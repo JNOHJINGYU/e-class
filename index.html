@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The new E-Class | 벤츠타임</title>
+<meta name="description" content="메르세데스-벤츠 The new E-Class. E 200, E 300, E 220 d, E 450, Plug-in Hybrid 라인업을 한눈에 비교하고 자세히 알아보세요.">
+<meta name="theme-color" content="#ffffff">
+
+<!--
+  ============================================================
+  구조 안내
+  ------------------------------------------------------------
+  이 파일은 E-Class 전체 라인업으로 진입하는 "메인" 랜딩페이지입니다.
+  하단 5개 카드는 각각 별도의 모델별 랜딩페이지(E200/E300/E220d/E450/Hybrid)로
+  연결되도록 만들어졌습니다. 링크 경로는 아래 두 군데에서 수정할 수 있습니다.
+    1) <script> 안의 MODEL_LINKS 객체 (한 곳에서 일괄 수정 - 권장)
+    2) 각 카드 <a> 태그의 href 속성 (JS가 꺼져 있을 때를 위한 기본값)
+  ============================================================
+-->
+
+<!-- 폰트: S-Core Dream(에스코어드림) → Pretendard → Noto Sans KR 순서로 적용 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<!-- S-Core Dream: 공식 CDN에서 직접 로드 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css">
+<style>
+  @font-face {
+    font-family: 'S-Core Dream';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: 300; font-style: normal;
+  }
+  @font-face {
+    font-family: 'S-Core Dream';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff');
+    font-weight: 400; font-style: normal;
+  }
+  @font-face {
+    font-family: 'S-Core Dream';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff') format('woff');
+    font-weight: 500; font-style: normal;
+  }
+  @font-face {
+    font-family: 'S-Core Dream';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff') format('woff');
+    font-weight: 600; font-style: normal;
+  }
+  @font-face {
+    font-family: 'S-Core Dream';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff') format('woff');
+    font-weight: 700; font-style: normal;
+  }
+  @font-face {
+    font-family: 'S-Core Dream';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff') format('woff');
+    font-weight: 800; font-style: normal;
+  }
+  @font-face {
+    font-family: 'S-Core Dream';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-9Black.woff') format('woff');
+    font-weight: 900; font-style: normal;
+  }
+</style>
+
+<style>
+  /* ============================================================
+     이미지 경로 설정 (나중에 실제 이미지로 교체)
+     ------------------------------------------------------------
+     1) 히어로 배경 이미지
+        아래 ".hero-media" 선택자의 background-image 중 첫 번째 url() 값을
+        실제 E-Class 대표 이미지 경로로 교체하세요.
+        예) background-image: url('images/e-class-hero.jpg'), linear-gradient(...);
+        이미지가 없거나 경로가 잘못된 동안에는 뒤에 있는 그라데이션이
+        대신 표시되어 화면이 깨지지 않습니다.
+     2) 권장 이미지 사양
+        - 가로 1920px 이상, 가로:세로 비율 16:9 ~ 16:10 권장
+        - 차량이 화면 중앙~우측에 위치하고 좌측 여백이 넉넉한 사진이 좋습니다
+          (좌측에 텍스트가 올라가기 때문입니다)
+     ============================================================ */
+
+  :root{
+    /* --c-black = 배경/밝은 면 위의 텍스트(검정), --c-platinum = 본문 텍스트/진한 채움(검정 계열) */
+    --c-black:#ffffff;
+    --c-near-black:#fafafa;
+    --c-charcoal:#f1f1f2;
+    --c-graphite:#e9e9ea;
+    --c-line:rgba(10,10,11,.14);
+    --c-line-strong:rgba(10,10,11,.4);
+    --c-platinum:#0a0a0b;
+    --c-silver:#4b4d52;
+    --c-mute:#6b6e73;
+    --c-hybrid:#0e8f6d;
+    --font-display:'S-Core Dream', 'Pretendard', 'Noto Sans KR', sans-serif;
+    --font-body:'S-Core Dream', 'Pretendard', 'Noto Sans KR', sans-serif;
+    --font-mono:'S-Core Dream', 'Pretendard', 'Noto Sans KR', monospace;
+    --maxw:1320px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--c-black);
+    color:var(--c-platinum);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; }
+  button{ font-family:inherit; background:none; border:none; color:inherit; cursor:pointer; }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--c-platinum);
+    outline-offset:4px;
+    border-radius:4px;
+  }
+
+  .container{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+
+  /* ---------------- 헤더 ---------------- */
+  .site-header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding:22px 0;
+    background:linear-gradient(180deg, rgba(255,255,255,.65) 0%, rgba(255,255,255,0) 100%);
+    transition:background .4s ease, padding .4s ease, backdrop-filter .4s ease, border-color .4s ease;
+    border-bottom:1px solid transparent;
+  }
+  .site-header.is-scrolled{
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    padding:14px 0;
+    border-bottom-color:var(--c-line);
+  }
+  .header-inner{
+    max-width:var(--maxw); margin:0 auto; padding:0 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .brand{ text-decoration:none; display:flex; flex-direction:column; gap:2px; }
+  .brand-mark{
+    font-family:var(--font-body); font-weight:700;
+    font-size:16px; letter-spacing:.01em; color:var(--c-platinum);
+  }
+  .brand-sub{
+    font-family:var(--font-body); font-size:10px; letter-spacing:.1em;
+    color:var(--c-mute); text-transform:uppercase; font-weight:400;
+  }
+  .header-nav{ display:flex; align-items:center; gap:18px; }
+  .nav-link{
+    font-family:var(--font-body); font-size:12px; font-weight:500; letter-spacing:.04em;
+    text-decoration:none; color:var(--c-silver);
+    border:1px solid var(--c-line-strong); border-radius:999px;
+    padding:10px 18px; transition:background .3s,color .3s,border-color .3s;
+  }
+  .nav-link:hover{ background:var(--c-platinum); color:var(--c-black); border-color:var(--c-platinum); }
+
+  /* ---------------- 히어로 ---------------- */
+  .hero{
+    position:relative;
+    height:100vh; min-height:560px;
+    height:100svh;
+    overflow:hidden;
+    display:flex; align-items:flex-end;
+  }
+  .hero-media{
+    position:absolute; inset:-8% 0 -8% 0;
+    background-position:center;
+    background-size:cover;
+    will-change:transform;
+    /* ↓↓↓ 1) 첫 번째 url()을 실제 E-Class 이미지 경로로 교체하세요 ↓↓↓ */
+    background-image:
+      url('https://github.com/JNOHJINGYU/images/blob/main/23C0253_026.jpg?raw=true'),
+      radial-gradient(ellipse at 70% 35%, #f4f4f5 0%, #e8e9ea 55%, #ffffff 100%);
+  }
+  .hero-overlay{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,.5) 62%, rgba(255,255,255,.9) 100%),
+      linear-gradient(100deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.55) 38%, rgba(255,255,255,0) 72%);
+  }
+  .hero-content{
+    position:relative; z-index:2;
+    width:100%;
+    padding:0 28px 246px;
+    max-width:var(--maxw); margin:0 auto;
+  }
+  .hero-inner{ max-width:600px; }
+  .eyebrow{
+    font-family:var(--font-body); font-size:11px; font-weight:500; letter-spacing:.16em;
+    color:var(--c-silver); text-transform:uppercase; margin-bottom:18px;
+  }
+  .hero-title{
+    font-family:var(--font-display); font-weight:900;
+    font-size:clamp(56px, 10vw, 110px);
+    line-height:.95; letter-spacing:-.03em;
+    color:var(--c-platinum);
+  }
+  .hero-title span{ color:var(--c-platinum); font-weight:900; }
+  .hero-subtitle{
+    margin-top:22px;
+    font-size:clamp(16px, 2vw, 19px);
+    color:var(--c-platinum); font-weight:700; letter-spacing:-.01em;
+  }
+  .hero-desc{
+    margin-top:14px;
+    font-size:14.5px; color:var(--c-silver); line-height:1.75;
+    max-width:480px;
+  }
+  .hero-actions{ margin-top:34px; display:flex; gap:14px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 26px; border-radius:999px;
+    font-family:var(--font-body); font-size:13px; font-weight:600; letter-spacing:.04em;
+    text-decoration:none; transition:transform .3s, background .3s, color .3s, border-color .3s;
+  }
+  .btn-primary{
+    background:var(--c-platinum); color:var(--c-black); border:1px solid var(--c-platinum);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); }
+
+  /* 시그니처 요소: 차체 캐릭터라인을 연상시키는 빛이 흐르는 가로선 */
+  .hero-line{
+    position:absolute; left:0; right:0; bottom:46px; z-index:2;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(10,10,11,.55), transparent);
+    background-size:200% 100%;
+    opacity:.55;
+    animation:sweepLine 8s linear infinite;
+  }
+  @keyframes sweepLine{
+    0%{ background-position:200% 0; }
+    100%{ background-position:-200% 0; }
+  }
+
+  .scroll-cue{
+    position:absolute; right:30px; bottom:34px; z-index:3;
+    display:flex; align-items:center; gap:10px;
+    color:var(--c-silver);
+  }
+  .scroll-cue-track{
+    width:1px; height:46px; background:var(--c-line-strong);
+    position:relative; overflow:hidden;
+  }
+  .scroll-cue-dot{
+    position:absolute; left:-1.5px; top:0; width:4px; height:14px; border-radius:2px;
+    background:var(--c-platinum);
+    animation:cueMove 2.6s ease-in-out infinite;
+  }
+  @keyframes cueMove{
+    0%{ top:0; opacity:0; }
+    15%{ opacity:1; }
+    85%{ opacity:1; }
+    100%{ top:32px; opacity:0; }
+  }
+  .scroll-cue-text{
+    writing-mode:vertical-rl;
+    font-family:var(--font-body); font-size:10px; font-weight:500; letter-spacing:.2em;
+  }
+
+  /* ---------------- 모델 섹션 ---------------- */
+  .models{ background:var(--c-black); padding:150px 0 100px; position:relative; }
+  .models::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--c-line), transparent);
+  }
+  .section-head{
+    max-width:760px; margin:0 auto 72px;
+    text-align:center;
+    opacity:0; transform:translateY(20px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .section-head.in-view{ opacity:1; transform:translateY(0); }
+  .section-head h2{
+    font-family:var(--font-display); font-weight:900;
+    font-size:clamp(34px,5vw,54px); margin-top:18px; line-height:1.08;
+    color:var(--c-platinum); letter-spacing:-.025em;
+  }
+  .section-desc{ margin-top:22px; color:var(--c-mute); font-size:15px; }
+
+  .cards-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:22px;
+  }
+  @media (min-width:641px){
+    .cards-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (min-width:1024px){
+    .cards-grid{ grid-template-columns:repeat(3,1fr); }
+  }
+  @media (min-width:1280px){
+    .cards-grid{ grid-template-columns:repeat(5,1fr); }
+  }
+  /* Plug-in Hybrid 카드는 콘텐츠가 많아 2/3열 구간에서 한 행을 가득 차지하도록 함 */
+  @media (min-width:641px) and (max-width:1279px){
+    .car-card--hybrid{ grid-column:1 / -1; }
+  }
+
+  .car-card{
+    position:relative;
+    display:flex; flex-direction:column;
+    border-radius:16px;
+    border:1px solid var(--c-line);
+    background:linear-gradient(160deg, rgba(10,10,11,.035), rgba(10,10,11,.012));
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    overflow:hidden; /* 이미지 모서리를 카드 둥근 모서리에 맞춰 잘라줌 */
+    opacity:0; transform:translateY(26px);
+    transition:transform .5s cubic-bezier(.16,.8,.3,1), box-shadow .5s ease,
+               border-color .35s ease, background .35s ease,
+               opacity .6s ease;
+    transition-delay:0ms;
+  }
+  .car-card.in-view{
+    opacity:1; transform:translateY(0);
+    transition-delay:var(--delay, 0ms);
+  }
+  .car-card:hover, .car-card:focus-within{
+    transform:translateY(-10px);
+    border-color:var(--c-line-strong);
+    background:linear-gradient(160deg, rgba(10,10,11,.065), rgba(10,10,11,.02));
+    box-shadow:0 28px 48px -20px rgba(20,20,22,.18), 0 0 0 1px rgba(10,10,11,.04) inset;
+  }
+
+  /* ---- 카드 이미지 영역 ----
+     실제 이미지는 각 카드 마크업의 <img class="card-image" src="..."> 에서 교체하세요.
+     이미지가 없거나 경로가 틀려도 onerror로 "이미지 준비 중" 플레이스홀더가 표시되어
+     화면이 깨지지 않습니다. */
+  .card-image-wrap{
+    position:relative;
+    aspect-ratio:16/8;
+    background:linear-gradient(150deg, var(--c-charcoal), var(--c-graphite));
+    border-bottom:1px solid var(--c-line);
+    overflow:hidden;
+  }
+  .card-image{
+    width:100%; height:100%;
+    object-fit:cover; object-position:center;
+    display:block;
+    transition:transform .6s cubic-bezier(.16,.8,.3,1);
+  }
+  .car-card:hover .card-image{ transform:scale(1.06); }
+  .card-image-wrap.img-fallback .card-image{ display:none; }
+  .card-image-wrap.img-fallback::after{
+    content:'이미지 준비 중';
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-body); font-size:11px; font-weight:400; letter-spacing:.06em;
+    color:var(--c-mute);
+  }
+
+  .card-body{
+    display:flex; flex-direction:column; gap:10px;
+    flex:1;
+    padding:18px 20px 20px;
+  }
+
+  .card-code{
+    font-family:var(--font-display); font-weight:700;
+    font-size:22px; letter-spacing:-.01em; color:var(--c-platinum);
+  }
+  .card-tagline{ font-size:13px; color:var(--c-silver); line-height:1.6; font-weight:400; }
+  .card-sub-models{
+    font-family:var(--font-body); font-size:11px; letter-spacing:.02em;
+    color:var(--c-mute); margin-top:-4px;
+  }
+
+  .hybrid-badge{
+    position:absolute; top:16px; right:16px; z-index:2;
+    font-family:var(--font-body); font-size:10px; font-weight:600; letter-spacing:.1em;
+    color:#ffffff; background:rgba(14,143,109,.92);
+    border:1px solid rgba(14,143,109,.92);
+    padding:5px 10px; border-radius:999px;
+  }
+
+  .card-foot{ margin-top:auto; }
+  .card-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    width:100%; justify-content:center;
+    min-height:42px;
+    padding:10px 16px;
+    border:1px solid var(--c-line-strong);
+    border-radius:999px;
+    font-family:var(--font-body); font-size:12px; font-weight:600; letter-spacing:.02em;
+    text-decoration:none; color:var(--c-platinum);
+    transition:background .3s, color .3s, border-color .3s, gap .3s;
+  }
+  .card-btn:hover{ background:var(--c-platinum); color:var(--c-black); border-color:var(--c-platinum); gap:13px; }
+  .card-btn--hybrid:hover{ background:var(--c-hybrid); border-color:var(--c-hybrid); color:#ffffff; }
+  .card-btn .arrow{ transition:transform .3s; }
+  .card-btn:hover .arrow{ transform:translateX(2px); }
+
+  /* ---------------- 푸터 ---------------- */
+  .site-footer{
+    border-top:1px solid var(--c-line);
+    padding:36px 0 48px;
+    text-align:center;
+    color:var(--c-mute);
+    font-size:12.5px;
+  }
+  .site-footer p{ margin-top:6px; }
+
+  /* ---------------- 모바일 보정 ---------------- */
+  @media (max-width:640px){
+    .hero-media{ background-position:center 32%; }
+    .hero-content{ padding:0 20px 160px; }
+    .hero-actions{ flex-wrap:wrap; }
+    .scroll-cue{ right:20px; bottom:24px; }
+    .models{ padding:108px 0 72px; }
+    .section-head{ margin-bottom:48px; }
+    .header-nav .nav-link{ padding:9px 14px; font-size:11px; font-family:var(--font-body); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a class="brand" href="#hero">
+      <span class="brand-mark">Mercedes-Benz</span>
+      <span class="brand-sub">벤츠타임 · 의정부 · E-Class</span>
+    </a>
+    <nav class="header-nav">
+      <a class="nav-link" href="#models">모델 보기</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="hero-media" aria-hidden="true"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-inner">
+      <p class="eyebrow">Mercedes-Benz E-Class</p>
+      <h1 class="hero-title">The new<br><span>E-Class</span></h1>
+      <p class="hero-subtitle">당신의 비즈니스와 일상을 완성하는<br>메르세데스-벤츠 E-Class</p>
+      <p class="hero-desc">E 200부터 E 450, 디젤, 플러그인 하이브리드, AMG 하이브리드까지<br>라이프스타일에 맞는 E-Class를 한눈에 비교하고 선택하세요.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#models">모델 둘러보기</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-line" aria-hidden="true"></div>
+
+  <button class="scroll-cue" id="scrollCue" aria-label="모델 목록으로 스크롤">
+    <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
+    <span class="scroll-cue-text">SCROLL</span>
+  </button>
+</section>
+
+<section class="models" id="models">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Model Lineup</p>
+      <h2>고객님에게 맞는 E-Class를 선택하세요</h2>
+      <p class="section-desc">가솔린, 디젤, 플러그인 하이브리드까지 — 5가지 라인업을 비교해보세요.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- 카드 1: E 200 (링크 수정: href 또는 하단 MODEL_LINKS.e200) -->
+      <article class="car-card" style="--delay:0ms">
+        <div class="card-image-wrap">
+          <!-- ↓↓↓ E 200 이미지 경로로 교체하세요 ↓↓↓ -->
+          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/24C0330_001.jpg?raw=true" alt="Mercedes-Benz E 200" loading="lazy"
+               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+        </div>
+        <div class="card-body">
+          <p class="card-code">E 200</p>
+          <p class="card-tagline">가장 합리적으로 만나는<br>프리미엄 E-Class</p>
+          <div class="card-foot">
+            <a class="card-btn" data-link="e200" href="e200.html">E 200 자세히 보기 <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 카드 2: E 300 (링크 수정: href 또는 하단 MODEL_LINKS.e300) -->
+      <article class="car-card" style="--delay:80ms">
+        <div class="card-image-wrap">
+          <!-- ↓↓↓ E 300 이미지 경로로 교체하세요 ↓↓↓ -->
+          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/23C0379_001%20(1).jpg?raw=true" alt="Mercedes-Benz E 300" loading="lazy"
+               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+        </div>
+        <div class="card-body">
+          <p class="card-code">E 300</p>
+          <p class="card-tagline">E-Class의<br>가장 균형 잡힌 선택</p>
+          <div class="card-foot">
+            <a class="card-btn" data-link="e300" href="e300.html">E 300 자세히 보기 <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 카드 3: E 220 d (링크 수정: href 또는 하단 MODEL_LINKS.e220d) -->
+      <article class="car-card" style="--delay:160ms">
+        <div class="card-image-wrap">
+          <!-- ↓↓↓ E 220 d 이미지 경로로 교체하세요 ↓↓↓ -->
+          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/E-CLASS_SIDE.jpg?raw=true" alt="Mercedes-Benz E 220 d" loading="lazy"
+               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+        </div>
+        <div class="card-body">
+          <p class="card-code">E 220 d</p>
+          <p class="card-tagline">장거리와 연비를 중시하는<br>고객을 위한 디젤 세단</p>
+          <div class="card-foot">
+            <a class="card-btn" data-link="e220d" href="e220d.html">E 220 d 자세히 보기 <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 카드 4: E 450 (링크 수정: href 또는 하단 MODEL_LINKS.e450) -->
+      <article class="car-card" style="--delay:240ms">
+        <div class="card-image-wrap">
+          <!-- ↓↓↓ E 450 이미지 경로로 교체하세요 ↓↓↓ -->
+          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/23C0014_003.jpg?raw=true" alt="Mercedes-Benz E 450" loading="lazy"
+               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+        </div>
+        <div class="card-body">
+          <p class="card-code">E 450</p>
+          <p class="card-tagline">6기통 감성과 여유로운 주행 성능을<br>원하는 고객을 위한 선택</p>
+          <div class="card-foot">
+            <a class="card-btn" data-link="e450" href="e450.html">E 450 자세히 보기 <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 카드 5: Plug-in Hybrid (링크 수정: href 또는 하단 MODEL_LINKS.hybrid) -->
+      <article class="car-card car-card--hybrid" style="--delay:320ms">
+        <span class="hybrid-badge">Plug-in Hybrid</span>
+        <div class="card-image-wrap">
+          <!-- ↓↓↓ Plug-in Hybrid 이미지 경로로 교체하세요 ↓↓↓ -->
+          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/mercedes-benz-e-klasse-phev-2023-06.jpg?raw=true" alt="Mercedes-Benz E-Class Plug-in Hybrid" loading="lazy"
+               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+        </div>
+        <div class="card-body">
+          <p class="card-code">Plug-in Hybrid</p>
+          <p class="card-tagline">전기 주행과 고성능 하이브리드를<br>함께 보는 선택</p>
+          <p class="card-sub-models">E 350 e · AMG E 53 HYBRID 4MATIC+</p>
+          <div class="card-foot">
+            <a class="card-btn card-btn--hybrid" data-link="hybrid" href="hybrid.html">Hybrid 자세히 보기 <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <p>Mercedes-Benz E-Class</p>
+  <p>벤츠타임 · 의정부 | © <span id="year"></span> Benz Time. All rights reserved.</p>
+</footer>
+
+<script>
+  /* ============================================================
+     모델별 랜딩페이지 링크 - 여기서 한 번에 수정 가능
+     (파일명/경로를 실제 페이지에 맞게 바꿔주세요)
+     ============================================================ */
+  const MODEL_LINKS = {
+    e200:   'e200.html',   // E 200 랜딩페이지 경로
+    e300:   'e300.html',   // E 300 랜딩페이지 경로
+    e220d:  'e220d.html',  // E 220 d 랜딩페이지 경로
+    e450:   'e450.html',   // E 450 랜딩페이지 경로
+    hybrid: 'hybrid.html'  // Plug-in Hybrid 랜딩페이지 경로
+  };
+  document.querySelectorAll('[data-link]').forEach((el) => {
+    const key = el.getAttribute('data-link');
+    if (MODEL_LINKS[key]) el.setAttribute('href', MODEL_LINKS[key]);
+  });
+
+  // 헤더: 스크롤 시 배경을 채워 가독성 확보
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('is-scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // 스크롤 유도 버튼
+  document.getElementById('scrollCue').addEventListener('click', () => {
+    document.getElementById('models').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // 카드 / 섹션 타이틀 등장 애니메이션
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealEls = document.querySelectorAll('.car-card, .section-head');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('in-view'));
+  }
+
+  // 히어로 이미지 미세 패럴랙스 (모션 최소화 환경에서는 비활성)
+  if (!reduceMotion) {
+    const heroMedia = document.querySelector('.hero-media');
+    const heroHeight = () => window.innerHeight;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y < heroHeight()) {
+        heroMedia.style.transform = `translateY(${y * 0.12}px) scale(${1 + y * 0.00015})`;
+      }
+    }, { passive: true });
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
