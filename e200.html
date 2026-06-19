@@ -227,12 +227,8 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 .hero-title-wrap {
   position: relative;
   padding: 40px 0;
-  background: linear-gradient(180deg, 
-    rgba(0,0,0,0.2) 0%,
-    rgba(0,0,0,0.3) 25%,
-    rgba(0,0,0,0.5) 50%,
-    rgba(0,0,0,0.7) 75%,
-    rgba(0,0,0,0.85) 100%);
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(8px);
   width: 100%;
   text-align: center;
 }
@@ -247,14 +243,14 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   line-height: 1.05;
   letter-spacing: -.03em;
   margin-bottom: 12px;
-  text-shadow: 0 4px 16px rgba(0,0,0,.6), 0 2px 8px rgba(0,0,0,.4);
+  text-shadow: 0 5px 18px rgba(0,0,0,.95);
 }
 .hero-title p {
   color: rgba(255,255,255,.75);
   font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 300;
   letter-spacing: .05em;
-  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+  text-shadow: 0 3px 12px rgba(0,0,0,.9);
 }
 .hero-price {
   margin-bottom: 48px;
@@ -315,21 +311,21 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   font-weight: 700;
   letter-spacing: .05em;
   margin-bottom: 12px;
-  color: var(--gold);
-  text-shadow: 0 2px 6px rgba(0,0,0,.4);
+  color: #ffffff;
+  text-shadow: 0 3px 10px rgba(0,0,0,.9);
 }
 .hero-card-price {
   font-size: 1.5rem;
   font-weight: 900;
   margin-bottom: 16px;
   color: var(--white);
-  text-shadow: 0 2px 8px rgba(0,0,0,.4);
+  text-shadow: 0 4px 14px rgba(0,0,0,.95);
 }
 .hero-card-items {
   font-size: .85rem;
   line-height: 1.7;
   color: rgba(255,255,255,.8);
-  text-shadow: 0 1px 4px rgba(0,0,0,.3);
+  text-shadow: 0 3px 10px rgba(0,0,0,.9);
 }
 .hero-card-items li {
   list-style: none;
@@ -848,8 +844,8 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   }
   .hero-content {
     justify-content: space-between;
-    padding-top: 70px;
-    padding-bottom: 40px;
+    padding-top: 35px;
+    padding-bottom: 25px;
   }
   .hero-title-wrap {
     width: auto;
@@ -857,12 +853,9 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     max-width: 680px;
     padding: 24px 48px 28px;
     border-radius: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(0,0,0,0.48) 0%,
-      rgba(0,0,0,0.34) 100%
-    );
-    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.72);
+    backdrop-filter: blur(8px);
+    transform: translateY(-20px);
   }
   .hero-label {
     margin-bottom: 18px;
@@ -879,7 +872,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     margin-top: 0;
     max-width: 640px;
     gap: 22px;
-    transform: translateY(0);
+    transform: translateY(45px);
   }
   .hero-card {
     padding: 26px 26px;
