@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E220d 4MATIC EXCLUSIVE | Mercedes-Benz</title>
+<!-- S-Core Dream (에스코어드림) – Google Fonts 미지원, Pretendard로 대체 (가장 유사한 느낌의 가변 한글 폰트) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+<!-- ============================================================
+     이미지 URL 관리 영역
+     ============================================================ -->
+<script>
+const IMAGES = {
+  hero:               "https://github.com/JNOHJINGYU/images/blob/main/23C0379_001.jpg?raw=true",   // S1 히어로 · 차량 사진
+  digitalLight:       "https://github.com/JNOHJINGYU/images/blob/main/e220d-drive.jpg?raw=true",   // S3 카드 1 · 디지털 라이트
+  distronic:          "https://github.com/JNOHJINGYU/images/blob/main/autodrive.png?raw=true",   // S3 카드 2 · 디스트로닉
+  parking:            "https://github.com/JNOHJINGYU/images/blob/main/e220d-petrol.jpeg?raw=true",   // S3 카드 3 · 주차 보조
+  burmester:          "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_3ggukc3ggukc3ggu.png?raw=true",   // S3 카드 4 · 부메스터
+  interior:           "https://github.com/JNOHJINGYU/images/blob/main/e220d-interior.jpg?raw=true",   // S7 인테리어
+  safety:             "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_doclujdoclujdocl.png?raw=true",   // S8 안전
+};
+</script>
+
+<!-- ============================================================
+     경쟁차 비교 데이터
+     ============================================================ -->
+<script>
+const COMPARE_DATA = {
+  headers: ["항목", "E220d 4MATIC\nEXCLUSIVE", "BMW 523d x-drive", "Audi A6 40 TDI quattro"],
+  highlight: 1,
+  rows: [
+    { label: "가격",              values: ["8,610만", "8,430만", "8,178만"] },
+    { label: "출력",              values: ["197ps",     "197ps", "204ps"] },
+    { label: "토크",              values: ["44.9kg.m",  "40kg.m", "40.8kg.m"] },
+    { label: "구동방식",          values: ["4MATIC","x-drive", "quattro"] },
+    { label: "복합연비",          values: ["16.0km/L",   "14.7km/L", "15.1km/L"] },
+    { label: "헤드업 디스플레이", values: ["✓ 기본",   "✓ 기본", "✓ 기본"] },
+    { label: "반자율 주행",       values: ["✓ 기본", "✓ 기본", "✓ 기본"] },
+    { label: "통풍 시트",         values: ["✓ 기본",   "✓ 기본", "✓ 기본"] },
+    { label: "브랜드 가치",       values: ["★★★★★",  "★★★★", "★★★"] },
+  ]
+};
+</script>
+
+<!-- ============================================================
+     프로모션 데이터
+     ============================================================ -->
+<script>
+const PROMO_DATA = [
+  { icon: "💰", title: "기본 할인",        content: "기본 할인 9%", tag: "DISCOUNT" },
+  { icon: "🏦", title: "벤츠 파이낸셜",   content: "", tag: "FINANCIAL" },
+  { icon: "🚗", title: "장기렌트",         content: "기본 할인 + 3% 할인", tag: "LONG-TERM RENT" },
+  { icon: "🔄", title: "재구매 고객 혜택", content: "기본 할인 + 1% 할인", tag: "LOYALTY" },
+  { icon: "🏢", title: "법인 고객 혜택",   content: "2대 이상 구매 시 기본 할인 + 3% 할인", tag: "CORPORATE" },
+  { icon: "🔃", title: "트레이드인 혜택",  content: "기본 할인 + 1% 할인", tag: "TRADE-IN" },
+];
+</script>
+
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Pretendard', 'S-Core Dream', 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic',
+               'Segoe UI', sans-serif;
+  background: #FFFFFF;
+  color: #111111;
+  line-height: 1.65;
+  overflow-x: hidden;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --blue:   #0066FF;
+  --red:    #E53935;
+  --black:  #111111;
+  --gold:   #D4AF7A;
+  --gray1:  #F8F8F8;
+  --gray2:  #F2F2F2;
+  --gray3:  #E0E0E0;
+  --gray4:  #999999;
+  --white:  #FFFFFF;
+  --shadow-sm: 0 2px 12px rgba(0,0,0,.06);
+  --shadow-md: 0 8px 32px rgba(0,0,0,.10);
+  --shadow-lg: 0 20px 60px rgba(0,0,0,.14);
+  --radius: 16px;
+  --section-gap: 120px;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.label-en {
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--gray4);
+}
+h1 { font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -.03em; }
+h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; line-height: 1.15; letter-spacing: -.02em; }
+h3 { font-size: clamp(1.25rem, 2.5vw, 1.65rem); font-weight: 800; }
+p  { color: #444; font-size: clamp(1.1rem, 2.05vw, 1.22rem); line-height: 1.85; }
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.red  { color: var(--red); }
+.blue { color: var(--blue); }
+.section { padding: var(--section-gap) 0; }
+.section-alt { background: var(--gray1); }
+.tag {
+  display: inline-block; padding: 4px 14px; border-radius: 100px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+}
+.tag-blue { background: rgba(0,102,255,.08); color: var(--blue); }
+.tag-red  { background: rgba(229,57,53,.08);  color: var(--red); }
+
+/* ============================================================
+   IMAGE PLACEHOLDER
+   ============================================================ */
+.img-box {
+  width: 100%; background: #F5F5F5; border: 2px dashed #CCCCCC;
+  display: flex; align-items: center; justify-content: center;
+  color: #AAAAAA; font-size: .85rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  position: relative; overflow: hidden;
+}
+.img-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.img-box span { position: relative; z-index: 1; pointer-events: none; }
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+.reveal-delay-4 { transition-delay: .4s; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gray3);
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 32px; height: 60px; transition: box-shadow .3s;
+}
+.site-header.scrolled { box-shadow: var(--shadow-sm); }
+.header-logo { font-size: .82rem; font-weight: 800; letter-spacing: .18em; color: var(--black); text-transform: uppercase; }
+
+
+
+/* ============================================================
+   S1 · HERO — BASE (공통 기본 스타일)
+   ============================================================ */
+#hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  background: var(--black);
+  overflow: hidden;
+  text-align: center;
+  padding-top: 60px;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+.hero-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hero-media-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 880px;
+  padding: 0 24px;
+  margin: 0 auto;
+}
+.hero-eyebrow-text {
+  display: block;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  color: rgba(255,255,255,.75);
+}
+.hero-main-title {
+  font-size: clamp(3.8rem, 9vw, 7rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.02em;
+  margin-bottom: 28px;
+  color: #111111;
+}
+.hero-subtitle {
+  font-size: clamp(1.05rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  letter-spacing: .02em;
+  margin-bottom: 8px;
+  color: var(--white);
+  text-shadow: 0 3px 14px rgba(0,0,0,.8), 0 1px 4px rgba(0,0,0,.9);
+}
+.hero-tagline {
+  font-size: .85rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 300;
+  margin-bottom: 52px;
+  color: rgba(255,255,255,.75);
+  text-shadow: 0 3px 14px rgba(0,0,0,.8), 0 1px 4px rgba(0,0,0,.9);
+}
+.hero-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.hero-divider-line {
+  flex: 1;
+  max-width: 110px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-divider-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.hero-cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  text-align: left;
+}
+.hero-card {
+  border-radius: var(--radius);
+  padding: 28px 28px 32px;
+  max-width: 420px;
+  width: 100%;
+  transition: transform .3s, box-shadow .3s, background .3s, border-color .3s;
+  background: rgba(10,10,10,.55);
+  border: 1px solid rgba(212,175,122,.30);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.45);
+}
+.hero-card:hover {
+  transform: translateY(-4px);
+  background: rgba(15,15,15,.65);
+  border-color: rgba(212,175,122,.5);
+  box-shadow: 0 18px 56px rgba(0,0,0,.55);
+}
+.hero-card-accent {
+  display: block;
+  width: 36px; height: 3px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  background: var(--gold);
+}
+.hero-card-name {
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: rgba(255,255,255,.7);
+}
+.hero-card-price {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -.02em;
+  line-height: 1;
+  margin-bottom: 12px;
+  color: var(--gold);
+}
+.hero-card-spec {
+  font-size: .82rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,.7);
+}
+
+/* ============================================================
+   S1 · HERO — PC (min-width: 769px)
+   풀스크린 사진 + 자연스러운 블랙 그라데이션 오버레이
+   ============================================================ */
+@media (min-width: 769px) {
+  #hero {
+    min-height: 100svh;
+    padding-top: 0;
+  }
+  .hero-media-overlay {
+    background: none;
+  }
+  .hero-inner {
+    padding: 0 56px;
+    margin-top: 70px;
+  }
+  .hero-main-title {
+    font-size: clamp(3.75rem, 9.75vw, 7.5rem);
+    letter-spacing: .04em;
+    margin-bottom: 36px;
+  }
+  .hero-eyebrow-text {
+    letter-spacing: .32em;
+    margin-bottom: 32px;
+  }
+  .hero-subtitle {
+    letter-spacing: .04em;
+    margin-bottom: 10px;
+  }
+  .hero-divider-label { letter-spacing: .3em; }
+  .hero-divider {
+    margin-top: 252px;
+    margin-bottom: 20px;
+  }
+  .hero-cards {
+    margin-top: 0;
+  }
+}
+
+/* ============================================================
+   S1 · HERO — Mobile (max-width: 768px)
+   사진 + 자연스러운 블랙 그라데이션 오버레이, 화이트 텍스트
+   ============================================================ */
+@media (max-width: 768px) {
+  #hero {
+    padding-top: 60px;
+  }
+  .hero-media-overlay {
+    background: none;
+  }
+  .hero-inner {
+    padding: 90px 20px 56px;
+  }
+  .hero-divider-label { letter-spacing: .25em; }
+}
+
+/* ============================================================
+   SECTION HEADING
+   ============================================================ */
+.section-heading { text-align: center; margin-bottom: 60px; position: relative; }
+.section-heading .label-en { margin-bottom: 16px; display: block; }
+.section-heading h2 { margin-bottom: 16px; }
+.section-heading p { max-width: 520px; margin: 0 auto; }
+
+/* 섹션 번호 뱃지 */
+.sec-num {
+  position: absolute;
+  top: 0; left: 0;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  color: var(--gray4);
+  background: var(--gray2);
+  border: 1px solid var(--gray3);
+  border-radius: 6px;
+  padding: 3px 9px;
+  line-height: 1.6;
+  user-select: none;
+}
+.hero-sec-num {
+  position: absolute;
+  top: 80px; left: 24px;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  color: var(--gray4);
+  background: var(--gray2);
+  border: 1px solid var(--gray3);
+  border-radius: 6px;
+  padding: 3px 9px;
+  line-height: 1.6;
+  user-select: none;
+  z-index: 10;
+}
+
+/* ============================================================
+   S2 · STATS
+   ============================================================ */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--white); border: 1px solid var(--gray3);
+  border-radius: var(--radius); padding: 36px 28px;
+  box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s; text-align: center;
+}
+.stat-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.stat-number { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 900; color: var(--blue); line-height: 1; letter-spacing: -.03em; margin-bottom: 8px; }
+.stat-label { font-size: .92rem; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+.stat-desc { font-size: .94rem; color: var(--gray4); line-height: 1.6; }
+
+/* ============================================================
+   S3 · REASON CARDS
+   ============================================================ */
+.reason-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+@media (max-width: 680px) { .reason-grid { grid-template-columns: 1fr; } }
+
+.reason-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background: var(--white);
+  border: 1px solid var(--gray3);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s;
+  display: flex;
+  flex-direction: column;
+}
+.reason-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 24px 64px rgba(0,0,0,.13);
+}
+
+/* 이미지 영역 – 크게 */
+.reason-img {
+  height: 280px;
+  flex-shrink: 0;
+}
+@media (max-width: 900px) { .reason-img { height: 220px; } }
+@media (max-width: 680px) { .reason-img { height: 200px; } }
+
+/* 카드 바디 */
+.reason-body {
+  padding: 32px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* 아이콘 + 제목 행 */
+.reason-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.reason-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: #EEF4FF;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.reason-body h3 {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+
+/* 강조 뱃지 */
+.reason-badge {
+  display: inline-block;
+  background: rgba(0,102,255,.07);
+  color: var(--blue);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 14px;
+  align-self: flex-start;
+}
+
+/* 설명 */
+.reason-body p {
+  font-size: 1.06rem;
+  color: #555;
+  line-height: 1.95;
+  margin: 0;
+}
+
+/* ============================================================
+   S4 · SPEC CARDS
+   ============================================================ */
+.spec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 900px) { .spec-grid { grid-template-columns: repeat(2, 1fr); } }
+.spec-card {
+  background: var(--white); border: 1px solid var(--gray3);
+  border-radius: var(--radius); padding: 28px 20px; text-align: center;
+  box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s;
+}
+.spec-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.spec-value { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; color: var(--black); letter-spacing: -.02em; line-height: 1.1; margin-bottom: 6px; }
+.spec-unit { font-size: .7rem; font-weight: 600; color: var(--gray4); display: block; margin-bottom: 8px; }
+.spec-label-row { font-size: .94rem; font-weight: 600; color: var(--gray4); }
+
+/* ============================================================
+   S7 · CONVENIENCE
+   ============================================================ */
+.convenience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) { .convenience-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .convenience-grid { grid-template-columns: 1fr 1fr; gap: 12px; } }
+.conv-card { background: var(--white); border: 1px solid var(--gray3); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s; }
+.conv-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.conv-icon { font-size: 2rem; margin-bottom: 12px; }
+.conv-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.conv-card p { font-size: .96rem; color: var(--gray4); line-height: 1.7; }
+
+/* ============================================================
+   S8 · SAFETY
+   ============================================================ */
+.safety-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px; }
+@media (max-width: 768px) { .safety-header { grid-template-columns: 1fr; gap: 32px; } }
+.safety-img { height: 360px; border-radius: var(--radius); overflow: hidden; }
+.safety-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 768px) { .safety-grid { grid-template-columns: repeat(2, 1fr); } }
+.safety-card { background: var(--white); border: 1px solid var(--gray3); border-radius: var(--radius); padding: 24px 20px; box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s; }
+.safety-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.safety-icon { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+.safety-card h4 { font-size: .94rem; font-weight: 700; margin-bottom: 4px; }
+.safety-card p { font-size: .94rem; color: var(--gray4); line-height: 1.65; }
+.red-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-right: 6px; vertical-align: middle; }
+
+/* ============================================================
+   S9 · CHECKLIST
+   ============================================================ */
+.checklist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--gray3); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+@media (max-width: 640px) { .checklist-grid { grid-template-columns: 1fr; } }
+.check-item { display: flex; align-items: center; gap: 16px; padding: 20px 28px; border-bottom: 1px solid var(--gray3); background: var(--white); transition: background .2s; }
+.check-item:nth-child(even) { border-left: 1px solid var(--gray3); }
+.check-item:hover { background: #F0F6FF; }
+.check-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: var(--white); font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.check-text h4 { font-size: .96rem; font-weight: 700; }
+.check-text p { font-size: .94rem; color: var(--gray4); margin: 0; line-height: 1.6; }
+
+/* ============================================================
+   S9 · 카테고리별 기본 적용 옵션
+   ============================================================ */
+.eq-category { margin-bottom: 40px; }
+.eq-category:last-child { margin-bottom: 0; }
+.eq-category-title {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 1.05rem; font-weight: 800; color: var(--black);
+  margin-bottom: 16px; letter-spacing: -.01em;
+}
+.eq-category-title::before {
+  content: ''; width: 18px; height: 3px; border-radius: 2px; background: var(--blue); flex-shrink: 0;
+}
+.eq-checklist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--gray3); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+@media (max-width: 640px) { .eq-checklist-grid { grid-template-columns: 1fr; } }
+.eq-item { display: flex; align-items: center; gap: 14px; padding: 16px 24px; border-bottom: 1px solid var(--gray3); background: var(--white); transition: background .2s; }
+.eq-item:nth-child(even) { border-left: 1px solid var(--gray3); }
+.eq-item:hover { background: #F0F6FF; }
+.eq-check-icon { width: 26px; height: 26px; border-radius: 50%; background: var(--blue); color: var(--white); font-size: .82rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.eq-item span.eq-label { font-size: 1.02rem; font-weight: 600; color: var(--black); }
+
+/* ============================================================
+   S10 · 상세 제원
+   ============================================================ */
+.detail-spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--gray3); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+@media (max-width: 640px) { .detail-spec-grid { grid-template-columns: 1fr; } }
+.ds-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; border-bottom: 1px solid var(--gray3); background: var(--white); gap: 16px; transition: background .2s; }
+.ds-row:nth-child(even) { border-left: 1px solid var(--gray3); background: var(--gray1); }
+.ds-row:hover { background: #EEF4FF; }
+.ds-label { font-size: .98rem; font-weight: 600; color: var(--gray4); white-space: nowrap; }
+.ds-value { font-size: 1.08rem; font-weight: 700; color: var(--black); text-align: right; }
+.ds-value.blue-val { color: var(--blue); }
+
+/* ============================================================
+   S11 · EXCLUSIVE vs AMG Line
+   ============================================================ */
+.vs-summary {
+  background: var(--gray1);
+  border: 1px solid var(--gray3);
+  border-radius: var(--radius);
+  padding: 28px 36px;
+  margin-bottom: 40px;
+  display: flex; flex-wrap: wrap; gap: 12px 32px;
+  align-items: center; justify-content: center;
+  text-align: center;
+}
+.vs-summary-item { font-size: .98rem; color: var(--gray4); line-height: 1.6; }
+.vs-summary-item strong { color: var(--black); font-weight: 800; }
+.vs-summary-sep { color: var(--gray3); font-size: 1.2rem; }
+@media (max-width: 600px) { .vs-summary-sep { display: none; } .vs-summary { flex-direction: column; } }
+.vs-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); box-shadow: var(--shadow-md); }
+.vs-table { width: 100%; min-width: 640px; border-collapse: collapse; }
+.vs-table th {
+  padding: 20px 24px; font-size: .9rem; font-weight: 800;
+  letter-spacing: .06em; text-align: center;
+  border-bottom: 2px solid var(--gray3);
+}
+.vs-table th.col-label-h {
+  text-align: left; padding-left: 28px;
+  background: var(--white); color: var(--gray4);
+  width: 160px;
+}
+.vs-table th.col-excl {
+  background: rgba(0,102,255,.06);
+  color: var(--blue); border-bottom-color: var(--blue);
+}
+.vs-table th.col-amg {
+  background: rgba(229,57,53,.06);
+  color: var(--red); border-bottom-color: var(--red);
+}
+.vs-table th .th-price {
+  display: block; font-size: .82rem; font-weight: 700;
+  margin-top: 4px; letter-spacing: 0;
+}
+.vs-table td {
+  padding: 19px 24px; font-size: 1.06rem;
+  text-align: center; border-bottom: 1px solid var(--gray3);
+  color: var(--black); font-weight: 500;
+}
+.vs-table td.col-label-d {
+  text-align: left; padding-left: 28px;
+  font-weight: 700; font-size: 1.03rem;
+  color: var(--black); background: var(--white); white-space: nowrap;
+}
+.vs-table td.col-excl { background: rgba(0,102,255,.04); font-weight: 600; }
+.vs-table td.col-amg  { background: rgba(229,57,53,.04);  font-weight: 600; }
+.vs-table td.empty-val { color: #CCC; }
+.vs-table tr:last-child td { border-bottom: none; }
+.vs-table tr:hover td { filter: brightness(.97); }
+.vs-table .row-highlight td { background: #FFFBF0; font-weight: 700; }
+.vs-table .row-highlight td.col-excl { background: rgba(0,102,255,.08); }
+.vs-table .row-highlight td.col-amg  { background: rgba(229,57,53,.08); }
+.vs-scroll-hint { display: none; font-size: .72rem; color: var(--gray4); text-align: right; margin-bottom: 10px; }
+@media (max-width: 768px) { .vs-scroll-hint { display: block; } }
+
+/* ============================================================
+   S11-2 · 추천 고객 카드
+   ============================================================ */
+.recommend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+@media (max-width: 768px) { .recommend-grid { grid-template-columns: 1fr; } }
+.recommend-card { border-radius: var(--radius); padding: 36px 32px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray3); background: var(--white); transition: transform .3s, box-shadow .3s; }
+.recommend-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.recommend-card.excl { border-top: 4px solid var(--blue); }
+.recommend-card.gas { border-top: 4px solid var(--red); }
+.recommend-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 22px; }
+.recommend-card.excl h3 { color: var(--blue); }
+.recommend-card.gas h3 { color: var(--red); }
+.recommend-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.recommend-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 1.02rem; color: #444; line-height: 1.75; }
+.recommend-list li::before { content: '✓'; flex-shrink: 0; font-weight: 800; }
+.recommend-card.excl .recommend-list li::before { color: var(--blue); }
+.recommend-card.gas .recommend-list li::before { color: var(--red); }
+
+/* ============================================================
+   S12 · 경쟁차 비교
+   ============================================================ */
+.compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); box-shadow: var(--shadow-md); }
+.compare-table { width: 100%; min-width: 700px; border-collapse: collapse; }
+.compare-table th { padding: 20px 24px; font-size: .9rem; font-weight: 800; letter-spacing: .06em; text-align: center; white-space: pre-line; border-bottom: 2px solid var(--gray3); background: var(--gray1); }
+.compare-table th.col-e300 { background: var(--black); color: var(--white); }
+.compare-table th.col-e300::after { content: 'OUR MODEL'; display: block; font-size: .62rem; letter-spacing: .14em; color: var(--blue); margin-top: 4px; }
+.compare-table td { padding: 20px 24px; font-size: 1.05rem; font-weight: 500; text-align: center; border-bottom: 1px solid var(--gray3); color: var(--gray4); }
+.compare-table td.col-e300 { background: #F0F4FF; color: var(--black); font-weight: 700; }
+.compare-table td.col-label { text-align: left; font-weight: 700; color: var(--black); background: var(--white); font-size: 1.03rem; padding-left: 28px; white-space: nowrap; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: #FAFAFA; }
+.compare-table tr:hover td.col-e300 { background: #E4EDFF; }
+.compare-notice { margin-top: 20px; font-size: .78rem; color: var(--gray4); text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.compare-notice::before { content: 'ⓘ'; }
+.scroll-hint { display: none; font-size: .72rem; color: var(--gray4); text-align: right; margin-bottom: 10px; }
+@media (max-width: 768px) { .scroll-hint { display: block; } }
+
+/* ============================================================
+   S13 · 프로모션
+   ============================================================ */
+.promo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 900px) { .promo-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .promo-grid { grid-template-columns: 1fr; } }
+.promo-card {
+  background: var(--white); border: 1px solid var(--gray3); border-radius: var(--radius);
+  padding: 36px 28px; box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s; position: relative; overflow: hidden;
+}
+.promo-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+.promo-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: .65rem; font-weight: 800; letter-spacing: .14em; background: var(--gray2); color: var(--gray4); margin-bottom: 20px; }
+.promo-tag { position: absolute; top: 20px; right: 20px; font-size: .6rem; font-weight: 800; letter-spacing: .12em; color: var(--blue); background: rgba(0,102,255,.08); padding: 3px 10px; border-radius: 100px; }
+.promo-icon { font-size: 2.4rem; margin-bottom: 16px; }
+.promo-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 12px; }
+.promo-content { font-size: 1.03rem; color: var(--gray4); line-height: 1.85; }
+.promo-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), #66A3FF); opacity: 0; transition: opacity .3s; }
+.promo-card:hover::before { opacity: 1; }
+
+/* ============================================================
+   RESPONSIVE GLOBAL
+   ============================================================ */
+@media (max-width: 768px) { :root { --section-gap: 80px; } }
+@media (max-width: 480px) { :root { --section-gap: 60px; } .site-header { padding: 0 20px; } }
+
+/* ============================================================
+   MOBILE READABILITY ENHANCEMENTS
+   ============================================================ */
+@media (max-width: 768px) {
+  p { line-height: 1.95; }
+  .reason-body p { line-height: 2.0; }
+  .conv-card p, .safety-card p, .check-text p { line-height: 1.8; }
+  .promo-content { line-height: 1.9; }
+  .recommend-list li { line-height: 1.85; }
+
+  /* 카드 내부 여백 확대 */
+  .reason-body { padding: 30px 26px 32px; }
+  .conv-card { padding: 26px 22px; }
+  .safety-card { padding: 22px 18px; }
+  .promo-card { padding: 32px 24px; }
+  .recommend-card { padding: 30px 24px; }
+  .stat-card { padding: 28px 20px; }
+
+  /* 체크리스트 가독성 향상 */
+  .check-item, .eq-item { padding: 18px 22px; gap: 14px; }
+  .ds-row { padding: 16px 22px; }
+
+  /* 비교표 가독성 향상 */
+  .vs-table td, .compare-table td { padding: 16px 18px; }
+  .vs-table th, .compare-table th { padding: 16px 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-logo">MERCEDES-BENZ</div>
+</header>
+
+<!-- ============================================================
+     S1 · HERO (차량 사진 + 텍스트)
+     ============================================================ -->
+<section id="hero" style="position:relative;">
+  <span class="hero-sec-num">01 · HERO</span>
+  <div class="hero-media" id="heroMedia">
+    <img id="heroImg" src="" alt="Mercedes-Benz E-Class" loading="eager" style="display:none;">
+    <div class="hero-media-overlay"></div>
+  </div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow-text reveal">E-CLASS W214 · MY26</p>
+    <h1 class="hero-main-title reveal reveal-delay-1">E-Class</h1>
+    <p class="hero-subtitle reveal reveal-delay-2">메르세데스-벤츠 E 220d 4MATIC</p>
+    <p class="hero-tagline reveal reveal-delay-2">The Best or Nothing</p>
+
+    <div class="hero-divider reveal reveal-delay-3">
+      <div class="hero-divider-line"></div>
+      <span class="hero-divider-label">Focus Lineup</span>
+      <div class="hero-divider-line"></div>
+    </div>
+
+    <div class="hero-cards reveal reveal-delay-4">
+      <!-- E220d 카드 -->
+      <div class="hero-card">
+        <span class="hero-card-accent blue"></span>
+        <div class="hero-card-name blue">E 220d 4MATIC EXCLUSIVE</div>
+        <div class="hero-card-price">8,610만원</div>
+        <div class="hero-card-spec">직렬 4기통 디젤 터보 · 197ps · 4MATIC · 컴포트 서스펜션</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     S2 · 왜 E-Class인가
+     ============================================================ -->
+<section id="why" class="section section-alt">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">02 · WHY E-CLASS</span>
+      <span class="label-en">Why E-Class</span>
+      <h2>왜 대한민국은<br>E-Class를 선택하는가</h2>
+      <p>숫자가 증명하는 압도적인 선택</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card reveal">
+        <div class="stat-number">8년</div>
+        <div class="stat-label">연속 수입차 판매 1위</div>
+        <div class="stat-desc">대한민국 수입차 시장 부동의 1위</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-1">
+        <div class="stat-number">#1</div>
+        <div class="stat-label">E-Class 판매량</div>
+        <div class="stat-desc">대한민국 판매량 기준 독보적 1위</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-2">
+        <div class="stat-number">20만대</div>
+        <div class="stat-label">단일모델 판매</div>
+        <div class="stat-desc">국내 최초 최대 판매</div>
+      </div>
+      <div class="stat-card reveal reveal-delay-3">
+        <div class="stat-number">75<span style="font-size:1.4rem">개</span></div>
+        <div class="stat-label">전국 서비스센터 75개소 운영</div>
+        <div class="stat-desc">국내 최대 규모의 서비스 인프라</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     S3 · E300 EXCLUSIVE를 선택하는 이유
+     ============================================================ -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">03 · REASONS</span>
+      <span class="label-en">Reasons to Choose</span>
+      <h2>E220d를<br>선택하는 이유</h2>
+      <p>장거리 운전자를 위한 가장 합리적인 E-Class</p>
+    </div>
+    <div class="reason-grid">
+
+      <!-- CARD 1 · 연비 -->
+      <div class="reason-card reveal">
+        <div class="img-box reason-img" id="imgDigitalLight"></div>
+        <div class="reason-body">
+          <div class="reason-header">
+            <div class="reason-icon">⛽</div>
+            <h3>출퇴근 비용이<br>줄어듭니다</h3>
+          </div>
+          <span class="reason-badge">16.0km/L 연비</span>
+          <p>16.0km/L의 뛰어난 복합연비를 제공합니다.<br>연간 주행거리가 많은 고객에게 가장 큰 만족감을 주는 E-Class입니다.</p>
+        </div>
+      </div>
+
+      <!-- CARD 2 · 디젤 토크 -->
+      <div class="reason-card reveal reveal-delay-1">
+        <div class="img-box reason-img" id="imgDistronic"></div>
+        <div class="reason-body">
+          <div class="reason-header">
+            <div class="reason-icon">🚗</div>
+            <h3>장거리 운전이<br>편해집니다</h3>
+          </div>
+          <span class="reason-badge">44.9kg.m 디젤 토크</span>
+          <p>44.9kg.m의 강력한 디젤 토크와 DISTRONIC 반자율주행 시스템이 적용되어 장거리 주행 피로를 줄여줍니다.</p>
+        </div>
+      </div>
+
+      <!-- CARD 3 · 연료탱크 -->
+      <div class="reason-card reveal reveal-delay-2">
+        <div class="img-box reason-img" id="imgParking"></div>
+        <div class="reason-body">
+          <div class="reason-header">
+            <div class="reason-icon">⛽</div>
+            <h3>주유 횟수가<br>줄어듭니다</h3>
+          </div>
+          <span class="reason-badge">66L 연료탱크</span>
+          <p>66L 연료탱크와 뛰어난 연비 덕분에 한번 주유로 장거리를 이동할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <!-- CARD 4 · 승차감 -->
+      <div class="reason-card reveal reveal-delay-3">
+        <div class="img-box reason-img" id="imgBurmester"></div>
+        <div class="reason-body">
+          <div class="reason-header">
+            <div class="reason-icon">🛋️</div>
+            <h3>벤츠의 승차감은<br>그대로</h3>
+          </div>
+          <span class="reason-badge">컴포트 서스펜션</span>
+          <p>컴포트 서스펜션과 4MATIC 사륜구동이 적용되어 벤츠 특유의 안정감과 승차감을 제공합니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     S4 · 핵심 제원
+     ============================================================ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">04 · KEY SPECS</span>
+      <span class="label-en">Key Specifications</span>
+      <h2>핵심 제원</h2>
+      <p>수치로 확인하는 E220d의 성능</p>
+    </div>
+    <div class="spec-grid">
+      <div class="spec-card reveal"><div class="spec-value blue">197</div><span class="spec-unit">ps</span><div class="spec-label-row">최고 출력</div></div>
+      <div class="spec-card reveal reveal-delay-1"><div class="spec-value">44.9</div><span class="spec-unit">kg.m</span><div class="spec-label-row">최대 토크</div></div>
+      <div class="spec-card reveal reveal-delay-2"><div class="spec-value">1,993</div><span class="spec-unit">cc</span><div class="spec-label-row">배기량</div></div>
+      <div class="spec-card reveal reveal-delay-3"><div class="spec-value red">7.8</div><span class="spec-unit">초</span><div class="spec-label-row">0→100 km/h</div></div>
+      <div class="spec-card reveal"><div class="spec-value">234</div><span class="spec-unit">km/h</span><div class="spec-label-row">최고 속도</div></div>
+      <div class="spec-card reveal reveal-delay-1"><div class="spec-value blue">16.0</div><span class="spec-unit">km/l</span><div class="spec-label-row">복합 연비</div></div>
+      <div class="spec-card reveal reveal-delay-2"><div class="spec-value" style="font-size:1.6rem;">4MATIC</div><span class="spec-unit">AWD</span><div class="spec-label-row">구동 방식</div></div>
+      <div class="spec-card reveal reveal-delay-3"><div class="spec-value" style="font-size:1.4rem;">9G</div><span class="spec-unit">Tronic</span><div class="spec-label-row">자동 변속기</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     S7 · 편의사양
+     ============================================================ -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">05 · CONVENIENCE</span>
+      <span class="label-en">Convenience Features</span>
+      <h2>실생활에서 체감하는<br>편의사양</h2>
+      <p>매일 사용할수록 더 느껴지는 배려</p>
+    </div>
+    <div class="img-box reveal" id="imgInterior" style="height:560px; border-radius:var(--radius); margin-bottom:48px; overflow:hidden;"></div>
+    <div class="convenience-grid">
+      <div class="conv-card reveal"><div class="conv-icon">⚙️</div><h4>9G-TRONIC 자동 9단 변속기</h4><p>부드럽고 효율적인 9단 자동변속</p></div>
+      <div class="conv-card reveal reveal-delay-1"><div class="conv-icon">🛋️</div><h4>컴포트 서스펜션</h4><p>벤츠 특유의 부드러운 승차감</p></div>
+      <div class="conv-card reveal reveal-delay-2"><div class="conv-icon">⭕</div><h4>19인치 경량 알로이 휠</h4><p>경량 설계로 효율성과 디자인 동시 만족</p></div>
+      <div class="conv-card reveal"><div class="conv-icon">💡</div><h4>LED 하이 퍼포먼스 헤드램프</h4><p>선명하고 강력한 야간 시야 확보</p></div>
+      <div class="conv-card reveal reveal-delay-1"><div class="conv-icon">🔆</div><h4>어댑티브 상향등 어시스트</h4><p>대향차 인식 후 자동 상향등 조절</p></div>
+      <div class="conv-card reveal reveal-delay-2"><div class="conv-icon">🌅</div><h4>파노라믹 선루프</h4><p>개방감 넘치는 대형 글라스 루프</p></div>
+      <div class="conv-card reveal"><div class="conv-icon">📍</div><h4>증강현실 AR 내비게이션</h4><p>실제 도로 위에 방향 안내 표시</p></div>
+      <div class="conv-card reveal reveal-delay-1"><div class="conv-icon">🍎</div><h4>무선 애플 카플레이</h4><p>아이폰 무선 연결 지원</p></div>
+      <div class="conv-card reveal reveal-delay-2"><div class="conv-icon">🤖</div><h4>무선 안드로이드 오토</h4><p>갤럭시폰 무선 연결 지원</p></div>
+      <div class="conv-card reveal"><div class="conv-icon">⚡</div><h4>무선충전</h4><p>콘솔박스 무선 스마트폰 충전 패드</p></div>
+      <div class="conv-card reveal reveal-delay-1"><div class="conv-icon">🌡️</div><h4>열선시트</h4><p>추운 날씨에도 따뜻한 착좌감</p></div>
+      <div class="conv-card reveal reveal-delay-2"><div class="conv-icon">❄️</div><h4>통풍시트</h4><p>더운 날씨에도 쾌적한 착좌감</p></div>
+      <div class="conv-card reveal"><div class="conv-icon">✨</div><h4>액티브 앰비언트 라이트</h4><p>분위기를 더하는 인테리어 조명</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     S8 · 안전
+     ============================================================ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">06 · SAFETY</span>
+      <span class="label-en">Safety Technology</span>
+      <h2>벤츠를 벤츠답게 만드는<br><span class="red">안전 기술</span></h2>
+      <p>사고를 예방하는 것을 넘어, 사고를 원천 차단합니다</p>
+    </div>
+    <div class="safety-header">
+      <div class="img-box safety-img reveal" id="imgSafety"></div>
+      <div class="reveal reveal-delay-1">
+        <span class="label-en" style="display:block; margin-bottom:16px;">Premium Safety Suite</span>
+        <h2 style="margin-bottom:20px;">드라이빙 어시스턴스<br>패키지 플러스</h2>
+        <p style="margin-bottom:24px;">고속도로에서 시내 도심까지, 360도 센서가 주변 환경을 실시간으로 모니터링하며 당신을 보호합니다.</p>
+        <div class="tag tag-red">DRIVING ASSISTANCE PACKAGE PLUS</div>
+      </div>
+    </div>
+    <div class="safety-grid">
+      <div class="safety-card reveal"><span class="safety-icon">📋</span><h4><span class="red-dot"></span>드라이빙 어시스턴스 패키지 플러스</h4><p>반자율주행 보조 시스템 풀패키지</p></div>
+      <div class="safety-card reveal reveal-delay-1"><span class="safety-icon">🚗</span><h4><span class="red-dot"></span>Active Distance Assist DISTRONIC</h4><p>앞 차와의 거리 자동 유지</p></div>
+      <div class="safety-card reveal reveal-delay-2"><span class="safety-icon">↔️</span><h4><span class="red-dot"></span>차선 유지 어시스트</h4><p>차선 이탈 감지 및 자동 복귀</p></div>
+      <div class="safety-card reveal"><span class="safety-icon">👁️</span><h4><span class="red-dot"></span>사각지대 어시스트</h4><p>측후방 차량 감지 알림</p></div>
+      <div class="safety-card reveal reveal-delay-1"><span class="safety-icon">⛔</span><h4><span class="red-dot"></span>Active Brake Assist</h4><p>충돌 위험 시 자동 제동</p></div>
+      <div class="safety-card reveal reveal-delay-2"><span class="safety-icon">🛡️</span><h4><span class="red-dot"></span>PRE-SAFE</h4><p>충돌 전 승객 자동 보호 준비</p></div>
+      <div class="safety-card reveal"><span class="safety-icon">🛡️</span><h4><span class="red-dot"></span>PRE-SAFE PLUS</h4><p>후방 추돌 위험 감지 및 사전 대응</p></div>
+      <div class="safety-card reveal reveal-delay-1"><span class="safety-icon">🛡️</span><h4><span class="red-dot"></span>PRE-SAFE Impulse Side</h4><p>측면 충돌 시 탑승자 보호 강화</p></div>
+      <div class="safety-card reveal reveal-delay-2"><span class="safety-icon">🚙</span><h4><span class="red-dot"></span>액티브 보닛</h4><p>보행자 충돌 시 충격 완화</p></div>
+      <div class="safety-card reveal"><span class="safety-icon">📷</span><h4><span class="red-dot"></span>360도 카메라</h4><p>전방위 시야로 안전한 주차</p></div>
+      <div class="safety-card reveal reveal-delay-1"><span class="safety-icon">🅿️</span><h4><span class="red-dot"></span>자동주차 시스템</h4><p>스스로 주차 공간을 찾아 주차</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     S9 · EXCLUSIVE 기본 적용 옵션
+     ============================================================ -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">07 · STANDARD EQUIPMENT</span>
+      <span class="label-en">Standard Equipment</span>
+      <h2>E 220d 4MATIC<br>기본 적용 옵션</h2>
+      <p>별도 선택 없이 모두 기본 포함됩니다</p>
+    </div>
+
+    <div class="eq-category reveal">
+      <div class="eq-category-title">파워트레인</div>
+      <div class="eq-checklist-grid">
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">OM654M 직렬 4기통 디젤 엔진</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">9G-TRONIC 자동변속기</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">4MATIC 사륜구동</span></div>
+      </div>
+    </div>
+
+    <div class="eq-category reveal">
+      <div class="eq-category-title">외관</div>
+      <div class="eq-checklist-grid">
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">EXCLUSIVE 외장 패키지</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">19인치 경량 알로이 휠</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">LED 하이 퍼포먼스 헤드램프</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">어댑티브 상향등 어시스트</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">파노라믹 선루프</span></div>
+      </div>
+    </div>
+
+    <div class="eq-category reveal">
+      <div class="eq-category-title">실내</div>
+      <div class="eq-checklist-grid">
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">ARTICO 시트</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">블랙 오픈포어 애쉬우드 트림</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">열선시트</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">통풍시트</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">엠비언트 라이트</span></div>
+      </div>
+    </div>
+
+    <div class="eq-category reveal">
+      <div class="eq-category-title">멀티미디어</div>
+      <div class="eq-checklist-grid">
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">3세대 MBUX</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">12.3인치 계기판</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">14.4인치 센터 디스플레이</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">AR 내비게이션</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">무선 애플 카플레이</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">무선 안드로이드 오토</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">무선충전</span></div>
+      </div>
+    </div>
+
+    <div class="eq-category reveal">
+      <div class="eq-category-title">편의</div>
+      <div class="eq-checklist-grid">
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">키레스고 패키지</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">전동트렁크</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">360도 카메라</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">자동주차 보조</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">MBUX 인테리어 어시스턴트</span></div>
+      </div>
+    </div>
+
+    <div class="eq-category reveal">
+      <div class="eq-category-title">안전</div>
+      <div class="eq-checklist-grid">
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">드라이빙 어시스턴스 패키지 플러스</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">DISTRONIC</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">차선유지 보조</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">사각지대 경고</span></div>
+        <div class="eq-item"><div class="eq-check-icon">✓</div><span class="eq-label">PRE-SAFE</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     S10 · 상세 제원
+     ============================================================ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">08 · FULL SPECS</span>
+      <span class="label-en">Full Specifications</span>
+      <h2>E 220d 4MATIC<br>상세 제원</h2>
+      <p>고객이 가장 많이 질문하는 핵심 정보를 모두 담았습니다</p>
+    </div>
+    <div class="detail-spec-grid reveal">
+      <div class="ds-row"><span class="ds-label">엔진</span><span class="ds-value">OM654M 직렬 4기통 디젤</span></div>
+      <div class="ds-row"><span class="ds-label">배기량</span><span class="ds-value blue-val">1,993cc</span></div>
+      <div class="ds-row"><span class="ds-label">최고 출력</span><span class="ds-value blue-val">197ps</span></div>
+      <div class="ds-row"><span class="ds-label">최대 토크</span><span class="ds-value blue-val">44.9kg.m</span></div>
+      <div class="ds-row"><span class="ds-label">구동 방식</span><span class="ds-value">4MATIC</span></div>
+      <div class="ds-row"><span class="ds-label">변속기</span><span class="ds-value">9G-TRONIC</span></div>
+      <div class="ds-row"><span class="ds-label">0→100 km/h</span><span class="ds-value blue-val">7.8초</span></div>
+      <div class="ds-row"><span class="ds-label">최고 속도</span><span class="ds-value">234km/h</span></div>
+      <div class="ds-row"><span class="ds-label">복합 연비</span><span class="ds-value blue-val">16.0km/L</span></div>
+      <div class="ds-row"><span class="ds-label">도심 연비</span><span class="ds-value">14.3km/L</span></div>
+      <div class="ds-row"><span class="ds-label">고속 연비</span><span class="ds-value">18.9km/L</span></div>
+      <div class="ds-row"><span class="ds-label">공차 중량</span><span class="ds-value">1,910kg</span></div>
+      <div class="ds-row"><span class="ds-label">전장</span><span class="ds-value">4,955mm</span></div>
+      <div class="ds-row"><span class="ds-label">전폭</span><span class="ds-value">1,880mm</span></div>
+      <div class="ds-row"><span class="ds-label">전고</span><span class="ds-value">1,465mm</span></div>
+      <div class="ds-row"><span class="ds-label">휠베이스</span><span class="ds-value">2,960mm</span></div>
+      <div class="ds-row"><span class="ds-label">트렁크 용량</span><span class="ds-value">540L</span></div>
+      <div class="ds-row"><span class="ds-label">연료 탱크</span><span class="ds-value">66L</span></div>
+      <div class="ds-row"><span class="ds-label">전륜 타이어</span><span class="ds-value">245/45R19</span></div>
+      <div class="ds-row"><span class="ds-label">후륜 타이어</span><span class="ds-value">275/40R19</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     S11 · EXCLUSIVE vs AMG Line 핵심 차이
+     ============================================================ -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">09 · VS E300</span>
+      <span class="label-en">Model Comparison</span>
+      <h2>E220d vs E300<br>핵심 차이 비교</h2>
+      <p>동일 EXCLUSIVE 라인 · 가격 차이 750만원</p>
+    </div>
+
+    <!-- 요약 배너 -->
+    <div class="vs-summary reveal">
+      <div class="vs-summary-item"><strong>동일 EXCLUSIVE 라인</strong><br>편안함과 고급스러움을 추구하는 디자인 동일</div>
+      <div class="vs-summary-sep">|</div>
+      <div class="vs-summary-item"><strong class="blue">E220d는</strong><br>탁월한 연비와 디젤 토크 선택</div>
+      <div class="vs-summary-sep">|</div>
+      <div class="vs-summary-item"><strong class="red">E300이 +750만원</strong><br>더 높은 출력과 추가 사양 선택</div>
+    </div>
+
+    <p class="vs-scroll-hint">← 좌우로 스크롤하여 비교하세요 →</p>
+    <div class="vs-wrap reveal reveal-delay-1">
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th class="col-label-h">구분</th>
+            <th class="col-excl">
+              E 220d EXCLUSIVE
+              <span class="th-price blue">8,610만원</span>
+            </th>
+            <th class="col-amg">
+              E 300 EXCLUSIVE
+              <span class="th-price red">9,360만원 <span style="font-size:.7rem; font-weight:600;">(+750만원)</span></span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="col-label-d">연료</td><td class="col-excl">디젤</td><td class="col-amg">가솔린</td></tr>
+          <tr><td class="col-label-d">엔진</td><td class="col-excl">OM654M 직렬 4기통 디젤</td><td class="col-amg">M254 직렬 4기통 가솔린 터보</td></tr>
+          <tr><td class="col-label-d">배기량</td><td class="col-excl">1,993cc</td><td class="col-amg">1,999cc</td></tr>
+          <tr><td class="col-label-d">최고출력</td><td class="col-excl">197ps</td><td class="col-amg">258ps</td></tr>
+          <tr><td class="col-label-d">최대토크</td><td class="col-excl">44.9kg.m</td><td class="col-amg">40.8kg.m</td></tr>
+          <tr><td class="col-label-d">복합연비</td><td class="col-excl">16.0km/L</td><td class="col-amg">11.1km/L</td></tr>
+          <tr><td class="col-label-d">0-100km/h</td><td class="col-excl">7.8초</td><td class="col-amg">6.1초</td></tr>
+          <tr><td class="col-label-d">최고속도</td><td class="col-excl">234km/h</td><td class="col-amg">250km/h</td></tr>
+          <tr><td class="col-label-d">공차중량</td><td class="col-excl">1,910kg</td><td class="col-amg">1,905kg</td></tr>
+          <tr><td class="col-label-d">헤드램프</td><td class="col-excl">LED 하이 퍼포먼스</td><td class="col-amg">디지털 라이트</td></tr>
+          <tr><td class="col-label-d">상향등 어시스트</td><td class="col-excl">어댑티브 상향등</td><td class="col-amg">어댑티브 상향등</td></tr>
+          <tr><td class="col-label-d">어쿠스틱 글래스</td><td class="col-excl empty-val">—</td><td class="col-amg">기본 포함</td></tr>
+          <tr><td class="col-label-d">시트소재</td><td class="col-excl">ARTICO</td><td class="col-amg">천연가죽</td></tr>
+          <tr><td class="col-label-d">실내트림</td><td class="col-excl">블랙 오픈포어 애쉬우드</td><td class="col-amg">브라운 메이플 우드 + 알루미늄 라인</td></tr>
+          <tr><td class="col-label-d">앰비언트 라이트</td><td class="col-excl">기본 포함</td><td class="col-amg">액티브 앰비언트 라이트</td></tr>
+          <tr><td class="col-label-d">헤드업 디스플레이</td><td class="col-excl empty-val">—</td><td class="col-amg">기본 포함</td></tr>
+          <tr><td class="col-label-d">사운드시스템</td><td class="col-excl empty-val">—</td><td class="col-amg">부메스터 4D</td></tr>
+          <tr><td class="col-label-d">키레스고 패키지</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
+          <tr><td class="col-label-d">루프라이너 블랙</td><td class="col-excl empty-val">—</td><td class="col-amg">기본 포함</td></tr>
+          <tr class="row-highlight">
+            <td class="col-label-d">추천 고객</td>
+            <td class="col-excl">연비와 장거리 주행<br>합리적인 유지비 선호</td>
+            <td class="col-amg">높은 출력과<br>추가 프리미엄 사양 선호</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 추천 고객 카드 -->
+    <div class="recommend-grid">
+      <div class="recommend-card excl reveal">
+        <h3>E220d EXCLUSIVE 추천 고객</h3>
+        <ul class="recommend-list">
+          <li>연간 주행거리 2만km 이상</li>
+          <li>연비를 최우선으로 생각하는 고객</li>
+          <li>디젤 특유의 풍부한 토크감을 선호하는 고객</li>
+          <li>실용성과 프리미엄을 함께 원하는 고객</li>
+          <li>유지비를 합리적으로 관리하고 싶은 고객</li>
+        </ul>
+      </div>
+      <div class="recommend-card gas reveal reveal-delay-1">
+        <h3>E300 EXCLUSIVE 추천 고객</h3>
+        <ul class="recommend-list">
+          <li>더욱 높은 출력과 스포티한 가속감을 원하는 고객</li>
+          <li>HUD 및 부메스터 사운드 등 추가 사양을 원하는 고객</li>
+          <li>천연가죽 시트와 고급 트림을 선호하는 고객</li>
+          <li>디지털 라이트와 액티브 앰비언트를 중요하게 생각하는 고객</li>
+          <li>750만원 추가 투자 가치가 있다고 생각하는 고객</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     S12 · 경쟁차 비교
+     ============================================================ -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">10 · COMPETITION</span>
+      <span class="label-en">Competitive Comparison</span>
+      <h2>왜 E-Class가<br>선택받는가</h2>
+      <p>경쟁 모델과 직접 비교해보십시오</p>
+    </div>
+    <p class="scroll-hint">← 좌우로 스크롤하여 비교하세요 →</p>
+    <div class="compare-wrap reveal" id="compareWrap"></div>
+    <p class="compare-notice">데이터는 추후 업데이트 예정입니다. 현재는 E220d EXCLUSIVE 기준 데이터만 반영되어 있습니다.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     S13 · 프로모션
+     ============================================================ -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="sec-num">11 · PROMOTION</span>
+      <span class="label-en">Monthly Promotion</span>
+      <h2>이달의 특별 혜택</h2>
+      <p>혜택 내용은 매월 업데이트됩니다</p>
+    </div>
+    <div class="promo-grid" id="promoGrid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* -- 이미지 자동 적용 -- */
+function applyImages() {
+  const map = {
+    imgDigitalLight:     IMAGES.digitalLight,
+    imgDistronic:        IMAGES.distronic,
+    imgParking:          IMAGES.parking,
+    imgBurmester:        IMAGES.burmester,
+    imgInterior:         IMAGES.interior,
+    imgSafety:           IMAGES.safety,
+  };
+  Object.entries(map).forEach(([id, url]) => {
+    if (!url) return;
+    const box = document.getElementById(id);
+    if (!box) return;
+    const img = document.createElement('img');
+    img.src = url; img.alt = id; img.loading = 'lazy';
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    box.appendChild(img);
+  });
+
+  /* 히어로 이미지 적용 */
+  const heroImg = document.getElementById('heroImg');
+  const heroMedia = document.getElementById('heroMedia');
+  if (heroImg && heroMedia) {
+    if (IMAGES.hero) {
+      heroImg.src = IMAGES.hero;
+      heroImg.style.display = 'block';
+    } else {
+      heroMedia.style.display = 'none';
+    }
+  }
+}
+applyImages();
+
+/* -- 경쟁차 비교표 렌더링 -- */
+function renderCompareTable() {
+  const wrap = document.getElementById('compareWrap');
+  if (!wrap) return;
+  let html = '<table class="compare-table"><thead><tr>';
+  COMPARE_DATA.headers.forEach((h, i) => {
+    if (i === 0) html += `<th style="text-align:left;padding-left:28px;min-width:130px;">${h}</th>`;
+    else if (i === COMPARE_DATA.highlight) html += `<th class="col-e300" style="min-width:160px;">${h}</th>`;
+    else html += `<th style="min-width:120px;color:var(--gray4);">${h}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+  COMPARE_DATA.rows.forEach(row => {
+    html += '<tr><td class="col-label">' + row.label + '</td>';
+    row.values.forEach((v, i) => {
+      const cls = (i + 1 === COMPARE_DATA.highlight) ? ' col-e300' : '';
+      const empty = v === '-' || v === '';
+      html += `<td class="${cls}"${empty ? ' style="color:#CCC"' : ''}>${v}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  wrap.innerHTML = html;
+}
+renderCompareTable();
+
+/* -- Scroll Reveal -- */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.10 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* -- 프로모션 렌더링 -- */
+function renderPromo() {
+  const grid = document.getElementById('promoGrid');
+  if (!grid) return;
+  grid.innerHTML = PROMO_DATA.map((p, i) => {
+    const d = ['', ' reveal-delay-1', ' reveal-delay-2'][i % 3];
+    return `<div class="promo-card reveal${d}">
+      <span class="promo-tag">${p.tag}</span>
+      <div class="promo-icon">${p.icon}</div>
+      <div class="promo-badge">PROMOTION · COMING SOON</div>
+      <h3>${p.title}</h3>
+      <p class="promo-content">${p.content}</p>
+    </div>`;
+  }).join('');
+  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+renderPromo();
+
+/* -- Sticky Header -- */
+const siteHeader = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => { siteHeader.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+
+/* -- CSS keyframes -- */
+const s = document.createElement('style');
+s.textContent = `@keyframes fadeIn{from{opacity:0}to{opacity:1}} @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.score-bar-fill{transition:none}}`;
+document.head.appendChild(s);
+</script>
+</body>
+</html>
