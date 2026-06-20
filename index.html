@@ -163,7 +163,7 @@
     height:100vh; min-height:560px;
     height:100svh;
     overflow:hidden;
-    display:flex; align-items:flex-end;
+    display:flex; align-items:flex-start;
   }
   .hero-media{
     position:absolute; inset:-8% 0 -8% 0;
@@ -184,10 +184,10 @@
   .hero-content{
     position:relative; z-index:2;
     width:100%;
-    padding:0 28px 246px;
+    padding:150px 28px 80px;
     max-width:var(--maxw); margin:0 auto;
   }
-  .hero-inner{ max-width:600px; }
+  .hero-inner{ max-width:600px; padding-top:40px; }
   .eyebrow{
     font-family:var(--font-body); font-size:11px; font-weight:500; letter-spacing:.16em;
     color:var(--c-silver); text-transform:uppercase; margin-bottom:18px;
@@ -406,7 +406,7 @@
   /* ---------------- 모바일 보정 ---------------- */
   @media (max-width:640px){
     .hero-media{ background-position:center 32%; }
-    .hero-content{ padding:0 20px 160px; }
+    .hero-content{ padding:140px 20px 90px; }
     .hero-actions{ flex-wrap:wrap; }
     .scroll-cue{ right:20px; bottom:24px; }
     .models{ padding:108px 0 72px; }
