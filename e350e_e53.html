@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E 350 e & AMG E 53 HYBRID 4MATIC+ | 벤츠타임 의정부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===========================
+   PHEV LANDING PAGE STYLES
+   E350e & AMG E 53 HYBRID 4MATIC+
+=========================== */
+
+/* --- RESET & BASE --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --off-white: #F8F8F8;
+  --light-gray: #F0F0F0;
+  --mid-gray: #CCCCCC;
+  --text-dark: #111111;
+  --text-mid: #333333;
+  --text-light: #666666;
+  --gold: #C8A96E;
+  /* E350e - 블루/그린 계열 포인트 */
+  --blue: #2E6DA4;
+  --blue-light: #EBF2FA;
+  /* AMG E53 - 와인/레드 계열 포인트 */
+  --wine: #8B1A2B;
+  --wine-light: #FBF0F2;
+  --border: #E0E0E0;
+  --section-pad: 80px 20px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'S-Core Dream', 'Pretendard', 'Noto Sans KR', sans-serif;
+  background: var(--white);
+  color: var(--text-dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* --- SECTION COMMON --- */
+section { padding: var(--section-pad); }
+
+.section-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 4px 12px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.section-sub {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.section-center { text-align: center; }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* =====================
+   01 HERO
+===================== */
+#hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 620px;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;   /* 상단 정렬 */
+  padding: 0;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('IMAGES_HERO_PLACEHOLDER');
+  background-size: cover;
+  background-position: 70% center;   /* 차량 오른쪽 배치 */
+  opacity: 0.9;
+  transition: opacity 0.3s;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  /* 왼쪽만 어둡게 — 차량(오른쪽)은 밝게 */
+  background: linear-gradient(
+    90deg,
+    rgba(0,0,0,0.70) 0%,
+    rgba(0,0,0,0.40) 38%,
+    rgba(0,0,0,0.12) 62%,
+    rgba(0,0,0,0.00) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;           /* 절대 배치 */
+  top: 18%;                     /* 화면 상단 18% 위치 */
+  left: 0;
+  z-index: 2;
+  padding: 0 48px;
+  max-width: 620px;             /* 텍스트가 차량 중앙까지 침범 안 하도록 */
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: clamp(26px, 3.8vw, 50px);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.hero-sub {
+  font-size: clamp(13px, 1.6vw, 15px);
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 28px;
+  max-width: 440px;
+  line-height: 1.7;
+}
+
+.hero-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  max-width: 300px;
+}
+
+.hero-card {
+  background: rgba(10,10,10,0.55);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 16px 18px;
+}
+
+.hero-card-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.hero-card-price {
+  font-size: clamp(15px, 2.4vw, 20px);
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+
+.hero-card-desc {
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+
+/* =====================
+   02 WHY E-CLASS PHEV
+===================== */
+#why-phev {
+  background: var(--white);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.why-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px 24px;
+  transition: box-shadow 0.2s;
+}
+
+.why-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+.why-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.why-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.why-card p {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* =====================
+   03 REASONS
+===================== */
+#reasons {
+  background: var(--off-white);
+}
+
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.reason-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.reason-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.reason-card h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.reason-card p {
+  font-size: 12px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* =====================
+   04 KEY SPECS
+===================== */
+#key-specs {
+  background: var(--white);
+}
+
+.specs-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.spec-column {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.spec-col-header {
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.spec-col-header.e350e {
+  background: var(--blue-light);
+  border-bottom: 3px solid var(--blue);
+}
+
+.spec-col-header.amg-e53 {
+  background: var(--wine-light);
+  border-bottom: 3px solid var(--wine);
+}
+
+.spec-col-header .model-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.spec-col-header.e350e .model-name { color: var(--blue); }
+.spec-col-header.amg-e53 .model-name { color: var(--wine); }
+
+.spec-col-header .model-price {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-top: 4px;
+}
+
+.spec-items {
+  background: var(--white);
+}
+
+.spec-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--light-gray);
+  gap: 8px;
+}
+
+.spec-item:last-child { border-bottom: none; }
+
+.spec-label {
+  font-size: 11px;
+  color: var(--text-light);
+  flex-shrink: 0;
+}
+
+.spec-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-align: right;
+}
+
+.spec-value.highlight-blue { color: var(--blue); }
+.spec-value.highlight-wine { color: var(--wine); }
+
+/* =====================
+   05 CONVENIENCE
+===================== */
+#convenience {
+  background: var(--off-white);
+}
+
+.conv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.conv-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 18px;
+}
+
+.conv-icon {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.conv-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.conv-card p {
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* =====================
+   06 SAFETY
+===================== */
+#safety {
+  background: var(--white);
+}
+
+.safety-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.safety-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 20px 18px;
+}
+
+.safety-card h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.safety-card p {
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 1.7;
+}
+
+/* =====================
+   07 STANDARD EQUIPMENT
+===================== */
+#standard-equipment {
+  background: var(--off-white);
+}
+
+.equip-note {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-bottom: 30px;
+  padding: 12px 16px;
+  background: var(--wine-light);
+  border-left: 3px solid var(--wine);
+  border-radius: 2px;
+}
+
+.equip-section {
+  margin-bottom: 28px;
+}
+
+.equip-category {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--wine);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--wine-light);
+}
+
+.equip-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.equip-tag {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: var(--text-mid);
+  line-height: 1.4;
+}
+
+/* =====================
+   08 FULL SPECS
+===================== */
+#full-specs {
+  background: var(--white);
+}
+
+.specs-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 30px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.specs-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.specs-table th {
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.specs-table th.th-label {
+  background: var(--light-gray);
+  color: var(--text-mid);
+  text-align: left;
+  width: 30%;
+}
+
+.specs-table th.th-e350e {
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+.specs-table th.th-amg {
+  background: var(--wine-light);
+  color: var(--wine);
+}
+
+.specs-table tr:nth-child(even) td { background: var(--off-white); }
+
+.specs-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--light-gray);
+  color: var(--text-dark);
+  vertical-align: top;
+}
+
+.specs-table td.td-label {
+  color: var(--text-light);
+  font-size: 11px;
+}
+
+.specs-table td.td-val {
+  text-align: center;
+  font-weight: 500;
+}
+
+.tbd { color: var(--mid-gray); font-style: italic; }
+
+/* =====================
+   09 MODEL COMPARISON
+===================== */
+#model-comparison {
+  background: var(--off-white);
+}
+
+.compare-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 30px;
+}
+
+.compare-table {
+  width: 100%;
+  min-width: 580px;
+  border-collapse: collapse;
+}
+
+.compare-table th {
+  padding: 16px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.compare-table th.th-blank {
+  background: var(--light-gray);
+  width: 35%;
+}
+
+.compare-table th.th-e350e {
+  background: var(--blue);
+  color: #fff;
+}
+
+.compare-table th.th-amg {
+  background: var(--wine);
+  color: #fff;
+}
+
+.compare-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  vertical-align: top;
+}
+
+.compare-table td.td-label {
+  background: var(--white);
+  color: var(--text-light);
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.compare-table td.td-e350e {
+  background: #FAFCFF;
+  color: var(--text-dark);
+  text-align: center;
+}
+
+.compare-table td.td-amg {
+  background: #FFF9FA;
+  color: var(--text-dark);
+  text-align: center;
+  font-weight: 600;
+}
+
+.compare-table tr:last-child td { border-bottom: none; }
+
+.recommend-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+
+.badge-blue { background: var(--blue-light); color: var(--blue); }
+.badge-wine { background: var(--wine-light); color: var(--wine); }
+
+/* =====================
+   10 COMPETITION
+===================== */
+#competition {
+  background: var(--white);
+}
+
+.comp-subtitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-mid);
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--light-gray);
+}
+
+.comp-block {
+  margin-bottom: 52px;
+}
+
+.comp-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.comp-table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.comp-table thead th {
+  padding: 14px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.comp-th-label {
+  background: var(--light-gray);
+  color: var(--text-mid);
+  text-align: left !important;
+  width: 28%;
+}
+
+.comp-table thead .th-e350e {
+  background: var(--blue);
+  color: #fff;
+}
+
+.comp-table thead .th-amg {
+  background: var(--wine);
+  color: #fff;
+}
+
+.comp-th-bmw {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.comp-table tbody tr:nth-child(even) td {
+  background: var(--off-white);
+}
+
+.comp-table tbody tr:hover td {
+  background: #f0f4f8;
+}
+
+.comp-td-label {
+  padding: 12px 18px;
+  color: var(--text-light);
+  font-size: 11px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.comp-table .td-e350e,
+.comp-table .td-amg,
+.comp-table .td-bmw {
+  padding: 12px 18px;
+  text-align: center;
+  border-bottom: 1px solid var(--light-gray);
+  vertical-align: top;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.comp-table .td-bmw {
+  color: var(--text-mid);
+}
+
+.comp-insight {
+  margin-top: 16px;
+  background: var(--off-white);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 14px 18px;
+  font-size: 12px;
+  color: var(--text-mid);
+  line-height: 1.8;
+}
+
+.comp-insight strong {
+  color: var(--text-dark);
+}
+
+/* =====================
+   11 PROMOTION
+===================== */
+#promotion {
+  background: var(--off-white);
+}
+
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.promo-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 26px 22px;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.promo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+}
+
+.promo-card.featured {
+  border-color: var(--gold);
+  box-shadow: 0 2px 16px rgba(200,169,110,0.18);
+}
+
+.promo-card.featured::before {
+  content: 'RECOMMENDED';
+  position: absolute;
+  top: -11px;
+  left: 18px;
+  background: var(--gold);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 10px;
+  letter-spacing: 1.5px;
+}
+
+.promo-tag {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.promo-icon {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.promo-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.promo-desc {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+
+.promo-card.featured .promo-desc {
+  color: var(--gold);
+}
+
+.promo-detail {
+  font-size: 11px;
+  color: var(--text-light);
+  line-height: 1.7;
+  border-top: 1px solid var(--light-gray);
+  padding-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .promo-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .promo-grid { grid-template-columns: 1fr; }
+}
+
+/* =====================
+   CTA / FOOTER
+===================== */
+#cta {
+  background: var(--text-dark);
+  padding: 60px 20px;
+  text-align: center;
+}
+
+#cta h2 {
+  font-size: clamp(20px, 4vw, 32px);
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+}
+
+#cta p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 30px;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  padding: 14px 32px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 14px 32px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+footer {
+  background: #0A0A0A;
+  padding: 30px 20px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.8;
+}
+
+/* =====================
+   MOBILE RESPONSIVE
+===================== */
+@media (max-width: 767px) {
+  :root { --section-pad: 56px 16px; }
+
+  /* Hero Mobile */
+  #hero {
+    height: 100svh;
+    min-height: 560px;
+  }
+
+  .hero-bg {
+    background-position: 60% center;
+    background-size: cover;
+  }
+
+  .hero-overlay {
+    /* 모바일은 상단 텍스트 배경만 살짝 */
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,0.50) 45%,
+      rgba(0,0,0,0.10) 70%,
+      rgba(0,0,0,0.00) 100%
+    );
+  }
+
+  .hero-content {
+    top: 8%;          /* 모바일은 더 위 */
+    padding: 0 20px;
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: clamp(18px, 5.5vw, 26px);
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .hero-cards {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    max-width: 280px;
+  }
+
+  .hero-card {
+    padding: 10px 12px;
+  }
+
+  .hero-card-name {
+    font-size: 9px;
+    margin-bottom: 3px;
+  }
+
+  .hero-card-price {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  .hero-card-desc {
+    font-size: 9px;
+  }
+
+  /* Specs compare - mobile stack */
+  .specs-compare {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Table scroll hint */
+  .scroll-hint {
+    font-size: 11px;
+    color: var(--text-light);
+    text-align: right;
+    margin-bottom: 6px;
+  }
+  .scroll-hint::before { content: '← '; }
+  .scroll-hint::after { content: ' →'; }
+}
+
+@media (max-width: 480px) {
+  .hero-cards {
+    grid-template-columns: 1fr;
+    max-width: 260px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- =====================
+     JAVASCRIPT DATA OBJECTS
+     이미지 URL 및 데이터 교체 영역
+===================== -->
+<script>
+/* ─────────────────────────────────────────
+   IMAGES — URL만 교체하면 전체 반영
+───────────────────────────────────────── */
+const IMAGES = {
+  hero: 'https://github.com/JNOHJINGYU/images/blob/main/Mercedes-Benz-E53_AMG_Hybrid-2025-1280-884184b31620baccde7022ed1083298d80.jpg?raw=true',
+  heroMobile: 'https://github.com/JNOHJINGYU/images/blob/main/Mercedes-Benz-E53_AMG_Hybrid-2025-1280-884184b31620baccde7022ed1083298d80.jpg?raw=true',
+};
+
+/* ─────────────────────────────────────────
+   SPEC DATA
+───────────────────────────────────────── */
+const SPECS = {
+  e350e: {
+    price: '9,870만원',
+    engine: 'M254, 직렬 4기통 터보 + 95kW 전기모터 (PHEV)',
+    displacement: '추후 업데이트',  // 카탈로그 확인 필요
+    combinedOutput: '추후 업데이트',
+    maxOutput: '329ps (가솔린) / 129ps (전기모터)',
+    maxTorque: '추후 업데이트',
+    motorOutput: '95kW / 129ps',
+    motorTorque: '추후 업데이트',
+    battery: '19.53 kWh',
+    evRange: '77km (1회 충전, 복합)',
+    drive: '4MATIC (사륜구동)',
+    transmission: '9G-TRONIC (자동 9단)',
+    acceleration: '6.5초',
+    topSpeed: '230km/h',
+    fuelEconomy: '11.1km/l (복합, 내연) / 도심 10.0 · 고속 12.7',
+    evEconomy: '3.1 km/kWh',
+    size: '4,955 × 1,880 × 1,480mm',
+    wheelbase: '2,960mm',
+    weight: '2,215kg',
+    suspension: '컴포트 서스펜션',
+    trunk: '370L',
+    co2: '27g/km',
+    tireFront: '245/45R19',
+    tireRear: '275/40R19',
+    fuelTank: '50L',
+  },
+  amgE53: {
+    price: '1억 4,160만원',
+    engine: 'M256M, 직렬 6기통 + 싱글터보 + 전기모터',
+    displacement: '2,998cc',
+    combinedOutput: '585hp / 토크 76.5 kgm (복합)',
+    maxOutput: '449ps / 5,800-6,100rpm',
+    maxTorque: '57.1 kgm / 2,200-5,000rpm',
+    motorOutput: '120kW',
+    motorTorque: '49.0 kgm',
+    battery: '21.2 kWh',
+    evRange: '66km (전기모드 최고속도 140km/h)',
+    drive: '4MATIC+ (AMG 전자식 리어 액슬 디퍼렌셜)',
+    transmission: 'AMG SPEEDSHIFT TCT 9G',
+    acceleration: '3.8초',
+    topSpeed: '250km/h',
+    fuelEconomy: '8.6km/l (5등급)',
+    evEconomy: '2.4 km/kWh',
+    size: '4,970 × 1,900 × 1,475mm',
+    wheelbase: '2,960mm',
+    weight: '2,390kg',
+    suspension: 'AMG RIDE CONTROL 서스펜션',
+    trunk: '370L (배터리 탑재로 축소)',
+    rearSteering: '2.5°',
+  }
+};
+
+/* ─────────────────────────────────────────
+   COMPARE TABLE DATA
+───────────────────────────────────────── */
+const COMPARE_DATA = [
+  { label: '가격 (MY26)',       e350e: '9,870만원',                            amg: '1억 4,160만원' },
+  { label: '파워트레인',         e350e: 'M254 직4 터보 + 95kW 전기모터',          amg: 'M256M 직6 + 싱글터보 + 전기모터' },
+  { label: '전기모터 출력',      e350e: '95kW / 129ps',                          amg: '120kW / 163ps' },
+  { label: '배터리 용량',        e350e: '19.53 kWh',                            amg: '21.2 kWh' },
+  { label: '전기 주행거리',      e350e: '77km (복합)',                            amg: '66km' },
+  { label: '전기 복합연비',      e350e: '3.1 km/kWh',                           amg: '2.4 km/kWh' },
+  { label: '내연 복합연비',      e350e: '11.1 km/l',                            amg: '8.6 km/l (5등급)' },
+  { label: '0-100km/h',        e350e: '6.5초',                                 amg: '3.8초' },
+  { label: '최고속도',           e350e: '230km/h',                              amg: '250km/h' },
+  { label: 'CO₂ 배출',          e350e: '27g/km',                               amg: '-' },
+  { label: '구동방식',           e350e: '4MATIC (사륜구동)',                      amg: '4MATIC+ (AMG 전자식 리어 액슬)' },
+  { label: '변속기',             e350e: '9G-TRONIC (자동 9단)',                   amg: 'AMG SPEEDSHIFT TCT 9G' },
+  { label: '서스펜션',           e350e: '컴포트 서스펜션',                         amg: 'AMG RIDE CONTROL' },
+  { label: '전장 × 전폭 × 전고', e350e: '4,955 × 1,880 × 1,480mm',              amg: '4,970 × 1,900 × 1,475mm' },
+  { label: '공차중량',           e350e: '2,215kg',                              amg: '2,390kg' },
+  { label: '트렁크 용량',        e350e: '370L',                                  amg: '370L' },
+  { label: '연료탱크',           e350e: '50L',                                   amg: '-' },
+];
+
+/* ─────────────────────────────────────────
+   COMPETITION DATA
+───────────────────────────────────────── */
+const COMPETITION_DATA = {
+  e350eVs530e: {
+    headers: ['항목', 'E 350 e 4MATIC EXCLUSIVE', 'BMW 530e'],
+    colClass: ['td-label', 'td-e350e', 'td-bmw'],
+    rows: [
+      { label: '가격',            merc: '9,870만원',                        bmw: '9,890만원' },
+      { label: '엔진',             merc: 'M254 직4 터보 + 95kW 전기모터',     bmw: '트윈파워 터보 직렬 4기통 가솔린+전기 모터' },
+      { label: '배터리 용량',      merc: '19.53 kWh',                        bmw: '22.1kwh' },
+      { label: '전기 주행거리',    merc: '77km (복합)',                        bmw: '66km' },
+      { label: '복합연비 (내연)',   merc: '11.1 km/L',                        bmw: '11.3km/L' },
+      { label: '전기 복합연비',    merc: '3.1 km/kWh',                        bmw: '2.9km/kwh' },
+      { label: '0-100km/h',       merc: '6.5초',                             bmw: '6.3초' },
+      { label: '구동방식',         merc: '4MATIC',                            bmw: 'xDrive' },
+      { label: '변속기',           merc: '9G-TRONIC (자동 9단)',               bmw: '스텝트로닉 자동 8단' },
+      { label: '트렁크 용량',      merc: '370L',                              bmw: '520L' },
+    ]
+  },
+  amgE53VsM5: {
+    headers: ['항목', 'AMG E 53 HYBRID 4MATIC+', 'BMW M5 (G90)'],
+    colClass: ['td-label', 'td-amg', 'td-bmw'],
+    rows: [
+      { label: '가격',             merc: '1억 4,160만원',                     bmw: '1억 6,810만원' },
+      { label: '엔진',             merc: 'M256M 직6 + 싱글터보 + 전기모터',     bmw: 'M 트윈파워 터보 V8 가솔린 + PHEV' },
+      { label: '배기량',           merc: '2,998cc',                           bmw: '4,395cc' },
+      { label: '배터리 용량',      merc: '21.2 kWh',                          bmw: 'Gross 22.1 kWh / Net 19.9 kWh (CATL)' },
+      { label: '복합출력',         merc: '585hp',                             bmw: '727ps' },
+      { label: '최고출력 (가솔린)', merc: '449ps',                             bmw: '585ps / 5,600-6,500rpm + 모터 197ps' },
+      { label: '최대토크 (복합)',   merc: '57.1 kgm (가솔린)',                  bmw: '101.9 kgf.m / 가솔린 76.5 + 모터 28.6' },
+      { label: '0-100km/h',       merc: '3.8초',                             bmw: '3.5초' },
+      { label: '최고속도',         merc: '250km/h',                           bmw: '250km/h (전기 140km/h)' },
+      { label: '전기 주행거리',    merc: '66km',                               bmw: '61km' },
+      { label: '복합연비 (내연)',   merc: '8.6 km/L',                          bmw: '12.0 km/L' },
+      { label: '전기 복합연비',    merc: '2.4 km/kWh',                         bmw: '2.4 km/kWh' },
+      { label: 'CO₂ 배출',        merc: '-',                                  bmw: '56 g/km' },
+      { label: '구동방식',         merc: '4MATIC+ (AMG 전자식)',               bmw: 'xDrive (전자식 AWD)' },
+      { label: '변속기',           merc: 'AMG SPEEDSHIFT TCT 9G',             bmw: '스포츠 스텝트로닉 8단' },
+      { label: '전장 × 전폭 × 전고', merc: '4,970 × 1,900 × 1,475mm',        bmw: '5,095 × 1,970 × 1,510mm' },
+      { label: '휠베이스',         merc: '2,960mm',                           bmw: '3,005mm' },
+      { label: '공차중량',         merc: '2,390kg',                           bmw: '2,380kg' },
+      { label: '트렁크 용량',      merc: '370L',                               bmw: '466L / 1,820L' },
+      { label: '연료탱크 / 충전',  merc: '-',                                  bmw: '60L / AC 완속 11kW' },
+      { label: '타이어',           merc: '-',                                  bmw: '전 285/40 R20 · 후 295/35 R21' },
+    ]
+  }
+};
+
+/* ─────────────────────────────────────────
+   PROMO DATA
+───────────────────────────────────────── */
+const PROMO_DATA = [
+  {
+    icon: '💰',
+    tag: 'DISCOUNT',
+    title: '기본 할인',
+    desc: '11% 할인',
+    detail: '현재 적용 가능한 할인 조건을 상담을 통해 안내해드립니다.',
+    featured: false,
+  },
+  {
+    icon: '🏦',
+    tag: 'FINANCIAL',
+    title: '벤츠 파이낸셜',
+    desc: '금융 조건별 추가 혜택 상담',
+    detail: 'Mercedes-Benz Financial Services의 다양한 금융 프로그램을 비교해드립니다.',
+    featured: true,
+  },
+  {
+    icon: '🚗',
+    tag: 'LEASE',
+    title: '장기렌트',
+    desc: '기본할인 + 3% 할인',
+    detail: '법인·개인 장기렌트 조건에 따른 월 납입금 견적을 제공합니다.',
+    featured: false,
+  },
+  {
+    icon: '🔁',
+    tag: 'LOYALTY',
+    title: '재구매 고객 혜택',
+    desc: '기본할인 + 1% 할인',
+    detail: '기존 Mercedes-Benz 보유 고객님께는 별도 재구매 우대 혜택을 제공합니다.',
+    featured: false,
+  },
+  {
+    icon: '🏢',
+    tag: 'CORPORATE',
+    title: '법인 고객 혜택',
+    desc: '법인 구매 조건별 상담',
+    detail: '법인 구매 시 세금 혜택 및 추가 조건을 상담을 통해 안내해드립니다.',
+    featured: false,
+  },
+  {
+    icon: '🔄',
+    tag: 'TRADE-IN',
+    title: '트레이드인 혜택',
+    desc: '기본할인 + 1% 할인',
+    detail: '현재 보유 차량의 매입 견적과 신차 교체 조건을 함께 안내해드립니다.',
+    featured: false,
+  },
+];
+
+/* ─────────────────────────────────────────
+   DOMContentLoaded — 동적 렌더링
+───────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ── Hero image ── */
+  const heroBg = document.querySelector('.hero-bg');
+  if (IMAGES.hero) {
+    const isMobile = window.innerWidth < 768;
+    const imgUrl = (isMobile && IMAGES.heroMobile) ? IMAGES.heroMobile : IMAGES.hero;
+    heroBg.style.backgroundImage = `url('${imgUrl}')`;
+    heroBg.style.opacity = '0.9';
+  } else {
+    heroBg.style.backgroundImage = 'linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%)';
+    heroBg.style.opacity = '1';
+  }
+
+  /* ── Model comparison table (09) ── */
+  const tbody = document.getElementById('compare-tbody');
+  if (tbody) {
+    COMPARE_DATA.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="td-label">${row.label}</td>
+        <td class="td-e350e">${row.e350e === '추후 업데이트' ? '<span class="tbd">추후 업데이트</span>' : row.e350e}</td>
+        <td class="td-amg">${row.amg}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* ── Competition tables (10) ── */
+  function renderCompTable(tableId, data) {
+    const wrap = document.getElementById(tableId);
+    if (!wrap) return;
+    const [hLabel, hMerc, hBmw] = data.headers;
+    const [cLabel, cMerc, cBmw] = data.colClass;
+    let html = `<table class="comp-table">
+      <thead><tr>
+        <th class="comp-th-label">${hLabel}</th>
+        <th class="comp-th-merc ${cMerc === 'td-e350e' ? 'th-e350e' : 'th-amg'}">${hMerc}</th>
+        <th class="comp-th-bmw">${hBmw}</th>
+      </tr></thead><tbody>`;
+    data.rows.forEach(row => {
+      const mercVal = row.merc === '추후 업데이트' ? '<span class="tbd">추후 업데이트</span>' : row.merc;
+      const bmwVal  = row.bmw  === '추후 업데이트' ? '<span class="tbd">추후 업데이트</span>' : row.bmw;
+      html += `<tr>
+        <td class="comp-td-label">${row.label}</td>
+        <td class="${cMerc}">${mercVal}</td>
+        <td class="${cBmw}">${bmwVal}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    wrap.innerHTML = html;
+  }
+  renderCompTable('comp-table-e350e', COMPETITION_DATA.e350eVs530e);
+  renderCompTable('comp-table-amg',   COMPETITION_DATA.amgE53VsM5);
+
+  /* ── Promo cards (11) ── */
+  const promoGrid = document.getElementById('promo-grid');
+  if (promoGrid) {
+    PROMO_DATA.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'promo-card' + (p.featured ? ' featured' : '');
+      card.innerHTML = `
+        <div class="promo-tag">${p.tag}</div>
+        <div class="promo-icon">${p.icon}</div>
+        <div class="promo-title">${p.title}</div>
+        <div class="promo-desc">${p.desc}</div>
+        <div class="promo-detail">${p.detail}</div>
+      `;
+      promoGrid.appendChild(card);
+    });
+  }
+});
+</script>
+
+<!-- =====================
+     01 HERO
+===================== -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">E-Class Plug-in Hybrid</div>
+    <h1 class="hero-title">E 350 e &amp;<br>AMG E 53 HYBRID 4MATIC+</h1>
+    <p class="hero-sub">효율과 퍼포먼스를 동시에 선택하는<br>E-Class 플러그인 하이브리드 라인업</p>
+    <div class="hero-cards">
+      <div class="hero-card">
+        <div class="hero-card-name">E 350 e 4MATIC EXCLUSIVE</div>
+        <div class="hero-card-price">9,870만원</div>
+        <div class="hero-card-desc">M254 직4 터보 + 전기모터 · 전기 주행 77km · 4MATIC</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-name">AMG E 53 HYBRID 4MATIC+</div>
+        <div class="hero-card-price">1억 4,160만원</div>
+        <div class="hero-card-desc">M256M + 전기모터 · 585hp · 4MATIC+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     02 WHY E-CLASS PHEV
+===================== -->
+<section id="why-phev">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">02 — WHY PHEV</div>
+      <h2 class="section-title">왜 E-Class 플러그인 하이브리드인가</h2>
+      <p class="section-sub">전기의 조용함과 가솔린의 여유를 동시에 — E-Class만의 프리미엄 PHEV 경험</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <h3>전기모드의 조용한 도심 주행</h3>
+        <p>충전 후 전기모드만으로 도심 출퇴근을 완전히 소화합니다. 엔진 소음 없이 E-Class의 정숙한 캐빈을 즐기세요.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🛣️</div>
+        <h3>장거리도 부담 없는 가솔린 엔진</h3>
+        <p>장거리 주행 시 가솔린 엔진이 자동으로 보조해 충전 걱정 없이 어디든 달릴 수 있습니다.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🏆</div>
+        <h3>E-Class 고유의 프리미엄 감성</h3>
+        <p>8년 연속 수입 세단 1위 브랜드. 고급 내장재, MBUX, 부메스터 사운드까지 — PHEV여도 E-Class입니다.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🚀</div>
+        <h3>AMG 선택 시 압도적 퍼포먼스</h3>
+        <p>AMG E 53은 전기모터와 M256M 엔진의 복합출력 585hp로 0-100km/h를 단 3.8초에 주파합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     03 REASONS
+===================== -->
+<section id="reasons">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">03 — REASONS</div>
+      <h2 class="section-title">E-Class PHEV를 선택하는 이유</h2>
+      <p class="section-sub">하이브리드 이상의 가치를 제공하는 E-Class PHEV 라인업</p>
+    </div>
+    <div class="reasons-grid">
+      <div class="reason-card">
+        <div class="reason-num">01</div>
+        <h3>전기 주행의 조용함</h3>
+        <p>전기모드에서 체감하는 E-Class의 진짜 정숙성. 도심 주행의 새로운 기준.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">02</div>
+        <h3>장거리 주행의 안정감</h3>
+        <p>배터리가 부족해도 가솔린 엔진이 바통을 이어받아 주행 불안감이 없습니다.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">03</div>
+        <h3>하이브리드 효율</h3>
+        <p>충전 기반 운행 시 연료비를 대폭 절감. 유류비 부담을 줄이면서도 프리미엄은 유지.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">04</div>
+        <h3>Mercedes 안전/편의사양</h3>
+        <p>드라이빙 어시스턴스 패키지, PRE-SAFE, 360도 카메라 등 벤츠의 최신 안전 기술 기본 탑재.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">05</div>
+        <h3>AMG 라인업의 확장</h3>
+        <p>AMG E 53는 전기모터를 더해 순수 AMG를 능가하는 복합 퍼포먼스를 자랑합니다.</p>
+      </div>
+      <div class="reason-card">
+        <div class="reason-num">06</div>
+        <h3>즉각적인 전기 토크</h3>
+        <p>전기모터 특유의 즉각적인 토크 응답으로 가속 시 더욱 자연스럽고 파워풀한 느낌.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     04 KEY SPECS
+===================== -->
+<section id="key-specs">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">04 — KEY SPECS</div>
+      <h2 class="section-title">핵심 제원 비교</h2>
+      <p class="section-sub">MB 어프로치 / 카달로그 기준 · MY26 · 2026.01 가격표 기준</p>
+    </div>
+    <div class="specs-compare">
+
+      <!-- E350e -->
+      <div class="spec-column">
+        <div class="spec-col-header e350e">
+          <div class="model-name">E 350 e 4MATIC EXCLUSIVE with EQ Hybrid</div>
+          <div class="model-price">9,870만원</div>
+        </div>
+        <div class="spec-items">
+          <div class="spec-item">
+            <span class="spec-label">엔진</span>
+            <span class="spec-value">M254, 직4 터보<br>+ 95kW 전기모터</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">전기모터 출력</span>
+            <span class="spec-value highlight-blue">95kW / 129ps</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">배터리 용량</span>
+            <span class="spec-value highlight-blue">19.53 kWh</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">전기 주행거리</span>
+            <span class="spec-value highlight-blue">77km (1회 충전, 복합)</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">0-100km/h</span>
+            <span class="spec-value">6.5초</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">구동방식</span>
+            <span class="spec-value">4MATIC (사륜구동)</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">변속기</span>
+            <span class="spec-value">9G-TRONIC (자동 9단)</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">내연 복합연비</span>
+            <span class="spec-value">11.1 km/l</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">전기 복합연비</span>
+            <span class="spec-value">3.1 km/kWh</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">공차중량</span>
+            <span class="spec-value">2,215kg</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">트렁크</span>
+            <span class="spec-value">370L</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AMG E 53 -->
+      <div class="spec-column">
+        <div class="spec-col-header amg-e53">
+          <div class="model-name">AMG E 53 HYBRID 4MATIC+</div>
+          <div class="model-price">1억 4,160만원</div>
+        </div>
+        <div class="spec-items">
+          <div class="spec-item">
+            <span class="spec-label">엔진</span>
+            <span class="spec-value">M256M, 직렬 6기통<br>+ 싱글터보 + 전기모터</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">배기량</span>
+            <span class="spec-value highlight-wine">2,998cc</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">복합출력</span>
+            <span class="spec-value highlight-wine">585hp / 76.5 kgm</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">전기모터 출력</span>
+            <span class="spec-value">120kW / 49.0 kgm</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">배터리 용량</span>
+            <span class="spec-value">21.2 kWh</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">전기 주행거리</span>
+            <span class="spec-value">66km (최고속도 140km/h)</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">0-100km/h</span>
+            <span class="spec-value highlight-wine">3.8초</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">구동방식</span>
+            <span class="spec-value">4MATIC+ (AMG 전자식)</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">변속기</span>
+            <span class="spec-value">AMG SPEEDSHIFT TCT 9G</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">공차중량</span>
+            <span class="spec-value">2,390kg</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">트렁크</span>
+            <span class="spec-value">370L</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     05 CONVENIENCE
+===================== -->
+<section id="convenience">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">05 — CONVENIENCE</div>
+      <h2 class="section-title">실생활에서 체감하는 편의사양</h2>
+      <p class="section-sub">PHEV 라이프스타일에 최적화된 편의 기술</p>
+    </div>
+    <div class="conv-grid">
+      <div class="conv-card">
+        <div class="conv-icon">⚡</div>
+        <h3>전기모드 주행 (EV Mode)</h3>
+        <p>버튼 하나로 순수 전기 주행 전환. 도심에서 연료 소비 없이 조용하게 이동.</p>
+      </div>
+      <div class="conv-card">
+        <div class="conv-icon">🔄</div>
+        <h3>회생제동 시스템</h3>
+        <p>감속 시 에너지를 배터리로 회수. 도심 주행 효율을 극대화합니다.</p>
+      </div>
+      <div class="conv-card">
+        <div class="conv-icon">🔌</div>
+        <h3>편리한 충전</h3>
+        <p>완속 충전(AC)으로 간편하게 가정에서 충전 가능. 야간 충전으로 다음날 전기주행 준비.</p>
+      </div>
+      <div class="conv-card">
+        <div class="conv-icon">📱</div>
+        <h3>MBUX 인포테인먼트</h3>
+        <p>12.3인치 디스플레이, "Hey Mercedes" 음성 인식, 무선 Android Auto / Apple CarPlay 지원.</p>
+      </div>
+      <div class="conv-card">
+        <div class="conv-icon">🎯</div>
+        <h3>360도 서라운드 카메라</h3>
+        <p>차량 주변 전방위 영상으로 주차와 저속 주행을 더욱 편리하게.</p>
+      </div>
+      <div class="conv-card">
+        <div class="conv-icon">🎵</div>
+        <h3>Burmester® 사운드 시스템</h3>
+        <p>전기모드의 정숙함과 결합되어 더욱 몰입감 있는 오디오 경험을 선사합니다.</p>
+      </div>
+      <div class="conv-card">
+        <div class="conv-icon">🛡️</div>
+        <h3>드라이빙 어시스턴스 패키지</h3>
+        <p>차선 유지, 어댑티브 크루즈 컨트롤, 사각지대 보조까지 — 장거리도 편안하게.</p>
+      </div>
+      <div class="conv-card">
+        <div class="conv-icon">🌡️</div>
+        <h3>통풍/열선 시트</h3>
+        <p>앞좌석 통풍 및 열선 시트 기본 탑재. 전기모드 시에도 쾌적한 시트 환경 유지.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     06 SAFETY
+===================== -->
+<section id="safety">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">06 — SAFETY</div>
+      <h2 class="section-title">E-Class PHEV 안전 기술</h2>
+      <p class="section-sub">Mercedes-Benz의 검증된 안전 시스템 — PHEV에서도 타협 없이</p>
+    </div>
+    <div class="safety-grid">
+      <div class="safety-card">
+        <h3>PRE-SAFE® 시스템</h3>
+        <p>충돌 위험 감지 시 승객 보호를 위해 시트 포지션, 안전벨트를 자동으로 준비합니다.</p>
+      </div>
+      <div class="safety-card">
+        <h3>Active Brake Assist</h3>
+        <p>전방 충돌 위험 시 자동으로 제동력을 보조. 교차로 교통 감지(Cross-Traffic) 포함.</p>
+      </div>
+      <div class="safety-card">
+        <h3>Active Distance Assist DISTRONIC</h3>
+        <p>앞 차량과의 거리를 자동 유지하며 속도를 조절하는 어댑티브 크루즈 컨트롤.</p>
+      </div>
+      <div class="safety-card">
+        <h3>Active Lane Keeping Assist</h3>
+        <p>차선 이탈 감지 및 경고, 스티어링 보조로 의도치 않은 차선 이탈을 방지합니다.</p>
+      </div>
+      <div class="safety-card">
+        <h3>Evasion Steering Assist</h3>
+        <p>장애물 회피 시 안전한 방향으로 스티어링을 보조해 사고 위험을 줄입니다.</p>
+      </div>
+      <div class="safety-card">
+        <h3>ADAPTIVE BRAKE (HOLD)</h3>
+        <p>정차 시 브레이크를 자동으로 유지하고, 출발 신호에 맞춰 자동으로 해제됩니다.</p>
+      </div>
+      <div class="safety-card">
+        <h3>Active Bonnet</h3>
+        <p>보행자 충돌 감지 시 보닛이 자동으로 들려 충격을 흡수하는 보행자 보호 시스템.</p>
+      </div>
+      <div class="safety-card">
+        <h3>PHEV 배터리 안전 설계</h3>
+        <p>고전압 배터리 케이싱과 충격 감지 자동 전원 차단 시스템으로 PHEV 특유의 안전성 보강.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     07 STANDARD EQUIPMENT (AMG E 53 전용)
+===================== -->
+<section id="standard-equipment">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">07 — STANDARD EQUIPMENT</div>
+      <h2 class="section-title">기본 사양 — 공식 카탈로그 기준</h2>
+      <p class="section-sub">E 350 e 4MATIC EXCLUSIVE · AMG E 53 HYBRID 4MATIC+ 각 모델 전용 구성</p>
+    </div>
+
+    <!-- E350e 기본사양 탭 선택 UI -->
+    <div style="display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;">
+      <button onclick="showEquip('e350e')" id="btn-e350e" style="padding:10px 22px;font-size:12px;font-weight:700;border:2px solid #2E6DA4;background:#2E6DA4;color:#fff;border-radius:4px;cursor:pointer;">E 350 e</button>
+      <button onclick="showEquip('amge53')" id="btn-amge53" style="padding:10px 22px;font-size:12px;font-weight:700;border:2px solid #8B1A2B;background:#fff;color:#8B1A2B;border-radius:4px;cursor:pointer;">AMG E 53 HYBRID</button>
+    </div>
+    <script>
+    function showEquip(model) {
+      document.getElementById('equip-e350e').style.display = model === 'e350e' ? 'block' : 'none';
+      document.getElementById('equip-amge53').style.display = model === 'amge53' ? 'block' : 'none';
+      document.getElementById('btn-e350e').style.background = model === 'e350e' ? '#2E6DA4' : '#fff';
+      document.getElementById('btn-e350e').style.color = model === 'e350e' ? '#fff' : '#2E6DA4';
+      document.getElementById('btn-amge53').style.background = model === 'amge53' ? '#8B1A2B' : '#fff';
+      document.getElementById('btn-amge53').style.color = model === 'amge53' ? '#fff' : '#8B1A2B';
+    }
+    </script>
+
+    <!-- ── E350e 기본 사양 ── -->
+    <div id="equip-e350e">
+      <div class="equip-note" style="border-left-color:#2E6DA4;background:#EBF2FA;">
+        ※ E 350 e 4MATIC EXCLUSIVE with EQ Hybrid Technology · 공식 카탈로그 기준 · MY26
+      </div>
+
+      <div class="equip-section">
+        <div class="equip-category" style="color:#2E6DA4;border-bottom-color:#EBF2FA;">POWERTRAIN (EQ HYBRID)</div>
+        <div class="equip-tags">
+          <span class="equip-tag">M254 직4 터보 + 95kW 전기 모터 (PHEV)</span>
+          <span class="equip-tag">19.53kWh 고전압 배터리</span>
+          <span class="equip-tag">전기 단독 주행 최대 77km</span>
+          <span class="equip-tag">회생제동 시스템</span>
+          <span class="equip-tag">9G-TRONIC (자동 9단)</span>
+          <span class="equip-tag">4MATIC 사륜구동</span>
+          <span class="equip-tag">컴포트 서스펜션</span>
+          <span class="equip-tag">저소음 타이어 (Tirefit)</span>
+        </div>
+      </div>
+
+      <div class="equip-section">
+        <div class="equip-category" style="color:#2E6DA4;border-bottom-color:#EBF2FA;">EXTERIOR</div>
+        <div class="equip-tags">
+          <span class="equip-tag">EXCLUSIVE 외장 패키지</span>
+          <span class="equip-tag">19인치 5스포크 알로이 휠 (R82)</span>
+          <span class="equip-tag">파노라믹 선루프</span>
+          <span class="equip-tag">아마틱 글래스</span>
+          <span class="equip-tag">별형 라디에이터 그릴 (EXCLUSIVE)</span>
+        </div>
+      </div>
+
+      <div class="equip-section">
+        <div class="equip-category" style="color:#2E6DA4;border-bottom-color:#EBF2FA;">LIGHT &amp; SIGHT</div>
+        <div class="equip-tags">
+          <span class="equip-tag">디지털 라이트</span>
+          <span class="equip-tag">어댑티브 상향등 어시스트 플러스</span>
+          <span class="equip-tag">로고 프로젝터</span>
+          <span class="equip-tag">액티브 앰비언트 라이트</span>
+        </div>
+      </div>
+
+      <div class="equip-section">
+        <div class="equip-category" style="color:#2E6DA4;border-bottom-color:#EBF2FA;">INTERIOR</div>
+        <div class="equip-tags">
+          <span class="equip-tag">EXCLUSIVE 인테리어 패키지</span>
+          <span class="equip-tag">가죽 시트 (컴포트)</span>
+          <span class="equip-tag">다기능 스티어링 휠, 나파 가죽 / 열선</span>
+          <span class="equip-tag">나피라 마티코 대쉬보드</span>
+          <span class="equip-tag">앞좌석 열선 / 통풍 / 메모리</span>
+          <span class="equip-tag">뒷좌석 열선 / 접이식 / ISOFIX</span>
+          <span class="equip-tag">브라운 오픈 포어 에쉬 우드 트림</span>
+          <span class="equip-tag">블루메이 라인 선글래스</span>
+          <span class="equip-tag">3D 계기반</span>
+          <span class="equip-tag">4존 클라이마트로닉</span>
+        </div>
+      </div>
+
+      <div class="equip-section">
+        <div class="equip-category" style="color:#2E6DA4;border-bottom-color:#EBF2FA;">TELEMATICS</div>
+        <div class="equip-tags">
+          <span class="equip-tag">3세대 MBUX</span>
+          <span class="equip-tag">12.3인치 계기반 + 14.4인치 미디어 디스플레이</span>
+          <span class="equip-tag">MBUX 증강현실 내비게이션</span>
+          <span class="equip-tag">헤드업 디스플레이 (HUD)</span>
+          <span class="equip-tag">부메스터® 4D 서라운드 사운드</span>
+          <span class="equip-tag">무선 스마트폰 통합 (Android Auto / Apple CarPlay)</span>
+          <span class="equip-tag">일체식 무선 충전</span>
+        </div>
+      </div>
+
+      <div class="equip-section">
+        <div class="equip-category" style="color:#2E6DA4;border-bottom-color:#EBF2FA;">COMFORT</div>
+        <div class="equip-tags">
+          <span class="equip-tag">키레스 고 패키지</span>
+          <span class="equip-tag">핸즈 프리 엑세스 &amp; 전동 트렁크</span>
+          <span class="equip-tag">파워 클로징</span>
+          <span class="equip-tag">에너자이징 패키지</span>
+          <span class="equip-tag">MBUX 인테리어 어시스턴트</span>
+          <span class="equip-tag">공기 청정 패키지</span>
+          <span class="equip-tag">원격 공조 장치 설정</span>
+        </div>
+      </div>
+
+      <div class="equip-section">
+        <div class="equip-category" style="color:#2E6DA4;border-bottom-color:#EBF2FA;">SAFETY</div>
+        <div class="equip-tags">
+          <span class="equip-tag">드라이빙 어시스턴스 패키지 플러스 (DAP+)</span>
+          <span class="equip-tag">Active Distance Assist DISTRONIC</span>
+          <span class="equip-tag">Active Brake Assist</span>
+          <span class="equip-tag">차선 이탈 방지 패키지</span>
+          <span class="equip-tag">사각지대 어시스트</span>
+          <span class="equip-tag">PRE-SAFE 시스템 플러스 / 임펄스 사이드</span>
+          <span class="equip-tag">360° 카메라 &amp; 매틱스 주차 어시스턴트</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AMG E53 기본 사양 ── -->
+    <div id="equip-amge53" style="display:none;">
+      <div class="equip-note">
+        ※ MB 어프로치 / 카달로그 기준이며, 최종 사양은 출고 시 확인 필요합니다. MY26 · 2026.01 가격표 기준.
+      </div>
+
+    <!-- AMG POWERTRAIN -->
+    <div class="equip-section">
+      <div class="equip-category">AMG POWERTRAIN</div>
+      <div class="equip-tags">
+        <span class="equip-tag">AMG SPEEDSHIFT TCT 9G 변속기</span>
+        <span class="equip-tag">AMG 전자식 가변 4륜구동 (4MATIC+)</span>
+        <span class="equip-tag">AMG 전자식 리어 액슬 디퍼렌셜</span>
+        <span class="equip-tag">AMG 파워매틱 시프팅 패들</span>
+        <span class="equip-tag">21.2kWh 고전압 배터리</span>
+        <span class="equip-tag">120kW 전기모터</span>
+        <span class="equip-tag">EQ Boost 인스턴트 스타트 (48V 계열)</span>
+        <span class="equip-tag">AMG 전용 엔진 세팅 (M256M)</span>
+      </div>
+    </div>
+
+    <!-- EXTERIOR -->
+    <div class="equip-section">
+      <div class="equip-category">EXTERIOR</div>
+      <div class="equip-tags">
+        <span class="equip-tag">AMG 전용 익스테리어 패키지</span>
+        <span class="equip-tag">AMG 스포츠 라디에이터 그릴</span>
+        <span class="equip-tag">AMG 19인치 휠 (앞 8.5J + 뒤 9J)</span>
+        <span class="equip-tag">브릿지스톤 포텐자 스포츠 타이어</span>
+        <span class="equip-tag">파워 돔 보닛 (AMG 전용)</span>
+        <span class="equip-tag">AMG 스포츠 리어 스포일러</span>
+        <span class="equip-tag">AMG 하이파이 포컬 레드 캘리퍼</span>
+        <span class="equip-tag">노블랙 고광 AMG 글로시 블랙 엘리먼트</span>
+        <span class="equip-tag">자동 트렁크 릴리즈</span>
+      </div>
+    </div>
+
+    <!-- INTERIOR -->
+    <div class="equip-section">
+      <div class="equip-category">INTERIOR</div>
+      <div class="equip-tags">
+        <span class="equip-tag">AMG 스페시픽 나파 천연 가죽 시트</span>
+        <span class="equip-tag">AMG 스포츠 스티어링 휠 (나파 가죽)</span>
+        <span class="equip-tag">AMG 코크피트 2.0</span>
+        <span class="equip-tag">AMG 퍼포먼스 사운드</span>
+        <span class="equip-tag">린S &amp; AKISCO 대쉬보드 우드 트림</span>
+        <span class="equip-tag">앰비언트 라이팅 (64색)</span>
+        <span class="equip-tag">향수 / 트레이스 조명</span>
+        <span class="equip-tag">42단계 전동 스포츠 시트 (열선 포함)</span>
+        <span class="equip-tag">4존 에어컨 기본</span>
+      </div>
+    </div>
+
+    <!-- TELEMATICS -->
+    <div class="equip-section">
+      <div class="equip-category">TELEMATICS</div>
+      <div class="equip-tags">
+        <span class="equip-tag">12.3인치 3D 계기반</span>
+        <span class="equip-tag">MBUX 슈퍼스크린 (옵션)</span>
+        <span class="equip-tag">헤드업 디스플레이 표준 탑재</span>
+        <span class="equip-tag">내비게이션 (FM, 17개 수신)</span>
+        <span class="equip-tag">무선 Android Auto / Apple CarPlay</span>
+        <span class="equip-tag">상시 Wi-Fi 핫스팟</span>
+        <span class="equip-tag">MBUX 인테리어 어시스턴트</span>
+        <span class="equip-tag">Mercedes-Me Connect (원격 제어)</span>
+        <span class="equip-tag">AMG 트랙페이스 (345 팔로워 서킷 데이터)</span>
+      </div>
+    </div>
+
+    <!-- COMFORT -->
+    <div class="equip-section">
+      <div class="equip-category">COMFORT</div>
+      <div class="equip-tags">
+        <span class="equip-tag">전자동 통풍 / 열선 앞좌석</span>
+        <span class="equip-tag">쾌적한 유리 + 프로코어 에어캄프</span>
+        <span class="equip-tag">히팅 파킹 기능</span>
+        <span class="equip-tag">원격 예약 충전 (스마트폰 연동)</span>
+        <span class="equip-tag">사전 공조 시스템</span>
+        <span class="equip-tag">리어 윈도우 전동 선쉐이드</span>
+        <span class="equip-tag">부메스터® 퍼포먼스 사운드 시스템</span>
+      </div>
+    </div>
+
+    <!-- SAFETY -->
+    <div class="equip-section">
+      <div class="equip-category">SAFETY</div>
+      <div class="equip-tags">
+        <span class="equip-tag">PRE-SAFE® 시스템</span>
+        <span class="equip-tag">PRE-SAFE Sound</span>
+        <span class="equip-tag">PRE-SAFE PLUS</span>
+        <span class="equip-tag">PRE-SAFE Impulse Side</span>
+        <span class="equip-tag">Active Brake Assist (Cross-Traffic)</span>
+        <span class="equip-tag">Active Distance Assist DISTRONIC</span>
+        <span class="equip-tag">Active Lane Keeping Assist</span>
+        <span class="equip-tag">Steering Assist / Evasion Steer</span>
+        <span class="equip-tag">야간 보행자 감지 어시스턴트</span>
+        <span class="equip-tag">Active Bonnet</span>
+        <span class="equip-tag">ADAPTIVE BRAKE (HOLD 기능)</span>
+        <span class="equip-tag">Adaptive Brake Lights</span>
+        <span class="equip-tag">360도 서라운드 뷰 카메라</span>
+      </div>
+    </div>
+    </div><!-- /equip-amge53 -->
+
+  </div><!-- /container -->
+</section>
+
+<!-- =====================
+     08 FULL SPECS
+===================== -->
+<section id="full-specs">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">08 — FULL SPECS</div>
+      <h2 class="section-title">상세 제원</h2>
+      <p class="section-sub">MB 어프로치 / 공식 카탈로그 기준 · MY26 · 2026.01 가격표 기준</p>
+    </div>
+    <p class="scroll-hint" style="text-align:right;font-size:11px;color:#999;margin-bottom:6px;">← 표를 좌우로 스크롤하세요 →</p>
+    <div class="specs-table-wrap">
+      <table class="specs-table">
+        <thead>
+          <tr>
+            <th class="th-label">항목</th>
+            <th class="th-e350e">E 350 e</th>
+            <th class="th-amg">AMG E 53 HYBRID 4MATIC+</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-label">가격 (MY26)</td><td class="td-val">9,870만원</td><td class="td-val">1억 4,160만원</td></tr>
+          <tr><td class="td-label">엔진</td><td class="td-val">M254, 직렬 4기통 터보 + 95kW 전기모터 (PHEV)</td><td class="td-val">M256M, 직렬 6기통 + 싱글터보 + 전기모터</td></tr>
+          <tr><td class="td-label">배기량</td><td class="td-val tbd">추후 확인</td><td class="td-val">2,998cc</td></tr>
+          <tr><td class="td-label">복합출력 (가솔린+전기)</td><td class="td-val tbd">추후 확인</td><td class="td-val">585hp / 토크 76.5 kgm</td></tr>
+          <tr><td class="td-label">최고출력 (가솔린)</td><td class="td-val tbd">추후 확인</td><td class="td-val">449ps / 5,800-6,100rpm</td></tr>
+          <tr><td class="td-label">최대토크 (가솔린)</td><td class="td-val tbd">추후 확인</td><td class="td-val">57.1 kgm / 2,200-5,000rpm</td></tr>
+          <tr><td class="td-label">전기모터 출력</td><td class="td-val">95kW / 129ps</td><td class="td-val">120kW</td></tr>
+          <tr><td class="td-label">전기모터 최대토크</td><td class="td-val tbd">추후 확인</td><td class="td-val">49.0 kgm</td></tr>
+          <tr><td class="td-label">배터리 용량</td><td class="td-val">19.53 kWh</td><td class="td-val">21.2 kWh</td></tr>
+          <tr><td class="td-label">전기 주행거리</td><td class="td-val">77km (1회 충전, 복합)</td><td class="td-val">66km (전기모드 최고속도 140km/h)</td></tr>
+          <tr><td class="td-label">0-100km/h</td><td class="td-val">6.5초</td><td class="td-val">3.8초</td></tr>
+          <tr><td class="td-label">최고속도</td><td class="td-val">230km/h</td><td class="td-val">250km/h</td></tr>
+          <tr><td class="td-label">복합연비 (내연)</td><td class="td-val">11.1 km/l / 도심 10.0 · 고속 12.7</td><td class="td-val">8.6 km/l (5등급)</td></tr>
+          <tr><td class="td-label">전기 복합연비</td><td class="td-val">3.1 km/kWh</td><td class="td-val">2.4 km/kWh</td></tr>
+          <tr><td class="td-label">CO₂ 배출</td><td class="td-val">27g/km</td><td class="td-val">-</td></tr>
+          <tr><td class="td-label">구동방식</td><td class="td-val">4MATIC (사륜구동)</td><td class="td-val">4MATIC+ (AMG 전자식 리어 액슬 디퍼렌셜)</td></tr>
+          <tr><td class="td-label">변속기</td><td class="td-val">9G-TRONIC (자동 9단)</td><td class="td-val">AMG SPEEDSHIFT TCT 9G</td></tr>
+          <tr><td class="td-label">서스펜션</td><td class="td-val">컴포트 서스펜션</td><td class="td-val">AMG RIDE CONTROL 서스펜션</td></tr>
+          <tr><td class="td-label">리어 액슬 스티어링</td><td class="td-val">-</td><td class="td-val">2.5°</td></tr>
+          <tr><td class="td-label">타이어 (전/후)</td><td class="td-val">245/45R19 / 275/40R19</td><td class="td-val">-</td></tr>
+          <tr><td class="td-label">전장 × 전폭 × 전고</td><td class="td-val">4,955 × 1,880 × 1,480mm</td><td class="td-val">4,970 × 1,900 × 1,475mm</td></tr>
+          <tr><td class="td-label">축거</td><td class="td-val">2,960mm</td><td class="td-val">2,960mm</td></tr>
+          <tr><td class="td-label">공차중량</td><td class="td-val">2,215kg</td><td class="td-val">2,390kg</td></tr>
+          <tr><td class="td-label">연료탱크</td><td class="td-val">50L</td><td class="td-val">-</td></tr>
+          <tr><td class="td-label">트렁크 용량</td><td class="td-val">370L</td><td class="td-val">370L</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     09 MODEL COMPARISON
+===================== -->
+<section id="model-comparison">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">09 — MODEL COMPARISON</div>
+      <h2 class="section-title">E 350 e vs AMG E 53 HYBRID</h2>
+      <p class="section-sub">나에게 맞는 E-Class PHEV는 어떤 모델일까?</p>
+    </div>
+    <p class="scroll-hint" style="text-align:right;font-size:11px;color:#999;margin-bottom:6px;">← 표를 좌우로 스크롤하세요 →</p>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="th-blank">구분</th>
+            <th class="th-e350e">E 350 e</th>
+            <th class="th-amg">AMG E 53 HYBRID 4MATIC+</th>
+          </tr>
+        </thead>
+        <tbody id="compare-tbody">
+          <!-- JS로 동적 렌더링 -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="td-label">추천 고객</td>
+            <td class="td-e350e">
+              <span class="recommend-badge badge-blue">E 350 e 추천</span><br>
+              효율, 전기주행, 세단의 편안함, 합리적인 PHEV를 원하는 분
+            </td>
+            <td class="td-amg">
+              <span class="recommend-badge badge-wine">AMG E 53 추천</span><br>
+              강력한 퍼포먼스, AMG 감성, 3.8초 가속, 고성능 PHEV를 원하는 분
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     10 COMPETITION
+===================== -->
+<section id="competition">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">10 — COMPETITION</div>
+      <h2 class="section-title">경쟁 모델 비교</h2>
+      <p class="section-sub">E-Class PHEV 라인업을 동급 BMW 모델과 직접 비교해보십시오</p>
+    </div>
+
+    <!-- E350e vs BMW 530e -->
+    <div class="comp-block">
+      <div class="comp-subtitle">E 350 e 4MATIC EXCLUSIVE &nbsp;vs&nbsp; BMW 530e</div>
+      <p class="scroll-hint" style="text-align:right;font-size:11px;color:#999;margin-bottom:6px;">← 표를 좌우로 스크롤하세요 →</p>
+      <div class="comp-scroll-wrap">
+        <div id="comp-table-e350e"></div>
+      </div>
+    </div>
+
+    <!-- AMG E53 vs BMW M5 -->
+    <div class="comp-block">
+      <div class="comp-subtitle">AMG E 53 HYBRID 4MATIC+ &nbsp;vs&nbsp; BMW M5 (G90)</div>
+      <p class="scroll-hint" style="text-align:right;font-size:11px;color:#999;margin-bottom:6px;">← 표를 좌우로 스크롤하세요 →</p>
+      <div class="comp-scroll-wrap">
+        <div id="comp-table-amg"></div>
+      </div>
+      <div class="comp-insight">
+        <strong>한눈에 보는 선택 가이드</strong><br>
+        AMG E 53는 M5보다 가격 접근성이 좋고, E-Class 기반의 고급 세단 감성과 AMG 퍼포먼스를 동시에 원하는 고객에게 적합합니다.<br>
+        BMW M5는 더 강력한 V8 출력(727ps)과 더 넓은 트렁크(466L)를 원하는 고객에게 적합합니다.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =====================
+     11 PROMOTION
+===================== -->
+<section id="promotion">
+  <div class="container">
+    <div class="section-center">
+      <div class="section-badge">11 — PROMOTION</div>
+      <h2 class="section-title">이달의 특별 혜택</h2>
+      <p class="section-sub">E 350 e와 AMG E 53 HYBRID 구매 조건은 매월 변동될 수 있습니다</p>
+    </div>
+    <div class="promo-grid" id="promo-grid">
+      <!-- JS 동적 렌더링 -->
+    </div>
+  </div>
+</section>
+
+<!-- =====================
+     CTA
+===================== -->
+<section id="cta">
+  <div class="container">
+    <h2>지금 바로 상담 예약하세요</h2>
+    <p>벤츠타임 의정부 전시장에서 E 350 e · AMG E 53 HYBRID 4MATIC+를 직접 경험해 보세요.</p>
+    <div class="cta-buttons">
+      <a href="tel:031-XXXX-XXXX" class="btn-primary">📞 전화 상담</a>
+      <a href="#" class="btn-secondary">시승 신청</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>벤츠타임 의정부 | Mercedes-Benz 공식 딜러</p>
+  <p style="margin-top:6px;">본 페이지의 가격 및 사양은 MY26 · 2026.01 기준이며 사전 예고 없이 변경될 수 있습니다.</p>
+  <p style="margin-top:4px;">E350e 데이터는 추후 업데이트 예정입니다.</p>
+</footer>
+
+</body>
+</html>
