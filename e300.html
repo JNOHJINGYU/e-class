@@ -673,6 +673,72 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
    ============================================================ */
 @media (max-width: 768px) { :root { --section-gap: 80px; } }
 @media (max-width: 480px) { :root { --section-gap: 60px; } .site-header { padding: 0 20px; } }
+
+/* ============================================================
+   MOBILE ONLY — 통계 카드 균일화 + 편의사양 이미지 최적화
+   ============================================================ */
+@media (max-width: 768px) {
+  /* 02 · STATS — 카드 4개 균일화 */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .stat-card {
+    min-height: 210px;
+    padding: 28px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .stat-number {
+    font-size: 2.8rem !important;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 1rem !important;
+    line-height: 1.45;
+    word-break: keep-all;
+  }
+  .stat-desc {
+    font-size: .86rem !important;
+    line-height: 1.55;
+    word-break: keep-all;
+  }
+
+  /* 05 · CONVENIENCE — 인테리어 이미지 최적화 */
+  #imgInterior {
+    height: 340px !important;
+    background-color: #f5f5f5;
+  }
+  #imgInterior img {
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 통계 카드 소형폰 조정 */
+  .stat-card {
+    min-height: 200px;
+    padding: 24px 14px;
+  }
+  .stat-number {
+    font-size: 2.5rem !important;
+  }
+  .stat-label {
+    font-size: .9rem !important;
+  }
+  .stat-desc {
+    font-size: .8rem !important;
+  }
+
+  /* 편의사양 이미지 소형폰 조정 */
+  #imgInterior {
+    height: 300px !important;
+    margin-bottom: 36px !important;
+  }
+}
 </style>
 </head>
 <body>
