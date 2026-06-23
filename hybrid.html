@@ -841,62 +841,8 @@ section { padding: var(--section-pad); }
 }
 
 /* =====================
-   CTA / FOOTER
+   FOOTER
 ===================== */
-#cta {
-  background: var(--text-dark);
-  padding: 60px 20px;
-  text-align: center;
-}
-
-#cta h2 {
-  font-size: clamp(20px, 4vw, 32px);
-  font-weight: 700;
-  color: #FFFFFF;
-  margin-bottom: 12px;
-}
-
-#cta p {
-  font-size: 14px;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 30px;
-}
-
-.cta-buttons {
-  display: flex;
-  gap: 14px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  background: var(--gold);
-  color: #fff;
-  border: none;
-  padding: 14px 32px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.btn-secondary {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.4);
-  padding: 14px 32px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-}
-
 footer {
   background: #0A0A0A;
   padding: 30px 20px;
@@ -909,39 +855,48 @@ footer {
 /* =====================
    MOBILE RESPONSIVE
 ===================== */
+/* ─────────────────────────────
+   모바일 전용 차량 이미지 카드
+────────────────────────────── */
+.hero-mobile-car {
+  display: none; /* PC에서는 숨김 */
+}
+
 @media (max-width: 767px) {
   :root { --section-pad: 56px 16px; }
 
-  /* Hero Mobile */
+  /* Hero Mobile — flex column: 텍스트 상단 / 차량 이미지 하단 */
   #hero {
-    height: 100svh;
-    min-height: 560px;
+    height: auto;
+    min-height: 100svh;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #0a0a0a;
   }
 
+  /* PC 배경 이미지는 모바일에서 숨김 */
   .hero-bg {
-    background-position: 60% center;
-    background-size: cover;
+    display: none;
   }
 
+  /* 오버레이도 모바일에서는 제거 (배경이 없으므로 불필요) */
   .hero-overlay {
-    /* 모바일은 상단 텍스트 배경만 살짝 */
-    background: linear-gradient(
-      180deg,
-      rgba(0,0,0,0.72) 0%,
-      rgba(0,0,0,0.50) 45%,
-      rgba(0,0,0,0.10) 70%,
-      rgba(0,0,0,0.00) 100%
-    );
+    display: none;
   }
 
+  /* 텍스트+가격카드 영역: 절대→상대 배치로 전환 */
   .hero-content {
-    top: 8%;          /* 모바일은 더 위 */
-    padding: 0 20px;
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 2;
+    padding: 48px 20px 20px;
     max-width: 100%;
+    width: 100%;
   }
 
   .hero-title {
-    font-size: clamp(18px, 5.5vw, 26px);
+    font-size: clamp(22px, 6vw, 30px);
     margin-bottom: 8px;
   }
 
@@ -953,11 +908,11 @@ footer {
   .hero-cards {
     grid-template-columns: 1fr;
     gap: 8px;
-    max-width: 280px;
+    max-width: 100%;
   }
 
   .hero-card {
-    padding: 10px 12px;
+    padding: 12px 14px;
   }
 
   .hero-card-name {
@@ -966,12 +921,27 @@ footer {
   }
 
   .hero-card-price {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 3px;
   }
 
   .hero-card-desc {
     font-size: 9px;
+  }
+
+  /* 모바일 차량 이미지: 텍스트 아래에 전체 노출 */
+  .hero-mobile-car {
+    display: block;
+    width: 100%;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .hero-mobile-car img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
   }
 
   /* Specs compare - mobile stack */
@@ -1204,14 +1174,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Hero image ── */
   const heroBg = document.querySelector('.hero-bg');
-  if (IMAGES.hero) {
-    const isMobile = window.innerWidth < 768;
-    const imgUrl = (isMobile && IMAGES.heroMobile) ? IMAGES.heroMobile : IMAGES.hero;
-    heroBg.style.backgroundImage = `url('${imgUrl}')`;
-    heroBg.style.opacity = '0.9';
+  const heroMobileImg = document.getElementById('hero-mobile-img');
+  const isMobile = window.innerWidth < 768;
+
+  if (isMobile) {
+    /* 모바일: .hero-bg 숨기고 <img> 태그에 모바일 이미지 적용 */
+    const mobileUrl = (IMAGES.heroMobile || IMAGES.hero);
+    if (heroMobileImg && mobileUrl) {
+      heroMobileImg.src = mobileUrl;
+    }
   } else {
-    heroBg.style.backgroundImage = 'linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%)';
-    heroBg.style.opacity = '1';
+    /* PC: 기존 background-image 방식 유지 */
+    if (IMAGES.hero) {
+      heroBg.style.backgroundImage = `url('${IMAGES.hero}')`;
+      heroBg.style.opacity = '0.9';
+    } else {
+      heroBg.style.backgroundImage = 'linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%)';
+      heroBg.style.opacity = '1';
+    }
   }
 
   /* ── Model comparison table (09) ── */
@@ -1296,6 +1276,10 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="hero-card-desc">M256M + 전기모터 · 585hp · 4MATIC+</div>
       </div>
     </div>
+  </div>
+  <!-- 모바일 전용 차량 이미지 (잘림 없이 전체 노출) -->
+  <div class="hero-mobile-car">
+    <img id="hero-mobile-img" src="" alt="E-Class Plug-in Hybrid">
   </div>
 </section>
 
@@ -1978,20 +1962,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div class="promo-grid" id="promo-grid">
       <!-- JS 동적 렌더링 -->
-    </div>
-  </div>
-</section>
-
-<!-- =====================
-     CTA
-===================== -->
-<section id="cta">
-  <div class="container">
-    <h2>지금 바로 상담 예약하세요</h2>
-    <p>벤츠타임 의정부 전시장에서 E 350 e · AMG E 53 HYBRID 4MATIC+를 직접 경험해 보세요.</p>
-    <div class="cta-buttons">
-      <a href="tel:031-XXXX-XXXX" class="btn-primary">📞 전화 상담</a>
-      <a href="#" class="btn-secondary">시승 신청</a>
     </div>
   </div>
 </section>
