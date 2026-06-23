@@ -466,25 +466,38 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 .specs-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 48px;
+  margin-top: 40px;
   background: var(--white);
+  table-layout: fixed;
 }
 .specs-table th {
   background: var(--black);
   color: var(--white);
-  padding: 16px 20px;
+  padding: 18px 20px;
   text-align: left;
   font-weight: 700;
   font-size: .9rem;
   letter-spacing: .05em;
 }
-.specs-table th:first-child {
-  width: 35%;
-}
 .specs-table td {
-  padding: 16px 20px;
+  padding: 22px 20px;
   border-bottom: 1px solid var(--gray3);
   font-size: .9rem;
+  vertical-align: middle;
+}
+.specs-table td:first-child {
+  width: 35%;
+  font-weight: 600;
+  text-align: left;
+  vertical-align: middle;
+}
+.specs-table td:last-child {
+  width: 65%;
+  text-align: left;
+  vertical-align: middle;
+}
+.specs-table tbody tr {
+  height: 72px;
 }
 .specs-table tbody tr:hover {
   background: var(--gray1);
@@ -1589,7 +1602,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
       <div class="vs-summary-sep">|</div>
       <div class="vs-summary-item"><strong class="red">AMG Line이 +350만원</strong><br>스포티한 감성 선택</div>
       <div class="vs-summary-sep">|</div>
-      <div class="vs-summary-item"><strong class="blue">AVANTGARDE는</strong><br>편안함과 고급스러움 선택</div>
+      <div class="vs-summary-item"><strong class="blue">Exclusive는</strong><br>편안함과 고급스러움 선택</div>
     </div>
 
     <!-- [S7-2] 비교 테이블 -->
@@ -1619,8 +1632,8 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
           <tr><td class="col-label-d">인테리어 트림</td><td class="col-excl">블랙 오픈 포어 애쉬</td><td class="col-amg">블랙 피아노 라커</td></tr>
           <tr><td class="col-label-d">엔진 사운드</td><td class="col-excl empty-val">—</td><td class="col-amg">스포티 엔진 사운드</td></tr>
           <tr><td class="col-label-d">HUD</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
-          <tr><td class="col-label-d">슈퍼스크린</td><td class="col-excl empty-val">—</td><td class="col-amg">기본 포함</td></tr>
-          <tr><td class="col-label-d">부메스터 4D</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
+          <tr><td class="col-label-d">슈퍼스크린</td><td class="col-excl empty-val">—</td><td class="col-amg">—</td></tr>
+          <tr><td class="col-label-d">오디오</td><td class="col-excl">어드밴시드 오디오</td><td class="col-amg">어드밴시드 오디오</td></tr>
           <tr><td class="col-label-d">360도 카메라</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
           <tr><td class="col-label-d">DISTRONIC</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
           <tr class="row-highlight">
@@ -1652,7 +1665,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
         <ul>
           <li>가장 합리적인 E-Class를 원하는 고객</li>
           <li>편안한 승차감을 선호하는 고객</li>
-          <li>크롬 그릴 디자인을 선호하는 고객</li>
+          <li>벤츠의 전통적인 디자인을 선호하는 고객</li>
           <li>350만원을 다른 옵션에 투자하고 싶은 고객</li>
         </ul>
       </div>
