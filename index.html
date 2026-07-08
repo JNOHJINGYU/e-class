@@ -173,13 +173,11 @@
     /* ↓↓↓ 1) 첫 번째 url()을 실제 E-Class 이미지 경로로 교체하세요 ↓↓↓ */
     background-image:
       url('https://github.com/JNOHJINGYU/images/blob/main/23C0253_026.jpg?raw=true'),
-      radial-gradient(ellipse at 70% 35%, #f4f4f5 0%, #e8e9ea 55%, #ffffff 100%);
+      radial-gradient(ellipse at 70% 35%, #d0d0d0 0%, #b0b0b0 55%, #909090 100%);
   }
   .hero-overlay{
     position:absolute; inset:0;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,.5) 62%, rgba(255,255,255,.9) 100%),
-      linear-gradient(100deg, rgba(255,255,255,.9) 0%, rgba(255,255,255,.55) 38%, rgba(255,255,255,0) 72%);
+    background:none;
   }
   .hero-content{
     position:relative; z-index:2;
@@ -190,24 +188,36 @@
   .hero-inner{ max-width:600px; padding-top:40px; }
   .eyebrow{
     font-family:var(--font-body); font-size:11px; font-weight:500; letter-spacing:.16em;
-    color:var(--c-silver); text-transform:uppercase; margin-bottom:18px;
+    color:#ffffff; text-transform:uppercase; margin-bottom:18px;
+    text-shadow: 0 1px 4px rgba(0,0,0,.4);
   }
   .hero-title{
     font-family:var(--font-display); font-weight:900;
     font-size:clamp(56px, 10vw, 110px);
     line-height:.95; letter-spacing:-.03em;
-    color:var(--c-platinum);
+    color:#ffffff;
+    text-shadow:
+      1px 1px 0 rgba(0,0,0,.55),
+      -1px -1px 0 rgba(0,0,0,.55),
+      1px -1px 0 rgba(0,0,0,.55),
+      -1px 1px 0 rgba(0,0,0,.55),
+      0 2px 8px rgba(0,0,0,.35);
   }
-  .hero-title span{ color:var(--c-platinum); font-weight:900; }
+  .hero-title span{ color:#ffffff; font-weight:900; }
   .hero-subtitle{
     margin-top:22px;
     font-size:clamp(16px, 2vw, 19px);
-    color:var(--c-platinum); font-weight:700; letter-spacing:-.01em;
+    color:#ffffff; font-weight:700; letter-spacing:-.01em;
+    text-shadow:
+      1px 1px 0 rgba(0,0,0,.45),
+      -1px -1px 0 rgba(0,0,0,.45),
+      0 2px 6px rgba(0,0,0,.3);
   }
   .hero-desc{
     margin-top:14px;
-    font-size:14.5px; color:var(--c-silver); line-height:1.75;
+    font-size:14.5px; color:#ffffff; line-height:1.75;
     max-width:480px;
+    text-shadow: 0 1px 4px rgba(0,0,0,.4);
   }
   .hero-actions{ margin-top:34px; display:flex; gap:14px; }
   .btn{
@@ -483,7 +493,7 @@
           <p class="card-code">E 200</p>
           <p class="card-tagline">가장 합리적으로 만나는<br>프리미엄 E-Class</p>
           <div class="card-foot">
-            <a class="card-btn" data-link="e200" href="e200.html">E 200 자세히 보기 <span class="arrow">→</span></a>
+            <a class="card-btn" data-link="e200" href="https://jnohjingyu.github.io/e-class/e200.html">E 200 자세히 보기 <span class="arrow">→</span></a>
           </div>
         </div>
       </article>
@@ -499,7 +509,7 @@
           <p class="card-code">E 300</p>
           <p class="card-tagline">E-Class의<br>가장 균형 잡힌 선택</p>
           <div class="card-foot">
-            <a class="card-btn" data-link="e300" href="e300.html">E 300 자세히 보기 <span class="arrow">→</span></a>
+            <a class="card-btn" data-link="e300" href="https://jnohjingyu.github.io/e-class/e300.html">E 300 자세히 보기 <span class="arrow">→</span></a>
           </div>
         </div>
       </article>
@@ -515,7 +525,7 @@
           <p class="card-code">E 220 d</p>
           <p class="card-tagline">장거리와 연비를 중시하는<br>고객을 위한 디젤 세단</p>
           <div class="card-foot">
-            <a class="card-btn" data-link="e220d" href="e220d.html">E 220 d 자세히 보기 <span class="arrow">→</span></a>
+            <a class="card-btn" data-link="e220d" href="https://jnohjingyu.github.io/e-class/e220d.html">E 220 d 자세히 보기 <span class="arrow">→</span></a>
           </div>
         </div>
       </article>
@@ -531,7 +541,7 @@
           <p class="card-code">E 450</p>
           <p class="card-tagline">6기통 감성과 여유로운 주행 성능을<br>원하는 고객을 위한 선택</p>
           <div class="card-foot">
-            <a class="card-btn" data-link="e450" href="e450.html">E 450 자세히 보기 <span class="arrow">→</span></a>
+            <a class="card-btn" data-link="e450" href="https://jnohjingyu.github.io/e-class/e450.html">E 450 자세히 보기 <span class="arrow">→</span></a>
           </div>
         </div>
       </article>
@@ -549,7 +559,7 @@
           <p class="card-tagline">전기 주행과 고성능 하이브리드를<br>함께 보는 선택</p>
           <p class="card-sub-models">E 350 e · AMG E 53 HYBRID 4MATIC+</p>
           <div class="card-foot">
-            <a class="card-btn card-btn--hybrid" data-link="hybrid" href="hybrid.html">Hybrid 자세히 보기 <span class="arrow">→</span></a>
+            <a class="card-btn card-btn--hybrid" data-link="hybrid" href="https://jnohjingyu.github.io/e-class/hybrid.html">Hybrid 자세히 보기 <span class="arrow">→</span></a>
           </div>
         </div>
       </article>
@@ -569,11 +579,11 @@
      (파일명/경로를 실제 페이지에 맞게 바꿔주세요)
      ============================================================ */
   const MODEL_LINKS = {
-    e200:   'e200.html',   // E 200 랜딩페이지 경로
-    e300:   'e300.html',   // E 300 랜딩페이지 경로
-    e220d:  'e220d.html',  // E 220 d 랜딩페이지 경로
-    e450:   'e450.html',   // E 450 랜딩페이지 경로
-    hybrid: 'hybrid.html'  // Plug-in Hybrid 랜딩페이지 경로
+    e200:   'https://jnohjingyu.github.io/e-class/e200.html',
+    e300:   'https://jnohjingyu.github.io/e-class/e300.html',
+    e220d:  'https://jnohjingyu.github.io/e-class/e220d.html',
+    e450:   'https://jnohjingyu.github.io/e-class/e450.html',
+    hybrid: 'https://jnohjingyu.github.io/e-class/hybrid.html'
   };
   document.querySelectorAll('[data-link]').forEach((el) => {
     const key = el.getAttribute('data-link');
