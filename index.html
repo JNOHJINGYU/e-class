@@ -413,15 +413,119 @@
   }
   .site-footer p{ margin-top:6px; }
 
-  /* ---------------- 모바일 보정 ---------------- */
+  /* ================================================================
+     모바일 히어로 재구성 (max-width: 640px)
+     이미지 영역 / 텍스트 영역을 위아래로 완전히 분리
+     PC(641px+) 는 기존 디자인 그대로 유지
+     ================================================================ */
   @media (max-width:640px){
-    .hero-media{ background-position:center 32%; }
-    .hero-content{ padding:140px 20px 90px; }
-    .hero-actions{ flex-wrap:wrap; }
-    .scroll-cue{ right:20px; bottom:24px; }
-    .models{ padding:108px 0 72px; }
-    .section-head{ margin-bottom:48px; }
-    .header-nav .nav-link{ padding:9px 14px; font-size:11px; font-family:var(--font-body); }
+
+    /* --- 히어로 컨테이너: 세로 flex, 고정높이/overflow 해제 --- */
+    .hero{
+      height:auto;
+      min-height:0;
+      overflow:visible;
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      padding-top:0;          /* 헤더 여백은 hero-media 자체에서 처리 */
+    }
+
+    /* --- 이미지 영역: absolute 해제 → 독립 블록으로 분리 --- */
+    .hero-media{
+      position:relative;
+      inset:auto;
+      width:100%;
+      height:55svh;
+      min-height:360px;
+      flex-shrink:0;
+      background-size:cover;
+      background-repeat:no-repeat;
+      background-position:58% center;   /* 차량 그릴/헤드램프가 화면 안에 들어오도록 */
+      will-change:auto;
+      transform:none !important;        /* 패럴랙스 transform 강제 리셋 */
+      padding-top:88px;                 /* 고정 헤더(약 80px) 아래에서 이미지 시작 */
+      box-sizing:border-box;
+    }
+
+    /* --- 오버레이: 모바일 이미지 영역에서도 없애기 --- */
+    .hero-overlay{ display:none; }
+
+    /* --- 텍스트 영역: 이미지 아래 흰 배경 블록 --- */
+    .hero-content{
+      position:relative;
+      z-index:1;
+      background:#ffffff;
+      width:100%;
+      max-width:none;
+      margin:0;
+      padding:36px 22px 48px;
+    }
+    .hero-inner{
+      max-width:none;
+      width:100%;
+      padding-top:0;
+    }
+
+    /* --- 텍스트 색상: 흰 배경 위이므로 검정 계열로 전환 --- */
+    .eyebrow{
+      color:#6b6e73;
+      text-shadow:none;
+    }
+    .hero-title{
+      color:#0a0a0b;
+      text-shadow:none;
+      font-size:clamp(46px, 14vw, 68px);
+      line-height:0.95;
+      letter-spacing:-0.04em;
+    }
+    .hero-title span{
+      color:#0a0a0b;
+    }
+    .hero-subtitle{
+      color:#0a0a0b;
+      text-shadow:none;
+      font-size:19px;
+      line-height:1.55;
+      margin-top:24px;
+    }
+    .hero-desc{
+      color:#5d6065;
+      text-shadow:none;
+      font-size:14px;
+      line-height:1.8;
+      margin-top:16px;
+      max-width:none;
+    }
+    /* 설명문 <br> 숨기기 → 화면 너비에 맞게 자연스럽게 줄바꿈 */
+    .hero-desc br{ display:none; }
+
+    /* --- 버튼: 검정 필드 버튼, 고정 폭 --- */
+    .hero-actions{
+      margin-top:28px;
+      flex-wrap:nowrap;
+    }
+    .btn-primary{
+      background:#0a0a0b;
+      color:#ffffff;
+      border-color:#0a0a0b;
+      font-size:15px;
+      font-weight:700;
+      min-height:54px;
+      width:auto;
+      min-width:240px;
+      max-width:280px;
+      justify-content:center;
+    }
+
+    /* --- 불필요 요소 숨기기 --- */
+    .hero-line,
+    .scroll-cue{ display:none; }
+
+    /* --- 모델 섹션 상단 여백 --- */
+    .models{ padding:88px 0 64px; }
+    .section-head{ margin-bottom:42px; }
+    .header-nav .nav-link{ padding:9px 14px; font-size:11px; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -618,8 +722,9 @@
     revealEls.forEach((el) => el.classList.add('in-view'));
   }
 
-  // 히어로 이미지 미세 패럴랙스 (모션 최소화 환경에서는 비활성)
-  if (!reduceMotion) {
+  // 히어로 이미지 미세 패럴랙스 — PC(641px+)에서만 실행, 모바일은 비활성
+  const isDesktop = window.matchMedia('(min-width: 641px)');
+  if (!reduceMotion && isDesktop.matches) {
     const heroMedia = document.querySelector('.hero-media');
     const heroHeight = () => window.innerHeight;
     window.addEventListener('scroll', () => {
