@@ -32,7 +32,7 @@ const COMPARE_DATA = {
   headers: ["항목", "E200 \nExclusive", "BMW 520i ", "Audi A6 "],
   highlight: 1,
   rows: [
-    { label: "가격",              values: ["7,750만원", "6,980만", "6,764만"] },
+    { label: "가격",              values: ["7,660만원", "6,980만", "6,764만"] },
     { label: "출력",              values: ["204ps",     "190ps", "203ps"] },
     { label: "토크",              values: ["32.6kg.m",  "31kg.m", "34.6kg.m"] },
     { label: "구동방식",          values: ["후륜","후륜", "전륜"] },
@@ -51,7 +51,7 @@ const COMPARE_DATA = {
      ============================================================ -->
 <script>
 const PROMO_DATA = [
-  { icon: "💰", title: "기본 할인",        content: "E200 Exclusive 5%<br>E200 AMG라인 11%", tag: "DISCOUNT" },
+  { icon: "💰", title: "기본 할인",        content: "E200 Exclusive 4%<br>E200 AMG라인 10%", tag: "DISCOUNT" },
   { icon: "🏦", title: "벤츠 파이낸셜",   content: "E200 Exclusive 추가 7% 할인<br>E200 AMG라인 추가 4% 할인", tag: "FINANCIAL" },
   { icon: "🚗", title: "장기렌트",         content: "E200 Exclusive<br>기본 할인 + 10% 할인<br>E200 AMG라인<br>기본할인 + 7% 할인", tag: "LONG-TERM RENT" },
   { icon: "🔄", title: "재구매 고객 혜택", content: "기본 할인 + 1% 할인", tag: "LOYALTY" },
@@ -466,38 +466,25 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 .specs-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 40px;
+  margin-top: 48px;
   background: var(--white);
-  table-layout: fixed;
 }
 .specs-table th {
   background: var(--black);
   color: var(--white);
-  padding: 18px 20px;
+  padding: 16px 20px;
   text-align: left;
   font-weight: 700;
   font-size: .9rem;
   letter-spacing: .05em;
 }
+.specs-table th:first-child {
+  width: 35%;
+}
 .specs-table td {
-  padding: 22px 20px;
+  padding: 16px 20px;
   border-bottom: 1px solid var(--gray3);
   font-size: .9rem;
-  vertical-align: middle;
-}
-.specs-table td:first-child {
-  width: 35%;
-  font-weight: 600;
-  text-align: left;
-  vertical-align: middle;
-}
-.specs-table td:last-child {
-  width: 65%;
-  text-align: left;
-  vertical-align: middle;
-}
-.specs-table tbody tr {
-  height: 72px;
 }
 .specs-table tbody tr:hover {
   background: var(--gray1);
@@ -1263,7 +1250,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
       <!-- [S1-4-1] Exclusive 카드 -->
       <div class="hero-card">
         <div class="hero-card-title">E200 Exclusive</div>
-        <div class="hero-card-price">7,750만원</div>
+        <div class="hero-card-price">7,660만원</div>
         <ul class="hero-card-items">
           <li>M254 직렬 4기통 가솔린 터보</li>
           <li>204ps</li>
@@ -1274,7 +1261,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
       <!-- [S1-4-2] AMG Line 카드 -->
       <div class="hero-card">
         <div class="hero-card-title">E200 AMG Line</div>
-        <div class="hero-card-price">8,100만원</div>
+        <div class="hero-card-price">8,000만원</div>
         <ul class="hero-card-items">
           <li>M254 직렬 4기통 가솔린 터보</li>
           <li>204ps</li>
@@ -1614,11 +1601,11 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
             <th class="col-label-h">구분</th>
             <th class="col-excl">
               E 200 Exclusive
-              <span class="th-price blue">7,750만원</span>
+              <span class="th-price blue">7,650만원</span>
             </th>
             <th class="col-amg">
               E 200 AMG Line
-              <span class="th-price red">8,100만원 <span style="font-size:.7rem; font-weight:600;">(+350만원)</span></span>
+              <span class="th-price red">8,000만원 <span style="font-size:.7rem; font-weight:600;">(+350만원)</span></span>
             </th>
           </tr>
         </thead>
