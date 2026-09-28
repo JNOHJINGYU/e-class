@@ -21,7 +21,44 @@ const IMAGES = {
   burmester:          "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_tmtok1tmtok1tmto.png?raw=true",   // S3 카드 4 · 부메스터
   interior:           "https://github.com/JNOHJINGYU/images/blob/main/e300ex_interior.jpg?raw=true",   // S7 인테리어
   safety:             "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_doclujdoclujdocl.png?raw=true",   // S8 안전
+
+  /* ── TRIM SELECTOR 이미지 (비어 있으면 플레이스홀더 표시) ── */
+  exclusiveExterior:  "https://github.com/JNOHJINGYU/images/blob/main/E300EX.png?raw=true",   // 메인 이미지 · EXCLUSIVE 외관
+  amgExterior:        "https://github.com/JNOHJINGYU/images/blob/main/E300AMG.png?raw=true",   // 메인 이미지 · AMG LINE 외관
+  exclusiveCompare:   "https://github.com/JNOHJINGYU/images/blob/main/EX%EC%8B%A4%EB%82%B4.png?raw=true",   // 비교 박스 · EXCLUSIVE 디자인 (예: 전면 그릴)
+  amgCompare:         "https://github.com/JNOHJINGYU/images/blob/main/E300AMG%EC%8B%A4%EB%82%B4.png?raw=true",   // 비교 박스 · AMG LINE 디자인 (예: 전면 범퍼)
 };
+</script>
+
+<!-- ============================================================
+     트림 선택 데이터 (TRIM SELECTOR)
+     ============================================================ -->
+<script>
+const TRIM_DATA = {
+  exclusive: {
+    key: "exclusive",
+    name: "E 300 4MATIC EXCLUSIVE",
+    price: "9,480만원",
+    description: "직렬 4기통 터보 · 258ps · 4MATIC · 컴포트 서스펜션",
+    image: IMAGES.exclusiveExterior,
+    compareImage: IMAGES.exclusiveCompare,
+    shortLabel: "EXCLUSIVE",
+    shortText: "수평적이고 우아한 럭셔리 디자인",
+    placeholder: "EXCLUSIVE EXTERIOR IMAGE"
+  },
+  amg: {
+    key: "amg",
+    name: "E 300 4MATIC AMG Line",
+    price: "9,900만원",
+    description: "직렬 4기통 터보 · 258ps · 4MATIC · 어질리티 컨트롤 서스펜션",
+    image: IMAGES.amgExterior,
+    compareImage: IMAGES.amgCompare,
+    shortLabel: "AMG LINE",
+    shortText: "더 스포티하고 다이내믹한 디자인",
+    placeholder: "AMG LINE EXTERIOR IMAGE"
+  }
+};
+const TRIM_DEFAULT = "exclusive";
 </script>
 
 <!-- ============================================================
@@ -379,6 +416,202 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   .hero-inner { padding: 44px 16px 56px; }
   .hero-main-title { font-size: clamp(3rem, 16vw, 4.4rem); }
   .hero-card-price { font-size: 2rem; }
+}
+
+/* ============================================================
+   S1-B · TRIM SELECTOR (EXCLUSIVE / AMG LINE 디자인 비교)
+   ============================================================ */
+#hero .hero-inner.hero-inner--intro { padding-bottom: 0; }
+#hero .hero-inner--intro .hero-tagline { margin-bottom: 0; }
+
+.trim-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px 110px;
+  background: var(--white);
+  text-align: center;
+}
+
+.trim-topline {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; margin-bottom: 30px;
+}
+.trim-topline-line {
+  flex: 1; max-width: 110px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.trim-topline-label {
+  font-size: .7rem; font-weight: 800; letter-spacing: .3em;
+  text-transform: uppercase; color: #9b7440;
+}
+
+/* 버튼 (segmented control) */
+.trim-tabs {
+  display: inline-flex; gap: 4px; padding: 4px;
+  background: var(--gray2); border: 1px solid var(--gray3);
+  border-radius: 100px; margin-bottom: 36px;
+}
+.trim-tab {
+  appearance: none; -webkit-appearance: none;
+  min-width: 150px; padding: 12px 28px;
+  border: 1px solid transparent; border-radius: 100px;
+  background: transparent; color: var(--black);
+  font-family: inherit; font-size: .78rem; font-weight: 800;
+  letter-spacing: .18em; text-transform: uppercase; white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.trim-tab:hover { background: var(--white); border-color: rgba(212,175,122,.55); }
+.trim-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.trim-tab.active {
+  background: var(--black); color: var(--white);
+  border-color: var(--gold);
+  box-shadow: 0 4px 14px rgba(0,0,0,.14), inset 0 -2px 0 var(--gold);
+}
+.trim-tab.active:hover { background: #000; }
+
+/* 메인 이미지 */
+.trim-hero {
+  max-width: 1160px; margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--gray3);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,.05);
+}
+.trim-main-image {
+  position: relative;
+  width: 100%;
+  height: clamp(520px, 50vw, 620px);
+  background: linear-gradient(180deg, #FAFAFA 0%, #F1F1F1 100%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.trim-main-image img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: center center;
+  padding: 24px;
+  transition: opacity .25s ease;
+}
+.trim-main-placeholder,
+.trim-compare-placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; color: #B5B5B5;
+  font-size: .8rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+  transition: opacity .25s ease;
+}
+.trim-main-placeholder::before,
+.trim-compare-placeholder::before {
+  content: ""; width: 38px; height: 1px; background: var(--gold);
+}
+.trim-is-hidden { display: none !important; }
+.trim-fading { opacity: 0 !important; }
+
+/* 트림 정보 */
+.trim-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px 32px;
+  padding: 28px 40px 30px;
+  border-top: 1px solid var(--gray3);
+  text-align: left;
+  transition: opacity .25s ease;
+}
+.trim-name {
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 900; letter-spacing: -.01em; color: var(--black);
+  line-height: 1.3;
+}
+.trim-price {
+  grid-row: span 2;
+  font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+  font-weight: 900; letter-spacing: -.02em; line-height: 1;
+  color: var(--gold); white-space: nowrap;
+}
+.trim-desc {
+  font-size: .88rem; line-height: 1.6; color: #666;
+}
+
+/* 비교 박스 */
+.trim-compare-grid {
+  max-width: 1160px; margin: 24px auto 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.trim-compare-card {
+  appearance: none; -webkit-appearance: none;
+  display: flex; flex-direction: column;
+  width: 100%; height: 100%;
+  padding: 0; text-align: left;
+  font-family: inherit; color: inherit;
+  background: var(--white);
+  border: 1px solid var(--gray3);
+  border-radius: 10px; overflow: hidden;
+  cursor: pointer;
+  transition: border-color .22s ease, box-shadow .22s ease, transform .22s ease;
+}
+.trim-compare-card:hover { border-color: rgba(212,175,122,.6); transform: translateY(-2px); }
+.trim-compare-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.trim-compare-card.active {
+  border-color: var(--gold);
+  box-shadow: 0 10px 30px rgba(0,0,0,.08), inset 0 3px 0 var(--gold);
+}
+.trim-compare-image {
+  position: relative; width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(180deg, #FAFAFA 0%, #F1F1F1 100%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.trim-compare-image img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+}
+.trim-compare-placeholder { font-size: .7rem; letter-spacing: .18em; }
+.trim-compare-body {
+  flex: 1; display: flex; flex-direction: column; gap: 6px;
+  padding: 20px 24px 22px;
+}
+.trim-compare-label {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  font-size: .8rem; font-weight: 800; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--black);
+}
+.trim-compare-state {
+  font-size: .62rem; font-weight: 800; letter-spacing: .16em;
+  color: var(--gray4); white-space: nowrap;
+  transition: color .22s ease;
+}
+.trim-compare-card.active .trim-compare-state { color: #9b7440; }
+.trim-compare-text { font-size: .9rem; line-height: 1.6; color: #555; }
+
+@media (max-width: 768px) {
+  .trim-section { padding: 48px 20px 72px; }
+  .trim-topline { margin-bottom: 24px; }
+  .trim-tabs { display: flex; width: 100%; max-width: 420px; margin: 0 auto 28px; }
+  .trim-tab { flex: 1; min-width: 0; padding: 12px 10px; }
+  .trim-main-image { height: auto; aspect-ratio: 4 / 3; }
+  .trim-main-image img { padding: 12px; }
+  .trim-info {
+    grid-template-columns: 1fr; text-align: center;
+    padding: 24px 20px 26px; gap: 8px;
+  }
+  .trim-price { grid-row: auto; order: 2; }
+  .trim-desc { order: 3; }
+  .trim-compare-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 16px; }
+  .trim-compare-body { text-align: center; align-items: center; }
+  .trim-compare-label { justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .trim-section { padding: 40px 16px 60px; }
+  .trim-tab { font-size: .7rem; letter-spacing: .12em; padding: 11px 6px; }
+  .trim-main-image { aspect-ratio: 1 / 1; min-height: 280px; }
+  .trim-name { font-size: 1.1rem; }
+  .trim-price { font-size: 2rem; }
+  .trim-desc { font-size: .82rem; }
+  .trim-compare-body { padding: 16px 18px 18px; }
 }
 
 /* ============================================================
@@ -775,33 +1008,60 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     <img id="heroImg" src="" alt="Mercedes-Benz E-Class" loading="eager" style="display:none;">
     <div class="hero-media-overlay"></div>
   </div>
-  <div class="hero-inner">
+  <div class="hero-inner hero-inner--intro">
     <p class="hero-eyebrow-text reveal">E-CLASS W214 · MY26</p>
     <h1 class="hero-main-title reveal reveal-delay-1">E-Class</h1>
     <p class="hero-subtitle reveal reveal-delay-2">메르세데스-벤츠 E 300 4MATIC</p>
     <p class="hero-tagline reveal reveal-delay-2">The Best or Nothing</p>
+  </div>
 
-    <div class="hero-divider reveal reveal-delay-3">
-      <div class="hero-divider-line"></div>
-      <span class="hero-divider-label">Focus Lineup</span>
-      <div class="hero-divider-line"></div>
+  <!-- ── TRIM SELECTOR : EXCLUSIVE / AMG LINE 디자인 비교 ── -->
+  <div class="trim-section" id="trimSection">
+    <div class="trim-topline reveal reveal-delay-3">
+      <div class="trim-topline-line"></div>
+      <span class="trim-topline-label">Choose Your Style</span>
+      <div class="trim-topline-line"></div>
     </div>
 
-    <div class="hero-cards reveal reveal-delay-4">
-      <!-- EXCLUSIVE 카드 -->
-      <div class="hero-card">
-        <span class="hero-card-accent blue"></span>
-        <div class="hero-card-name blue">E 300 4MATIC EXCLUSIVE</div>
-        <div class="hero-card-price">9,480만원</div>
-        <div class="hero-card-spec">직렬 4기통 터보 · 258ps · 4MATIC · 컴포트 서스펜션</div>
+    <!-- 1) 트림 선택 버튼 -->
+    <div class="trim-tabs reveal reveal-delay-3" role="tablist" aria-label="트림 선택">
+      <button type="button" class="trim-tab active" role="tab" data-trim="exclusive" aria-selected="true" aria-controls="trimHero">EXCLUSIVE</button>
+      <button type="button" class="trim-tab" role="tab" data-trim="amg" aria-selected="false" aria-controls="trimHero">AMG LINE</button>
+    </div>
+
+    <!-- 2) 메인 이미지 + 4) 트림 정보 -->
+    <div class="trim-hero reveal reveal-delay-4" id="trimHero" role="tabpanel">
+      <div class="trim-main-image">
+        <img id="trimMainImg" src="" alt="" class="trim-is-hidden">
+        <div class="trim-main-placeholder" id="trimMainPlaceholder">EXCLUSIVE EXTERIOR IMAGE</div>
       </div>
-      <!-- AMG Line 카드 -->
-      <div class="hero-card">
-        <span class="hero-card-accent red"></span>
-        <div class="hero-card-name red">E 300 4MATIC AMG Line</div>
-        <div class="hero-card-price">9,900만원</div>
-        <div class="hero-card-spec">직렬 4기통 터보 · 258ps · 4MATIC · 어질리티 컨트롤 서스펜션</div>
+      <div class="trim-info" id="trimInfo" aria-live="polite">
+        <div class="trim-name" id="trimName">E 300 4MATIC EXCLUSIVE</div>
+        <div class="trim-price" id="trimPrice">9,480만원</div>
+        <div class="trim-desc" id="trimDesc">직렬 4기통 터보 · 258ps · 4MATIC · 컴포트 서스펜션</div>
       </div>
+    </div>
+
+    <!-- 3) 디자인 비교 박스 -->
+    <div class="trim-compare-grid reveal reveal-delay-4" id="trimCompareGrid">
+      <button type="button" class="trim-compare-card active" data-trim="exclusive" aria-pressed="true">
+        <div class="trim-compare-image" data-compare-image="exclusive">
+          <div class="trim-compare-placeholder">EXCLUSIVE DESIGN</div>
+        </div>
+        <div class="trim-compare-body">
+          <div class="trim-compare-label"><span>EXCLUSIVE</span><span class="trim-compare-state">SELECTED</span></div>
+          <div class="trim-compare-text">수평적이고 우아한 럭셔리 디자인</div>
+        </div>
+      </button>
+      <button type="button" class="trim-compare-card" data-trim="amg" aria-pressed="false">
+        <div class="trim-compare-image" data-compare-image="amg">
+          <div class="trim-compare-placeholder">AMG LINE DESIGN</div>
+        </div>
+        <div class="trim-compare-body">
+          <div class="trim-compare-label"><span>AMG LINE</span><span class="trim-compare-state">VIEW</span></div>
+          <div class="trim-compare-text">더 스포티하고 다이내믹한 디자인</div>
+        </div>
+      </button>
     </div>
   </div>
 </section>
@@ -1177,6 +1437,122 @@ function applyImages() {
   }
 }
 applyImages();
+
+/* -- TRIM SELECTOR (EXCLUSIVE / AMG LINE) -- */
+let currentTrim = null;
+let trimFadeTimer = null;
+
+function setTrimMainImage(trim) {
+  const img = document.getElementById('trimMainImg');
+  const ph  = document.getElementById('trimMainPlaceholder');
+  if (!img || !ph) return;
+  ph.textContent = trim.placeholder;
+  if (trim.image) {
+    img.onload  = () => { img.classList.remove('trim-is-hidden'); ph.classList.add('trim-is-hidden'); };
+    img.onerror = () => { img.classList.add('trim-is-hidden'); ph.classList.remove('trim-is-hidden'); };
+    img.alt = trim.name + ' 외관';
+    img.src = trim.image;
+    if (img.complete && img.naturalWidth > 0) img.onload();
+  } else {
+    img.onload = img.onerror = null;
+    img.removeAttribute('src');
+    img.alt = '';
+    img.classList.add('trim-is-hidden');
+    ph.classList.remove('trim-is-hidden');
+  }
+}
+
+function setTrimInfo(trim) {
+  const name  = document.getElementById('trimName');
+  const price = document.getElementById('trimPrice');
+  const desc  = document.getElementById('trimDesc');
+  if (name)  name.textContent  = trim.name;
+  if (price) price.textContent = trim.price;
+  if (desc)  desc.textContent  = trim.description;
+}
+
+function updateTrimButtons(trimKey) {
+  document.querySelectorAll('.trim-tab').forEach(btn => {
+    const on = btn.dataset.trim === trimKey;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+}
+
+function updateTrimCompareCards(trimKey) {
+  document.querySelectorAll('.trim-compare-card').forEach(card => {
+    const on = card.dataset.trim === trimKey;
+    card.classList.toggle('active', on);
+    card.setAttribute('aria-pressed', on ? 'true' : 'false');
+    const state = card.querySelector('.trim-compare-state');
+    if (state) state.textContent = on ? 'SELECTED' : 'VIEW';
+  });
+}
+
+function renderTrimCompareImages() {
+  Object.values(TRIM_DATA).forEach(trim => {
+    const box = document.querySelector(`[data-compare-image="${trim.key}"]`);
+    if (!box || !trim.compareImage) return;
+    const img = document.createElement('img');
+    img.src = trim.compareImage;
+    img.alt = trim.shortLabel + ' 디자인';
+    img.loading = 'lazy';
+    img.onload  = () => { const ph = box.querySelector('.trim-compare-placeholder'); if (ph) ph.classList.add('trim-is-hidden'); };
+    img.onerror = () => { img.remove(); };
+    box.appendChild(img);
+  });
+}
+
+function renderTrim(trimKey) {
+  const trim = TRIM_DATA[trimKey];
+  if (!trim || trimKey === currentTrim) return;
+  const isFirst = currentTrim === null;
+  currentTrim = trimKey;
+
+  updateTrimButtons(trimKey);
+  updateTrimCompareCards(trimKey);
+
+  const media = document.querySelector('.trim-main-image');
+  const info  = document.getElementById('trimInfo');
+  if (isFirst || !media || !info) {
+    setTrimMainImage(trim);
+    setTrimInfo(trim);
+    return;
+  }
+  /* 빠른 크로스페이드 (약 0.25초) */
+  clearTimeout(trimFadeTimer);
+  media.classList.add('trim-fading');
+  info.classList.add('trim-fading');
+  media.style.transition = info.style.transition = 'opacity .12s ease';
+  trimFadeTimer = setTimeout(() => {
+    setTrimMainImage(TRIM_DATA[currentTrim]);
+    setTrimInfo(TRIM_DATA[currentTrim]);
+    media.classList.remove('trim-fading');
+    info.classList.remove('trim-fading');
+  }, 120);
+}
+
+function initTrimSelector() {
+  if (!document.getElementById('trimSection')) return;
+  document.querySelectorAll('.trim-tab, .trim-compare-card').forEach(el => {
+    el.addEventListener('click', () => renderTrim(el.dataset.trim));
+  });
+  /* 좌우 방향키로 버튼 전환 */
+  const tabs = Array.from(document.querySelectorAll('.trim-tab'));
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      next.focus();
+      renderTrim(next.dataset.trim);
+    });
+  });
+  /* 이미지 미리 불러오기 → 전환 시 지연 없음 */
+  Object.values(TRIM_DATA).forEach(t => { if (t.image) { const p = new Image(); p.src = t.image; } });
+  renderTrimCompareImages();
+  renderTrim(TRIM_DEFAULT);
+}
+initTrimSelector();
 
 /* -- 경쟁차 비교표 렌더링 -- */
 function renderCompareTable() {
