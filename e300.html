@@ -30,6 +30,8 @@ const IMAGES = {
 
   /* ── 모달 전용 이미지 (비어 있으면 플레이스홀더 표시) ── */
   frontSensorSystem:  "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_izi75jizi75jizi7.png?raw=true",   // DISTRONIC 카드 클릭 · E-Class W214 전방 센서 시스템 (GitHub raw URL 입력)
+  irLaminatedGlassDetail: "https://github.com/JNOHJINGYU/images/blob/main/ChatGPT%20%EC%9D%B4%EB%AF%B8%EC%A7%80%202026%EB%85%84%209%EC%9B%94%2029%EC%9D%BC%20%EC%98%A4%ED%9B%84%2002_41_26.png?raw=true",   // 편의사양 IR 라미네이티드 글래스 카드 클릭 · 상세 설명 이미지 (GitHub raw URL 입력)
+  adaptiveBrakeSystemDetail: "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_5se5m95se5m95se5.png?raw=true",   // 안전 기술 · 어댑티브 브레이크 시스템 카드 클릭 · 상세 설명 이미지 (GitHub raw URL 입력)
 };
 
 /* ── 동영상 URL 관리 (mp4 URL을 넣으면 바로 작동) ── */
@@ -788,6 +790,29 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 .conv-icon { font-size: 2rem; margin-bottom: 12px; }
 .conv-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
 .conv-card p { font-size: .86rem; color: var(--gray4); }
+/* 편의사양 · 클릭 가능한 카드 (IR 라미네이티드 글래스) */
+.conv-card.conv-card-clickable { position: relative; cursor: pointer; }
+.conv-card.conv-card-clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.conv-detail-badge {
+  position: absolute; top: 16px; right: 16px;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 10px; border-radius: 999px;
+  background: rgba(0,0,0,.05);
+  border: 1px solid transparent;
+  color: #666;
+  font-size: .68rem; font-weight: 700; letter-spacing: .04em; line-height: 1.2;
+  white-space: nowrap; pointer-events: none;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.conv-detail-badge span { color: var(--gold); transition: transform .2s ease; }
+.conv-card.conv-card-clickable:hover .conv-detail-badge,
+.conv-card.conv-card-clickable:focus-visible .conv-detail-badge {
+  background: var(--black); color: #fff; border-color: var(--gold);
+}
+.conv-card.conv-card-clickable:hover .conv-detail-badge span { transform: translateX(2px); }
+@media (max-width: 480px) {
+  .conv-detail-badge { top: 10px; right: 10px; padding: 4px 8px; font-size: .62rem; }
+}
 
 /* ============================================================
    S8 · SAFETY
@@ -804,20 +829,30 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 .safety-card p { font-size: .84rem; color: var(--gray4); }
 .red-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--red); margin-right: 6px; vertical-align: middle; }
 
-/* ============================================================
-   S9 · CHECKLIST
-   ============================================================ */
-.checklist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--gray3); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
-@media (max-width: 640px) { .checklist-grid { grid-template-columns: 1fr; } }
-.check-item { display: flex; align-items: center; gap: 16px; padding: 20px 28px; border-bottom: 1px solid var(--gray3); background: var(--white); transition: background .2s; }
-.check-item:nth-child(even) { border-left: 1px solid var(--gray3); }
-.check-item:hover { background: #F0F6FF; }
-.check-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: var(--white); font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.check-text h4 { font-size: .96rem; font-weight: 700; }
-.check-text p { font-size: .84rem; color: var(--gray4); margin: 0; }
+/* 안전 기술 · 클릭 가능한 카드 (어댑티브 브레이크 시스템) */
+.safety-card.safety-card-clickable { position: relative; cursor: pointer; }
+.safety-card.safety-card-clickable:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.safety-detail-badge {
+  position: absolute; top: 14px; right: 14px;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 10px; border-radius: 999px;
+  background: rgba(229,57,53,.08);
+  border: 1px solid transparent;
+  color: var(--red);
+  font-size: .68rem; font-weight: 700; letter-spacing: .04em; line-height: 1.2;
+  white-space: nowrap; pointer-events: none;
+  transition: background-color .2s ease, color .2s ease;
+}
+.safety-detail-badge span { transition: transform .2s ease; }
+.safety-card.safety-card-clickable:hover .safety-detail-badge,
+.safety-card.safety-card-clickable:focus-visible .safety-detail-badge { background: var(--red); color: #fff; }
+.safety-card.safety-card-clickable:hover .safety-detail-badge span { transform: translateX(2px); }
+@media (max-width: 480px) {
+  .safety-detail-badge { top: 10px; right: 10px; padding: 4px 8px; font-size: .62rem; }
+}
 
 /* ============================================================
-   S10 · 상세 제원
+   S9 · 상세 제원
    ============================================================ */
 .detail-spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--gray3); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
 @media (max-width: 640px) { .detail-spec-grid { grid-template-columns: 1fr; } }
@@ -829,7 +864,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 .ds-value.blue-val { color: var(--blue); }
 
 /* ============================================================
-   S11 · EXCLUSIVE vs AMG Line
+   S10 · EXCLUSIVE vs AMG Line
    ============================================================ */
 .vs-summary {
   background: var(--gray1);
@@ -891,7 +926,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 @media (max-width: 768px) { .vs-scroll-hint { display: block; } }
 
 /* ============================================================
-   S12 · 경쟁차 비교
+   S11 · 경쟁차 비교
    ============================================================ */
 .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); box-shadow: var(--shadow-md); }
 .compare-table { width: 100%; min-width: 700px; border-collapse: collapse; }
@@ -910,7 +945,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 @media (max-width: 768px) { .scroll-hint { display: block; } }
 
 /* ============================================================
-   S13 · 프로모션
+   S12 · 프로모션
    ============================================================ */
 .promo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 @media (max-width: 900px) { .promo-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -1378,13 +1413,17 @@ body.media-modal-lock { overflow: hidden; }
     <div class="convenience-grid">
       <div class="conv-card reveal"><div class="conv-icon">🗺️</div><h4>헤드업 디스플레이</h4><p>전방 시선 유지하며 주행 정보 확인</p></div>
       <div class="conv-card reveal reveal-delay-1"><div class="conv-icon">📱</div><h4>증강현실 내비게이션</h4><p>실제 도로 위에 방향 안내 표시</p></div>
-      <div class="conv-card reveal reveal-delay-2"><div class="conv-icon">🍎</div><h4></h4>부메스터4d 사운드</h4><p>17개의 스피커와 돌비 애트머스지원</p></div>
+      <div class="conv-card reveal reveal-delay-2"><div class="conv-icon">🍎</div><h4>부메스터 4D 사운드</h4><p>17개의 스피커와 돌비 애트머스지원</p></div>
       <div class="conv-card reveal"><div class="conv-icon">🤖</div><h4>무선 안드로이드 오토&애플 카플레이</h4><p>갤럭시폰&아이폰 무선 연결 지원</p></div>
       <div class="conv-card reveal reveal-delay-1"><div class="conv-icon">⚡</div><h4>무선 충전</h4><p>콘솔박스 무선 스마트폰 충전 패드</p></div>
       <div class="conv-card reveal reveal-delay-2"><div class="conv-icon">🌡️</div><h4>열선 + 통풍 시트</h4><p>사계절 완벽 온도 관리</p></div>
       <div class="conv-card reveal"><div class="conv-icon">🚪</div><h4>전동 트렁크</h4><p>손 없이도 열리는 편리한 트렁크</p></div>
       <div class="conv-card reveal reveal-delay-1"><div class="conv-icon">📷</div><h4>360도 카메라</h4><p>주차 걱정 없는 전방위 시야 확보</p></div>
       <div class="conv-card reveal reveal-delay-2"><div class="conv-icon">🌅</div><h4>파노라믹 선루프</h4><p>개방감 넘치는 대형 글라스 루프</p></div>
+      <div class="conv-card conv-card-clickable reveal" id="irGlassCard" role="button" tabindex="0" aria-haspopup="dialog" aria-label="IR 라미네이티드 글래스 상세보기">
+        <div class="conv-detail-badge" aria-hidden="true">상세보기 <span>→</span></div>
+        <div class="conv-icon">🛡️</div><h4>IR 라미네이티드 글래스</h4><p>자외선·적외선 차단으로 쾌적한 실내</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1411,43 +1450,22 @@ body.media-modal-lock { overflow: hidden; }
     <div class="safety-grid">
       <div class="safety-card reveal"><span class="safety-icon">🚗</span><h4><span class="red-dot"></span>액티브 디스턴스 어시스트</h4><p>앞 차와의 거리 자동 유지</p></div>
       <div class="safety-card reveal reveal-delay-1"><span class="safety-icon">⛔</span><h4><span class="red-dot"></span>액티브 브레이크 어시스트</h4><p>충돌 위험 시 자동 제동</p></div>
-      <div class="safety-card reveal reveal-delay-2"><span class="safety-icon">↔️</span><h4><span class="red-dot"></span>차선 이탈 방지</h4><p>차선 이탈 감지 및 자동 복귀</p></div>
-      <div class="safety-card reveal"><span class="safety-icon">👁️</span><h4><span class="red-dot"></span>사각지대 어시스트</h4><p>측후방 차량 감지 알림</p></div>
-      <div class="safety-card reveal reveal-delay-1"><span class="safety-icon">🛡️</span><h4><span class="red-dot"></span>PRE-SAFE® 시스템</h4><p>충돌 전 승객 자동 보호 준비</p></div>
-      <div class="safety-card reveal reveal-delay-2"><span class="safety-icon">📷</span><h4><span class="red-dot"></span>360도 카메라</h4><p>전방위 시야로 안전한 주차</p></div>
+      <div class="safety-card safety-card-clickable reveal reveal-delay-2" id="cardAdaptiveBrake" role="button" tabindex="0" aria-haspopup="dialog" aria-label="어댑티브 브레이크 시스템 상세 이미지 보기">
+        <div class="safety-detail-badge" aria-hidden="true">상세보기 <span>→</span></div>
+        <span class="safety-icon">🛑</span><h4><span class="red-dot"></span>어댑티브 브레이크 시스템</h4><p>주행 상황에 맞춰 제동력 보조</p>
+      </div>
+      <div class="safety-card reveal"><span class="safety-icon">↔️</span><h4><span class="red-dot"></span>차선 이탈 방지</h4><p>차선 이탈 감지 및 자동 복귀</p></div>
+      <div class="safety-card reveal reveal-delay-1"><span class="safety-icon">👁️</span><h4><span class="red-dot"></span>사각지대 어시스트</h4><p>측후방 차량 감지 알림</p></div>
+      <div class="safety-card reveal reveal-delay-2"><span class="safety-icon">🛡️</span><h4><span class="red-dot"></span>PRE-SAFE® 시스템</h4><p>충돌 전 승객 자동 보호 준비</p></div>
+      <div class="safety-card reveal"><span class="safety-icon">📷</span><h4><span class="red-dot"></span>360도 카메라</h4><p>전방위 시야로 안전한 주차</p></div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     S9 · EXCLUSIVE 기본 적용 옵션
+     S9 · 상세 제원
      ============================================================ -->
 <section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <span class="label-en">Standard Equipment</span>
-      <h2>E 300 4MATIC<br>기본 적용 옵션</h2>
-      <p>별도 선택 없이 모두 기본 포함됩니다</p>
-    </div>
-    <div class="checklist-grid reveal">
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>디지털 라이트 (DIGITAL LIGHT)</h4><p>130만 마이크로 미러 헤드램프</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>부메스터 4D 사운드</h4><p>시트 진동 포함 고급 오디오</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>헤드업 디스플레이</h4><p>전방 시선 유지 주행 정보</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>증강현실 내비게이션</h4><p>실제 도로 위 방향 안내</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>열선 + 통풍 시트</h4><p>앞좌석 기본 적용</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>컴포트 서스펜션</h4><p>벤츠 특유의 부드러운 승차감</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>360도 카메라</h4><p>전방위 주차 보조 시스템</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>드라이빙 어시스턴스 패키지 플러스</h4><p>반자율주행 보조 시스템 풀패키지</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>무선 스마트폰 통합 패키지</h4><p>애플카플레이 + 안드로이드 오토</p></div></div>
-      <div class="check-item"><div class="check-icon">✓</div><div class="check-text"><h4>EXCLUSIVE/AMG라인 외장 + 인테리어 패키지</h4><p>전용 디자인 요소 일체 적용</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     S10 · 상세 제원
-     ============================================================ -->
-<section class="section section-alt">
   <div class="container">
     <div class="section-heading">
       <span class="label-en">Full Specifications</span>
@@ -1482,9 +1500,9 @@ body.media-modal-lock { overflow: hidden; }
 </section>
 
 <!-- ============================================================
-     S11 · EXCLUSIVE vs AMG Line 핵심 차이
+     S10 · EXCLUSIVE vs AMG Line 핵심 차이
      ============================================================ -->
-<section class="section">
+<section class="section section-alt">
   <div class="container">
     <div class="section-heading">
       <span class="label-en">Model Comparison</span>
@@ -1543,9 +1561,9 @@ body.media-modal-lock { overflow: hidden; }
 </section>
 
 <!-- ============================================================
-     S12 · 경쟁차 비교
+     S11 · 경쟁차 비교
      ============================================================ -->
-<section class="section section-alt">
+<section class="section">
   <div class="container">
     <div class="section-heading">
       <span class="label-en">Competitive Comparison</span>
@@ -1559,9 +1577,9 @@ body.media-modal-lock { overflow: hidden; }
 </section>
 
 <!-- ============================================================
-     S13 · 프로모션
+     S12 · 프로모션
      ============================================================ -->
-<section class="section">
+<section class="section section-alt">
   <div class="container">
     <div class="section-heading">
       <span class="label-en">Monthly Promotion</span>
@@ -1864,7 +1882,7 @@ document.head.appendChild(s);
     setTimeout(() => { try { closeBtn.focus({ preventScroll: true }); } catch (e) { closeBtn.focus(); } }, 30);
   }
 
-  /* 이미지 모달 — opts: { wide: true, placeholder: '...' } */
+  /* 이미지 모달 — opts: { wide: true, placeholder: '...', emptyText: '...' } */
   function openImageModal(src, alt, opts) {
     opts = opts || {};
     stopVideo();
@@ -1877,7 +1895,7 @@ document.head.appendChild(s);
       imgEl.src = src;
       imgEl.hidden = false;
     } else {
-      showPlaceholder(phLabel, '이미지 URL을 등록해주세요.');
+      showPlaceholder(phLabel, opts.emptyText || '이미지 URL을 등록해주세요.');
     }
     show(alt);
   }
@@ -1980,6 +1998,22 @@ document.head.appendChild(s);
     addEl(document.getElementById('imgDistronic'), 'reason-action-badge', '<b>⊕</b> 전방 센서 보기');
     makeActivatable(dsCard, 'E-Class W214 전방 센서 시스템 이미지 보기', () =>
       openImageModal(IMAGES.frontSensorSystem, '메르세데스-벤츠 E클래스 (W214) 전방 센서 시스템', { wide: true, placeholder: 'FRONT SENSOR SYSTEM IMAGE' }));
+  }
+
+  /* 5) 안전 기술 · 어댑티브 브레이크 시스템 카드 → 상세 이미지 */
+  const adaptiveBrakeCard = document.getElementById('cardAdaptiveBrake');
+  if (adaptiveBrakeCard) {
+    makeActivatable(adaptiveBrakeCard, '어댑티브 브레이크 시스템 상세 이미지 보기', () =>
+      openImageModal(IMAGES.adaptiveBrakeSystemDetail || '', 'Mercedes-Benz 어댑티브 브레이크 시스템',
+        { wide: true, placeholder: 'ADAPTIVE BRAKE SYSTEM IMAGE', emptyText: '상세 이미지 URL을 등록해주세요.' }));
+  }
+
+  /* 4) 편의사양 · IR 라미네이티드 글래스 카드 → 상세 이미지 */
+  const irGlassCard = document.getElementById('irGlassCard');
+  if (irGlassCard) {
+    makeActivatable(irGlassCard, 'IR 라미네이티드 글래스 상세보기', () =>
+      openImageModal(IMAGES.irLaminatedGlassDetail || '', 'Mercedes-Benz IR 라미네이티드 글래스 상세 설명',
+        { wide: true, placeholder: 'IR LAMINATED GLASS', emptyText: '상세 이미지 URL을 등록해주세요.' }));
   }
 })();
 </script>
