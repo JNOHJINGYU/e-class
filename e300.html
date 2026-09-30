@@ -666,7 +666,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 /* ============================================================
    S2 · STATS
    ============================================================ */
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
 .stat-card {
   background: var(--white); border: 1px solid var(--gray3);
@@ -973,10 +973,15 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
    MOBILE ONLY — 통계 카드 균일화 + 편의사양 이미지 최적화
    ============================================================ */
 @media (max-width: 768px) {
-  /* 02 · STATS — 카드 4개 균일화 */
+  /* 02 · STATS — 카드 3개 : 2열 + 마지막 카드 중앙 정렬 */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 14px;
+  }
+  .stats-grid .stat-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 7px);
   }
   .stat-card {
     min-height: 210px;
@@ -1295,14 +1300,9 @@ body.media-modal-lock { overflow: hidden; }
         <div class="stat-desc">대한민국 판매량 기준 독보적 1위</div>
       </div>
       <div class="stat-card reveal reveal-delay-2">
-        <div class="stat-number">20만대</div>
+        <div class="stat-number">37만대</div>
         <div class="stat-label">단일모델 판매</div>
-        <div class="stat-desc">국내 최초 최대 판매</div>
-      </div>
-      <div class="stat-card reveal reveal-delay-3">
-        <div class="stat-number">75<span style="font-size:1.4rem">개</span></div>
-        <div class="stat-label">전국 서비스센터 75개소 운영</div>
-        <div class="stat-desc">국내 최대 규모의 서비스 인프라</div>
+        <div class="stat-desc">국내 누적 판매 기준</div>
       </div>
     </div>
   </div>
