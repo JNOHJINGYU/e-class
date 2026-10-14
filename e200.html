@@ -14,14 +14,55 @@
      ============================================================ -->
 <script>
 const IMAGES = {
-  hero:               "https://github.com/JNOHJINGYU/images/blob/main/23C0379_001.jpg?raw=true",   // S1 히어로 · 차량 사진
-  digitalLight:       "https://github.com/JNOHJINGYU/images/blob/main/mercedes_me_converted.jpg?raw=true",   // S3 카드 1 · 디지털 라이트
-  distronic:          "https://github.com/JNOHJINGYU/images/blob/main/autodrive.png?raw=true",   // S3 카드 2 · 디스트로닉
-  parking:            "https://github.com/JNOHJINGYU/images/blob/main/camera.png?raw=true",   // S3 카드 3 · 주차 보조
-  burmester:          "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_xwnoefxwnoefxwno.png?raw=true",   // S3 카드 4 · 부메스터
-  interior:           "https://github.com/JNOHJINGYU/images/blob/main/23C0379_003.jpg?raw=true",   // S7 인테리어
-  safety:             "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_doclujdoclujdocl.png?raw=true",   // S8 안전
+  hero:               "https://raw.githubusercontent.com/JNOHJINGYU/images/main/23C0379_001.jpg",   // S1 히어로 · 차량 사진
+  digitalLight:       "https://raw.githubusercontent.com/JNOHJINGYU/images/main/mercedes_me_converted.jpg",   // S3 카드 1 · 디지털 라이트
+  distronic:          "https://raw.githubusercontent.com/JNOHJINGYU/images/main/autodrive.png",   // S3 카드 2 · 디스트로닉
+  parking:            "https://raw.githubusercontent.com/JNOHJINGYU/images/main/camera.png",   // S3 카드 3 · 주차 보조
+  burmester:          "https://raw.githubusercontent.com/JNOHJINGYU/images/main/Gemini_Generated_Image_xwnoefxwnoefxwno.png",   // S3 카드 4 · 부메스터
+  interior:           "https://raw.githubusercontent.com/JNOHJINGYU/images/main/23C0379_003.jpg",   // S7 인테리어
+  safety:             "https://raw.githubusercontent.com/JNOHJINGYU/images/main/Gemini_Generated_Image_doclujdoclujdocl.png",   // S8 안전
+
+  /* ── TRIM SELECTOR 이미지 (비어 있으면 플레이스홀더 표시) ── */
+  exclusiveExterior:  "https://raw.githubusercontent.com/JNOHJINGYU/images/main/ex1.png",   // E200 EXCLUSIVE 외관 이미지
+  amgExterior:        "https://raw.githubusercontent.com/JNOHJINGYU/images/main/20261014133725.png",   // E200 AMG LINE 외관 이미지
 };
+
+/* 이미지 주소 입력 안내
+   - raw.githubusercontent.com 직접 주소를 권장합니다.
+     (github.com/.../blob/... 주소를 붙여넣어도 자동으로 직접 주소로 변환됩니다)
+   - GitHub에서 같은 파일명으로 이미지를 교체했는데 예전 이미지가 보이면
+     아래 IMAGE_CACHE_VERSION 값을 바꿔주세요 (예: "20261014b").
+   - 이미지가 안 보이면 F12 콘솔에서 checkAllImageLinks() 를 실행하면
+     키별 상태를 표로 확인할 수 있습니다. */
+const IMAGE_CACHE_VERSION = "20261014";
+</script>
+
+<!-- ============================================================
+     트림 선택 데이터 (TRIM SELECTOR)
+     가격·사양이 바뀌면 이 영역만 수정하면 화면에 자동 반영됩니다.
+     ============================================================ -->
+<script>
+const TRIM_DATA = {
+  exclusive: {
+    key: "exclusive",
+    label: "EXCLUSIVE",
+    name: "E 200 EXCLUSIVE",
+    price: "7,660만원",
+    description: "직렬 4기통 가솔린 터보 · 204ps · 후륜구동 · 컴포트 서스펜션",
+    image: IMAGES.exclusiveExterior,
+    placeholder: "EXCLUSIVE EXTERIOR IMAGE"
+  },
+  amg: {
+    key: "amg",
+    label: "AMG LINE",
+    name: "E 200 AMG LINE",
+    price: "8,100만원",   // 기존 E200 페이지(히어로 카드·S7 비교표) 기재 가격
+    description: "직렬 4기통 가솔린 터보 · 204ps · 후륜구동 · 스포츠 서스펜션",   // 기존 S7 비교표 기준
+    image: IMAGES.amgExterior,
+    placeholder: "AMG LINE EXTERIOR IMAGE"
+  }
+};
+const TRIM_DEFAULT = "exclusive";
 </script>
 
 <!-- ============================================================
@@ -256,60 +297,133 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 .hero-badge {
   display: none;
 }
-.hero-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+
+/* ============================================================
+   S1-B · TRIM SELECTOR (EXCLUSIVE / AMG LINE) — E300 디자인 기준
+   ============================================================ */
+#trim { background: var(--white); }
+.trim-section {
+  max-width: 1200px;
   margin: 0 auto;
-  max-width: 700px;
+  padding: 64px 24px 110px;
+  background: var(--white);
+  text-align: center;
+}
+.trim-topline {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; margin-bottom: 30px;
+}
+.trim-topline-line {
+  flex: 1; max-width: 110px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.trim-topline-label {
+  font-size: .7rem; font-weight: 800; letter-spacing: .3em;
+  text-transform: uppercase; color: #9b7440;
+}
+/* 버튼 (캡슐형 segmented control) */
+.trim-tabs {
+  display: inline-flex; gap: 4px; padding: 4px;
+  background: var(--gray2); border: 1px solid var(--gray3);
+  border-radius: 100px; margin-bottom: 36px;
+}
+.trim-tab {
+  appearance: none; -webkit-appearance: none;
+  min-width: 150px; padding: 12px 28px;
+  border: 1px solid transparent; border-radius: 100px;
+  background: transparent; color: var(--black);
+  font-family: inherit; font-size: .78rem; font-weight: 800;
+  letter-spacing: .18em; text-transform: uppercase; white-space: nowrap;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: background-color .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.trim-tab:hover { background: var(--white); border-color: rgba(212,175,122,.55); }
+.trim-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.trim-tab.active {
+  background: var(--black); color: var(--white);
+  border-color: var(--gold);
+  box-shadow: 0 4px 14px rgba(0,0,0,.14), inset 0 -2px 0 var(--gold);
+}
+.trim-tab.active:hover { background: #000; }
+/* 대형 이미지 카드 */
+.trim-hero {
+  max-width: 1160px; margin: 0 auto;
+  background: var(--white);
+  border: 1px solid var(--gray3);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,.05);
+}
+.trim-main-image {
+  position: relative;
   width: 100%;
-  padding: 0 16px;
-  animation: fadeIn 1s ease-in .4s backwards;
+  height: clamp(520px, 50vw, 620px);
+  background: linear-gradient(180deg, #FAFAFA 0%, #F1F1F1 100%);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  transition: opacity .25s ease;
 }
-.hero-card {
-  background: rgba(0,0,0,.4);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: var(--radius);
-  padding: 20px 20px;
-  color: var(--white);
-  transition: all .4s ease;
-  cursor: default;
+.trim-main-image img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain; object-position: center center;
+  padding: 24px;
 }
-.hero-card:hover {
-  background: rgba(0,0,0,.5);
-  border-color: rgba(255,255,255,.2);
-  transform: translateY(-8px);
+.trim-main-placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; color: #B5B5B5;
+  font-size: .8rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
 }
-.hero-card-title {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: .05em;
-  margin-bottom: 8px;
-  color: #ffffff;
-  text-shadow: 0 3px 10px rgba(0,0,0,.95);
+.trim-main-placeholder::before {
+  content: ""; width: 38px; height: 1px; background: var(--gold);
 }
-.hero-card-price {
-  font-size: 1.7rem;
-  font-weight: 900;
-  margin-bottom: 12px;
-  color: var(--white);
-  text-shadow: 0 4px 14px rgba(0,0,0,.95);
+.trim-is-hidden { display: none !important; }
+.trim-fading { opacity: 0 !important; }
+/* 트림 정보 */
+.trim-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px 32px;
+  padding: 28px 40px 30px;
+  border-top: 1px solid var(--gray3);
+  text-align: left;
+  transition: opacity .25s ease;
 }
-.hero-card-items {
-  font-size: .9rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,.8);
-  text-shadow: 0 3px 10px rgba(0,0,0,.9);
+.trim-name {
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 900; letter-spacing: -.01em; color: var(--black);
+  line-height: 1.3;
 }
-.hero-card-items li {
-  list-style: none;
-  margin-bottom: 5px;
+.trim-price {
+  grid-row: span 2;
+  font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+  font-weight: 900; letter-spacing: -.02em; line-height: 1;
+  color: var(--gold); white-space: nowrap;
 }
-.hero-card-items li:before {
-  content: '• ';
-  color: var(--gold);
-  font-weight: 700;
+.trim-desc { font-size: .88rem; line-height: 1.6; color: #666; }
+@media (max-width: 768px) {
+  .trim-section { padding: 48px 20px 72px; }
+  .trim-topline { margin-bottom: 24px; }
+  .trim-tabs { display: flex; width: 100%; max-width: 420px; margin: 0 auto 28px; }
+  .trim-tab { flex: 1; min-width: 0; padding: 12px 10px; min-height: 44px; }
+  .trim-main-image { height: auto; aspect-ratio: 4 / 3; }
+  .trim-main-image img { padding: 12px; }
+  .trim-info {
+    grid-template-columns: 1fr; text-align: center;
+    padding: 24px 20px 26px; gap: 8px;
+  }
+  .trim-name { order: 1; }
+  .trim-price { grid-row: auto; order: 2; }
+  .trim-desc { order: 3; }
+}
+@media (max-width: 480px) {
+  .trim-section { padding: 40px 16px 60px; }
+  .trim-tab { font-size: .7rem; letter-spacing: .12em; padding: 11px 6px; }
+  .trim-main-image { aspect-ratio: 1 / 1; min-height: 280px; }
+  .trim-name { font-size: 1.1rem; }
+  .trim-price { font-size: 2rem; }
+  .trim-desc { font-size: .82rem; }
 }
 
 /* ============================================================
@@ -862,41 +976,82 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     text-shadow: none;
   }
   
-  /* 카드 위치 조정 (차량 가리지 않게) */
-  .hero-cards {
-    margin-top: 130px;
-    transform: translateY(180px);
-    max-width: 580px;
-    gap: 18px;
+  /* ---- 섹션 공통 ---- */
+  .section-heading p {
+    font-size: 1.15rem;
   }
   
-  /* 카드 자체 살짝 축소 */
-  .hero-card {
-    padding: 18px 16px;
-    min-height: auto;
-    background: rgba(0,0,0,0.48);
-    backdrop-filter: blur(10px);
+  /* ---- S2 WHY 섹션 ---- */
+  .why-card p {
+    font-size: 1.05rem;
   }
   
-  /* 차량명 크기 축소 */
-  .hero-card-title {
+  /* ---- S3 편의사양 섹션 ---- */
+  .feature-content {
+    padding: 30px;
+  }
+  .feature-card h3 {
+    font-size: 1.35rem;
+  }
+  .feature-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  
+  /* ---- S4 핵심 제원 ---- */
+  .spec-label {
+    font-size: .95rem;
+  }
+  
+  /* ---- S5 상세 제원 ---- */
+  .specs-table th {
+    font-size: 1rem;
+  }
+  .specs-table td {
+    font-size: 1rem;
+  }
+  
+  /* ---- S6 기본 사양 ---- */
+  .feature-category {
+    padding: 38px 34px;
+  }
+  .feature-category h4 {
     font-size: 1.25rem;
-    font-weight: 800;
-    margin-bottom: 6px;
+  }
+  .feature-category li {
+    font-size: 1rem;
+    line-height: 1.75;
   }
   
-  .hero-card-price {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+  /* ---- S7 비교 ---- */
+  .vs-summary-item {
+    font-size: 1.05rem;
+  }
+  .vs-table th {
+    font-size: 1rem;
+  }
+  .vs-table td {
+    font-size: 1rem;
   }
   
-  .hero-card-items {
-    font-size: 0.8rem;
-    line-height: 1.55;
+  /* ---- S9 경쟁차 비교 ---- */
+  .compare-table th {
+    font-size: 1rem;
+  }
+  .compare-table td {
+    font-size: .98rem;
   }
   
-  .hero-card-items li {
-    margin-bottom: 3px;
+  /* ---- S10 프로모션 ---- */
+  .promo-card {
+    padding: 46px 34px;
+  }
+  .promo-card h3 {
+    font-size: 1.35rem;
+  }
+  .promo-content {
+    font-size: 1rem;
+    line-height: 1.7;
   }
   
   /* ---- 섹션 공통 ---- */
@@ -976,86 +1131,6 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: 1rem;
     line-height: 1.7;
   }
-}
-  
-  /* ---- 섹션 공통 ---- */
-  .section-heading p {
-    font-size: 1.15rem;
-  }
-  
-  /* ---- S2 WHY 섹션 ---- */
-  .why-card p {
-    font-size: 1.05rem;
-  }
-  
-  /* ---- S3 편의사양 섹션 ---- */
-  .feature-content {
-    padding: 30px;
-  }
-  .feature-card h3 {
-    font-size: 1.35rem;
-  }
-  .feature-card p {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-  
-  /* ---- S4 핵심 제원 ---- */
-  .spec-label {
-    font-size: .95rem;
-  }
-  
-  /* ---- S5 상세 제원 ---- */
-  .specs-table th {
-    font-size: 1rem;
-  }
-  .specs-table td {
-    font-size: 1rem;
-  }
-  
-  /* ---- S6 기본 사양 ---- */
-  .feature-category {
-    padding: 38px 34px;
-  }
-  .feature-category h4 {
-    font-size: 1.25rem;
-  }
-  .feature-category li {
-    font-size: 1rem;
-    line-height: 1.75;
-  }
-  
-  /* ---- S7 비교 ---- */
-  .vs-summary-item {
-    font-size: 1.05rem;
-  }
-  .vs-table th {
-    font-size: 1rem;
-  }
-  .vs-table td {
-    font-size: 1rem;
-  }
-  
-  /* ---- S9 경쟁차 비교 ---- */
-  .compare-table th {
-    font-size: 1rem;
-  }
-  .compare-table td {
-    font-size: .98rem;
-  }
-  
-  /* ---- S10 프로모션 ---- */
-  .promo-card {
-    padding: 46px 34px;
-  }
-  .promo-card h3 {
-    font-size: 1.35rem;
-  }
-  .promo-content {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-}
   
   /* ---- 섹션 공통 ---- */
   .section-heading p {
@@ -1138,7 +1213,6 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 
 /* ---- 태블릿 (481px ~ 768px) ---- */
 @media (max-width: 768px) {
-  .hero-cards { grid-template-columns: 1fr; }
   .vs-summary { grid-template-columns: 1fr; gap: 16px; }
   .vs-summary-sep { display: none; }
   .specs-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1189,32 +1263,6 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   .hero-title p {
     font-size: 1rem;
   }
-  .hero-cards {
-    grid-template-columns: 1fr;
-    margin: 20px auto 0;
-    gap: 14px;
-    max-width: 420px;
-  }
-  .hero-card {
-    padding: 22px 18px;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.14);
-  }
-  .hero-card-title {
-    font-size: .9rem;
-    margin-bottom: 10px;
-  }
-  .hero-card-price {
-    font-size: 1.4rem;
-    margin-bottom: 12px;
-  }
-  .hero-card-items {
-    font-size: .75rem;
-    line-height: 1.6;
-  }
-  .hero-card-items li {
-    margin-bottom: 4px;
-  }
 }
 </style>
 </head>
@@ -1244,30 +1292,36 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
         <p>가장 합리적인 메르세데스-벤츠</p>
       </div>
     </div>
-    
-    <!-- [S1-4] 비교 카드 그룹 (하단) -->
-    <div class="hero-cards">
-      <!-- [S1-4-1] Exclusive 카드 -->
-      <div class="hero-card">
-        <div class="hero-card-title">E200 Exclusive</div>
-        <div class="hero-card-price">7,750만원</div>
-        <ul class="hero-card-items">
-          <li>M254 직렬 4기통 가솔린 터보</li>
-          <li>204ps</li>
-          <li>후륜구동(RWD)</li>
-          <li>Exclusive 패키지</li>
-        </ul>
+  </div>
+</section>
+
+<!-- ============================================================
+     [S1-B] TRIM SELECTOR : EXCLUSIVE / AMG LINE (가격은 이 섹션에서만 표시)
+     ============================================================ -->
+<section id="trim">
+  <div class="trim-section" id="trimSection">
+    <div class="trim-topline reveal">
+      <div class="trim-topline-line"></div>
+      <span class="trim-topline-label">Choose Your Style</span>
+      <div class="trim-topline-line"></div>
+    </div>
+
+    <!-- 트림 선택 버튼 -->
+    <div class="trim-tabs reveal reveal-delay-1" role="tablist" aria-label="트림 선택">
+      <button type="button" class="trim-tab active" role="tab" id="trimTab-exclusive" data-trim="exclusive" aria-selected="true" aria-controls="trimHero">EXCLUSIVE</button>
+      <button type="button" class="trim-tab" role="tab" id="trimTab-amg" data-trim="amg" aria-selected="false" aria-controls="trimHero" tabindex="-1">AMG LINE</button>
+    </div>
+
+    <!-- 대형 이미지 카드 + 트림 정보 -->
+    <div class="trim-hero reveal reveal-delay-2" id="trimHero" role="tabpanel" aria-labelledby="trimTab-exclusive">
+      <div class="trim-main-image" id="trimMedia">
+        <img id="trimMainImg" alt="" class="trim-is-hidden" decoding="async">
+        <div class="trim-main-placeholder" id="trimMainPlaceholder">EXCLUSIVE EXTERIOR IMAGE</div>
       </div>
-      <!-- [S1-4-2] AMG Line 카드 -->
-      <div class="hero-card">
-        <div class="hero-card-title">E200 AMG Line</div>
-        <div class="hero-card-price">8,100만원</div>
-        <ul class="hero-card-items">
-          <li>M254 직렬 4기통 가솔린 터보</li>
-          <li>204ps</li>
-          <li>후륜구동(RWD)</li>
-          <li>AMG Line 패키지</li>
-        </ul>
+      <div class="trim-info" id="trimInfo" aria-live="polite">
+        <div class="trim-name" id="trimName">E 200 EXCLUSIVE</div>
+        <div class="trim-price" id="trimPrice">7,660만원</div>
+        <div class="trim-desc" id="trimDesc">직렬 4기통 가솔린 터보 · 204ps · 후륜구동 · 컴포트 서스펜션</div>
       </div>
     </div>
   </div>
@@ -1708,24 +1762,106 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
      [SCRIPT] JAVASCRIPT & FUNCTIONALITY
      ============================================================ -->
 <script>
+/* -- 이미지 URL 처리 (GLC 페이지와 동일한 방식) -- */
+const IMAGE_LOG_PREFIX = '[E200 이미지]';
+function safeDecode(seg){ try { return decodeURIComponent(seg); } catch(e){ return seg; } }
+// github.com/<user>/<repo>/blob|raw/<branch>/<path>(?raw=true) → raw.githubusercontent.com 직접 주소
+function normalizeImageUrl(url){
+  let u = (url || '').trim();
+  if(!u) return '';
+  const m = u.match(/^https?:\/\/(?:www\.)?github\.com\/([^\/]+)\/([^\/]+)\/(?:blob|raw)\/([^?#]+)/i);
+  if(m){
+    const path = m[3].split('/').map(seg => encodeURIComponent(safeDecode(seg))).join('/');
+    u = `https://raw.githubusercontent.com/${m[1]}/${m[2]}/${path}`;
+  }
+  return u;
+}
+// ?v=IMAGE_CACHE_VERSION 자동 추가 (재시도 시 r= 토큰 추가)
+function resolveImageSrc(url, retryToken){
+  const u = normalizeImageUrl(url);
+  if(!u) return '';
+  try{
+    const o = new URL(u, location.href);
+    if(typeof IMAGE_CACHE_VERSION !== 'undefined' && IMAGE_CACHE_VERSION && !o.searchParams.has('v')) o.searchParams.set('v', IMAGE_CACHE_VERSION);
+    if(retryToken) o.searchParams.set('r', retryToken);
+    return o.toString();
+  }catch(e){ return u; }
+}
+// 실패한 이미지의 키·주소·원인을 콘솔에 기록
+function diagnoseImageFailure(key, originalUrl, requestedUrl){
+  const base = { key, IMAGES_값: originalUrl, 요청한_주소: requestedUrl };
+  if(typeof fetch !== 'function'){ console.error(`${IMAGE_LOG_PREFIX} 로딩 실패: IMAGES["${key}"]`, base); return; }
+  fetch(requestedUrl, { method:'HEAD', cache:'no-store' }).then(res=>{
+    const type = res.headers.get('content-type') || '';
+    let reason;
+    if(res.status === 404) reason = '404 - 파일이 존재하지 않습니다 (경로/파일명/대소문자 확인)';
+    else if(res.status === 403 || res.status === 401) reason = `${res.status} - 접근이 차단되었습니다`;
+    else if(res.status === 429) reason = '429 - 요청이 너무 많아 서버가 일시 차단했습니다';
+    else if(!res.ok) reason = `HTTP ${res.status}`;
+    else if(type && !/^image\//i.test(type)) reason = `이미지가 아닌 데이터 (content-type: ${type})`;
+    else reason = '서버 응답은 정상 - 일시적 네트워크 오류이거나 파일 손상';
+    console.error(`${IMAGE_LOG_PREFIX} 로딩 실패: IMAGES["${key}"] → ${reason}`, Object.assign(base, { HTTP상태: res.status }));
+  }).catch(err=>{
+    console.error(`${IMAGE_LOG_PREFIX} 로딩 실패: IMAGES["${key}"] → 네트워크 오류 또는 접근 차단`, Object.assign(base, { 오류: String(err) }));
+  });
+}
+// img에 주소를 넣고, 실패 시 1회 재시도 → 그래도 실패하면 onFail 실행 + 콘솔 기록
+function loadImageWithRetry(img, key, url, onFail, isCurrent){
+  const original = (url || '').trim();
+  let retried = false;
+  img.onerror = () => {
+    if(isCurrent && !isCurrent()) return;
+    const failed = img.getAttribute('src');
+    if(!retried){
+      retried = true;
+      console.warn(`${IMAGE_LOG_PREFIX} 로딩 실패 → 재시도: IMAGES["${key}"]`, failed);
+      setTimeout(()=>{ if(img.getAttribute('src') === failed) img.src = resolveImageSrc(original, Date.now().toString(36)); }, 600);
+      return;
+    }
+    if(onFail) onFail();
+    diagnoseImageFailure(key, original, failed);
+  };
+  img.src = resolveImageSrc(original);
+}
+// 콘솔 점검용: checkAllImageLinks()
+function checkAllImageLinks(){
+  return Promise.all(Object.keys(IMAGES).map(key=>{
+    const url = resolveImageSrc(IMAGES[key]);
+    if(!url) return Promise.resolve({ key, url:'(비어 있음)', status:'-', ok:false });
+    return fetch(url, { method:'HEAD', cache:'no-store' })
+      .then(r=>({ key, url, status:r.status, type:r.headers.get('content-type')||'', ok: r.ok && /^image\//i.test(r.headers.get('content-type')||'') }))
+      .catch(e=>({ key, url, status:'network error', type:String(e), ok:false }));
+  })).then(rows=>{
+    console.table(rows);
+    const bad = rows.filter(r=>!r.ok);
+    if(bad.length) console.error(`${IMAGE_LOG_PREFIX} 문제 있는 이미지 ${bad.length}개:`, bad.map(r=>r.key));
+    else console.info(`${IMAGE_LOG_PREFIX} 모든 이미지(${rows.length}개) 정상`);
+    return rows;
+  });
+}
+window.checkAllImageLinks = checkAllImageLinks;
+
 /* -- 이미지 자동 적용 -- */
 function applyImages() {
   const map = {
-    imgDigitalLight:     IMAGES.digitalLight,
-    imgDistronic:        IMAGES.distronic,
-    imgParking:          IMAGES.parking,
-    imgBurmester:        IMAGES.burmester,
-    imgInterior:         IMAGES.interior,
-    imgSafety:           IMAGES.safety,
+    imgDigitalLight:     'digitalLight',
+    imgDistronic:        'distronic',
+    imgParking:          'parking',
+    imgBurmester:        'burmester',
+    imgInterior:         'interior',
+    imgSafety:           'safety',
   };
-  Object.entries(map).forEach(([id, url]) => {
+  Object.entries(map).forEach(([id, key]) => {
+    const url = IMAGES[key];
     if (!url) return;
     const box = document.getElementById(id);
     if (!box) return;
     const img = document.createElement('img');
-    img.src = url; img.alt = id; img.loading = 'lazy';
+    img.alt = id; img.loading = 'lazy';
     img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
     box.appendChild(img);
+    // 최종 실패 시 깨진 이미지 아이콘 대신 기존 박스 배경을 그대로 보여줌
+    loadImageWithRetry(img, key, url, () => img.remove());
   });
 
   /* 히어로 이미지 적용 */
@@ -1733,14 +1869,106 @@ function applyImages() {
   const heroMedia = document.getElementById('heroMedia');
   if (heroImg && heroMedia) {
     if (IMAGES.hero) {
-      heroImg.src = IMAGES.hero;
       heroImg.style.display = 'block';
+      loadImageWithRetry(heroImg, 'hero', IMAGES.hero, () => { heroImg.style.display = 'none'; });
     } else {
       heroMedia.style.display = 'none';
     }
   }
 }
 applyImages();
+
+/* -- 트림 선택 (EXCLUSIVE / AMG LINE) --
+   TRIM_DATA 값만 바꾸면 화면에 자동 반영됩니다.
+   이미지가 비어 있거나 로딩에 실패하면 플레이스홀더를 표시합니다. */
+let currentTrim = null;
+let trimFadeTimer = null;
+let trimLoadToken = 0;
+
+function setTrimMainImage(trim) {
+  const img = document.getElementById('trimMainImg');
+  const ph  = document.getElementById('trimMainPlaceholder');
+  if (!img || !ph) return;
+  const token = ++trimLoadToken;           // 이전 트림 이미지의 늦은 응답 무시
+  const url = (trim.image || '').trim();
+  ph.textContent = trim.placeholder || (trim.label + ' EXTERIOR IMAGE');
+  img.onload = img.onerror = null;
+  img.classList.add('trim-is-hidden');
+  ph.classList.remove('trim-is-hidden');
+  if (!url) { img.removeAttribute('src'); return; }
+  img.alt = trim.name + ' 외관';
+  img.onload = () => {
+    if (token !== trimLoadToken) return;
+    img.classList.remove('trim-is-hidden');
+    ph.classList.add('trim-is-hidden');
+  };
+  const key = trim.key === 'amg' ? 'amgExterior' : 'exclusiveExterior';
+  loadImageWithRetry(img, key, url, () => {
+    img.classList.add('trim-is-hidden');
+    ph.classList.remove('trim-is-hidden');
+  }, () => token === trimLoadToken);
+  if (img.complete && img.naturalWidth > 0) img.onload();
+}
+
+function setTrimInfo(trim) {
+  const name  = document.getElementById('trimName');
+  const price = document.getElementById('trimPrice');
+  const desc  = document.getElementById('trimDesc');
+  if (name)  name.textContent  = trim.name || '';
+  if (price) price.textContent = trim.price || '가격 확인 중';
+  if (desc)  desc.textContent  = trim.description || '';
+}
+
+function updateTrimButtons(trimKey) {
+  document.querySelectorAll('.trim-tab').forEach(btn => {
+    const on = btn.dataset.trim === trimKey;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    btn.tabIndex = on ? 0 : -1;
+    if (on) document.getElementById('trimHero').setAttribute('aria-labelledby', btn.id);
+  });
+}
+
+function renderTrim(trimKey) {
+  const trim = TRIM_DATA[trimKey];
+  if (!trim || trimKey === currentTrim) return;
+  const isFirst = currentTrim === null;
+  currentTrim = trimKey;
+  updateTrimButtons(trimKey);
+
+  const media = document.getElementById('trimMedia');
+  const info  = document.getElementById('trimInfo');
+  clearTimeout(trimFadeTimer);
+  if (isFirst) {
+    setTrimMainImage(trim);
+    setTrimInfo(trim);
+    return;
+  }
+  media.classList.add('trim-fading');
+  info.classList.add('trim-fading');
+  trimFadeTimer = setTimeout(() => {
+    const t = TRIM_DATA[currentTrim];      // 빠르게 연속 클릭해도 마지막 선택만 반영
+    setTrimMainImage(t);
+    setTrimInfo(t);
+    media.classList.remove('trim-fading');
+    info.classList.remove('trim-fading');
+  }, 200);
+}
+
+function initTrimSelector() {
+  if (!document.getElementById('trimSection')) return;
+  const tabs = Array.from(document.querySelectorAll('.trim-tab'));
+  tabs.forEach(btn => btn.addEventListener('click', () => renderTrim(btn.dataset.trim)));
+  tabs.forEach((btn, i) => btn.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+    next.focus();
+    renderTrim(next.dataset.trim);
+  }));
+  renderTrim(TRIM_DATA[TRIM_DEFAULT] ? TRIM_DEFAULT : Object.keys(TRIM_DATA)[0]);
+}
+initTrimSelector();
 
 /* -- 경쟁차 비교표 렌더링 -- */
 function renderCompareTable() {
