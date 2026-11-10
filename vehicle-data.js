@@ -22,23 +22,47 @@ const DATA_BASIS = 'MB 어프로치 / 공식 카탈로그 기준 · MY26 · 2026
    이미지 URL 관리 영역
    - https://... 또는 images/파일명.jpg 형태로 입력
    - 비워두면 레이아웃이 유지된 채 "이미지 준비 중" 영역으로 표시됩니다
+   - GitHub 이미지는 반드시 raw.githubusercontent.com 주소를 사용하세요.
+     github.com/.../blob/main/파일?raw=true 주소는 github.com에서 2번 리다이렉트된 뒤
+     같은 파일에 도착하므로, 이미지마다 요청이 3번 오가 첫 표시가 늦어집니다.
+       (X) https://github.com/JNOHJINGYU/images/blob/main/파일명.jpg?raw=true
+       (O) https://raw.githubusercontent.com/JNOHJINGYU/images/main/파일명.jpg
    ========================================================================== */
-const E53_PHOTO = 'https://github.com/JNOHJINGYU/images/blob/main/Mercedes-Benz-E53_AMG_Hybrid-2025-1280-884184b31620baccde7022ed1083298d80.jpg?raw=true';
+const GH_IMG = 'https://raw.githubusercontent.com/JNOHJINGYU/images/main/';
+
+/* ▶ WebP 스위치 (메인 페이지 hybrid.html 이미지)
+   false : 기존 JPG를 사용합니다.
+   true  : 아래 webp 파일을 사용합니다. (2026.11.10 images 저장소 업로드·접근 확인 완료 — 현재 사용 중)
+           → images 저장소에 WebP 10개를 업로드하고, 주소가 열리는 것을 확인한 뒤에만 true로 바꾸세요.
+             (업로드 전에 true로 바꾸면 이미지가 "이미지 준비 중"으로 표시됩니다) */
+const USE_WEBP = true;
+const pickImg = (jpg, webp) => GH_IMG + (USE_WEBP && webp ? webp : jpg);
+
+const E53_PHOTO = GH_IMG + 'Mercedes-Benz-E53_AMG_Hybrid-2025-1280-884184b31620baccde7022ed1083298d80.jpg'; // 1280×960 · 113KB
 
 const IMAGE_LINKS = {
   main: {
-    hero: 'https://github.com/JNOHJINGYU/images/blob/main/eclass-phev-hero-cutaway.jpg?raw=true',
-    heroMobile: '',            // 비워두면 hero 이미지를 사용
-    phevCutaway: 'https://github.com/JNOHJINGYU/images/blob/main/e350e-phev-cutaway-labeled.jpg?raw=true', // SECTION 02 투시도 (1장)
-    whyQuiet: 'https://github.com/JNOHJINGYU/images/blob/main/e-phev-mode-electric.jpg?raw=true',          // SECTION 04 · 01 전기 주행
-    whyRange: 'https://github.com/JNOHJINGYU/images/blob/main/e-phev-mode-gasoline.jpg?raw=true',          // SECTION 04 · 02 가솔린 주행
-    whyEfficiency: 'https://github.com/JNOHJINGYU/images/blob/main/e-phev-mode-hybrid.jpg?raw=true',       // SECTION 04 · 03 하이브리드 주행
-    whyResponse: 'https://github.com/JNOHJINGYU/images/blob/main/e-phev-mode-acceleration.jpg?raw=true',   // SECTION 04 · 04 가속 주행
-    cardE350e: 'https://github.com/JNOHJINGYU/images/blob/main/e350e-phev-home-charging.jpg?raw=true', // SECTION 05 라인업 카드
-    cardE53: E53_PHOTO,
+    /* HERO — hybrid.html <head>에서 가장 먼저(preload) 요청됩니다 */
+    hero: pickImg('eclass-phev-hero-cutaway.jpg', 'eclass-phev-hero-cutaway.webp'),     // JPG 1672×941 331KB → WebP 1672px 176KB
+    heroMobile: USE_WEBP ? GH_IMG + 'eclass-phev-hero-cutaway-1080.webp' : '',           // 모바일(767px 이하) 전용 · WebP 1080px 82KB · 비워두면 hero 사용
+    heroSize: [1672, 941],     // 히어로 원본 가로×세로 (레이아웃 이동 방지용)
+
+    /* SECTION 02 투시도 (1장) — 글자 라벨이 있어 원본 해상도 유지 */
+    phevCutaway: pickImg('e350e-phev-cutaway-labeled.jpg', 'e350e-phev-cutaway-labeled.webp'), // JPG 1448×1086 419KB → WebP 1448px 185KB
+    phevCutawaySmall: USE_WEBP ? GH_IMG + 'e350e-phev-cutaway-labeled-800.webp' : '',            // 작은 화면용 WebP 800px 92KB (확대 모달은 항상 큰 이미지)
+
+    /* SECTION 04 — 카드 표시 폭 약 290px(PC 4열) · 레티나 2배 기준 800px */
+    whyQuiet: pickImg('e-phev-mode-electric.jpg', 'e-phev-mode-electric-800.webp'),          // 01 전기 주행   JPG 343KB → WebP 57KB
+    whyRange: pickImg('e-phev-mode-gasoline.jpg', 'e-phev-mode-gasoline-800.webp'),          // 02 가솔린 주행 JPG 322KB → WebP 51KB
+    whyEfficiency: pickImg('e-phev-mode-hybrid.jpg', 'e-phev-mode-hybrid-800.webp'),         // 03 하이브리드  JPG 316KB → WebP 51KB
+    whyResponse: pickImg('e-phev-mode-acceleration.jpg', 'e-phev-mode-acceleration-800.webp'), // 04 가속 주행  JPG 397KB → WebP 69KB
+
+    /* SECTION 05 라인업 카드 — 표시 폭 약 580px(PC 2열) · 레티나 기준 1200px */
+    cardE350e: pickImg('e350e-phev-home-charging.jpg', 'e350e-phev-home-charging-1200.webp'), // JPG 323KB → WebP 110KB
+    cardE53: pickImg('Mercedes-Benz-E53_AMG_Hybrid-2025-1280-884184b31620baccde7022ed1083298d80.jpg', 'e53-amg-hybrid-card-1200.webp'), // JPG 113KB → WebP 43KB
   },
   e350e: {
-    hero: 'https://github.com/JNOHJINGYU/images/blob/main/e350e-hero-residence.jpg?raw=true',
+    hero: GH_IMG + 'e350e-hero-residence.jpg',   // 1448×1086 · 357KB (e350e 페이지 — 이번 WebP 변환 범위 밖)
     price: '',                 // PRICE 섹션 외관 이미지 — 비워두면 main.cardE350e(라인업 카드) 이미지 사용
     electric: '',
     charging: '',
