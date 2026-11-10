@@ -191,6 +191,25 @@ section{scroll-margin-top:var(--header-h);padding-block:clamp(72px,8vw,120px);}
 .lab-legend i.mix{background:repeating-linear-gradient(90deg,var(--engine) 0 6px,var(--electric) 6px 12px);}
 .lab-note{margin-top:12px;font-size:12px;color:var(--mute);line-height:1.7;}
 
+/* 기기에서 '애니메이션 줄이기(움직임 줄이기)'를 켠 고객에게만 표시되는 안내 + 재생 버튼 */
+.motion-note{margin-top:12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;
+  padding:10px 12px;background:var(--bg-2);border:1px solid var(--line);font-size:12.5px;color:var(--sub);line-height:1.6;}
+.motion-note[hidden]{display:none;}
+.motion-btn{flex:0 0 auto;min-height:40px;padding:8px 14px;border:1px solid var(--ink);background:#fff;color:var(--ink);
+  font-size:13px;font-weight:700;letter-spacing:.02em;}
+.motion-btn[aria-pressed="true"]{background:var(--ink);color:#fff;}
+
+/* 고객이 직접 '재생'을 선택한 경우: 전역 움직임 줄이기 규칙보다 우선해 도면 속 CSS 애니메이션 재개 */
+.lab-svg.motion-forced .bat-seg,.lab-svg.motion-forced .boost-ring{animation-iteration-count:infinite!important;}
+.lab-svg.motion-forced.mode-electric .bat-seg{animation-duration:2.4s!important;}
+.lab-svg.motion-forced.mode-accel .bat-seg{animation-duration:1.2s!important;}
+.lab-svg.motion-forced.mode-regen .bat-seg{animation-duration:2s!important;}
+.lab-svg.motion-forced.mode-accel .boost-ring{animation-duration:1s!important;}
+
+/* 진단 패널 — 주소 끝에 ?debug=motion 을 붙였을 때만 생성됩니다 (일반 고객에게는 보이지 않음) */
+#motionDebug{position:fixed;left:8px;bottom:8px;z-index:3000;max-width:calc(100vw - 16px);padding:8px 10px;
+  background:rgba(14,15,17,.88);color:#9EF0B5;font:11px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre;pointer-events:none;}
+
 .mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
 .mode-btn{border:1px solid var(--line);background:#fff;padding:14px 14px;text-align:left;transition:all .25s var(--ease);position:relative;}
 .mode-btn small{display:block;font-size:11px;letter-spacing:.08em;color:var(--mute);font-weight:700;}
@@ -502,6 +521,10 @@ section{scroll-margin-top:var(--header-h);padding-block:clamp(72px,8vw,120px);}
           <span><i style="--c:var(--regen)"></i>회수 에너지</span>
         </div>
         <p class="lab-note">※ 이해를 돕기 위한 개념도입니다. 부품의 실제 형상·크기·위치와 다르며, 4MATIC의 앞·뒤 구동력은 고정 비율이 아니라 주행 조건에 따라 제어됩니다.</p>
+        <div class="motion-note" id="motionNote" hidden>
+          <span id="motionNoteText">기기의 ‘애니메이션 줄이기’ 설정에 맞춰 에너지 흐름을 화살표가 있는 정지 화면으로 보여드립니다.</span>
+          <button type="button" class="motion-btn" id="motionToggle" aria-pressed="false" aria-controls="labSvg">▶ 흐름 애니메이션 보기</button>
+        </div>
       </div>
 
       <div class="lab-controls">
@@ -739,7 +762,7 @@ function setMode(key){
       p.setAttribute('stroke-width', m.width);
       p.setAttribute('stroke-dasharray', `${dash} ${period - dash}`);
       flowLayer.appendChild(p);
-      flowEls.push({ el:p, base:-i * seg, dir: f.rev ? -1 : 1 });
+      flowEls.push({ el:p, base:-i * seg, dir: f.rev ? -1 : 1, lead: i === 0, color });
     });
   });
 
@@ -756,41 +779,159 @@ function setMode(key){
   drawFlows();   // 애니메이션이 멈춰 있어도 새 모드의 흐름선은 바로 표시
 }
 
-/* 흐름 애니메이션 (requestAnimationFrame)
-   - 도면이 화면에 보이고 + 브라우저 탭이 활성 상태일 때만 프레임을 돌립니다.
-   - 둘 중 하나라도 아니면 루프 자체를 멈춥니다 (빈 프레임도 요청하지 않음).
-   - 배터리 깜빡임 등 CSS 애니메이션도 같은 조건으로 일시정지합니다 (.lab-paused).
-   - 다시 보이면 멈춘 위치에서 이어서 움직입니다. */
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let labVisible = !('IntersectionObserver' in window); // IO 미지원 브라우저는 항상 표시로 간주
+/* ==================================================
+   흐름 애니메이션 (requestAnimationFrame)
+   --------------------------------------------------
+   [움직임 줄이기 설정]
+   갤럭시의 '애니메이션 제거/줄이기'(접근성) 또는 개발자 옵션의 '애니메이션 배율 끄기'를 켜면
+   삼성 인터넷·Chrome·카카오톡 인앱 브라우저가 모두 prefers-reduced-motion: reduce 로 보고합니다.
+   → 이 경우 기본은 '정지 화면 + 방향 화살표'로 보여주고, 고객이 버튼으로 직접 재생할 수 있습니다.
+     (선택은 이 기기 브라우저에 기억됩니다)
+
+   [배터리 절약]
+   - 도면이 실제 화면에 보일 때만 프레임을 돌립니다. (IntersectionObserver + 스크롤 위치 확인 이중 체크)
+   - 탭이 백그라운드로 가면 브라우저가 requestAnimationFrame 자체를 멈춥니다.
+     visibilitychange에서도 루프를 정리하고, 다시 보이면 자동 재개합니다.
+
+   [진단]  주소 끝에 ?debug=motion 을 붙이면 화면 왼쪽 아래에 상태 패널이 나타납니다.
+   ================================================== */
+const MOTION_KEY = 'phevFlowMotion';                 // 고객의 '애니메이션 보기' 선택 저장 키
+const motionMQ = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+let reducePref = !!(motionMQ && motionMQ.matches);   // 기기 설정: 움직임 줄이기
+let userWantsMotion = false;                         // 고객이 직접 '재생'을 선택했는지
+try { userWantsMotion = localStorage.getItem(MOTION_KEY) === 'on'; } catch(e){}
+const motionAllowed = () => !reducePref || userWantsMotion;
+
+let labVisible = false, ioFired = false;
 let rafId = 0, lastTs = null, flowTime = 0;
+const diag = { frames:0, fps:0, lastFrameAt:0, starts:0, stops:0, source:'-' };
+
+/* 정지 화면용 방향 화살표 — 움직임 줄이기 상태에서만 표시 (기본 디자인에는 나타나지 않음) */
+const arrowIds = {};
+function arrowFor(color){
+  if(arrowIds[color]) return arrowIds[color];
+  let defs = svg.querySelector('defs');
+  if(!defs){ defs = document.createElementNS(NS, 'defs'); svg.insertBefore(defs, svg.firstChild); }
+  const id = 'flowArrow' + color.replace('#', '');
+  const mk = document.createElementNS(NS, 'marker');
+  mk.setAttribute('id', id); mk.setAttribute('viewBox', '0 0 10 10');
+  mk.setAttribute('refX', '5'); mk.setAttribute('refY', '5');
+  mk.setAttribute('markerWidth', '4'); mk.setAttribute('markerHeight', '4');
+  mk.setAttribute('orient', 'auto-start-reverse');
+  const tri = document.createElementNS(NS, 'path');
+  tri.setAttribute('d', 'M0 0 L10 5 L0 10 z'); tri.setAttribute('fill', color);
+  mk.appendChild(tri); defs.appendChild(mk);
+  return (arrowIds[color] = id);
+}
+function applyArrows(){
+  const show = !motionAllowed();
+  flowEls.forEach(f => {
+    f.el.removeAttribute('marker-end'); f.el.removeAttribute('marker-start');
+    if(show && f.lead) f.el.setAttribute(f.dir < 0 ? 'marker-start' : 'marker-end', `url(#${arrowFor(f.color)})`);
+  });
+}
 
 function drawFlows(){
   const sp = MODES[currentMode] ? MODES[currentMode].speed : 1;
+  const moving = motionAllowed();
   flowEls.forEach(f => {
-    const off = reduceMotion ? f.base : f.base - f.dir * flowTime * 46 * sp;
+    const off = moving ? f.base - f.dir * flowTime * 46 * sp : f.base;
     f.el.setAttribute('stroke-dashoffset', off.toFixed(1));
   });
+  applyArrows();
 }
 function tick(ts){
   if(lastTs !== null) flowTime += Math.min(ts - lastTs, 100) / 1000; // 복귀 직후 큰 점프 방지
   lastTs = ts;
-  drawFlows();
+  const sp = MODES[currentMode] ? MODES[currentMode].speed : 1;
+  flowEls.forEach(f => f.el.setAttribute('stroke-dashoffset', (f.base - f.dir * flowTime * 46 * sp).toFixed(1)));
+  diag.frames++;
   rafId = requestAnimationFrame(tick);
 }
 function updateLoop(){
-  const run = labVisible && !document.hidden && !reduceMotion;
+  const run = labVisible && motionAllowed() && document.visibilityState !== 'hidden';
   svg.classList.toggle('lab-paused', !run);
-  if(run && !rafId){ lastTs = null; rafId = requestAnimationFrame(tick); }
-  else if(!run && rafId){ cancelAnimationFrame(rafId); rafId = 0; }
+  svg.classList.toggle('motion-forced', reducePref && userWantsMotion);
+  if(run && !rafId){ lastTs = null; rafId = requestAnimationFrame(tick); diag.starts++; }
+  else if(!run && rafId){ cancelAnimationFrame(rafId); rafId = 0; diag.stops++; }
+  updateMotionNote();
+}
+
+/* 화면 표시 여부 — IntersectionObserver를 기본으로, 스크롤 위치 확인을 보조로 사용
+   (일부 인앱 브라우저에서 IO 콜백이 늦거나 누락되는 경우에도 멈추지 않도록) */
+function rectVisible(){
+  const r = svg.getBoundingClientRect();
+  const vh = window.innerHeight || document.documentElement.clientHeight;
+  return r.bottom > 0 && r.top < vh && r.width > 0;
+}
+function setVisible(v, source){
+  if(v === labVisible) return;
+  labVisible = v; diag.source = source; updateLoop();
 }
 if('IntersectionObserver' in window){
-  new IntersectionObserver(es => es.forEach(e => { labVisible = e.isIntersecting; updateLoop(); })).observe(svg);
+  new IntersectionObserver(es => es.forEach(e => { ioFired = true; setVisible(e.isIntersecting, 'io'); })).observe(svg);
 }
-document.addEventListener('visibilitychange', updateLoop);
+let rectQueued = false;
+function checkRect(){
+  if(rectQueued) return; rectQueued = true;
+  setTimeout(() => { rectQueued = false; setVisible(rectVisible(), 'rect'); }, 120);
+}
+window.addEventListener('scroll', checkRect, { passive:true });
+window.addEventListener('resize', checkRect);
+window.addEventListener('orientationchange', checkRect);
+window.addEventListener('pageshow', () => { labVisible = rectVisible(); updateLoop(); }); // 뒤로가기 캐시 복귀
+document.addEventListener('visibilitychange', () => { if(document.visibilityState !== 'hidden') labVisible = rectVisible(); updateLoop(); });
+
+/* 기기 설정이 바뀌면 즉시 반영 (구형 브라우저는 addListener) */
+if(motionMQ){
+  const onPref = e => { reducePref = e.matches; drawFlows(); updateLoop(); };
+  motionMQ.addEventListener ? motionMQ.addEventListener('change', onPref) : motionMQ.addListener && motionMQ.addListener(onPref);
+}
+
+/* 움직임 줄이기 사용자 전용 안내·재생 버튼 */
+const motionNote = document.getElementById('motionNote');
+const motionToggle = document.getElementById('motionToggle');
+const motionNoteText = document.getElementById('motionNoteText');
+function updateMotionNote(){
+  if(!motionNote) return;
+  motionNote.hidden = !reducePref;            // 기기 설정이 켜진 고객에게만 표시
+  if(!reducePref) return;
+  motionToggle.setAttribute('aria-pressed', String(userWantsMotion));
+  motionToggle.textContent = userWantsMotion ? '❚❚ 애니메이션 멈추기' : '▶ 흐름 애니메이션 보기';
+  motionNoteText.textContent = userWantsMotion
+    ? '에너지 흐름 애니메이션을 재생하고 있습니다.'
+    : '기기의 ‘애니메이션 줄이기’ 설정에 맞춰 에너지 흐름을 화살표가 있는 정지 화면으로 보여드립니다.';
+}
+if(motionToggle) motionToggle.addEventListener('click', () => {
+  userWantsMotion = !userWantsMotion;
+  try { localStorage.setItem(MOTION_KEY, userWantsMotion ? 'on' : 'off'); } catch(e){}
+  drawFlows(); updateLoop();
+});
+
+/* 진단 패널 (?debug=motion 일 때만) */
+if(/[?&#]debug=motion\b/.test(location.search + location.hash)){
+  const box = document.createElement('div'); box.id = 'motionDebug'; box.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(box);
+  setInterval(() => {
+    diag.fps = diag.frames; diag.frames = 0;
+    const r = svg.getBoundingClientRect();
+    box.textContent =
+      `reduced-motion(기기): ${reducePref}\n` +
+      `사용자 재생 선택   : ${userWantsMotion}\n` +
+      `움직임 허용        : ${motionAllowed()}\n` +
+      `도면 화면 표시     : ${labVisible} (마지막 갱신 ${diag.source}, IO ${'IntersectionObserver' in window ? (ioFired ? '응답' : '미응답') : '미지원'})\n` +
+      `rect 계산 표시     : ${rectVisible()} top=${Math.round(r.top)} h=${Math.round(r.height)}\n` +
+      `탭 상태            : ${document.visibilityState}\n` +
+      `루프 실행 중       : ${!!rafId}  fps≈${diag.fps}  시작${diag.starts}/정지${diag.stops}\n` +
+      `모드               : ${currentMode}  흐름선 ${flowEls.length}개\n` +
+      `UA: ${navigator.userAgent.slice(-70)}`;
+  }, 1000);
+  console.info('[PHEV motion debug] 활성화됨');
+}
 
 setMode('electric');
-drawFlows();   // 첫 화면(또는 동작 줄이기 설정)에서도 흐름선 위치를 그려 둠
+labVisible = rectVisible();   // 첫 진입 시 즉시 판정 (IO 응답 전에도 동작)
+drawFlows();                  // 정지 상태에서도 흐름선과 화살표를 그려 둠
 updateLoop();
 
 /* ==================================================
