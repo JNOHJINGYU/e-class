@@ -7,6 +7,40 @@
 <meta name="description" content="메르세데스-벤츠 The new E-Class. E 200, E 300, E 220 d, E 450, Plug-in Hybrid 라인업을 한눈에 비교하고 자세히 알아보세요.">
 <meta name="theme-color" content="#ffffff">
 
+<!-- 히어로 이미지 우선 로딩: <picture>와 동일한 srcset/media 조건이라 중복 다운로드 없음 -->
+<link rel="preload" as="image" type="image/webp" media="(max-width:640px)"
+      imagesrcset="images/e-class/hero-m-720.webp 720w, images/e-class/hero-m-1080.webp 1080w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" media="(min-width:641px)"
+      imagesrcset="images/e-class/hero-1280.webp 1280w, images/e-class/hero-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
+
+<script>
+  /* 이미지 로딩 처리 (img 태그의 onload/onerror에서 호출되므로 <head>에서 먼저 정의)
+     - 실패 시 개발자 콘솔에 원인 정보 출력
+     - data-fallback(검증된 원본 이미지 주소)로 1회만 재시도 → 무한 반복 없음
+     - 재시도까지 실패한 경우에만 플레이스홀더 표시 */
+  document.documentElement.classList.add('js');
+  window.eImgLoad = function (img) { img.classList.add('is-loaded'); };
+  window.eImgError = function (img) {
+    var failed = img.currentSrc || img.src;
+    var fb = img.getAttribute('data-fallback');
+    if (fb && !img.getAttribute('data-retried')) {
+      img.setAttribute('data-retried', '1');
+      console.warn('[E-Class 이미지] 로딩 실패 → 원본 주소로 1회 재시도', { image: img.alt || 'hero', failed: failed, retry: fb });
+      var pic = img.parentNode;
+      if (pic && pic.tagName === 'PICTURE') {
+        Array.prototype.slice.call(pic.querySelectorAll('source')).forEach(function (s) { s.parentNode.removeChild(s); });
+      }
+      img.removeAttribute('srcset');
+      img.src = fb;
+      return;
+    }
+    img.onerror = null;
+    console.error('[E-Class 이미지] 최종 로딩 실패 - 플레이스홀더 표시', { image: img.alt || 'hero', failed: failed });
+    var wrap = img.closest('.card-image-wrap, .hero-media');
+    if (wrap) wrap.classList.add('img-fallback');
+  };
+</script>
+
 <!--
   ============================================================
   구조 안내
@@ -68,12 +102,12 @@
   /* ============================================================
      이미지 경로 설정 (나중에 실제 이미지로 교체)
      ------------------------------------------------------------
-     1) 히어로 배경 이미지
-        아래 ".hero-media" 선택자의 background-image 중 첫 번째 url() 값을
-        실제 E-Class 대표 이미지 경로로 교체하세요.
-        예) background-image: url('images/e-class-hero.jpg'), linear-gradient(...);
-        이미지가 없거나 경로가 잘못된 동안에는 뒤에 있는 그라데이션이
-        대신 표시되어 화면이 깨지지 않습니다.
+     1) 히어로 이미지
+        본문의 <div class="hero-media"> 안 <picture> 태그에서 교체합니다.
+        (PC: hero-1280/1920.webp, 모바일: hero-m-720/1080.webp, JPG는 예비용)
+        모든 이미지는 이 페이지와 같은 저장소의 images/e-class/ 폴더에 있습니다.
+        <head>의 preload 2줄도 같은 파일명으로 함께 바꿔주세요.
+        이미지가 끝까지 실패하면 .hero-media의 그라데이션 배경이 대신 보입니다.
      2) 권장 이미지 사양
         - 가로 1920px 이상, 가로:세로 비율 16:9 ~ 16:10 권장
         - 차량이 화면 중앙~우측에 위치하고 좌측 여백이 넉넉한 사진이 좋습니다
@@ -170,11 +204,17 @@
     background-position:center;
     background-size:cover;
     will-change:transform;
-    /* ↓↓↓ 1) 첫 번째 url()을 실제 E-Class 이미지 경로로 교체하세요 ↓↓↓ */
+    /* 이미지는 본문 <picture>에서 로딩 — 아래 그라데이션은 로딩 전/실패 시 바탕 */
     background-image:
-      url('https://github.com/JNOHJINGYU/images/blob/main/23C0253_026.jpg?raw=true'),
       radial-gradient(ellipse at 70% 35%, #d0d0d0 0%, #b0b0b0 55%, #909090 100%);
   }
+  .hero-img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover; object-position:center;
+    display:block;
+  }
+  .hero-media.img-fallback .hero-img{ display:none; }
   .hero-overlay{
     position:absolute; inset:0;
     background:none;
@@ -341,17 +381,20 @@
      화면이 깨지지 않습니다. */
   .card-image-wrap{
     position:relative;
-    aspect-ratio:16/8;
+    aspect-ratio:16/9;
     background:linear-gradient(150deg, var(--c-charcoal), var(--c-graphite));
     border-bottom:1px solid var(--c-line);
     overflow:hidden;
   }
   .card-image{
     width:100%; height:100%;
-    object-fit:cover; object-position:center;
+    object-fit:cover; object-position:var(--img-pos, center);
     display:block;
-    transition:transform .6s cubic-bezier(.16,.8,.3,1);
+    transition:transform .6s cubic-bezier(.16,.8,.3,1), opacity .6s ease;
   }
+  /* 이미지가 도착하면 부드럽게 나타남 (JS가 꺼져 있으면 항상 표시) */
+  .js .card-image{ opacity:0; }
+  .js .card-image.is-loaded{ opacity:1; }
   .car-card:hover .card-image{ transform:scale(1.06); }
   .card-image-wrap.img-fallback .card-image{ display:none; }
   .card-image-wrap.img-fallback::after{
@@ -441,7 +484,8 @@
       flex-shrink:0;
       background-size:cover;
       background-repeat:no-repeat;
-      background-position:58% center;   /* 차량 그릴/헤드램프가 화면 안에 들어오도록 */
+      background-position:58% center;
+      /* 모바일 이미지는 차량 중심으로 별도 크롭된 파일(hero-m-*.webp) 사용 */
       will-change:auto;
       transform:none !important;        /* 패럴랙스 transform 강제 리셋 */
       padding-top:88px;                 /* 고정 헤더(약 80px) 아래에서 이미지 시작 */
@@ -553,7 +597,16 @@
 </header>
 
 <section class="hero" id="hero">
-  <div class="hero-media" aria-hidden="true"></div>
+  <div class="hero-media" aria-hidden="true">
+    <picture>
+      <source media="(max-width:640px)" type="image/webp" srcset="images/e-class/hero-m-720.webp 720w, images/e-class/hero-m-1080.webp 1080w" sizes="100vw">
+      <source media="(max-width:640px)" srcset="images/e-class/hero-m-1080.jpg">
+      <source type="image/webp" srcset="images/e-class/hero-1280.webp 1280w, images/e-class/hero-1920.webp 1920w" sizes="100vw">
+      <img class="hero-img" src="images/e-class/hero-1920.jpg" alt="" width="1920" height="1080"
+           loading="eager" fetchpriority="high"
+           data-fallback="https://raw.githubusercontent.com/JNOHJINGYU/images/main/23C0253_026.jpg" onerror="eImgError(this)">
+    </picture>
+  </div>
   <div class="hero-overlay" aria-hidden="true"></div>
 
   <div class="hero-content">
@@ -590,8 +643,12 @@
       <article class="car-card" style="--delay:0ms">
         <div class="card-image-wrap">
           <!-- ↓↓↓ E 200 이미지 경로로 교체하세요 ↓↓↓ -->
-          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/24C0330_001.jpg?raw=true" alt="Mercedes-Benz E 200" loading="lazy"
-               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+          <picture>
+            <source type="image/webp" srcset="images/e-class/e200-480.webp 480w, images/e-class/e200-768.webp 768w" sizes="(min-width:1280px) 236px, (min-width:1024px) calc((100vw - 100px) / 3), (min-width:641px) calc((100vw - 78px) / 2), calc(100vw - 56px)">
+            <img class="card-image" src="images/e-class/e200-768.jpg" alt="Mercedes-Benz E 200" width="768" height="432"
+                 loading="lazy" decoding="async"
+                 data-fallback="https://raw.githubusercontent.com/JNOHJINGYU/images/main/24C0330_001.jpg" onload="eImgLoad(this)" onerror="eImgError(this)">
+          </picture>
         </div>
         <div class="card-body">
           <p class="card-code">E 200</p>
@@ -606,8 +663,12 @@
       <article class="car-card" style="--delay:80ms">
         <div class="card-image-wrap">
           <!-- ↓↓↓ E 300 이미지 경로로 교체하세요 ↓↓↓ -->
-          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/23C0379_001%20(1).jpg?raw=true" alt="Mercedes-Benz E 300" loading="lazy"
-               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+          <picture>
+            <source type="image/webp" srcset="images/e-class/e300-480.webp 480w, images/e-class/e300-768.webp 768w" sizes="(min-width:1280px) 236px, (min-width:1024px) calc((100vw - 100px) / 3), (min-width:641px) calc((100vw - 78px) / 2), calc(100vw - 56px)">
+            <img class="card-image" src="images/e-class/e300-768.jpg" alt="Mercedes-Benz E 300" width="768" height="432"
+                 loading="lazy" decoding="async"
+                 data-fallback="https://raw.githubusercontent.com/JNOHJINGYU/images/main/23C0379_001.jpg" onload="eImgLoad(this)" onerror="eImgError(this)">
+          </picture>
         </div>
         <div class="card-body">
           <p class="card-code">E 300</p>
@@ -622,8 +683,12 @@
       <article class="car-card" style="--delay:160ms">
         <div class="card-image-wrap">
           <!-- ↓↓↓ E 220 d 이미지 경로로 교체하세요 ↓↓↓ -->
-          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/E-CLASS_SIDE.jpg?raw=true" alt="Mercedes-Benz E 220 d" loading="lazy"
-               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+          <picture>
+            <source type="image/webp" srcset="images/e-class/e220d-480.webp 480w, images/e-class/e220d-768.webp 768w" sizes="(min-width:1280px) 236px, (min-width:1024px) calc((100vw - 100px) / 3), (min-width:641px) calc((100vw - 78px) / 2), calc(100vw - 56px)">
+            <img class="card-image" src="images/e-class/e220d-768.jpg" alt="Mercedes-Benz E 220 d" width="768" height="432"
+                 loading="lazy" decoding="async"
+                 data-fallback="https://raw.githubusercontent.com/JNOHJINGYU/images/main/E-CLASS_SIDE.jpg" onload="eImgLoad(this)" onerror="eImgError(this)">
+          </picture>
         </div>
         <div class="card-body">
           <p class="card-code">E 220 d</p>
@@ -638,8 +703,12 @@
       <article class="car-card" style="--delay:240ms">
         <div class="card-image-wrap">
           <!-- ↓↓↓ E 450 이미지 경로로 교체하세요 ↓↓↓ -->
-          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/23C0014_003.jpg?raw=true" alt="Mercedes-Benz E 450" loading="lazy"
-               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+          <picture>
+            <source type="image/webp" srcset="images/e-class/e450-480.webp 480w, images/e-class/e450-768.webp 768w" sizes="(min-width:1280px) 236px, (min-width:1024px) calc((100vw - 100px) / 3), (min-width:641px) calc((100vw - 78px) / 2), calc(100vw - 56px)">
+            <img class="card-image" src="images/e-class/e450-768.jpg" alt="Mercedes-Benz E 450" width="768" height="432"
+                 loading="lazy" decoding="async"
+                 data-fallback="https://raw.githubusercontent.com/JNOHJINGYU/images/main/23C0014_003.jpg" onload="eImgLoad(this)" onerror="eImgError(this)">
+          </picture>
         </div>
         <div class="card-body">
           <p class="card-code">E 450</p>
@@ -655,8 +724,12 @@
         <span class="hybrid-badge">Plug-in Hybrid</span>
         <div class="card-image-wrap">
           <!-- ↓↓↓ Plug-in Hybrid 이미지 경로로 교체하세요 ↓↓↓ -->
-          <img class="card-image" src="https://github.com/JNOHJINGYU/images/blob/main/mercedes-benz-e-klasse-phev-2023-06.jpg?raw=true" alt="Mercedes-Benz E-Class Plug-in Hybrid" loading="lazy"
-               onerror="this.closest('.card-image-wrap').classList.add('img-fallback')">
+          <picture>
+            <source type="image/webp" srcset="images/e-class/hybrid-480.webp 480w, images/e-class/hybrid-768.webp 768w" sizes="(min-width:1280px) 236px, (min-width:1024px) calc((100vw - 100px) / 3), (min-width:641px) calc((100vw - 78px) / 2), calc(100vw - 56px)">
+            <img class="card-image" src="images/e-class/hybrid-768.jpg" alt="Mercedes-Benz E-Class Plug-in Hybrid" width="768" height="432"
+                 loading="lazy" decoding="async"
+                 data-fallback="https://raw.githubusercontent.com/JNOHJINGYU/images/main/mercedes-benz-e-klasse-phev-2023-06.jpg" onload="eImgLoad(this)" onerror="eImgError(this)">
+          </picture>
         </div>
         <div class="card-body">
           <p class="card-code">Plug-in Hybrid</p>
@@ -736,6 +809,11 @@
   }
 
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // 안전장치: 캐시 등으로 onload 전에 완료된 카드 이미지도 표시
+  document.querySelectorAll('.card-image').forEach((img) => {
+    if (img.complete && img.naturalWidth > 0) img.classList.add('is-loaded');
+  });
 </script>
 
 </body>
