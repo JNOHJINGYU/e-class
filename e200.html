@@ -159,31 +159,26 @@ const EQUIPMENT_DATA = {
     { trim: 'seat' },
     { trim: 'interiorTrim' },
     { trim: 'steering' },
-    '앞좌석 열선',
-    '앞좌석 통풍',
-    '메모리 시트',
-    '뒷좌석 ISOFIX',
+    '앞좌석 열선 · 통풍 · 메모리',
+    '뒷좌석 열선 · ISOFIX · 접이식 시트',
     '앰비언트 라이트',
     '자동 온도 조절 시스템'
   ],
+  /* 멀티미디어 — '편의 및 인포테인먼트' 옵션과 동일. { text, sub } 형식은 sub가 회색 보조 설명으로 표시됩니다 */
   multimedia: [
-    '3세대 MBUX',
-    '12.3인치 계기판',
-    '14.4인치 센터 디스플레이',
-    '증강현실 내비게이션',
-    '무선 애플 카플레이',
-    '무선 안드로이드 오토',
-    '무선 충전',
-    '기본형 사운드 시스템',
-    'Mercedes Me Connect'
+    '12.3인치 계기판 + 3세대 MBUX 14.4인치 디스플레이',
+    'MBUX 증강현실 내비게이션',
+    '헤드업 디스플레이',
+    '앞좌석 스마트폰 무선 충전',
+    '무선 Apple CarPlay · Android Auto',
+    { text: 'Mercedes me connect', sub: '사전 온도 조절 · 디지털 차량 키' }
   ],
   convenience: [
     'KEYLESS-GO',
     '액티브 주차 어시스트',
     '서라운드 뷰 카메라',
     '전동 트렁크',
-    '핸즈프리 액세스',
-    'MBUX 인테리어 어시스턴트'
+    '핸즈프리 액세스'
   ],
   safety: [
     '드라이빙 어시스턴스 패키지 플러스',
@@ -772,6 +767,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 }
 .spx-list li::before { content: '✓'; color: var(--blue); font-weight: 800; flex: 0 0 auto; }
 .spx-list li .spx-txt { flex: 1; min-width: 0; }
+.spx-sub { color: var(--gray4); font-size: .88em; font-weight: 500; }
 .spx-badge {
   flex: 0 0 auto; align-self: center;
   font-size: .62rem; font-weight: 800; letter-spacing: .12em; white-space: nowrap;
@@ -1441,8 +1437,8 @@ const E_COLORS = [
 const E_INTERIOR_MODEL = 'E 200';
 const E_INTERIOR = [
   { id: 'black', name: '블랙 시트',   swatch: '#1E1E20', price: 0,      file: 'e350e-interior-black', mobile: 'e350e-interior-black-m' },
-  { id: 'beige', name: '베이지 시트', swatch: '#D8C3A0', price: 420000, file: 'e350e-interior-beige', mobile: 'e350e-interior-beige-m2' },
-  { id: 'brown', name: '브라운 시트', swatch: '#7A4A2B', price: 420000, file: 'e350e-interior-brown', mobile: 'e350e-interior-brown-m' }
+  { id: 'beige', name: '베이지 시트', swatch: '#D8C3A0', price: 0, file: 'e350e-interior-beige', mobile: 'e350e-interior-beige-m2' },
+  { id: 'brown', name: '브라운 시트', swatch: '#7A4A2B', price: 0, file: 'e350e-interior-brown', mobile: 'e350e-interior-brown-m' }
 ];
 /* 시트 컬러 뷰어 — 다른 섹션과 독립 실행 (PC/휴대폰 이미지 자동 선택·미리 불러오기·확대 보기) */
 (function(){
@@ -1966,13 +1962,14 @@ document.head.appendChild(s);
   function trimLabel(){ return (trims[curTrim] && trims[curTrim].label) || ''; }
   function resolve(item){
     if(typeof item === 'string') return { text: item, trim: false };
+    if(item && item.text) return { text: item.text, sub: item.sub || '', trim: false };
     if(item && item.trim){ const v = trims[curTrim] && trims[curTrim][item.trim]; return v ? { text: v, trim: true } : null; }
     return null;
   }
   const badge = () => `<span class="spx-badge">${esc(trimLabel())}</span>`;
   function listHTML(title, items, extraClass){
     const lis = items.map(resolve).filter(Boolean)
-      .map(r => `<li${r.trim ? ' class="is-trim"' : ''}><span class="spx-txt">${esc(r.text)}</span>${r.trim ? badge() : ''}</li>`).join('');
+      .map(r => `<li${r.trim ? ' class="is-trim"' : ''}><span class="spx-txt">${esc(r.text)}${r.sub ? ` <span class="spx-sub">${esc(r.sub)}</span>` : ''}</span>${r.trim ? badge() : ''}</li>`).join('');
     return `<div class="spx-list-card${extraClass || ''}"><h3 class="spx-list-title">${esc(title)}</h3><ul class="spx-list">${lis}</ul></div>`;
   }
   function specsHTML(groups){
