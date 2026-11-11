@@ -67,20 +67,6 @@ const COMPARE_DATA = {
 };
 </script>
 
-<!-- ============================================================
-     프로모션 데이터
-     ============================================================ -->
-<script>
-const PROMO_DATA = [
-  { icon: "💰", title: "기본 할인",        content: "기본 할인 9%", tag: "DISCOUNT" },
-  { icon: "🏦", title: "벤츠 파이낸셜",   content: "", tag: "FINANCIAL" },
-  { icon: "🚗", title: "장기렌트",         content: "기본 할인 + 3% 할인", tag: "LONG-TERM RENT" },
-  { icon: "🔄", title: "재구매 고객 혜택", content: "기본 할인 + 1% 할인", tag: "LOYALTY" },
-  { icon: "🏢", title: "법인 고객 혜택",   content: "2대 이상 구매 시 기본 할인 + 3% 할인", tag: "CORPORATE" },
-  { icon: "🔃", title: "트레이드인 혜택",  content: "기본 할인 + 1% 할인", tag: "TRADE-IN" },
-];
-</script>
-
 <style>
 /* ============================================================
    RESET & BASE
@@ -666,25 +652,6 @@ p  { color: #444; font-size: clamp(1.1rem, 2.05vw, 1.22rem); line-height: 1.85; 
 @media (max-width: 768px) { .scroll-hint { display: block; } }
 
 /* ============================================================
-   S13 · 프로모션
-   ============================================================ */
-.promo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-@media (max-width: 900px) { .promo-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 540px) { .promo-grid { grid-template-columns: 1fr; } }
-.promo-card {
-  background: var(--white); border: 1px solid var(--gray3); border-radius: var(--radius);
-  padding: 36px 28px; box-shadow: var(--shadow-sm); transition: transform .3s, box-shadow .3s; position: relative; overflow: hidden;
-}
-.promo-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
-.promo-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: .65rem; font-weight: 800; letter-spacing: .14em; background: var(--gray2); color: var(--gray4); margin-bottom: 20px; }
-.promo-tag { position: absolute; top: 20px; right: 20px; font-size: .6rem; font-weight: 800; letter-spacing: .12em; color: var(--blue); background: rgba(0,102,255,.08); padding: 3px 10px; border-radius: 100px; }
-.promo-icon { font-size: 2.4rem; margin-bottom: 16px; }
-.promo-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 12px; }
-.promo-content { font-size: 1.03rem; color: var(--gray4); line-height: 1.85; }
-.promo-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue), #66A3FF); opacity: 0; transition: opacity .3s; }
-.promo-card:hover::before { opacity: 1; }
-
-/* ============================================================
    RESPONSIVE GLOBAL
    ============================================================ */
 @media (max-width: 768px) { :root { --section-gap: 80px; } }
@@ -697,14 +664,12 @@ p  { color: #444; font-size: clamp(1.1rem, 2.05vw, 1.22rem); line-height: 1.85; 
   p { line-height: 1.95; }
   .reason-body p { line-height: 2.0; }
   .conv-card p, .safety-card p, .check-text p { line-height: 1.8; }
-  .promo-content { line-height: 1.9; }
   .recommend-list li { line-height: 1.85; }
 
   /* 카드 내부 여백 확대 */
   .reason-body { padding: 30px 26px 32px; }
   .conv-card { padding: 26px 22px; }
   .safety-card { padding: 22px 18px; }
-  .promo-card { padding: 32px 24px; }
   .recommend-card { padding: 30px 24px; }
   .stat-card { padding: 28px 20px; }
 
@@ -1541,20 +1506,6 @@ const E_INTERIOR = [
 </section>
 
 <!-- ============================================================
-     S13 · 프로모션
-     ============================================================ -->
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <span class="label-en">Monthly Promotion</span>
-      <h2>이달의 특별 혜택</h2>
-      <p>혜택 내용은 매월 업데이트됩니다</p>
-    </div>
-    <div class="promo-grid" id="promoGrid"></div>
-  </div>
-</section>
-
-<!-- ============================================================
      JAVASCRIPT
      ============================================================ -->
 <script>
@@ -1625,24 +1576,6 @@ const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
 }, { threshold: 0.10 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-/* -- 프로모션 렌더링 -- */
-function renderPromo() {
-  const grid = document.getElementById('promoGrid');
-  if (!grid) return;
-  grid.innerHTML = PROMO_DATA.map((p, i) => {
-    const d = ['', ' reveal-delay-1', ' reveal-delay-2'][i % 3];
-    return `<div class="promo-card reveal${d}">
-      <span class="promo-tag">${p.tag}</span>
-      <div class="promo-icon">${p.icon}</div>
-      <div class="promo-badge">PROMOTION · COMING SOON</div>
-      <h3>${p.title}</h3>
-      <p class="promo-content">${p.content}</p>
-    </div>`;
-  }).join('');
-  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-}
-renderPromo();
 
 /* -- Sticky Header -- */
 const siteHeader = document.getElementById('siteHeader');
