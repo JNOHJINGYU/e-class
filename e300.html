@@ -1294,6 +1294,16 @@ body.media-modal-lock { overflow: hidden; }
 @media (max-width:480px){.eint-btn{font-size:14px;gap:6px;padding:10px 6px;min-height:46px}.eint-price{font-size:14px}}
 @media (prefers-reduced-motion:reduce){.eint-stage img.ecol-fade{animation:none}}
 </style>
+<style>
+/* ==================================================
+   TRIM BOX FIT — 초이스(트림 선택) 이미지 박스를 이미지 비율과 일치
+   - 고정 높이·안쪽 여백을 없애 이미지가 박스를 꽉 채움 (PC·태블릿·휴대폰 공통)
+   - 실제 이미지가 로드되면 그 비율로 자동 맞춤 (이미지를 바꿔도 여백이 생기지 않음)
+   ================================================== */
+.trim-main-image{height:auto;min-height:0;aspect-ratio:var(--trim-ratio, 1422 / 881);}
+.trim-main-image img{padding:0;object-fit:cover;object-position:center;}
+.trim-compare-image{aspect-ratio:var(--trim-compare-ratio, 1422 / 881);}
+</style>
 </head>
 <body>
 
@@ -2411,6 +2421,23 @@ document.head.appendChild(s);
       openImageModal(IMAGES.irLaminatedGlassDetail || '', 'Mercedes-Benz IR 라미네이티드 글래스 상세 설명',
         { wide: true, placeholder: 'IR LAMINATED GLASS', emptyText: '상세 이미지 URL을 등록해주세요.' }));
   }
+})();
+</script>
+<script>
+/* TRIM BOX FIT — 로드된 이미지의 실제 비율로 박스 비율 맞춤 */
+(function(){
+  function fit(img, box, prop){
+    if(!img || !box) return;
+    const set = () => { if(img.naturalWidth && img.naturalHeight) box.style.setProperty(prop, img.naturalWidth + ' / ' + img.naturalHeight); };
+    img.addEventListener('load', set); if(img.complete) set();
+  }
+  const main = document.getElementById('trimMainImg');
+  fit(main, main && main.closest('.trim-main-image'), '--trim-ratio');
+  /* 비교 박스(이미지가 나중에 추가됨) */
+  document.querySelectorAll('.trim-compare-image').forEach(box => {
+    const hook = () => { const img = box.querySelector('img'); if(img){ fit(img, box, '--trim-compare-ratio'); return true; } return false; };
+    if(!hook()){ const mo = new MutationObserver(() => { if(hook()) mo.disconnect(); }); mo.observe(box, { childList: true }); }
+  });
 })();
 </script>
 </body>
