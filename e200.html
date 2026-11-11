@@ -77,13 +77,154 @@ const TRIM_DATA = {
     key: "amg",
     label: "AMG LINE",
     name: "E 200 AMG LINE",
-    price: "8,100만원",   // 기존 E200 페이지(히어로 카드·S7 비교표) 기재 가격
-    description: "직렬 4기통 가솔린 터보 · 204ps · 후륜구동 · 스포츠 서스펜션",   // 기존 S7 비교표 기준
+    price: "8,100만원",   // 기존 E200 페이지(히어로 카드·S6 비교표) 기재 가격
+    description: "직렬 4기통 가솔린 터보 · 204ps · 후륜구동 · 스포츠 서스펜션",   // 기존 S6 비교표 기준
     image: IMAGES.amgExterior,
     placeholder: "AMG LINE EXTERIOR IMAGE"
   }
 };
 const TRIM_DEFAULT = "exclusive";
+</script>
+
+<!-- ============================================================
+     제원 및 기본 사양 데이터 (S5 · SPECIFICATIONS & EQUIPMENT)
+     - 여기 값만 고치면 화면에 자동 반영됩니다. (HTML은 수정할 필요 없음)
+     - 문자열 항목 = 두 트림 공통 사양
+     - { trim: '키' } 항목 = 트림별로 다른 사양 → 아래 TRIM_EQUIPMENT의 같은 키 값을 표시
+       (값을 null로 두면 그 트림에서는 항목이 표시되지 않습니다)
+     - 트림 키(exclusive / amg)는 위 TRIM_DATA와 같은 이름을 사용합니다.
+     ============================================================ -->
+<script>
+/* 카테고리 버튼 — 순서·이름 */
+const EQUIPMENT_CATEGORIES = [
+  { key: 'specifications', label: '상세 제원' },
+  { key: 'exterior',       label: '외관 사양' },
+  { key: 'interior',       label: '실내 사양' },
+  { key: 'multimedia',     label: '멀티미디어' },
+  { key: 'convenience',    label: '편의 사양' },
+  { key: 'safety',         label: '안전 사양' }
+];
+
+const EQUIPMENT_DATA = {
+  /* 상세 제원 — rows: [항목명, 제원] 또는 { label: 항목명, trim: '키' } */
+  specifications: [
+    { group: '엔진 및 동력', rows: [
+      ['엔진', 'M254 직렬 4기통 가솔린 터보'],
+      ['배기량', '1,999cc'],
+      ['최고출력', '204ps / 6,100rpm'],
+      ['최대토크', '32.6kg.m / 2,000~4,000rpm'],
+      ['변속기', '9G-TRONIC'],
+      ['구동방식', 'RWD'],
+      { label: '서스펜션', trim: 'suspension' }
+    ]},
+    { group: '성능 및 연비', rows: [
+      ['복합연비', '12.3km/l'],
+      ['도심연비', '10.6km/l'],
+      ['고속연비', '15.3km/l'],
+      ['0~100km/h', '7.5초'],
+      ['최고속도', '240km/h']
+    ]},
+    { group: '차체 및 무게', rows: [
+      ['전장', '4,955mm'],
+      ['전폭', '1,880mm'],
+      ['전고', '1,475mm'],
+      ['축거', '2,960mm'],
+      ['공차중량', '1,750kg']
+    ]},
+    { group: '용량', rows: [
+      ['연료탱크', '66L'],
+      ['트렁크', '540L']
+    ]},
+    /* 기존 '기본 사양 > POWERTRAIN' 항목 (상세 제원에 통합) */
+    { group: '파워트레인 기본 사양', items: [
+      'M254 직렬 가솔린 터보',
+      '9G-TRONIC 자동 9단',
+      { trim: 'suspension' },
+      '타이어핏',
+      { trim: 'engineSound' }
+    ]}
+  ],
+  exterior: [
+    { trim: 'exteriorPackage' },
+    { trim: 'wheel' },
+    { trim: 'grille' },
+    'LED 고성능 헤드램프',
+    '어댑티브 상향등 어시스트',
+    '파노라믹 선루프',
+    '브랜드 프로젝션 로고'
+  ],
+  interior: [
+    { trim: 'interiorPackage' },
+    'ARTICO 시트',
+    { trim: 'seat' },
+    { trim: 'interiorTrim' },
+    { trim: 'steering' },
+    '앞좌석 열선',
+    '앞좌석 통풍',
+    '메모리 시트',
+    '뒷좌석 ISOFIX',
+    '앰비언트 라이트',
+    '자동 온도 조절 시스템'
+  ],
+  multimedia: [
+    '3세대 MBUX',
+    '12.3인치 계기판',
+    '14.4인치 센터 디스플레이',
+    '증강현실 내비게이션',
+    '무선 애플 카플레이',
+    '무선 안드로이드 오토',
+    '무선 충전',
+    '기본형 사운드 시스템',
+    'Mercedes Me Connect'
+  ],
+  convenience: [
+    'KEYLESS-GO',
+    '액티브 주차 어시스트',
+    '서라운드 뷰 카메라',
+    '전동 트렁크',
+    '핸즈프리 액세스',
+    'MBUX 인테리어 어시스턴트'
+  ],
+  safety: [
+    '드라이빙 어시스턴스 패키지 플러스',
+    'DISTRONIC',
+    '능동형 차선 유지 어시스트',
+    '능동형 사각지대 어시스트',
+    'Active Brake Assist',
+    'Steering Assist',
+    'PRE-SAFE',
+    '에어백 11개',
+    'ADAPTIVE BRAKE'
+  ]
+};
+
+/* 트림별로 다른 사양 — 기존 페이지 'Exclusive vs AMG Line' 비교표 기준 */
+const TRIM_EQUIPMENT = {
+  exclusive: {
+    label: 'EXCLUSIVE',
+    suspension:      '컴포트 서스펜션',
+    engineSound:     null,                          // 비교표: Exclusive '—'
+    exteriorPackage: 'EXCLUSIVE 외장 패키지',
+    wheel:           '18인치 5스포크 경량 알로이 휠',
+    grille:          '크롬 라디에이터 그릴',
+    interiorPackage: 'EXCLUSIVE 인테리어 패키지',
+    seat:            '컴포트 시트',
+    interiorTrim:    '블랙 오픈 포어 애쉬우드 트림',
+    steering:        '나파가죽 스티어링 휠'
+  },
+  amg: {
+    label: 'AMG LINE',
+    suspension:      '스포츠 서스펜션',
+    engineSound:     '스포티 엔진 사운드',
+    exteriorPackage: 'AMG LINE 외장 패키지',
+    wheel:           '19인치 AMG 휠',
+    grille:          'AMG 패턴 그릴',
+    interiorPackage: 'AMG LINE 인테리어 패키지',
+    seat:            '스포츠 시트',
+    interiorTrim:    '블랙 피아노 라커 트림',
+    steering:        '다기능 스포츠 나파 스티어링 휠'
+  }
+};
 </script>
 
 <!-- ============================================================
@@ -596,40 +737,124 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 }
 
 /* ============================================================
-   S5 · DETAILED SPECS TABLE
+   S5 · SPECIFICATIONS & EQUIPMENT (상세 제원 + 기본 사양 통합)
    ============================================================ */
-.specs-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 48px;
-  background: var(--white);
+.spx-section { border-top: 1px solid var(--gray2); }
+.spx-toolbar {
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  margin-top: 8px; margin-bottom: 36px;
 }
-.specs-table th {
-  background: var(--black);
-  color: var(--white);
-  padding: 16px 20px;
-  text-align: left;
-  font-weight: 700;
-  font-size: .9rem;
-  letter-spacing: .05em;
+/* 카테고리 버튼 — PC 가로 정렬(좁아지면 줄바꿈) / 모바일 2열 × 3행 */
+.spx-cats { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 980px; }
+.spx-cat {
+  appearance: none; -webkit-appearance: none;
+  min-height: 46px; padding: 11px 22px;
+  background: var(--white); color: var(--black);
+  border: 1px solid var(--gray3); border-radius: 100px;
+  font-family: inherit; font-size: .92rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.2;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: background-color .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease;
 }
-.specs-table th:first-child {
-  width: 35%;
+.spx-cat:hover { border-color: var(--black); box-shadow: var(--shadow-sm); }
+.spx-cat:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.spx-cat.active {
+  background: var(--black); color: var(--white); border-color: var(--gold);
+  box-shadow: 0 4px 14px rgba(0,0,0,.14), inset 0 -2px 0 var(--gold);
 }
-.specs-table td {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--gray3);
-  font-size: .9rem;
+/* 기준 트림 — 2번째 섹션 트림 선택과 같은 상태 */
+.spx-trim { display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.spx-trim-label { font-size: .72rem; font-weight: 800; letter-spacing: .2em; color: #9b7440; }
+.spx-trim-tabs {
+  display: inline-flex; gap: 4px; padding: 4px;
+  background: var(--gray2); border: 1px solid var(--gray3); border-radius: 100px;
 }
-.specs-table tbody tr:hover {
-  background: var(--gray1);
+.spx-trim-tab {
+  appearance: none; -webkit-appearance: none;
+  min-height: 38px; min-width: 112px; padding: 8px 18px;
+  border: 1px solid transparent; border-radius: 100px;
+  background: transparent; color: var(--black);
+  font-family: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .16em; white-space: nowrap;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: background-color .22s ease, color .22s ease, border-color .22s ease;
 }
-.specs-table tbody tr:last-child td {
-  border-bottom: 2px solid var(--black);
+.spx-trim-tab:hover { background: var(--white); border-color: rgba(212,175,122,.55); }
+.spx-trim-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.spx-trim-tab.active { background: var(--black); color: var(--white); border-color: var(--gold); }
+
+/* 내용 영역 — 높이 변화를 부드럽게 (갑작스러운 화면 이동 방지) */
+.spx-panel { position: relative; overflow: hidden; transition: height .32s ease; }
+.spx-view { transition: opacity .22s ease, transform .22s ease; }
+.spx-view.is-out { opacity: 0; transform: translateY(6px); }
+
+/* 상세 제원 — 그룹별 카드(PC 2열 / 모바일 1열) */
+.spx-spec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.spx-table {
+  width: 100%; border-collapse: collapse; table-layout: fixed;
+  background: var(--white); border: 1px solid var(--gray3); border-radius: 10px; overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.spx-table caption { caption-side: top; text-align: left; }
+.spx-table th.spx-th {
+  background: var(--black); color: var(--white);
+  padding: 15px 22px; text-align: left;
+  font-size: .9rem; font-weight: 700; letter-spacing: .05em;
+}
+.spx-table td { padding: 14px 22px; border-bottom: 1px solid var(--gray3); font-size: .92rem; line-height: 1.5; vertical-align: middle; overflow-wrap: anywhere; word-break: keep-all; }
+.spx-table tr:last-child td { border-bottom: none; }
+.spx-table td.spx-k { width: 40%; color: #555; font-weight: 500; }
+.spx-table td.spx-v { color: var(--black); font-weight: 700; text-align: right; }
+.spx-table tbody tr:hover { background: var(--gray1); }
+.spx-full { grid-column: 1 / -1; }
+
+/* 사양 리스트 카드 */
+.spx-list-card {
+  background: var(--white); border: 1px solid var(--gray3); border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); padding: 28px 32px;
+}
+.spx-list-title {
+  font-size: 1.05rem; font-weight: 800; color: var(--black);
+  padding-bottom: 12px; margin-bottom: 6px; border-bottom: 2px solid var(--black);
+}
+.spx-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
+.spx-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 13px 0; border-bottom: 1px solid var(--gray2);
+  font-size: .95rem; line-height: 1.55; color: #333; word-break: keep-all; overflow-wrap: anywhere;
+}
+.spx-list li::before { content: '✓'; color: var(--blue); font-weight: 800; flex: 0 0 auto; }
+.spx-list li .spx-txt { flex: 1; min-width: 0; }
+.spx-badge {
+  flex: 0 0 auto; align-self: center;
+  font-size: .62rem; font-weight: 800; letter-spacing: .12em; white-space: nowrap;
+  color: #9b7440; border: 1px solid rgba(212,175,122,.7); border-radius: 100px; padding: 3px 8px;
+}
+.spx-note { margin-top: 18px; text-align: center; font-size: .8rem; color: var(--gray4); line-height: 1.6; }
+.spx-note b { color: #9b7440; font-weight: 800; }
+
+@media (max-width: 900px) {
+  .spx-spec-grid { grid-template-columns: 1fr; gap: 18px; }
+}
+@media (max-width: 768px) {
+  .spx-toolbar { margin-bottom: 28px; }
+  .spx-cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; max-width: 420px; }
+  .spx-cat { width: 100%; min-height: 46px; padding: 10px 8px; font-size: .9rem; }
+  .spx-list { grid-template-columns: 1fr; }
+  .spx-list-card { padding: 22px 20px; }
+  .spx-table th.spx-th { padding: 14px 18px; }
+  .spx-table td { padding: 13px 18px; font-size: .9rem; }
+}
+@media (max-width: 480px) {
+  .spx-trim { gap: 8px; }
+  .spx-trim-tab { min-width: 100px; padding: 8px 12px; }
+  .spx-table td.spx-k { width: 42%; }
+  .spx-list li { font-size: .92rem; padding: 12px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spx-panel, .spx-view { transition: none; }
 }
 
 /* ============================================================
-   S6 · STANDARD FEATURES (카테고리별 사양)
+   카드형 리스트 (06 추천 고객 섹션에서 사용)
    ============================================================ */
 .feature-categories {
   display: grid;
@@ -674,7 +899,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 }
 
 /* ============================================================
-   S7 · VS TABLE
+   S6 · VS TABLE
    ============================================================ */
 .vs-summary {
   display: grid;
@@ -778,7 +1003,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 .row-highlight td { padding: 24px 16px; font-weight: 700; }
 
 /* ============================================================
-   S8 · COMPARISON TABLE
+   S7 · COMPARISON TABLE
    ============================================================ */
 .compare-wrap {
   overflow-x: auto;
@@ -837,7 +1062,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 }
 
 /* ============================================================
-   S9 · PROMO CARDS
+   S8 · PROMO CARDS
    ============================================================ */
 .promo-grid {
   display: grid;
@@ -1024,15 +1249,8 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .95rem;
   }
   
-  /* ---- S5 상세 제원 ---- */
-  .specs-table th {
-    font-size: 1rem;
-  }
-  .specs-table td {
-    font-size: 1rem;
-  }
   
-  /* ---- S6 기본 사양 ---- */
+  /* ---- 카드형 리스트 (추천 고객) ---- */
   .feature-category {
     padding: 38px 34px;
   }
@@ -1044,7 +1262,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     line-height: 1.75;
   }
   
-  /* ---- S7 비교 ---- */
+  /* ---- S6 비교 ---- */
   .vs-summary-item {
     font-size: 1.05rem;
   }
@@ -1055,7 +1273,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: 1rem;
   }
   
-  /* ---- S9 경쟁차 비교 ---- */
+  /* ---- S8 경쟁차 비교 ---- */
   .compare-table th {
     font-size: 1rem;
   }
@@ -1063,7 +1281,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .98rem;
   }
   
-  /* ---- S10 프로모션 ---- */
+  /* ---- S9 프로모션 ---- */
   .promo-card {
     padding: 46px 34px;
   }
@@ -1102,15 +1320,8 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .95rem;
   }
   
-  /* ---- S5 상세 제원 ---- */
-  .specs-table th {
-    font-size: 1rem;
-  }
-  .specs-table td {
-    font-size: 1rem;
-  }
   
-  /* ---- S6 기본 사양 ---- */
+  /* ---- 카드형 리스트 (추천 고객) ---- */
   .feature-category {
     padding: 38px 34px;
   }
@@ -1122,7 +1333,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     line-height: 1.75;
   }
   
-  /* ---- S7 비교 ---- */
+  /* ---- S6 비교 ---- */
   .vs-summary-item {
     font-size: 1.05rem;
   }
@@ -1133,7 +1344,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: 1rem;
   }
   
-  /* ---- S9 경쟁차 비교 ---- */
+  /* ---- S8 경쟁차 비교 ---- */
   .compare-table th {
     font-size: 1rem;
   }
@@ -1141,7 +1352,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .98rem;
   }
   
-  /* ---- S10 프로모션 ---- */
+  /* ---- S9 프로모션 ---- */
   .promo-card {
     padding: 46px 34px;
   }
@@ -1180,15 +1391,8 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .95rem;
   }
   
-  /* ---- S5 상세 제원 ---- */
-  .specs-table th {
-    font-size: 1rem;
-  }
-  .specs-table td {
-    font-size: 1rem;
-  }
   
-  /* ---- S6 기본 사양 ---- */
+  /* ---- 카드형 리스트 (추천 고객) ---- */
   .feature-category {
     padding: 38px 34px;
   }
@@ -1200,7 +1404,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     line-height: 1.75;
   }
   
-  /* ---- S7 비교 ---- */
+  /* ---- S6 비교 ---- */
   .vs-summary-item {
     font-size: 1.05rem;
   }
@@ -1211,7 +1415,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: 1rem;
   }
   
-  /* ---- S9 경쟁차 비교 ---- */
+  /* ---- S8 경쟁차 비교 ---- */
   .compare-table th {
     font-size: 1rem;
   }
@@ -1219,7 +1423,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .98rem;
   }
   
-  /* ---- S10 프로모션 ---- */
+  /* ---- S9 프로모션 ---- */
   .promo-card {
     padding: 46px 34px;
   }
@@ -1868,176 +2072,48 @@ const E_INTERIOR = [
 </section>
 
 <!-- ============================================================
-     [S5] DETAILED SPECS
+     [S5] SPECIFICATIONS & EQUIPMENT — 제원 및 기본 사양 (기존 S5 상세 제원 + S6 기본 사양 통합)
+     - 화면 내용은 아래 SPEC DATA 스크립트의 EQUIPMENT_DATA / TRIM_EQUIPMENT에서 자동 생성됩니다.
+     - 트림(EXCLUSIVE / AMG LINE)은 2번째 섹션 트림 선택과 같은 상태를 사용합니다.
      ============================================================ -->
-<section class="section section-alt">
+<section class="section spx-section" id="specs" aria-labelledby="spxTitle">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">04 · DETAILED SPECS</span>
-      <span class="label-en">Full Specifications</span>
-      <h2>상세 제원</h2>
-      <p></p>
+      <span class="sec-num">04 · SPECS &amp; EQUIPMENT</span>
+      <span class="label-en">Specifications &amp; Equipment</span>
+      <h2 id="spxTitle">E 200 제원 및 기본 사양</h2>
+      <p>궁금한 항목을 선택해 자세히 확인해 보세요.</p>
     </div>
-    <table class="specs-table reveal">
-      <thead>
-        <tr><th colspan="2">엔진 및 동력</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>엔진</td><td>M254 직렬 4기통 가솔린 터보</td></tr>
-        <tr><td>배기량</td><td>1,999cc</td></tr>
-        <tr><td>최고출력</td><td>204ps / 6,100rpm</td></tr>
-        <tr><td>최대토크</td><td>32.6kg.m / 2,000~4,000rpm</td></tr>
-        <tr><td>변속기</td><td>9G-TRONIC</td></tr>
-        <tr><td>구동방식</td><td>RWD</td></tr>
-      </tbody>
-    </table>
-    <table class="specs-table reveal reveal-delay-1">
-      <thead>
-        <tr><th colspan="2">성능 및 연비</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>복합연비</td><td>12.3km/l</td></tr>
-        <tr><td>도심연비</td><td>10.6km/l</td></tr>
-        <tr><td>고속연비</td><td>15.3km/l</td></tr>
-        <tr><td>0~100km/h</td><td>7.5초</td></tr>
-        <tr><td>최고속도</td><td>240km/h</td></tr>
-      </tbody>
-    </table>
-    <table class="specs-table reveal reveal-delay-2">
-      <thead>
-        <tr><th colspan="2">차체 및 무게</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>전장</td><td>4,955mm</td></tr>
-        <tr><td>전폭</td><td>1,880mm</td></tr>
-        <tr><td>전고</td><td>1,475mm</td></tr>
-        <tr><td>축거</td><td>2,960mm</td></tr>
-        <tr><td>공차중량</td><td>1,750kg</td></tr>
-      </tbody>
-    </table>
-    <table class="specs-table reveal reveal-delay-3">
-      <thead>
-        <tr><th colspan="2">용량</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>연료탱크</td><td>66L</td></tr>
-        <tr><td>트렁크</td><td>540L</td></tr>
-        <tr><td>서스펜션</td><td>컴포트 서스펜션</td></tr>
-      </tbody>
-    </table>
+
+    <div class="spx-toolbar reveal">
+      <!-- [S5-1] 카테고리 선택 (버튼은 EQUIPMENT_CATEGORIES 순서대로 자동 생성) -->
+      <div class="spx-cats" id="spxCats" role="tablist" aria-label="사양 카테고리 선택"></div>
+      <!-- [S5-2] 기준 트림 (2번째 섹션 트림 선택과 연동) -->
+      <div class="spx-trim" role="group" aria-label="기준 트림 선택">
+        <span class="spx-trim-label">기준 트림</span>
+        <div class="spx-trim-tabs" id="spxTrimTabs"></div>
+      </div>
+    </div>
+
+    <!-- [S5-3] 선택한 카테고리 내용 -->
+    <div class="spx-panel reveal reveal-delay-1" id="spxPanel" role="tabpanel" aria-live="polite"></div>
+    <p class="spx-note" id="spxNote"></p>
   </div>
 </section>
 
 <!-- ============================================================
-     [S6] STANDARD FEATURES
-     ============================================================ -->
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <span class="sec-num">05 · STANDARD FEATURES</span>
-      <span class="label-en">Equipment</span>
-      <h2>기본 사양</h2>
-      <p></p>
-    </div>
-    <div class="feature-categories reveal">
-      <!-- [S6-1] POWERTRAIN -->
-      <div class="feature-category reveal reveal-delay-1">
-        <h4>POWERTRAIN</h4>
-        <ul>
-          <li>M254 직렬 가솔린 터보</li>
-          <li>9G-TRONIC 자동 9단</li>
-          <li>컴포트 서스펜션</li>
-          <li>타이어핏</li>
-        </ul>
-      </div>
-      <!-- [S6-2] 외관 사양 -->
-      <div class="feature-category reveal reveal-delay-2">
-        <h4>외관 사양</h4>
-        <ul>
-          <li>Exclusive/AMG라인 외장 패키지</li>
-          <li>18인치 5스포크 경량 알로이 휠</li>
-          <li>크롬 라디에이터 그릴</li>
-          <li>LED 고성능 헤드램프</li>
-          <li>어댑티브 상향등 어시스트</li>
-          <li>파노라믹 선루프</li>
-          <li>브랜드 프로젝션 로고</li>
-        </ul>
-      </div>
-      <!-- [S6-3] 실내 사양 -->
-      <div class="feature-category reveal reveal-delay-3">
-        <h4>실내 사양</h4>
-        <ul>
-          <li>Exclusive/AMG라인 인테리어 패키지</li>
-          <li>ARTICO 시트</li>
-          <li>블랙 오픈 포어 애쉬우드 트림</li>
-          <li>나파가죽 스티어링 휠</li>
-          <li>앞좌석 열선</li>
-          <li>앞좌석 통풍</li>
-          <li>메모리 시트</li>
-          <li>뒷좌석 ISOFIX</li>
-          <li>앰비언트 라이트</li>
-          <li>자동 온도 조절 시스템</li>
-        </ul>
-      </div>
-      <!-- [S6-4] 멀티미디어 -->
-      <div class="feature-category reveal reveal-delay-4">
-        <h4>멀티미디어</h4>
-        <ul>
-          <li>3세대 MBUX</li>
-          <li>12.3인치 계기판</li>
-          <li>14.4인치 센터 디스플레이</li>
-          <li>증강현실 내비게이션</li>
-          <li>무선 애플 카플레이</li>
-          <li>무선 안드로이드 오토</li>
-          <li>무선 충전</li>
-          <li>기본형 사운드 시스템</li>
-          <li>Mercedes Me Connect</li>
-        </ul>
-      </div>
-      <!-- [S6-5] 편의 사양 -->
-      <div class="feature-category reveal reveal-delay-1">
-        <h4>편의 사양</h4>
-        <ul>
-          <li>KEYLESS-GO</li>
-          <li>액티브 주차 어시스트</li>
-          <li>서라운드 뷰 카메라</li>
-          <li>전동 트렁크</li>
-          <li>핸즈프리 액세스</li>
-          <li>MBUX 인테리어 어시스턴트</li>
-        </ul>
-      </div>
-      <!-- [S6-6] 안전 사양 -->
-      <div class="feature-category reveal reveal-delay-2">
-        <h4>안전 사양</h4>
-        <ul>
-          <li>드라이빙 어시스턴스 패키지 플러스</li>
-          <li>DISTRONIC</li>
-          <li>능동형 차선 유지 어시스트</li>
-          <li>능동형 사각지대 어시스트</li>
-          <li>Active Brake Assist</li>
-          <li>Steering Assist</li>
-          <li>PRE-SAFE</li>
-          <li>에어백 11개</li>
-          <li>ADAPTIVE BRAKE</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     [S7] Exclusive VS AMG LINE
+     [S6] Exclusive VS AMG LINE
      ============================================================ -->
 <section class="section section-alt">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">06 · MODEL COMPARISON</span>
+      <span class="sec-num">05 · MODEL COMPARISON</span>
       <span class="label-en">Model Comparison</span>
       <h2>E 200 Exclusive<br>vs AMG Line</h2>
       <p>핵심 차이를 한눈에 확인하세요</p>
     </div>
 
-    <!-- [S7-1] 요약 배너 -->
+    <!-- [S6-1] 요약 배너 -->
     <div class="vs-summary reveal">
       <div class="vs-summary-item"><strong>동일 파워트레인</strong><br>M254 직렬 4기통 터보 · 204ps · RWD</div>
       <div class="vs-summary-sep">|</div>
@@ -2046,7 +2122,7 @@ const E_INTERIOR = [
       <div class="vs-summary-item"><strong class="blue">Exclusive는</strong><br>편안함과 고급스러움 선택</div>
     </div>
 
-    <!-- [S7-2] 비교 테이블 -->
+    <!-- [S6-2] 비교 테이블 -->
     <p class="vs-scroll-hint">← 좌우로 스크롤하여 비교하세요 →</p>
     <div class="vs-wrap reveal reveal-delay-1">
       <table class="vs-table">
@@ -2089,18 +2165,18 @@ const E_INTERIOR = [
 </section>
 
 <!-- ============================================================
-     [S8] 추천 고객
+     [S7] 추천 고객
      ============================================================ -->
 <section class="section">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">07 · RECOMMENDATION</span>
+      <span class="sec-num">06 · RECOMMENDATION</span>
       <span class="label-en">Customer Profile</span>
       <h2>E 200<br>추천 고객</h2>
       <p></p>
     </div>
     <div class="feature-categories reveal">
-      <!-- [S8-1] E 200 추천고객 -->
+      <!-- [S7-1] E 200 추천고객 -->
       <div class="feature-category reveal reveal-delay-1">
         <h4>E 200 Exclusive</h4>
         <ul>
@@ -2110,7 +2186,7 @@ const E_INTERIOR = [
           <li>350만원을 다른 옵션에 투자하고 싶은 고객</li>
         </ul>
       </div>
-      <!-- [S8-2] AMG Line 추천고객 -->
+      <!-- [S7-2] AMG Line 추천고객 -->
       <div class="feature-category reveal reveal-delay-2">
         <h4>E 200 AMG Line</h4>
         <ul>
@@ -2125,12 +2201,12 @@ const E_INTERIOR = [
 </section>
 
 <!-- ============================================================
-     [S9] 경쟁차 비교
+     [S8] 경쟁차 비교
      ============================================================ -->
 <section class="section section-alt">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">08 · COMPETITION</span>
+      <span class="sec-num">07 · COMPETITION</span>
       <span class="label-en">Competitive Comparison</span>
       <h2>왜 E-Class가<br>선택받는가</h2>
       <p>경쟁 모델과 직접 비교해보십시오</p>
@@ -2142,18 +2218,18 @@ const E_INTERIOR = [
 </section>
 
 <!-- ============================================================
-     [S10] 프로모션
+     [S9] 프로모션
      ============================================================ -->
 <section class="section">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">09 · PROMOTION</span>
+      <span class="sec-num">08 · PROMOTION</span>
       <span class="label-en">Monthly Promotion</span>
       <h2>이달의 특별 혜택</h2>
       <p>혜택 내용은 매월 업데이트됩니다</p>
     </div>
     <div class="promo-grid" id="promoGrid">
-      <!-- [S10] 프로모션 카드는 JavaScript로 동적 생성됨 -->
+      <!-- [S9] 프로모션 카드는 JavaScript로 동적 생성됨 -->
     </div>
   </div>
 </section>
@@ -2428,6 +2504,124 @@ window.addEventListener('scroll', () => { siteHeader.classList.toggle('scrolled'
 const s = document.createElement('style');
 s.textContent = `@keyframes fadeIn{from{opacity:0}to{opacity:1}} @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.score-bar-fill{transition:none}}`;
 document.head.appendChild(s);
+</script>
+<script>
+/* ==================================================
+   S5 · 제원 및 기본 사양 — 화면 생성·카테고리 전환·트림 연동
+   (데이터는 <head>의 EQUIPMENT_CATEGORIES / EQUIPMENT_DATA / TRIM_EQUIPMENT)
+   ================================================== */
+(function(){
+  const panel = document.getElementById('spxPanel'), catsEl = document.getElementById('spxCats'),
+        trimEl = document.getElementById('spxTrimTabs'), noteEl = document.getElementById('spxNote');
+  if(!panel || !catsEl || typeof EQUIPMENT_DATA === 'undefined') return;
+  const cats = (typeof EQUIPMENT_CATEGORIES !== 'undefined' ? EQUIPMENT_CATEGORIES : []).filter(c => EQUIPMENT_DATA[c.key]);
+  const trims = (typeof TRIM_EQUIPMENT !== 'undefined') ? TRIM_EQUIPMENT : {};
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const startTrim = () => { try { if(typeof currentTrim !== 'undefined' && currentTrim && trims[currentTrim]) return currentTrim; } catch(e){}
+    return (typeof TRIM_DEFAULT !== 'undefined' && trims[TRIM_DEFAULT]) ? TRIM_DEFAULT : Object.keys(trims)[0]; };
+  let curCat = cats.length ? cats[0].key : null, curTrim = startTrim();
+
+  /* 항목 해석 — 문자열은 공통, { trim } 은 현재 트림 값 (null이면 표시 안 함) */
+  function trimLabel(){ return (trims[curTrim] && trims[curTrim].label) || ''; }
+  function resolve(item){
+    if(typeof item === 'string') return { text: item, trim: false };
+    if(item && item.trim){ const v = trims[curTrim] && trims[curTrim][item.trim]; return v ? { text: v, trim: true } : null; }
+    return null;
+  }
+  const badge = () => `<span class="spx-badge">${esc(trimLabel())}</span>`;
+  function listHTML(title, items, extraClass){
+    const lis = items.map(resolve).filter(Boolean)
+      .map(r => `<li${r.trim ? ' class="is-trim"' : ''}><span class="spx-txt">${esc(r.text)}</span>${r.trim ? badge() : ''}</li>`).join('');
+    return `<div class="spx-list-card${extraClass || ''}"><h3 class="spx-list-title">${esc(title)}</h3><ul class="spx-list">${lis}</ul></div>`;
+  }
+  function specsHTML(groups){
+    return '<div class="spx-spec-grid">' + groups.map(g => {
+      if(g.items) return listHTML(g.group, g.items, ' spx-full');
+      const rows = (g.rows || []).map(r => {
+        if(Array.isArray(r)) return `<tr><td class="spx-k">${esc(r[0])}</td><td class="spx-v">${esc(r[1])}</td></tr>`;
+        const v = resolve(r); if(!v) return '';
+        return `<tr class="is-trim"><td class="spx-k">${esc(r.label)} ${badge()}</td><td class="spx-v">${esc(v.text)}</td></tr>`;
+      }).join('');
+      return `<table class="spx-table"><thead><tr><th class="spx-th" colspan="2" scope="colgroup">${esc(g.group)}</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }).join('') + '</div>';
+  }
+  function build(){
+    const v = document.createElement('div'); v.className = 'spx-view';
+    const cat = cats.find(c => c.key === curCat);
+    v.innerHTML = curCat === 'specifications' ? specsHTML(EQUIPMENT_DATA.specifications) : listHTML(cat ? cat.label : '', EQUIPMENT_DATA[curCat] || []);
+    return v;
+  }
+  function updateNote(){
+    if(!noteEl) return;
+    noteEl.innerHTML = `<b>${esc(trimLabel())}</b> 기준 사양입니다. 금색 태그가 붙은 항목은 트림(EXCLUSIVE / AMG LINE)에 따라 달라집니다.`;
+  }
+
+  /* 전환 — 페이드 + 높이를 부드럽게 맞춰 아래 내용이 갑자기 튀지 않게 */
+  let token = 0;
+  function swap(){
+    const my = ++token, old = panel.querySelector('.spx-view');
+    updateNote();
+    if(!old || reduce){ panel.replaceChildren(build()); panel.style.height = ''; return; }
+    const h0 = panel.offsetHeight;
+    panel.style.height = h0 + 'px';
+    old.classList.add('is-out');
+    setTimeout(() => {
+      if(my !== token) return;
+      const nv = build(); nv.classList.add('is-out');
+      panel.replaceChildren(nv);
+      const h1 = nv.offsetHeight;
+      requestAnimationFrame(() => {
+        if(my !== token) return;
+        panel.style.height = h1 + 'px';
+        nv.classList.remove('is-out');
+        setTimeout(() => { if(my === token) panel.style.height = ''; }, 360);
+      });
+    }, 170);
+  }
+
+  /* 카테고리 버튼 (탭) */
+  catsEl.innerHTML = cats.map(c => `<button type="button" class="spx-cat" role="tab" id="spxTab-${esc(c.key)}" data-cat="${esc(c.key)}" aria-controls="spxPanel" aria-selected="false" tabindex="-1">${esc(c.label)}</button>`).join('');
+  const catBtns = [...catsEl.querySelectorAll('.spx-cat')];
+  function setCat(key, animate){
+    if(!cats.some(c => c.key === key)) return;
+    const changed = key !== curCat; curCat = key;
+    catBtns.forEach(b => { const on = b.dataset.cat === key; b.classList.toggle('active', on); b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+    panel.setAttribute('aria-labelledby', 'spxTab-' + key);
+    if(animate === false) { panel.replaceChildren(build()); updateNote(); }
+    else if(changed) swap();
+  }
+  catBtns.forEach((b, i) => {
+    b.addEventListener('click', () => setCat(b.dataset.cat));
+    b.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if(!d) return;
+      e.preventDefault(); const n = catBtns[(i + d + catBtns.length) % catBtns.length]; n.focus(); setCat(n.dataset.cat);
+    });
+  });
+
+  /* 기준 트림 — 2번째 섹션(트림 선택)과 같은 상태 사용 */
+  trimEl.innerHTML = Object.keys(trims).map(k => `<button type="button" class="spx-trim-tab" data-trim="${esc(k)}" aria-pressed="false">${esc(trims[k].label || k)}</button>`).join('');
+  const trimBtns = [...trimEl.querySelectorAll('.spx-trim-tab')];
+  function setTrim(k){
+    if(!trims[k]) return;
+    const changed = k !== curTrim; curTrim = k;
+    trimBtns.forEach(b => { const on = b.dataset.trim === k; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
+    if(changed) swap();   // 선택된 카테고리는 그대로 유지
+  }
+  trimBtns.forEach(b => b.addEventListener('click', () => {
+    if(typeof renderTrim === 'function') renderTrim(b.dataset.trim);   // 2번째 섹션도 함께 변경 → 아래 연결로 이 섹션도 갱신
+    else setTrim(b.dataset.trim);
+  }));
+  /* 2번째 섹션의 트림 전환(renderTrim)에 이 섹션 갱신을 연결 */
+  if(typeof renderTrim === 'function'){
+    const baseRenderTrim = renderTrim;
+    renderTrim = function(k){ const r = baseRenderTrim.apply(this, arguments); setTrim(k); return r; };
+  }
+  window.SPEC_EQUIPMENT = { setCategory: setCat, setTrim: setTrim };
+
+  trimBtns.forEach(b => { const on = b.dataset.trim === curTrim; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
+  setCat(curCat, false);
+})();
 </script>
 <script>
 /* TRIM BOX FIT — 로드된 이미지의 실제 비율로 박스 비율 맞춤 */
