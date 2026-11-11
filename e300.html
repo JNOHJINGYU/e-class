@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- HERO 이미지 우선 로딩 — 아래 IMAGES.hero / IMG_OPT_WIDTHS와 같은 파일이라 한 번만 내려받습니다 -->
+<link rel="preload" as="image" type="image/webp" fetchpriority="high" href="images/e-class/opt/e-front-1920.webp"
+  imagesrcset="images/e-class/opt/e-front-960.webp 960w, images/e-class/opt/e-front-1200.webp 1200w, images/e-class/opt/e-front-1600.webp 1600w, images/e-class/opt/e-front-1920.webp 1920w" imagesizes="100vw">
 <title>E300 4MATIC EXCLUSIVE | Mercedes-Benz</title>
 <!-- S-Core Dream (에스코어드림) – Google Fonts 미지원, Noto Sans KR로 대체 후 font-feature 최적화 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,25 +16,43 @@
      이미지 URL 관리 영역
      ============================================================ -->
 <script>
+/* ==================================================
+   IMAGE OPT — 이미지 용량·로딩 최적화
+   - 아래 IMAGES 값은 이 페이지와 같은 저장소(images/e-class/opt/)의 최적화 WebP 파일입니다.
+     (github.com 이미지 주소는 방문자가 많을 때 GitHub 요청 제한으로 막힐 수 있어 같은 사이트에서 제공)
+   - IMG_OPT_WIDTHS에 등록된 이미지는 화면 크기에 맞는 파일(960px / 1600px 등)만 내려받습니다.
+   - 새 이미지를 GitHub 주소로 넣어도 그대로 동작합니다(반응형만 적용 안 됨).
+   ================================================== */
+const IMG_OPT_WIDTHS = {"adaptive-brake": [960, 1200, 1600], "autodrive": [960, 1200, 1399], "burmester": [960, 1200, 1424], "digital-light": [930], "e-front": [960, 1200, 1600, 1920], "e300-amgline": [960, 1200, 1422], "e300-amgline-detail": [960, 1200, 1422], "e300-exclusive": [960, 1200, 1422], "e300-exclusive-detail": [960, 1200, 1422], "e300-interior": [960, 1200, 1280], "front-sensor": [960, 1200, 1600], "ir-glass": [960, 1200, 1448], "parking-camera": [960, 1200, 1408], "safety": [960, 1200, 1365]};
+const IMG_SIZES = { hero: '100vw', trim: '(max-width: 1240px) 92vw, 1150px', wide: '(max-width: 1240px) 92vw, 1150px', card: '(max-width: 768px) 100vw, 50vw', compare: '(max-width: 768px) 50vw, 30vw' };
+function optImg(img, url, sizes){
+  const m = String(url || '').match(/^(.*images\/e-class\/opt\/)([a-z0-9-]+)-(\d+)\.webp$/);
+  const ws = m && IMG_OPT_WIDTHS[m[2]];
+  img.decoding = 'async';
+  if(!ws || ws.length < 2){ img.removeAttribute('srcset'); img.removeAttribute('sizes'); return; }
+  img.sizes = sizes || IMG_SIZES.card;
+  img.srcset = ws.map(w => `${m[1]}${m[2]}-${w}.webp ${w}w`).join(', ');
+}
+
 const IMAGES = {
-  hero:               "https://github.com/JNOHJINGYU/images/blob/main/23C0379_001.jpg?raw=true",   // S1 히어로 · 차량 사진
-  digitalLight:       "https://github.com/JNOHJINGYU/images/blob/main/digitallight.jpeg?raw=true",   // S3 카드 1 · 디지털 라이트
-  distronic:          "https://github.com/JNOHJINGYU/images/blob/main/autodrive.png?raw=true",   // S3 카드 2 · 디스트로닉
-  parking:            "https://github.com/JNOHJINGYU/images/blob/main/camera.png?raw=true",   // S3 카드 3 · 주차 보조
-  burmester:          "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_tmtok1tmtok1tmto.png?raw=true",   // S3 카드 4 · 부메스터
-  interior:           "https://github.com/JNOHJINGYU/images/blob/main/e300ex_interior.jpg?raw=true",   // S7 인테리어
-  safety:             "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_doclujdoclujdocl.png?raw=true",   // S8 안전
+  hero:               "images/e-class/opt/e-front-1920.webp",   // S1 히어로 · 차량 사진
+  digitalLight:       "images/e-class/opt/digital-light-930.webp",   // S3 카드 1 · 디지털 라이트
+  distronic:          "images/e-class/opt/autodrive-1399.webp",   // S3 카드 2 · 디스트로닉
+  parking:            "images/e-class/opt/parking-camera-1408.webp",   // S3 카드 3 · 주차 보조
+  burmester:          "images/e-class/opt/burmester-1424.webp",   // S3 카드 4 · 부메스터
+  interior:           "images/e-class/opt/e300-interior-1280.webp",   // S7 인테리어
+  safety:             "images/e-class/opt/safety-1365.webp",   // S8 안전
 
   /* ── TRIM SELECTOR 이미지 (비어 있으면 플레이스홀더 표시) ── */
-  exclusiveExterior:  "https://github.com/JNOHJINGYU/images/blob/main/E300EX.png?raw=true",   // 메인 이미지 · EXCLUSIVE 외관
-  amgExterior:        "https://github.com/JNOHJINGYU/images/blob/main/E300AMG.png?raw=true",   // 메인 이미지 · AMG LINE 외관
-  exclusiveCompare:   "https://github.com/JNOHJINGYU/images/blob/main/EX%EC%8B%A4%EB%82%B4.png?raw=true",   // 비교 박스 · EXCLUSIVE 디자인 (예: 전면 그릴)
-  amgCompare:         "https://github.com/JNOHJINGYU/images/blob/main/E300AMG%EC%8B%A4%EB%82%B4.png?raw=true",   // 비교 박스 · AMG LINE 디자인 (예: 전면 범퍼)
+  exclusiveExterior:  "images/e-class/opt/e300-exclusive-1422.webp",   // 메인 이미지 · EXCLUSIVE 외관
+  amgExterior:        "images/e-class/opt/e300-amgline-1422.webp",   // 메인 이미지 · AMG LINE 외관
+  exclusiveCompare:   "images/e-class/opt/e300-exclusive-detail-1422.webp",   // 비교 박스 · EXCLUSIVE 디자인 (예: 전면 그릴)
+  amgCompare:         "images/e-class/opt/e300-amgline-detail-1422.webp",   // 비교 박스 · AMG LINE 디자인 (예: 전면 범퍼)
 
   /* ── 모달 전용 이미지 (비어 있으면 플레이스홀더 표시) ── */
-  frontSensorSystem:  "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_izi75jizi75jizi7.png?raw=true",   // DISTRONIC 카드 클릭 · E-Class W214 전방 센서 시스템 (GitHub raw URL 입력)
-  irLaminatedGlassDetail: "https://github.com/JNOHJINGYU/images/blob/main/ChatGPT%20%EC%9D%B4%EB%AF%B8%EC%A7%80%202026%EB%85%84%209%EC%9B%94%2029%EC%9D%BC%20%EC%98%A4%ED%9B%84%2002_41_26.png?raw=true",   // 편의사양 IR 라미네이티드 글래스 카드 클릭 · 상세 설명 이미지 (GitHub raw URL 입력)
-  adaptiveBrakeSystemDetail: "https://github.com/JNOHJINGYU/images/blob/main/Gemini_Generated_Image_5se5m95se5m95se5.png?raw=true",   // 안전 기술 · 어댑티브 브레이크 시스템 카드 클릭 · 상세 설명 이미지 (GitHub raw URL 입력)
+  frontSensorSystem:  "images/e-class/opt/front-sensor-1600.webp",   // DISTRONIC 카드 클릭 · E-Class W214 전방 센서 시스템 (GitHub raw URL 입력)
+  irLaminatedGlassDetail: "images/e-class/opt/ir-glass-1448.webp",   // 편의사양 IR 라미네이티드 글래스 카드 클릭 · 상세 설명 이미지 (GitHub raw URL 입력)
+  adaptiveBrakeSystemDetail: "images/e-class/opt/adaptive-brake-1600.webp",   // 안전 기술 · 어댑티브 브레이크 시스템 카드 클릭 · 상세 설명 이미지 (GitHub raw URL 입력)
 };
 
 /* ── 동영상 URL 관리 (mp4 URL을 넣으면 바로 작동) ── */
@@ -1204,6 +1225,49 @@ body.media-modal-lock { overflow: hidden; }
   .safety-zoom-hint { right: 12px; bottom: 12px; width: 36px; height: 36px; }
 }
 </style>
+<style>
+/* ==================================================
+   EXTERIOR COLOURS — 외장 컬러 섹션 (E 350 e 페이지 컬러 섹션과 동일한 디자인)
+   - 이 페이지의 다른 스타일과 겹치지 않도록 ecol- 접두어로 독립 구성
+   - 이미지 영역은 사진 비율(1672:941)로 미리 고정 → 로딩 중 화면 흔들림 없음
+   ================================================== */
+.ecol-section{
+  --ecol-ink:#0E0F11; --ecol-sub:#58606B; --ecol-mute:#8B929B; --ecol-line:#E1E5EA;
+  --ecol-blue:#0B3A6E; --ecol-ease:cubic-bezier(.22,.61,.36,1);
+  background:#F3F5F8; padding:clamp(72px,8vw,120px) 0; scroll-margin-top:80px;
+}
+.ecol-section--white{background:#FFFFFF;}
+.ecol-wrap{width:min(100% - 40px,1200px);margin-inline:auto;}
+.ecol-block{max-width:1100px;margin-inline:auto;}
+.ecol-head{text-align:center;margin-bottom:clamp(22px,2.6vw,32px);}
+.ecol-eyebrow{margin:0;font-size:12px;font-weight:700;letter-spacing:.24em;color:var(--ecol-blue);}
+.ecol-title{margin:8px 0 0;font-size:clamp(22px,2.4vw,30px);font-weight:900;letter-spacing:-.02em;line-height:1.35;color:var(--ecol-ink);}
+.ecol-stage{position:relative;background:#fff;border:1px solid var(--ecol-line);aspect-ratio:1672 / 941;overflow:hidden;line-height:0;}
+.ecol-stage img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;cursor:zoom-in;transition:opacity .2s var(--ecol-ease);}
+.ecol-stage.is-loading img{opacity:.82;}
+.ecol-stage img.ecol-fade{animation:ecolIn .3s var(--ecol-ease);}
+@keyframes ecolIn{from{opacity:.25}to{opacity:1}}
+.ecol-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;line-height:1.6;
+  background:linear-gradient(135deg,#F0F3F7,#E0E6ED);color:var(--ecol-mute);font-size:13px;letter-spacing:.04em;text-align:center;}
+.ecol-swatches{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:560px;margin:clamp(20px,2.4vw,30px) auto 0;padding:4px;}
+.ecol-swatch{width:42px;height:42px;border-radius:50%;background:var(--sw);border:none;padding:0;cursor:pointer;flex:0 0 auto;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);transition:transform .2s var(--ecol-ease),box-shadow .2s var(--ecol-ease);}
+.ecol-swatch.is-light{box-shadow:inset 0 0 0 1px rgba(14,15,17,.22);}
+.ecol-swatch:hover{transform:scale(1.07);}
+.ecol-swatch.is-active{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--ecol-blue);transform:scale(1.04);}
+.ecol-swatch:focus-visible{outline:2px solid var(--ecol-blue);outline-offset:6px;}
+.ecol-name{margin:16px 0 0;text-align:center;font-size:clamp(17px,1.8vw,21px);font-weight:700;letter-spacing:-.01em;color:var(--ecol-ink);min-height:1.6em;line-height:1.6;}
+.ecol-name small{display:block;font-size:13px;font-weight:500;color:var(--ecol-blue);}
+/* 휴대폰: 4개 + 3개 2줄 가운데 정렬 */
+@media (max-width:480px){.ecol-swatches{gap:14px;max-width:212px}.ecol-swatch{width:38px;height:38px}}
+/* 확대 보기 */
+.ecol-lightbox{position:fixed;inset:0;z-index:3000;background:rgba(10,11,12,.92);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .3s;}
+.ecol-lightbox.open{opacity:1;visibility:visible;}
+.ecol-lightbox img{max-width:92vw;max-height:86vh;object-fit:contain;}
+.ecol-lightbox-close{position:absolute;top:max(18px,env(safe-area-inset-top));right:18px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:none;color:#fff;font-size:24px;line-height:1;cursor:pointer;}
+.ecol-lightbox-cap{position:absolute;bottom:max(18px,env(safe-area-inset-bottom));left:0;right:0;margin:0;text-align:center;color:rgba(255,255,255,.75);font-size:13px;padding:0 20px;}
+@media (prefers-reduced-motion:reduce){.ecol-stage img.ecol-fade{animation:none}.ecol-swatch{transition:none}}
+</style>
 </head>
 <body>
 
@@ -1217,7 +1281,7 @@ body.media-modal-lock { overflow: hidden; }
      ============================================================ -->
 <section id="hero">
   <div class="hero-media" id="heroMedia">
-    <img id="heroImg" src="" alt="Mercedes-Benz E-Class" loading="eager" style="display:none;">
+    <img id="heroImg" alt="Mercedes-Benz E-Class" loading="eager" fetchpriority="high" decoding="async" width="1920" height="1078" style="display:none;">
     <div class="hero-media-overlay"></div>
   </div>
   <div class="hero-inner hero-inner--intro">
@@ -1277,6 +1341,159 @@ body.media-modal-lock { overflow: hidden; }
     </div>
   </div>
 </section>
+
+<!-- ============================================================
+     EXTERIOR COLOURS · 외장 컬러 (E 350 e 페이지와 동일한 컬러 섹션)
+     컬러 추가·수정은 바로 아래 스크립트의 E_COLORS 목록에서 합니다.
+     ============================================================ -->
+<section class="ecol-section ecol-section--white" id="colors" aria-labelledby="ecolTitle">
+  <div class="ecol-wrap">
+    <div class="ecol-block reveal" id="ecolViewer">
+      <div class="ecol-head">
+        <p class="ecol-eyebrow">EXTERIOR COLOURS</p>
+        <h2 class="ecol-title" id="ecolTitle">나만의 E-Class를 완성하는 컬러</h2>
+      </div>
+      <div class="ecol-stage" id="ecolStage" aria-live="polite"></div>
+      <div class="ecol-swatches" id="ecolSwatches" role="group" aria-label="외장 컬러 선택"></div>
+      <p class="ecol-name" id="ecolName" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+<div class="ecol-lightbox" id="ecolLightbox" role="dialog" aria-modal="true" aria-label="이미지 확대 보기" aria-hidden="true">
+  <button type="button" class="ecol-lightbox-close" id="ecolLightboxClose" aria-label="닫기">&times;</button>
+  <img id="ecolLightboxImg" alt="">
+  <p class="ecol-lightbox-cap" id="ecolLightboxCap"></p>
+</div>
+<script>
+/* ==================================================
+   ▶▶ 외장 컬러 목록 (EXTERIOR COLOURS) ◀◀  — E 350 e 페이지와 동일
+   - file: images/e-class/color/ 폴더의 파일 이름 (파일이름-828.webp / 파일이름-1448.webp)
+           불러오기 실패 시 GitHub images 저장소의 원본 JPG(파일이름.jpg)로 1회 재시도
+   - name·swatch는 이미지 작업용 표기입니다. 국내 공식 색상명·선택 가능 여부는 옵션표와 대조 후 수정하세요.
+   - swatch: 원형 버튼 색상 / price: 추가금액(원). 숫자로 넣으면 컬러명 아래 '+금액' 표시, null이면 표시 안 함
+   ================================================== */
+const E_COLOR_MODEL = 'E 300 4MATIC';
+const E_COLORS = [
+  { id: 'obsidian-black',  name: '옵시디언 블랙',     swatch: '#15171A', price: null, file: 'e350e-color-obsidian-black' },
+  { id: 'nautic-blue',     name: '노틱 블루',         swatch: '#172B48', price: null, file: 'e350e-color-nautic-blue' },
+  { id: 'velvet-brown',    name: '벨벳 브라운',       swatch: '#655348', price: null, file: 'e350e-color-velvet-brown' },
+  { id: 'graphite-grey',   name: '그라파이트 그레이', swatch: '#53565A', price: null, file: 'e350e-color-graphite-grey' },
+  { id: 'hightech-silver', name: '하이테크 실버',     swatch: '#BEC5CB', price: null, file: 'e350e-color-hightech-silver' },
+  { id: 'polar-white',     name: '폴라 화이트',       swatch: '#F4F4F1', price: null, file: 'e350e-color-polar-white' },
+  { id: 'verde-silver',    name: '베르데 실버',       swatch: '#819891', price: null, file: 'e350e-color-verde-silver' }
+];
+/* 컬러 뷰어 — 다른 섹션과 독립 실행 (이미지 전환·미리 불러오기·확대 보기) */
+(function(){
+  const DIR = 'images/e-class/color/', RAW = 'https://raw.githubusercontent.com/JNOHJINGYU/images/main/';
+  const SIZES = '(max-width: 1140px) calc(100vw - 40px), 1100px';
+  const LOG = '[외장 컬러]';
+  const list = (Array.isArray(window.E_COLORS) ? window.E_COLORS : E_COLORS).filter(c => c && c.id && c.file);
+  const stage = document.getElementById('ecolStage'), wrap = document.getElementById('ecolSwatches'), nameEl = document.getElementById('ecolName');
+  if(!list.length || !stage || !wrap) return;
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const isLight = hex => { const m = String(hex || '').replace('#','').match(/^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i); if(!m) return false;
+    const [r,g,b] = m.slice(1).map(x => parseInt(x,16)); return (0.299*r + 0.587*g + 0.114*b) > 175; };
+  const byId = id => list.find(c => c.id === id) || list[0];
+  const variant = c => ({ src: `${DIR}${c.file}-1448.webp`, srcset: `${DIR}${c.file}-828.webp 828w, ${DIR}${c.file}-1448.webp 1448w`,
+    full: `${DIR}${c.file}-1448.webp`, fb: `${RAW}${c.file}.jpg` });
+
+  wrap.innerHTML = list.map(c => `<button type="button" class="ecol-swatch${isLight(c.swatch) ? ' is-light' : ''}" data-view="${esc(c.id)}" style="--sw:${esc(c.swatch || '#ccc')}" aria-pressed="false" aria-label="${esc(c.name)}" title="${esc(c.name)}"></button>`).join('');
+  const btns = [...wrap.querySelectorAll('.ecol-swatch')];
+
+  /* 미리 불러오기 캐시 — 화면에 쓰는 것과 같은 srcset/sizes로 받아 두므로 전환 시 다시 내려받지 않음 */
+  const cache = new Map(), keep = [];
+  function preload(c){
+    if(cache.has(c.id)) return cache.get(c.id);
+    const v = variant(c);
+    const pr = new Promise((resolve, reject) => {
+      const im = new Image(); keep.push(im); im.decoding = 'async';
+      im.sizes = SIZES; im.srcset = v.srcset;
+      im.onload = () => (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(() => resolve(v));
+      im.onerror = () => { const f = new Image(); f.onload = () => resolve({ src: v.fb, srcset: '', full: v.fb, fb: '' }); f.onerror = reject; f.src = v.fb; };
+      im.src = v.src;
+    });
+    pr.catch(() => cache.delete(c.id));
+    cache.set(c.id, pr);
+    return pr;
+  }
+
+  let img = null, token = 0, current = null;
+  function onImgError(){
+    if(!img) return;
+    const fb = img.dataset.fb;
+    if(fb){   // WebP 실패 → 원본 JPG로 1회만 재시도
+      console.warn(LOG, '이미지 로딩 실패 → 원본 JPG로 재시도', { failed: img.currentSrc || img.src, retry: fb });
+      img.removeAttribute('srcset'); img.dataset.fb = ''; img.dataset.full = fb; img.src = fb; return;
+    }
+    console.error(LOG, '이미지를 불러오지 못했습니다', img.currentSrc || img.src);
+    img.remove(); img = null;
+    stage.insertAdjacentHTML('beforeend', '<div class="ecol-ph">이미지 준비 중</div>');
+  }
+  function apply(v, c, fade, first){
+    if(!img){
+      stage.innerHTML = '';
+      img = document.createElement('img');
+      img.className = 'ecol-image'; img.width = 1672; img.height = 941;
+      img.loading = first ? 'lazy' : 'eager'; img.decoding = 'async';
+      img.tabIndex = 0; img.setAttribute('role', 'button');
+      img.addEventListener('error', onImgError);
+      stage.appendChild(img);
+    }
+    if(v.srcset){ img.sizes = SIZES; img.srcset = v.srcset; } else { img.removeAttribute('srcset'); img.removeAttribute('sizes'); }
+    img.src = v.src; img.dataset.full = v.full; img.dataset.fb = v.fb || '';
+    const alt = E_COLOR_MODEL + ' 외장 컬러 — ' + c.name;
+    img.alt = alt; img.setAttribute('aria-label', alt + ' 확대 보기');
+    if(fade){ img.classList.remove('ecol-fade'); void img.offsetWidth; img.classList.add('ecol-fade'); }
+  }
+  function show(id){
+    const c = byId(id), my = ++token; current = c.id;
+    btns.forEach(b => { const on = b.dataset.view === c.id; b.classList.toggle('is-active', on); b.setAttribute('aria-pressed', String(on)); });
+    if(nameEl){
+      const price = (typeof c.price === 'number' && c.price > 0) ? `<small>+${c.price.toLocaleString('ko-KR')}원</small>` : '';
+      nameEl.innerHTML = esc(c.name || '') + price;
+    }
+    if(!img){ apply(variant(c), c, false, true); return; }   // 첫 표시는 지연 로딩
+    let settled = false; const t0 = performance.now();
+    setTimeout(() => { if(!settled && my === token) stage.classList.add('is-loading'); }, 120);   // 캐시에 있으면 로딩 표시 없이 바로 전환
+    preload(c).then(v => { settled = true; if(my !== token) return; stage.classList.remove('is-loading'); apply(v, c, performance.now() - t0 > 120); })
+      .catch(() => { settled = true; if(my !== token) return; stage.classList.remove('is-loading'); console.error(LOG, '이미지를 불러오지 못해 현재 이미지를 유지합니다:', c.file); });
+  }
+  btns.forEach(b => b.addEventListener('click', () => show(b.dataset.view)));
+  show(list[0].id);
+
+  /* 섹션이 화면 가까이 오면 나머지 컬러를 하나씩 미리 받음 (데이터 절약 모드·2G에서는 생략) */
+  const canPrefetch = () => { const n = navigator.connection || {}; return !n.saveData && !/(^|-)2g$/.test(n.effectiveType || ''); };
+  const idle = cb => ('requestIdleCallback' in window) ? requestIdleCallback(cb, { timeout: 2500 }) : setTimeout(cb, 600);
+  function prefetchRest(){
+    if(!canPrefetch()) return;
+    preload(byId(current)).catch(() => {});
+    const rest = list.filter(c => c.id !== current);
+    const next = () => { const c = rest.shift(); if(!c) return; preload(c).catch(() => {}).finally(() => idle(next)); };
+    idle(next);
+  }
+  const first = stage.querySelector('img');
+  const startPrefetch = () => { if(first.complete && first.naturalWidth) prefetchRest(); else first.addEventListener('load', prefetchRest, { once: true }); };
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver(es => { if(es.some(e => e.isIntersecting)){ io.disconnect(); startPrefetch(); } }, { rootMargin: '50% 0px' });
+    io.observe(stage);
+  } else startPrefetch();
+
+  /* 확대 보기 */
+  const lb = document.getElementById('ecolLightbox'), li = document.getElementById('ecolLightboxImg'),
+        cap = document.getElementById('ecolLightboxCap'), cb = document.getElementById('ecolLightboxClose');
+  if(!lb) return;
+  let last = null, prevOverflow = '';
+  const open = el => { last = el; li.src = el.dataset.full || el.currentSrc || el.src; li.alt = el.alt; cap.textContent = el.alt;
+    lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); prevOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; cb.focus(); };
+  const close = () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); li.removeAttribute('src'); document.body.style.overflow = prevOverflow; if(last) last.focus(); };
+  stage.addEventListener('click', e => { if(e.target.tagName === 'IMG') open(e.target); });
+  stage.addEventListener('keydown', e => { if(e.target.tagName === 'IMG' && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); open(e.target); } });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && lb.classList.contains('open')) close(); });
+  cb.addEventListener('click', close);
+  lb.addEventListener('click', e => { if(e.target === lb) close(); });
+})();
+</script>
+
 
 <!-- ============================================================
      S2 · 왜 E-Class인가
@@ -1609,7 +1826,9 @@ function applyImages() {
     const box = document.getElementById(id);
     if (!box) return;
     const img = document.createElement('img');
-    img.src = url; img.alt = id; img.loading = 'lazy';
+    img.alt = id; img.loading = 'lazy';
+    optImg(img, url, id === 'imgInterior' ? IMG_SIZES.wide : IMG_SIZES.card);
+    img.src = url;
     img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
     box.appendChild(img);
   });
@@ -1619,6 +1838,7 @@ function applyImages() {
   const heroMedia = document.getElementById('heroMedia');
   if (heroImg && heroMedia) {
     if (IMAGES.hero) {
+      optImg(heroImg, IMAGES.hero, IMG_SIZES.hero);
       heroImg.src = IMAGES.hero;
       heroImg.style.display = 'block';
     } else {
@@ -1641,6 +1861,7 @@ function setTrimMainImage(trim) {
     img.onload  = () => { img.classList.remove('trim-is-hidden'); ph.classList.add('trim-is-hidden'); };
     img.onerror = () => { img.classList.add('trim-is-hidden'); ph.classList.remove('trim-is-hidden'); };
     img.alt = trim.name + ' 외관';
+    optImg(img, trim.image, IMG_SIZES.trim);
     img.src = trim.image;
     if (img.complete && img.naturalWidth > 0) img.onload();
   } else {
@@ -1684,9 +1905,10 @@ function renderTrimCompareImages() {
     const box = document.querySelector(`[data-compare-image="${trim.key}"]`);
     if (!box || !trim.compareImage) return;
     const img = document.createElement('img');
-    img.src = trim.compareImage;
     img.alt = trim.shortLabel + ' 디자인';
     img.loading = 'lazy';
+    optImg(img, trim.compareImage, IMG_SIZES.compare);
+    img.src = trim.compareImage;
     img.onload  = () => { const ph = box.querySelector('.trim-compare-placeholder'); if (ph) ph.classList.add('trim-is-hidden'); };
     img.onerror = () => { img.remove(); };
     box.appendChild(img);
@@ -1738,7 +1960,7 @@ function initTrimSelector() {
     });
   });
   /* 이미지 미리 불러오기 → 전환 시 지연 없음 */
-  Object.values(TRIM_DATA).forEach(t => { if (t.image) { const p = new Image(); p.src = t.image; } });
+  Object.values(TRIM_DATA).forEach(t => { if (t.image) { const p = new Image(); optImg(p, t.image, IMG_SIZES.trim); p.src = t.image; } });
   renderTrimCompareImages();
   renderTrim(TRIM_DEFAULT);
 }
