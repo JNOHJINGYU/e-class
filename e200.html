@@ -87,7 +87,7 @@ const TRIM_DEFAULT = "exclusive";
 </script>
 
 <!-- ============================================================
-     제원 및 기본 사양 데이터 (S5 · SPECIFICATIONS & EQUIPMENT)
+     제원 및 기본 사양 데이터 (S4 · SPECIFICATIONS & EQUIPMENT)
      - 여기 값만 고치면 화면에 자동 반영됩니다. (HTML은 수정할 필요 없음)
      - 문자열 항목 = 두 트림 공통 사양
      - { trim: '키' } 항목 = 트림별로 다른 사양 → 아래 TRIM_EQUIPMENT의 같은 키 값을 표시
@@ -198,7 +198,7 @@ const EQUIPMENT_DATA = {
   ]
 };
 
-/* 트림별로 다른 사양 — 기존 페이지 'Exclusive vs AMG Line' 비교표 기준 */
+/* 트림별로 다른 사양 — 기존 'Exclusive vs AMG Line' 비교표(삭제된 섹션) 기준 */
 const TRIM_EQUIPMENT = {
   exclusive: {
     label: 'EXCLUSIVE',
@@ -247,20 +247,6 @@ const COMPARE_DATA = {
     { label: "브랜드 가치",       values: ["★★★★★",  "★★★★", "★★★"] },
   ]
 };
-</script>
-
-<!-- ============================================================
-     프로모션 데이터
-     ============================================================ -->
-<script>
-const PROMO_DATA = [
-  { icon: "💰", title: "기본 할인",        content: "E200 Exclusive 4%<br>E200 AMG라인 10%", tag: "DISCOUNT" },
-  { icon: "🏦", title: "벤츠 파이낸셜",   content: "E200 Exclusive 추가 7% 할인<br>E200 AMG라인 추가 4% 할인", tag: "FINANCIAL" },
-  { icon: "🚗", title: "장기렌트",         content: "E200 Exclusive<br>기본 할인 + 10% 할인<br>E200 AMG라인<br>기본할인 + 7% 할인", tag: "LONG-TERM RENT" },
-  { icon: "🔄", title: "재구매 고객 혜택", content: "기본 할인 + 1% 할인", tag: "LOYALTY" },
-  { icon: "🏢", title: "법인 고객 혜택",   content: "2대 이상 구매 시 기본 할인 + 3% 할인", tag: "CORPORATE" },
-  { icon: "🔃", title: "트레이드인 혜택",  content: "기본 할인 + 1% 할인", tag: "TRADE-IN" },
-];
 </script>
 
 <style>
@@ -701,45 +687,8 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
 }
 
 /* ============================================================
-   S4 · SPECS GRID (핵심 제원)
+   S4 · SPECIFICATIONS & EQUIPMENT (상세 제원 + 기본 사양 통합)
    ============================================================ */
-.specs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 24px;
-  margin-top: 64px;
-}
-.spec-item {
-  background: var(--gray1);
-  padding: 28px 20px;
-  border-radius: var(--radius);
-  text-align: center;
-  border: 1px solid var(--gray3);
-  transition: all .4s ease;
-}
-.spec-item:hover {
-  background: var(--white);
-  border-color: var(--blue);
-  box-shadow: var(--shadow-md);
-}
-.spec-value {
-  font-size: clamp(1.6rem, 3vw, 2rem);
-  font-weight: 900;
-  color: var(--black);
-  margin-bottom: 8px;
-}
-.spec-label {
-  font-size: .8rem;
-  color: var(--gray4);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .1em;
-}
-
-/* ============================================================
-   S5 · SPECIFICATIONS & EQUIPMENT (상세 제원 + 기본 사양 통합)
-   ============================================================ */
-.spx-section { border-top: 1px solid var(--gray2); }
 .spx-toolbar {
   display: flex; flex-direction: column; align-items: center; gap: 18px;
   margin-top: 8px; margin-bottom: 36px;
@@ -853,158 +802,24 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   .spx-panel, .spx-view { transition: none; }
 }
 
-/* ============================================================
-   카드형 리스트 (06 추천 고객 섹션에서 사용)
-   ============================================================ */
-.feature-categories {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 28px;
-  margin-top: 64px;
-}
-.feature-category {
-  padding: 32px 28px;
-  background: var(--gray1);
-  border: 1px solid var(--gray3);
-  border-radius: var(--radius);
-  transition: all .4s ease;
-}
-.feature-category:hover {
-  background: var(--white);
-  border-color: var(--black);
-  box-shadow: var(--shadow-md);
-}
-.feature-category h4 {
-  font-size: 1.1rem;
-  font-weight: 800;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--black);
-  color: var(--black);
-}
-.feature-category ul {
-  list-style: none;
-}
-.feature-category li {
-  padding: 8px 0;
-  font-size: .9rem;
-  color: #444;
-  line-height: 1.6;
-}
-.feature-category li:before {
-  content: '✓ ';
-  color: var(--blue);
-  font-weight: 700;
-  margin-right: 6px;
+/* 모바일 최적화 — 터치 영역·작은 글자 보강 */
+.spx-badge { font-size: 11px; letter-spacing: .08em; }
+.ecol-swatch { position: relative; }
+.ecol-swatch::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; }   /* 보이는 크기는 그대로, 누르는 영역만 넓힘 */
+@media (max-width: 768px) {
+  .spx-trim-tab { min-height: 44px; }
 }
 
 /* ============================================================
-   S6 · VS TABLE
+   S5 · COMPARISON TABLE (경쟁차 비교)
    ============================================================ */
-.vs-summary {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
-  gap: 24px;
-  margin: 48px 0;
-  padding: 28px;
-  background: var(--gray1);
-  border-radius: var(--radius);
-  align-items: center;
-  text-align: center;
-}
-.vs-summary-item {
-  font-size: .9rem;
-  line-height: 1.6;
-}
-.vs-summary-item strong {
-  display: block;
-  font-weight: 800;
-  margin-bottom: 4px;
-  color: var(--black);
-}
-.vs-summary-sep {
-  color: var(--gray3);
-  font-size: 2rem;
-  font-weight: 300;
-}
-.scroll-hint, .vs-scroll-hint {
+.scroll-hint {
   text-align: center;
   color: var(--gray4);
   font-size: .85rem;
   margin: 32px 0 16px;
   font-weight: 600;
 }
-.vs-wrap {
-  overflow-x: auto;
-  margin-top: 32px;
-  padding-bottom: 12px;
-  border-radius: 8px;
-}
-.vs-table {
-  width: 100%;
-  min-width: 600px;
-  border-collapse: collapse;
-  background: var(--white);
-}
-.vs-table thead {
-  background: var(--black);
-  color: var(--white);
-}
-.vs-table th {
-  padding: 20px 16px;
-  text-align: center;
-  font-weight: 700;
-  font-size: .9rem;
-  border-right: 1px solid rgba(0,0,0,.1);
-}
-.vs-table th:first-child {
-  text-align: left;
-}
-.col-label-h {
-  width: 25%;
-  min-width: 120px;
-}
-.col-excl, .col-amg {
-  width: 37.5%;
-}
-.th-price {
-  display: block;
-  font-size: 1.1rem;
-  font-weight: 900;
-  margin-top: 8px;
-}
-.vs-table td {
-  padding: 16px;
-  border-bottom: 1px solid var(--gray3);
-  text-align: center;
-  font-size: .9rem;
-}
-.vs-table td:first-child {
-  text-align: left;
-  background: var(--gray1);
-  font-weight: 700;
-  color: var(--black);
-}
-.col-label-d {
-  width: 25%;
-  min-width: 120px;
-  color: var(--black);
-}
-.col-excl { color: var(--blue); }
-.col-amg { color: var(--red); }
-.vs-table tbody tr:hover td {
-  background-color: rgba(0,102,255,.03);
-}
-.empty-val {
-  color: #CCC;
-  font-style: italic;
-}
-.row-highlight { background: var(--gray1); }
-.row-highlight td { padding: 24px 16px; font-weight: 700; }
-
-/* ============================================================
-   S7 · COMPARISON TABLE
-   ============================================================ */
 .compare-wrap {
   overflow-x: auto;
   margin-top: 32px;
@@ -1059,78 +874,6 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   border-radius: 4px;
   font-size: .85rem;
   color: #B71C1C;
-}
-
-/* ============================================================
-   S8 · PROMO CARDS
-   ============================================================ */
-.promo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 28px;
-  margin-top: 64px;
-}
-.promo-card {
-  position: relative;
-  padding: 40px 28px;
-  background: var(--gray1);
-  border: 1px solid var(--gray3);
-  border-radius: var(--radius);
-  text-align: center;
-  transition: all .4s ease;
-  overflow: hidden;
-}
-.promo-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(135deg, var(--blue) 0%, var(--red) 100%);
-  opacity: 0;
-  transition: opacity .4s ease;
-  z-index: 0;
-}
-.promo-card:hover::before {
-  opacity: .05;
-}
-.promo-card > * {
-  position: relative;
-  z-index: 1;
-}
-.promo-tag {
-  display: inline-block;
-  padding: 4px 12px;
-  background: var(--blue);
-  color: var(--white);
-  border-radius: 100px;
-  font-size: .7rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  margin-bottom: 16px;
-}
-.promo-icon {
-  font-size: 3rem;
-  margin-bottom: 16px;
-  transition: transform .4s ease;
-}
-.promo-card:hover .promo-icon {
-  transform: scale(1.15);
-}
-.promo-badge {
-  font-size: .7rem;
-  color: var(--gray4);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
-.promo-card h3 {
-  margin-bottom: 12px;
-  color: var(--black);
-}
-.promo-content {
-  color: #666;
-  font-size: .9rem;
-  line-height: 1.6;
 }
 
 /* ============================================================
@@ -1244,36 +987,11 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     line-height: 1.7;
   }
   
-  /* ---- S4 핵심 제원 ---- */
-  .spec-label {
-    font-size: .95rem;
-  }
   
   
-  /* ---- 카드형 리스트 (추천 고객) ---- */
-  .feature-category {
-    padding: 38px 34px;
-  }
-  .feature-category h4 {
-    font-size: 1.25rem;
-  }
-  .feature-category li {
-    font-size: 1rem;
-    line-height: 1.75;
-  }
   
-  /* ---- S6 비교 ---- */
-  .vs-summary-item {
-    font-size: 1.05rem;
-  }
-  .vs-table th {
-    font-size: 1rem;
-  }
-  .vs-table td {
-    font-size: 1rem;
-  }
   
-  /* ---- S8 경쟁차 비교 ---- */
+  /* ---- S5 경쟁차 비교 ---- */
   .compare-table th {
     font-size: 1rem;
   }
@@ -1281,17 +999,6 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .98rem;
   }
   
-  /* ---- S9 프로모션 ---- */
-  .promo-card {
-    padding: 46px 34px;
-  }
-  .promo-card h3 {
-    font-size: 1.35rem;
-  }
-  .promo-content {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
   
   /* ---- 섹션 공통 ---- */
   .section-heading p {
@@ -1315,36 +1022,11 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     line-height: 1.7;
   }
   
-  /* ---- S4 핵심 제원 ---- */
-  .spec-label {
-    font-size: .95rem;
-  }
   
   
-  /* ---- 카드형 리스트 (추천 고객) ---- */
-  .feature-category {
-    padding: 38px 34px;
-  }
-  .feature-category h4 {
-    font-size: 1.25rem;
-  }
-  .feature-category li {
-    font-size: 1rem;
-    line-height: 1.75;
-  }
   
-  /* ---- S6 비교 ---- */
-  .vs-summary-item {
-    font-size: 1.05rem;
-  }
-  .vs-table th {
-    font-size: 1rem;
-  }
-  .vs-table td {
-    font-size: 1rem;
-  }
   
-  /* ---- S8 경쟁차 비교 ---- */
+  /* ---- S5 경쟁차 비교 ---- */
   .compare-table th {
     font-size: 1rem;
   }
@@ -1352,17 +1034,6 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .98rem;
   }
   
-  /* ---- S9 프로모션 ---- */
-  .promo-card {
-    padding: 46px 34px;
-  }
-  .promo-card h3 {
-    font-size: 1.35rem;
-  }
-  .promo-content {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
   
   /* ---- 섹션 공통 ---- */
   .section-heading p {
@@ -1386,36 +1057,11 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     line-height: 1.7;
   }
   
-  /* ---- S4 핵심 제원 ---- */
-  .spec-label {
-    font-size: .95rem;
-  }
   
   
-  /* ---- 카드형 리스트 (추천 고객) ---- */
-  .feature-category {
-    padding: 38px 34px;
-  }
-  .feature-category h4 {
-    font-size: 1.25rem;
-  }
-  .feature-category li {
-    font-size: 1rem;
-    line-height: 1.75;
-  }
   
-  /* ---- S6 비교 ---- */
-  .vs-summary-item {
-    font-size: 1.05rem;
-  }
-  .vs-table th {
-    font-size: 1rem;
-  }
-  .vs-table td {
-    font-size: 1rem;
-  }
   
-  /* ---- S8 경쟁차 비교 ---- */
+  /* ---- S5 경쟁차 비교 ---- */
   .compare-table th {
     font-size: 1rem;
   }
@@ -1423,26 +1069,11 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: .98rem;
   }
   
-  /* ---- S9 프로모션 ---- */
-  .promo-card {
-    padding: 46px 34px;
-  }
-  .promo-card h3 {
-    font-size: 1.35rem;
-  }
-  .promo-content {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
 }
 
 /* ---- 태블릿 (481px ~ 768px) ---- */
 @media (max-width: 768px) {
-  .vs-summary { grid-template-columns: 1fr; gap: 16px; }
-  .vs-summary-sep { display: none; }
-  .specs-grid { grid-template-columns: repeat(2, 1fr); }
   .why-grid { grid-template-columns: 1fr; }
-  .feature-categories { grid-template-columns: 1fr; }
 }
 
 /* ---- 모바일 (480px 이하) ---- */
@@ -1452,7 +1083,6 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   h1 { font-size: clamp(2rem, 7vw, 3rem); }
   h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
   .hero-price-main { font-size: 1.8rem; }
-  .specs-grid { grid-template-columns: 1fr; }
   
   /* ---- 히어로 섹션 모바일 ---- */
   #hero {
@@ -2016,70 +1646,14 @@ const E_INTERIOR = [
 </section>
 
 <!-- ============================================================
-     [S4] KEY SPECS
-     ============================================================ -->
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <span class="sec-num">03 · KEY SPECS</span>
-      <span class="label-en">Core Specifications</span>
-      <h2>핵심 제원</h2>
-      <p></p>
-    </div>
-    <div class="specs-grid reveal">
-      <!-- [S4-1] 최고출력 -->
-      <div class="spec-item reveal reveal-delay-1">
-        <div class="spec-value">204</div>
-        <div class="spec-label">최고출력<br>ps</div>
-      </div>
-      <!-- [S4-2] 최대토크 -->
-      <div class="spec-item reveal reveal-delay-2">
-        <div class="spec-value">32.6</div>
-        <div class="spec-label">최대토크<br>kg.m</div>
-      </div>
-      <!-- [S4-3] 배기량 -->
-      <div class="spec-item reveal reveal-delay-3">
-        <div class="spec-value">1,999</div>
-        <div class="spec-label">배기량<br>cc</div>
-      </div>
-      <!-- [S4-4] 가속성능 -->
-      <div class="spec-item reveal reveal-delay-4">
-        <div class="spec-value">7.5</div>
-        <div class="spec-label">0→100km/h<br>초</div>
-      </div>
-      <!-- [S4-5] 복합연비 -->
-      <div class="spec-item reveal reveal-delay-1">
-        <div class="spec-value">12.3</div>
-        <div class="spec-label">복합연비<br>km/l</div>
-      </div>
-      <!-- [S4-6] 구동방식 -->
-      <div class="spec-item reveal reveal-delay-2">
-        <div class="spec-value">RWD</div>
-        <div class="spec-label">후륜<br>구동</div>
-      </div>
-      <!-- [S4-7] 변속기 -->
-      <div class="spec-item reveal reveal-delay-3">
-        <div class="spec-value">9G</div>
-        <div class="spec-label">TRONIC<br>자동 9단</div>
-      </div>
-      <!-- [S4-8] 최고속도 -->
-      <div class="spec-item reveal reveal-delay-4">
-        <div class="spec-value">240</div>
-        <div class="spec-label">최고속도<br>km/h</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     [S5] SPECIFICATIONS & EQUIPMENT — 제원 및 기본 사양 (기존 S5 상세 제원 + S6 기본 사양 통합)
+     [S4] SPECIFICATIONS & EQUIPMENT — 제원 및 기본 사양 (기존 S5 상세 제원 + S6 기본 사양 통합)
      - 화면 내용은 아래 SPEC DATA 스크립트의 EQUIPMENT_DATA / TRIM_EQUIPMENT에서 자동 생성됩니다.
      - 트림(EXCLUSIVE / AMG LINE)은 2번째 섹션 트림 선택과 같은 상태를 사용합니다.
      ============================================================ -->
 <section class="section spx-section" id="specs" aria-labelledby="spxTitle">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">04 · SPECS &amp; EQUIPMENT</span>
+      <span class="sec-num">03 · SPECS &amp; EQUIPMENT</span>
       <span class="label-en">Specifications &amp; Equipment</span>
       <h2 id="spxTitle">E 200 제원 및 기본 사양</h2>
       <p>궁금한 항목을 선택해 자세히 확인해 보세요.</p>
@@ -2102,111 +1676,12 @@ const E_INTERIOR = [
 </section>
 
 <!-- ============================================================
-     [S6] Exclusive VS AMG LINE
+     [S5] 경쟁차 비교
      ============================================================ -->
 <section class="section section-alt">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">05 · MODEL COMPARISON</span>
-      <span class="label-en">Model Comparison</span>
-      <h2>E 200 Exclusive<br>vs AMG Line</h2>
-      <p>핵심 차이를 한눈에 확인하세요</p>
-    </div>
-
-    <!-- [S6-1] 요약 배너 -->
-    <div class="vs-summary reveal">
-      <div class="vs-summary-item"><strong>동일 파워트레인</strong><br>M254 직렬 4기통 터보 · 204ps · RWD</div>
-      <div class="vs-summary-sep">|</div>
-      <div class="vs-summary-item"><strong class="red">AMG Line이 +350만원</strong><br>스포티한 감성 선택</div>
-      <div class="vs-summary-sep">|</div>
-      <div class="vs-summary-item"><strong class="blue">Exclusive는</strong><br>편안함과 고급스러움 선택</div>
-    </div>
-
-    <!-- [S6-2] 비교 테이블 -->
-    <p class="vs-scroll-hint">← 좌우로 스크롤하여 비교하세요 →</p>
-    <div class="vs-wrap reveal reveal-delay-1">
-      <table class="vs-table">
-        <thead>
-          <tr>
-            <th class="col-label-h">구분</th>
-            <th class="col-excl">
-              E 200 Exclusive
-              <span class="th-price blue">7,750만원</span>
-            </th>
-            <th class="col-amg">
-              E 200 AMG Line
-              <span class="th-price red">8,100만원 <span style="font-size:.7rem; font-weight:600;">(+350만원)</span></span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="col-label-d">외장 패키지</td><td class="col-excl">Exclusive</td><td class="col-amg">AMG Line</td></tr>
-          <tr><td class="col-label-d">그릴 디자인</td><td class="col-excl">크롬 그릴</td><td class="col-amg">AMG 패턴 그릴</td></tr>
-          <tr><td class="col-label-d">휠</td><td class="col-excl">18인치 5스포크</td><td class="col-amg">19인치 AMG</td></tr>
-          <tr><td class="col-label-d">서스펜션</td><td class="col-excl">컴포트 서스펜션</td><td class="col-amg">스포츠 서스펜션</td></tr>
-          <tr><td class="col-label-d">시트</td><td class="col-excl">컴포트 시트</td><td class="col-amg">스포츠 시트</td></tr>
-          <tr><td class="col-label-d">스티어링 휠</td><td class="col-excl">다기능 나파 가죽</td><td class="col-amg">다기능 스포츠 나파</td></tr>
-          <tr><td class="col-label-d">인테리어 트림</td><td class="col-excl">블랙 오픈 포어 애쉬</td><td class="col-amg">블랙 피아노 라커</td></tr>
-          <tr><td class="col-label-d">엔진 사운드</td><td class="col-excl empty-val">—</td><td class="col-amg">스포티 엔진 사운드</td></tr>
-          <tr><td class="col-label-d">HUD</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
-          <tr><td class="col-label-d">슈퍼스크린</td><td class="col-excl empty-val">—</td><td class="col-amg">—</td></tr>
-          <tr><td class="col-label-d">오디오</td><td class="col-excl">어드밴시드 오디오</td><td class="col-amg">어드밴시드 오디오</td></tr>
-          <tr><td class="col-label-d">360도 카메라</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
-          <tr><td class="col-label-d">DISTRONIC</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
-          <tr class="row-highlight">
-            <td class="col-label-d">추천 고객</td>
-            <td class="col-excl">합리적인 가격으로<br>편안한 E-Class 경험</td>
-            <td class="col-amg">스포티한 감성과<br>첨단 기술 선호</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     [S7] 추천 고객
-     ============================================================ -->
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <span class="sec-num">06 · RECOMMENDATION</span>
-      <span class="label-en">Customer Profile</span>
-      <h2>E 200<br>추천 고객</h2>
-      <p></p>
-    </div>
-    <div class="feature-categories reveal">
-      <!-- [S7-1] E 200 추천고객 -->
-      <div class="feature-category reveal reveal-delay-1">
-        <h4>E 200 Exclusive</h4>
-        <ul>
-          <li>가장 합리적인 E-Class를 원하는 고객</li>
-          <li>편안한 승차감을 선호하는 고객</li>
-          <li>벤츠의 전통적인 디자인을 선호하는 고객</li>
-          <li>350만원을 다른 옵션에 투자하고 싶은 고객</li>
-        </ul>
-      </div>
-      <!-- [S7-2] AMG Line 추천고객 -->
-      <div class="feature-category reveal reveal-delay-2">
-        <h4>E 200 AMG Line</h4>
-        <ul>
-          <li>AMG 디자인을 선호하는 고객</li>
-          <li>스포츠 감성을 원하는 고객</li>
-          <li>19인치 AMG 휠을 선호하는 고객</li>
-          <li>최첨단 편의사양을 원하는 고객</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     [S8] 경쟁차 비교
-     ============================================================ -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-heading">
-      <span class="sec-num">07 · COMPETITION</span>
+      <span class="sec-num">04 · COMPETITION</span>
       <span class="label-en">Competitive Comparison</span>
       <h2>왜 E-Class가<br>선택받는가</h2>
       <p>경쟁 모델과 직접 비교해보십시오</p>
@@ -2214,23 +1689,6 @@ const E_INTERIOR = [
     <p class="scroll-hint">← 좌우로 스크롤하여 비교하세요 →</p>
     <div class="compare-wrap reveal" id="compareWrap"></div>
     <p class="compare-notice">데이터는 추후 업데이트 예정입니다. 현재는 E200 Exclusive 기준 데이터만 반영되어 있습니다.</p>
-  </div>
-</section>
-
-<!-- ============================================================
-     [S9] 프로모션
-     ============================================================ -->
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <span class="sec-num">08 · PROMOTION</span>
-      <span class="label-en">Monthly Promotion</span>
-      <h2>이달의 특별 혜택</h2>
-      <p>혜택 내용은 매월 업데이트됩니다</p>
-    </div>
-    <div class="promo-grid" id="promoGrid">
-      <!-- [S9] 프로모션 카드는 JavaScript로 동적 생성됨 -->
-    </div>
   </div>
 </section>
 
@@ -2478,24 +1936,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.10 });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-/* -- 프로모션 렌더링 -- */
-function renderPromo() {
-  const grid = document.getElementById('promoGrid');
-  if (!grid) return;
-  grid.innerHTML = PROMO_DATA.map((p, i) => {
-    const d = ['', ' reveal-delay-1', ' reveal-delay-2'][i % 3];
-    return `<div class="promo-card reveal${d}">
-      <span class="promo-tag">${p.tag}</span>
-      <div class="promo-icon">${p.icon}</div>
-      <div class="promo-badge">PROMOTION · COMING SOON</div>
-      <h3>${p.title}</h3>
-      <p class="promo-content">${p.content}</p>
-    </div>`;
-  }).join('');
-  grid.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-}
-renderPromo();
-
 /* -- Sticky Header -- */
 const siteHeader = document.getElementById('siteHeader');
 window.addEventListener('scroll', () => { siteHeader.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
@@ -2507,7 +1947,7 @@ document.head.appendChild(s);
 </script>
 <script>
 /* ==================================================
-   S5 · 제원 및 기본 사양 — 화면 생성·카테고리 전환·트림 연동
+   S4 · 제원 및 기본 사양 — 화면 생성·카테고리 전환·트림 연동
    (데이터는 <head>의 EQUIPMENT_CATEGORIES / EQUIPMENT_DATA / TRIM_EQUIPMENT)
    ================================================== */
 (function(){
