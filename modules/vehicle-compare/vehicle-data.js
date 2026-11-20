@@ -218,69 +218,295 @@
     /* ============================== BMW ============================== */
     /* 경쟁차 데이터는 각 E-Class 페이지의 기존 경쟁차 비교표에 있던 값만 옮겼습니다. 없는 값은 비워 둡니다. */
 
+    /* 출처: 바탕화면 '타브랜드' 폴더
+       - BMW: THE 5 Approach Book 260907.pdf (BMW 코오롱모터스, 2026-09-07) — 판매가격·주요 사양·제원표
+       - Audi: A6 어프로치.pdf (A6 26MY) — 판매가격·제원·기본 옵션
+       자료에 없는 항목은 넣지 않았습니다(화면에는 '정보 없음'). */
     'bmw-520i': {
-      brand: 'BMW', model: '5 Series', name: 'BMW 520i', trim: '', short: '520i', powertrain: 'gasoline',
-      source: { page: 'e200.html', note: 'E200 경쟁차 비교표', checked: CHECKED },
-      price: { value: 69800000 },
-      specs: { power: 190, torque: 31.0, drive: '후륜' },
-      equipment: { headlamp: { status: 'std', text: '어댑티브 LED 라이트' }, hud: 'std', sound: { status: 'std', text: '스텐다드' }, semiAuto: 'std', ventSeats: 'std' }
+      brand: 'BMW', model: '5 Series (G60)', name: 'BMW 520i', trim: 'Base', short: '520i', powertrain: 'gasoline',
+      source: { page: 'THE 5 Approach Book 260907.pdf', note: 'BMW THE 5 어프로치북 (2026-09-07) · 판매가격 P2 기준', checked: CHECKED },
+      price: { value: 72000000 },
+      specs: {
+        engine: 'BMW 트윈파워 터보 4기통 가솔린 (48V MHEV)', displacement: 1998,
+        power: { value: 190, note: '4,400~6,500 rpm' }, torque: { value: 31.6, note: '1,500~4,000 rpm' },
+        drive: { value: '후륜', note: 'E200 페이지 비교표 기준' }, transmission: { value: '스텝트로닉', note: '자동 8단' },
+        accel: 8.1, topSpeed: 230,
+        fuelCombined: { value: 12.1, note: '3등급' }, fuelCity: 11.1, fuelHighway: 13.7, co2: 137,
+        length: 5060, width: 1900, height: 1515, wheelbase: 2995, weight: 1835, trunk: 520, fuelTank: 60,
+        tireFront: '245/45 R19', tireRear: '245/45 R19'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: '어댑티브 LED 헤드라이트' },
+        wheels: { status: 'std', text: '19인치 934 바이컬러 그레이' },
+        panoramaRoof: { status: 'std', text: '파노라마 글라스 루프' },
+        seatMaterial: { status: 'std', text: '베간자 가죽 스포츠 시트' },
+        interiorTrim: { status: 'std', text: 'M 알루미늄 롬비클' },
+        ambient: { status: 'std', text: '인터렉션 바' },
+        rooflinerBlack: { status: 'na', note: '안트라사이트 헤드라이너는 M Sport부터' },
+        heatedSeats: { status: 'std', text: '앞·뒤' }, ventSeats: { status: 'std', text: '앞좌석' },
+        hud: 'std', sound: { status: 'std', text: 'Hi-Fi 라우드 스피커 (6개, 100W)' },
+        wirelessCharging: 'std', keylessGo: { status: 'std', text: '컴포트 액세스' },
+        powerTrunk: { status: 'std', text: '전동식 (킥 오프닝)' },
+        surroundCamera: { status: 'std', text: '서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파킹 어시스턴트 플러스' },
+        semiAuto: { status: 'std', text: '드라이빙 어시스턴트 프로페셔널' },
+        airbags: { status: 'std', text: '8개' }
+      }
     },
     'bmw-523d-xdrive': {
-      brand: 'BMW', model: '5 Series', name: 'BMW 523d xDrive', trim: '', short: '523d', powertrain: 'diesel',
-      source: { page: 'e220d.html', note: 'E220d 경쟁차 비교표', checked: CHECKED },
-      price: { value: 84300000 },
-      specs: { power: 197, torque: 40.0, drive: 'xDrive', fuelCombined: 14.7 },
-      equipment: { hud: 'std', semiAuto: 'std', ventSeats: 'std' }
+      brand: 'BMW', model: '5 Series (G60)', name: 'BMW 523d xDrive', trim: 'Base', short: '523d', powertrain: 'diesel',
+      source: { page: 'THE 5 Approach Book 260907.pdf', note: 'BMW THE 5 어프로치북 (2026-09-07) · 판매가격 xDrive P2 기준', checked: CHECKED },
+      price: { value: 82200000 },
+      specs: {
+        engine: 'BMW 트윈파워 터보 4기통 디젤 (48V MHEV)', displacement: 1995,
+        power: { value: 197, note: '4,000 rpm' }, torque: { value: 40.8, note: '1,500~2,750 rpm' },
+        drive: 'xDrive', transmission: { value: '스텝트로닉', note: '자동 8단' },
+        accel: 7.3, topSpeed: 228,
+        fuelCombined: 13.8, fuelCity: 12.7, fuelHighway: 15.4, co2: 138,
+        length: 5060, width: 1900, height: 1515, wheelbase: 2995, weight: 1965, trunk: 520, fuelTank: 60,
+        tireFront: '245/45 R19', tireRear: '245/45 R19'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: '어댑티브 LED 헤드라이트' },
+        wheels: { status: 'std', text: '19인치 934 바이컬러 그레이' },
+        panoramaRoof: { status: 'std', text: '파노라마 글라스 루프' },
+        seatMaterial: { status: 'std', text: '베간자 가죽 스포츠 시트' },
+        interiorTrim: { status: 'std', text: 'M 알루미늄 롬비클' },
+        ambient: { status: 'std', text: '인터렉션 바' },
+        rooflinerBlack: { status: 'na', note: '안트라사이트 헤드라이너는 M Sport부터' },
+        heatedSeats: { status: 'std', text: '앞·뒤' }, ventSeats: { status: 'std', text: '앞좌석' },
+        hud: 'std', sound: { status: 'std', text: '하만 카돈 (12개, 205W)' },
+        wirelessCharging: 'std', keylessGo: { status: 'std', text: '컴포트 액세스' },
+        powerTrunk: { status: 'std', text: '전동식 (킥 오프닝)' },
+        surroundCamera: { status: 'std', text: '서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파킹 어시스턴트 플러스' },
+        semiAuto: { status: 'std', text: '드라이빙 어시스턴트 프로페셔널' },
+        airbags: { status: 'std', text: '8개' }
+      }
     },
     'bmw-530i-xdrive': {
-      brand: 'BMW', model: '5 Series', name: 'BMW 530i xDrive', trim: '', short: '530i', powertrain: 'gasoline',
-      source: { page: 'e300.html', note: 'E300 경쟁차 비교표', checked: CHECKED },
-      price: { value: 89000000 },
-      specs: { power: 258, torque: 40.0, drive: 'xDrive' },
-      equipment: { headlamp: { status: 'std', text: '어댑티브 LED 라이트' }, hud: 'std', sound: { status: 'std', text: '하만카돈 Hi-Fi' }, semiAuto: 'std', ventSeats: 'std' }
+      brand: 'BMW', model: '5 Series (G60)', name: 'BMW 530i xDrive', trim: 'Base', short: '530i', powertrain: 'gasoline',
+      source: { page: 'THE 5 Approach Book 260907.pdf', note: 'BMW THE 5 어프로치북 (2026-09-07) · 판매가격 P2 기준', checked: CHECKED },
+      price: { value: 86500000 },
+      specs: {
+        engine: 'BMW 트윈파워 터보 4기통 가솔린 (48V MHEV)', displacement: 1998,
+        power: { value: 258, note: '4,600~6,500 rpm' }, torque: { value: 40.8, note: '1,600~4,500 rpm' },
+        drive: 'xDrive', transmission: { value: '스텝트로닉', note: '자동 8단' },
+        accel: 6.1, topSpeed: 250,
+        fuelCombined: { value: 11.1, note: '4등급' }, fuelCity: 9.9, fuelHighway: 13.0, co2: 151,
+        length: 5060, width: 1900, height: 1515, wheelbase: 2995, weight: 1905, trunk: 520, fuelTank: 60,
+        tireFront: '245/45 R19', tireRear: '245/45 R19'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: '어댑티브 LED 헤드라이트' },
+        wheels: { status: 'std', text: '19인치 934 바이컬러 그레이' },
+        panoramaRoof: { status: 'std', text: '파노라마 글라스 루프' },
+        seatMaterial: { status: 'std', text: '메리노 가죽 컴포트 시트' },
+        interiorTrim: { status: 'std', text: '파인우드 그레이 블루 애쉬' },
+        ambient: { status: 'std', text: '인터렉션 바 · 크리스탈 인테리어' },
+        rooflinerBlack: { status: 'na', note: '안트라사이트 헤드라이너는 M Sport부터' },
+        heatedSeats: { status: 'std', text: '앞·뒤' }, ventSeats: { status: 'std', text: '앞좌석' },
+        hud: 'std', sound: { status: 'std', text: '하만 카돈 (12개, 205W)' },
+        wirelessCharging: 'std', keylessGo: { status: 'std', text: '컴포트 액세스' },
+        powerTrunk: { status: 'std', text: '전동식 (킥 오프닝)' },
+        surroundCamera: { status: 'std', text: '서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파킹 어시스턴트 플러스' },
+        semiAuto: { status: 'std', text: '드라이빙 어시스턴트 프로페셔널' },
+        airbags: { status: 'std', text: '8개' }
+      }
+    },
+    'bmw-530e': {
+      brand: 'BMW', model: '5 Series (G60)', name: 'BMW 530e', trim: 'Base', short: '530e', powertrain: 'phev',
+      source: { page: 'THE 5 Approach Book 260907.pdf', note: 'BMW THE 5 어프로치북 (2026-09-07) · 판매가격 P2 기준 (후륜 모델 수치)', checked: CHECKED },
+      price: { value: 91500000 },
+      specs: {
+        engine: 'BMW 트윈파워 터보 4기통 가솔린', displacement: 1998,
+        power: { value: 190, note: '5,000 rpm' }, torque: { value: 31.6, note: '1,500~4,000 rpm' },
+        systemPower: 299, systemTorque: 45.9,
+        transmission: { value: '스텝트로닉', note: '자동 8단' },
+        accel: 6.3, topSpeed: { value: 230, note: '전기 모드 140 km/h' },
+        fuelCombined: 11.3, fuelCity: 10.9, fuelHighway: 11.8, co2: 25,
+        evRange: 70, evEfficiency: { value: 3.2, note: '도심 3.1 · 고속 3.3' },
+        battery: { value: 22.1, note: '총 용량 (가용 18.7) · CATL' },
+        length: 5060, width: 1900, height: 1515, wheelbase: 2995, weight: 2125, trunk: 520, fuelTank: 60,
+        tireFront: '245/45 R19', tireRear: '245/45 R19', suspension: '후륜 에어 서스펜션'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: '어댑티브 LED 헤드라이트' },
+        wheels: { status: 'std', text: '19인치 934 바이컬러 그레이' },
+        panoramaRoof: { status: 'std', text: '파노라마 글라스 루프' },
+        seatMaterial: { status: 'std', text: '메리노 가죽 컴포트 시트' },
+        interiorTrim: { status: 'std', text: '파인우드 그레이 블루 애쉬' },
+        ambient: { status: 'std', text: '인터렉션 바 · 크리스탈 인테리어' },
+        rooflinerBlack: { status: 'na', note: '안트라사이트 헤드라이너는 M Sport부터' },
+        heatedSeats: { status: 'std', text: '앞·뒤' }, ventSeats: { status: 'std', text: '앞좌석' },
+        hud: 'std', sound: { status: 'std', text: '하만 카돈 (12개, 205W)' },
+        wirelessCharging: 'std', keylessGo: { status: 'std', text: '컴포트 액세스' },
+        powerTrunk: { status: 'std', text: '전동식 (킥 오프닝)' },
+        surroundCamera: { status: 'std', text: '서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파킹 어시스턴트 플러스' },
+        semiAuto: { status: 'std', text: '드라이빙 어시스턴트 프로페셔널' },
+        airbags: { status: 'std', text: '8개' }
+      }
     },
     'bmw-550e-xdrive': {
-      brand: 'BMW', model: '5 Series', name: 'BMW 550e xDrive', trim: '', short: '550e', powertrain: 'phev',
-      source: { page: 'e450.html', note: 'E450 경쟁차 비교표', checked: CHECKED },
-      price: { value: 115300000 },
-      specs: { systemPower: 489, motorPower: 197, systemTorque: 71.4, motorTorque: 28.6, drive: 'xDrive', accel: 4.3 },
-      equipment: { headlamp: { status: 'std', text: '어댑티브 LED 라이트' }, hud: 'std', sound: { status: 'std', text: 'B&W 서라운드' }, semiAuto: 'std', rearSteer: 'std' }
+      brand: 'BMW', model: '5 Series (G60)', name: 'BMW 550e xDrive', trim: 'M Sport Pro', short: '550e', powertrain: 'phev',
+      source: { page: 'THE 5 Approach Book 260907.pdf', note: 'BMW THE 5 어프로치북 (2026-09-07) · 판매가격 P1 기준 · 전기모터 수치는 E450 페이지 비교표', checked: CHECKED },
+      price: { value: 116700000 },
+      specs: {
+        engine: 'BMW 트윈파워 터보 6기통 가솔린', displacement: 2998,
+        power: { value: 313, note: '5,000~6,500 rpm' }, torque: { value: 45.9, note: '1,750~4,700 rpm' },
+        systemPower: 489, systemTorque: 71.4, motorPower: 197, motorTorque: 28.6,
+        drive: 'xDrive', transmission: { value: '스텝트로닉', note: '자동 8단' },
+        accel: 4.3, topSpeed: { value: 250, note: '전기 모드 140 km/h' },
+        fuelCombined: 10.1, fuelCity: 9.5, fuelHighway: 10.9, co2: 36,
+        evRange: 62, evEfficiency: { value: 2.9, note: '도심 2.8 · 고속 3.1' },
+        battery: { value: 22.1, note: '총 용량 (가용 19) · CATL' },
+        length: 5060, width: 1900, height: 1515, wheelbase: 2995, weight: 2300, trunk: 520, fuelTank: 60,
+        tireFront: '255/35 R21', tireRear: '285/30 R21',
+        suspension: '어댑티브 M 서스펜션 프로페셔널 · 후륜 에어 서스펜션'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: '어댑티브 LED 헤드라이트 (쉐도우 라인)' },
+        wheels: { status: 'std', text: '21인치 954 바이컬러 제트 블랙 M' },
+        panoramaRoof: { status: 'std', text: '파노라마 글라스 루프' },
+        seatMaterial: { status: 'std', text: '메리노 가죽 컴포트 시트' },
+        interiorTrim: { status: 'std', text: '다크 실버 M 카본' },
+        ambient: { status: 'std', text: '인터렉션 바 · 크리스탈 인테리어' },
+        rooflinerBlack: { status: 'std', text: '안트라사이트 헤드라이너' },
+        heatedSeats: { status: 'std', text: '앞·뒤' }, ventSeats: { status: 'std', text: '앞좌석' },
+        hud: 'std', sound: { status: 'std', text: 'B&W 서라운드 (18개, 655W)' },
+        wirelessCharging: 'std', keylessGo: { status: 'std', text: '컴포트 액세스' },
+        powerTrunk: { status: 'std', text: '전동식 (킥 오프닝)' },
+        surroundCamera: { status: 'std', text: '서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파킹 어시스턴트 프로페셔널 · 리모트 컨트롤 파킹' },
+        rearSteer: { status: 'std', text: '인테그럴 액티브 스티어링' },
+        semiAuto: { status: 'std', text: '드라이빙 어시스턴트 프로페셔널' },
+        airbags: { status: 'std', text: '8개' }
+      }
     },
 
     /* ============================== Audi ============================== */
 
-    'audi-a6': {
-      brand: 'Audi', model: 'A6', name: 'Audi A6', trim: '세부 트림 미표기', short: 'A6', powertrain: 'gasoline',
-      source: { page: 'e200.html', note: 'E200 경쟁차 비교표 (트림명 미표기 — 확인 필요)', checked: CHECKED },
+    'audi-a6-40-tfsi': {
+      brand: 'Audi', model: 'A6 (26MY)', name: 'Audi A6 40 TFSI', trim: 'Advanced', short: 'A6 40 TFSI', aliases: ['audi-a6'], powertrain: 'gasoline',
+      source: { page: 'A6 어프로치.pdf', note: 'Audi A6 26MY 어프로치 자료', checked: CHECKED },
       price: { value: 67640000 },
-      specs: { power: 203, torque: 34.6, drive: '전륜' },
-      equipment: { headlamp: { status: 'std', text: 'Matrix LED' }, hud: 'std', sound: { status: 'std', text: 'B&O 3D 사운드' }, semiAuto: 'std', ventSeats: 'std' }
+      specs: {
+        engine: '직렬 4기통 가솔린 터보 직분사 (TFSI)', displacement: 1984,
+        power: { value: 203.9, note: '203.9 ps · 4,500~6,500 rpm' }, torque: { value: 34.67, note: '1,600~4,000 rpm' },
+        drive: { value: '전륜', note: 'E200 페이지 비교표 기준' }, transmission: { value: 'S tronic', note: '자동 7단' },
+        accel: 8.2, topSpeed: 244, fuelCombined: 10.7,
+        length: 5005, width: 1875, height: 1460, wheelbase: 2923, weight: 1860, trunk: 492, fuelTank: 61,
+        tireFront: '245/45 R19', tireRear: '245/45 R19', suspension: '컴포트 서스펜션'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: 'Matrix LED' }, adaptiveHighBeam: { status: 'std', text: '하이빔 어시스트' },
+        wheels: { status: 'std', text: '19인치 5트윈 스포크 그라파이트 그레이' },
+        panoramaRoof: { status: 'std', text: '스위처블 파노라믹 루프' },
+        interiorTrim: { status: 'std', text: '알루미늄 탄젠트 인레이' },
+        ambient: { status: 'std', text: '멀티컬러 · 다이내믹 인터렉션 라이트' },
+        rooflinerBlack: { status: 'na', note: '블랙 헤드라이닝은 S-line' },
+        heatedSeats: { status: 'std', text: '1·2열' }, ventSeats: { status: 'std', text: '1열' },
+        hud: 'std', sound: { status: 'std', text: 'B&O 3D 프리미엄 (16스피커, 685W)' },
+        wirelessCharging: 'std', powerTrunk: { status: 'std', text: '전동식 테일게이트' },
+        surroundCamera: { status: 'std', text: '360° 서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파크 어시스트 프로 (원격 주차 포함)' },
+        semiAuto: { status: 'std', text: 'ACA+ (중앙 유지·차선 변경 보조)' },
+        blindSpot: { status: 'std', text: '사이드 어시스트' }
+      }
     },
     'audi-a6-40-tdi-quattro': {
-      brand: 'Audi', model: 'A6', name: 'Audi A6 40 TDI quattro', trim: '', short: 'A6 40 TDI', powertrain: 'diesel',
-      source: { page: 'e220d.html', note: 'E220d 경쟁차 비교표', checked: CHECKED },
+      brand: 'Audi', model: 'A6 (26MY)', name: 'Audi A6 40 TDI quattro', trim: 'S-line', short: 'A6 40 TDI', powertrain: 'diesel',
+      source: { page: 'A6 어프로치.pdf', note: 'Audi A6 26MY 어프로치 자료', checked: CHECKED },
       price: { value: 81780000 },
-      specs: { power: 204, torque: 40.8, drive: 'quattro', fuelCombined: 15.1 },
-      equipment: { hud: 'std', semiAuto: 'std', ventSeats: 'std' }
+      specs: {
+        engine: '직렬 4기통 디젤 터보 직분사 (TDI) · 48V MHEV+', displacement: 1968,
+        power: { value: 204, note: '3,800~4,200 rpm' }, torque: { value: 40.79, note: '1,750~3,250 rpm' },
+        drive: 'quattro', transmission: { value: 'S tronic', note: '자동 7단' },
+        accel: 6.9, topSpeed: 243, fuelCombined: 15.1,
+        length: 5005, width: 1875, height: 1445, wheelbase: 2924, weight: 2055, trunk: 452, fuelTank: 64,
+        tireFront: '255/40 R20', tireRear: '255/40 R20', suspension: 'S 스포츠 서스펜션'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: 'Matrix LED' }, adaptiveHighBeam: { status: 'std', text: '하이빔 어시스트' },
+        wheels: { status: 'std', text: '20인치 10스포크 트위스트 그라파이트 그레이' },
+        panoramaRoof: { status: 'std', text: '스위처블 파노라믹 루프' },
+        interiorTrim: { status: 'std', text: '매트 브러시 알루미늄 인레이' },
+        ambient: { status: 'std', text: '멀티컬러 · 다이내믹 인터렉션 라이트' },
+        rooflinerBlack: { status: 'std', text: '블랙 헤드라이닝' },
+        heatedSeats: { status: 'std', text: '1·2열' }, ventSeats: { status: 'std', text: '1열' },
+        hud: 'std', sound: { status: 'std', text: 'B&O 3D 프리미엄 (16스피커, 685W)' },
+        wirelessCharging: 'std', powerTrunk: { status: 'std', text: '전동식 테일게이트' },
+        surroundCamera: { status: 'std', text: '360° 서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파크 어시스트 프로 (원격 주차 포함)' },
+        semiAuto: { status: 'std', text: 'ACA+ (중앙 유지·차선 변경 보조)' },
+        blindSpot: { status: 'std', text: '사이드 어시스트' }
+      }
     },
-    'audi-a6-quattro': {
-      brand: 'Audi', model: 'A6', name: 'Audi A6 quattro', trim: '세부 트림 미표기', short: 'A6 quattro', powertrain: 'gasoline',
-      source: { page: 'e300.html', note: 'E300 경쟁차 비교표 (트림명 미표기 — 확인 필요)', checked: CHECKED },
+    'audi-a6-45-tfsi-quattro': {
+      brand: 'Audi', model: 'A6 (26MY)', name: 'Audi A6 45 TFSI quattro', trim: 'S-line', short: 'A6 45 TFSI', aliases: ['audi-a6-quattro'], powertrain: 'gasoline',
+      source: { page: 'A6 어프로치.pdf', note: 'Audi A6 26MY 어프로치 자료', checked: CHECKED },
       price: { value: 85410000 },
-      specs: { power: 271, torque: 40.0, drive: 'quattro' },
-      equipment: { headlamp: { status: 'std', text: 'Matrix LED' }, hud: 'std', sound: { status: 'std', text: 'B&O 3D 사운드' }, semiAuto: 'std', ventSeats: 'std' }
+      specs: {
+        engine: '직렬 4기통 가솔린 터보 직분사 (TFSI)', displacement: 1984,
+        power: { value: 271.9, note: '271.9 ps · 5,000~6,500 rpm' }, torque: { value: 40.79, note: '1,750~4,500 rpm' },
+        drive: 'quattro', transmission: { value: 'S tronic', note: '자동 7단' },
+        accel: 6.2, topSpeed: 250, fuelCombined: 10.4,
+        length: 5005, width: 1875, height: 1445, wheelbase: 2924, weight: 1935, trunk: 492, fuelTank: 61,
+        tireFront: '255/40 R20', tireRear: '255/40 R20', suspension: 'S 스포츠 서스펜션'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: 'Matrix LED' }, adaptiveHighBeam: { status: 'std', text: '하이빔 어시스트' },
+        wheels: { status: 'std', text: '20인치 멀티 스포크 그라파이트 그레이' },
+        panoramaRoof: { status: 'std', text: '스위처블 파노라믹 루프' },
+        interiorTrim: { status: 'std', text: '매트 브러시 알루미늄 인레이' },
+        ambient: { status: 'std', text: '멀티컬러 · 다이내믹 인터렉션 라이트' },
+        rooflinerBlack: { status: 'std', text: '블랙 헤드라이닝' },
+        heatedSeats: { status: 'std', text: '1·2열' }, ventSeats: { status: 'std', text: '1열' },
+        hud: 'std', sound: { status: 'std', text: 'B&O 3D 프리미엄 (16스피커, 685W)' },
+        wirelessCharging: 'std', powerTrunk: { status: 'std', text: '전동식 테일게이트' },
+        surroundCamera: { status: 'std', text: '360° 서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파크 어시스트 프로 (원격 주차 포함)' },
+        rearSteer: { status: 'std', text: '올 휠 스티어링' },
+        semiAuto: { status: 'std', text: 'ACA+ (중앙 유지·차선 변경 보조)' },
+        blindSpot: { status: 'std', text: '사이드 어시스트' }
+      }
     },
     'audi-a6-55-tfsi-quattro': {
-      brand: 'Audi', model: 'A6', name: 'Audi A6 55 TFSI quattro', trim: '', short: 'A6 55 TFSI', powertrain: 'gasoline',
-      source: { page: 'e450.html', note: 'E450 경쟁차 비교표', checked: CHECKED },
+      brand: 'Audi', model: 'A6 (26MY)', name: 'Audi A6 55 TFSI quattro', trim: 'S-line', short: 'A6 55 TFSI', powertrain: 'gasoline',
+      source: { page: 'A6 어프로치.pdf', note: 'Audi A6 26MY 어프로치 자료', checked: CHECKED },
       price: { value: 97180000 },
-      specs: { power: 367, torque: 56.0, drive: 'quattro', accel: 4.8 },
-      equipment: { headlamp: { status: 'std', text: 'Matrix LED' }, hud: 'std', sound: { status: 'std', text: 'B&O 3D 사운드' }, semiAuto: 'std', rearSteer: 'na' }
+      specs: {
+        engine: 'V6 가솔린 터보 직분사 (TFSI)', displacement: 2995,
+        power: { value: 367, note: '5,500~6,300 rpm' }, torque: { value: 56.08, note: '1,700~4,000 rpm' },
+        drive: 'quattro', transmission: { value: 'S tronic', note: '자동 7단' },
+        accel: 4.8, topSpeed: 250, fuelCombined: 9.2,
+        length: 5005, width: 1875, height: 1445, wheelbase: 2927, weight: 2005, trunk: 492, fuelTank: 61,
+        tireFront: '255/35 R21', tireRear: '255/35 R21', suspension: '어댑티브 에어 서스펜션'
+      },
+      equipment: {
+        headlamp: { status: 'std', text: 'Digital Matrix LED · OLED 테일라이트' }, adaptiveHighBeam: { status: 'std', text: '하이빔 어시스트' },
+        wheels: { status: 'std', text: '21인치 Audi Sport 멀티 스포크 S 블랙' },
+        panoramaRoof: { status: 'std', text: '스위처블 파노라믹 루프' },
+        seatMaterial: { status: 'std', text: '나파 가죽 (롬버스 패턴)' },
+        interiorTrim: { status: 'std', text: '체스트넛 그레이 인레이' },
+        ambient: { status: 'std', text: '멀티컬러 · 다이내믹 인터렉션 라이트' },
+        rooflinerBlack: { status: 'std', text: '블랙 헤드라이닝' },
+        heatedSeats: { status: 'std', text: '1·2열' }, ventSeats: { status: 'std', text: '1열 (마사지 포함)' },
+        hud: 'std', sound: { status: 'std', text: 'B&O 3D 프리미엄 (20채널, 810W)' },
+        wirelessCharging: 'std', powerTrunk: { status: 'std', text: '전동식 테일게이트' },
+        surroundCamera: { status: 'std', text: '360° 서라운드 뷰' },
+        parkingAssist: { status: 'std', text: '파크 어시스트 프로 (원격 주차 포함)' },
+        rearSteer: { status: 'std', text: '올 휠 스티어링' },
+        semiAuto: { status: 'std', text: 'ACA+ (중앙 유지·차선 변경 보조)' },
+        blindSpot: { status: 'std', text: '사이드 어시스트' }
+      }
     }
   };
 
   /* 다른 데이터 파일과 합쳐 쓸 수 있도록 기존 등록분에 추가합니다. */
   var store = window.MBVC_VEHICLES = window.MBVC_VEHICLES || {};
   for (var id in VEHICLES) if (Object.prototype.hasOwnProperty.call(VEHICLES, id)) store[id] = VEHICLES[id];
-  window.MBVC_DATA_META = { basis: '각 모델 랜딩페이지 기존 제원·비교표 · e-class/vehicle-data.js', checked: CHECKED };
+  window.MBVC_DATA_META = { basis: '벤츠: 각 모델 랜딩페이지 제원 · BMW/Audi: 타브랜드 어프로치북', checked: CHECKED };
 })(window);

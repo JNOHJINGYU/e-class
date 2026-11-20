@@ -287,7 +287,7 @@
       self.el.dBody.hidden = !open;
     });
     var meta = window.MBVC_DATA_META || {};
-    this.el.note.innerHTML = '가격·제원은 각 모델 페이지와 공식 자료 기준' + (meta.checked ? ' (확인일 ' + esc(meta.checked) + ')' : '') +
+    this.el.note.innerHTML = '가격·제원은 메르세데스-벤츠 각 모델 페이지, BMW·아우디 딜러 어프로치북 기준' + (meta.checked ? ' (확인일 ' + esc(meta.checked) + ')' : '') +
       '이며, 실제 판매 조건·옵션에 따라 달라질 수 있습니다. <b>확인 필요</b>는 자료 간 수치가 다르거나 공식 확인 전인 항목으로 차이 비교에서 제외됩니다. ' +
       '수치 차이는 우열이 아닌 차이만 표시합니다. 단위 기준: 출력 ps(1 kW = 1.36 ps) · 토크 kg·m(1 kg·m = 9.81 Nm) · 연비 km/L · 전비 km/kWh.';
   };
