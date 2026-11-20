@@ -1,5 +1,5 @@
 /*!
- * Mercedes-Benz 공통 차량 제원 비교 모듈 — vehicle-compare.js  v1.0.0
+ * Mercedes-Benz 공통 차량 제원 비교 모듈 — vehicle-compare.js  v1.1.0
  * --------------------------------------------------------------------------
  * 순수 JavaScript · 외부 라이브러리 없음 · GitHub Pages 정적 호스팅용
  *
@@ -18,7 +18,7 @@
   'use strict';
   if (window.MercedesCompare) return;
 
-  var VERSION = '1.0.0';
+  var VERSION = '1.1.0';
   var uid = 0;
 
   /* ------------------------------------------------------------------ *
@@ -86,6 +86,11 @@
     surroundCamera:   { label: '360도 카메라', type: 'equip' },
     parkingAssist:    { label: '주차 어시스트', type: 'equip' },
     rearSteer:        { label: '리어 액슬 스티어링', type: 'equip' },
+    exteriorPackage:  { label: '외장 패키지', type: 'equip' },
+    seatType:         { label: '시트 타입', type: 'equip' },
+    steering:         { label: '스티어링 휠', type: 'equip' },
+    passengerScreen:  { label: 'MBUX 슈퍼스크린', type: 'equip' },
+    engineSound:      { label: '스포티 엔진 사운드', type: 'equip' },
     /* 안전 */
     drivingAssistPlus:{ label: '드라이빙 어시스턴스 패키지 플러스', type: 'equip' },
     semiAuto:         { label: '반자율 주행 보조', type: 'equip' },
@@ -101,7 +106,7 @@
     { key: 'performance', label: '가격·성능', fields: ['price', 'fuel', 'engine', 'displacement', 'power', 'torque', 'systemPower', 'systemTorque', 'motorPower', 'motorTorque', 'drive', 'transmission', 'accel', 'topSpeed'] },
     { key: 'efficiency',  label: '연비·전비', fields: ['fuelCombined', 'fuelCity', 'fuelHighway', 'co2', 'evRange', 'evEfficiency', 'battery', 'acCharging', 'dcCharging'] },
     { key: 'dimensions',  label: '차체·크기', fields: ['length', 'width', 'height', 'wheelbase', 'weight', 'trunk', 'fuelTank', 'turning', 'tireFront', 'tireRear', 'suspension'] },
-    { key: 'comfort',     label: '편의·옵션', fields: ['headlamp', 'adaptiveHighBeam', 'wheels', 'panoramaRoof', 'acousticGlass', 'seatMaterial', 'interiorTrim', 'ambient', 'rooflinerBlack', 'heatedSeats', 'ventSeats', 'hud', 'sound', 'arNavi', 'wirelessCarplay', 'wirelessCharging', 'interiorAssistant', 'keylessGo', 'powerTrunk', 'surroundCamera', 'parkingAssist', 'rearSteer'] },
+    { key: 'comfort',     label: '편의·옵션', fields: ['exteriorPackage', 'headlamp', 'adaptiveHighBeam', 'wheels', 'panoramaRoof', 'acousticGlass', 'seatType', 'seatMaterial', 'steering', 'interiorTrim', 'ambient', 'rooflinerBlack', 'heatedSeats', 'ventSeats', 'hud', 'passengerScreen', 'sound', 'engineSound', 'arNavi', 'wirelessCarplay', 'wirelessCharging', 'interiorAssistant', 'keylessGo', 'powerTrunk', 'surroundCamera', 'parkingAssist', 'rearSteer'] },
     { key: 'safety',      label: '안전사양', fields: ['drivingAssistPlus', 'semiAuto', 'distronic', 'laneKeeping', 'blindSpot', 'activeBrake', 'preSafe', 'activeBonnet', 'airbags'] }
   ];
   var FUEL = { gasoline: '가솔린', diesel: '디젤', phev: '플러그인 하이브리드 (가솔린)', ev: '전기' };
@@ -193,15 +198,12 @@
     this.id = 'mbvc' + (++uid);
     this.base = findVehicle(opt.baseModel);
     this.baseId = this.base ? vid(this.base) : null;
-    var self = this;
-    this.candidates = (opt.compareModels || []).map(function (id) {
+    this.requested = (opt.compareModels || []).map(function (id) {
       var v = findVehicle(id);
       if (!v && window.console) console.warn('[MercedesCompare] 등록되지 않은 차량 ID — 목록에서 제외합니다:', id);
       return v ? vid(v) : null;
-    }).filter(function (id, i, a) { return id && id !== self.baseId && a.indexOf(id) === i; });
-    if (!this.candidates.length) {
-      Object.keys(store()).forEach(function (k) { if (k !== self.baseId) self.candidates.push(k); });
-    }
+    }).filter(function (id, i, a) { return id && a.indexOf(id) === i; });
+    this.candidates = this.candidateList();
     var def = findVehicle(opt.defaultCompare);
     this.cmpId = def && this.candidates.indexOf(vid(def)) > -1 ? vid(def) : this.candidates[0];
     this.cat = CATEGORIES[0].key;
@@ -213,6 +215,43 @@
     this.renderTable();
   }
   var P = Compare.prototype;
+  /* 비교 후보 = 요청 목록(없으면 등록 차량 전체) − 현재 기준 차량 */
+  P.candidateList = function () {
+    var self = this, src = this.requested.length ? this.requested : Object.keys(store());
+    return src.filter(function (k) { return k !== self.baseId; });
+  };
+  /* 기준 차량 변경 (예: 히어로에서 트림 선택) — 비교 차량·카테고리·차이점 보기 상태는 유지 */
+  P.setBase = function (id) {
+    var v = findVehicle(id);
+    if (!v || !this.el) return false;
+    var prev = this.baseId, k = vid(v);
+    if (k === prev) return true;
+    this.base = v; this.baseId = k;
+    if (this.requested.length && this.requested.indexOf(k) < 0) this.requested.unshift(k);
+    this.candidates = this.candidateList();
+    if (this.cmpId === k || this.candidates.indexOf(this.cmpId) < 0) {
+      this.cmpId = this.candidates.indexOf(prev) > -1 ? prev : this.candidates[0];
+    }
+    this.closeList();
+    this.buildList();
+    this.setDetailLabel();
+    this._detailBuilt = false;
+    if (!this.el.dBody.hidden) { this.renderDetail(); this._detailBuilt = true; }
+    this.renderVehicles();
+    this.renderTable();
+    return true;
+  };
+  /* 비교 차량 변경 */
+  P.setCompare = function (id) {
+    var v = findVehicle(id), k = v && vid(v);
+    if (!k || k === this.baseId || this.candidates.indexOf(k) < 0) return false;
+    if (k !== this.cmpId) { this.cmpId = k; this.renderVehicles(); this.renderTable(); }
+    return true;
+  };
+  P.setDetailLabel = function () {
+    var b = this.base;
+    this.el.dBtn.innerHTML = '<span>' + esc(vName(b)) + ' 전체 제원 보기</span><span class="mbvc-plus" aria-hidden="true"></span>';
+  };
   P.on = function (el, ev, fn, o) { el.addEventListener(ev, fn, o); this.listeners.push([el, ev, fn, o]); };
   P.destroy = function () {
     this.listeners.forEach(function (l) { l[0].removeEventListener(l[1], l[2], l[3]); });
@@ -275,11 +314,20 @@
     this.on(this.el.diff, 'change', function () { self.diffOnly = self.el.diff.checked; self.renderTable(); });
     /* 비교 차량 목록 */
     this.buildList();
+    this.on(this.el.list, 'keydown', function (e) {
+      var i = self._active == null ? 0 : self._active;
+      if (e.key === 'ArrowDown') { e.preventDefault(); self.activate(Math.min(i + 1, self.opts.length - 1)); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); self.activate(Math.max(i - 1, 0)); }
+      else if (e.key === 'Home') { e.preventDefault(); self.activate(0); }
+      else if (e.key === 'End') { e.preventDefault(); self.activate(self.opts.length - 1); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); self.choose(self.opts[i].getAttribute('data-id')); }
+      else if (e.key === 'Escape' || e.key === 'Tab') { self.closeList(e.key === 'Escape'); }
+    });
     this.on(this.el.pick, 'click', function () { self.toggleList(); });
     this.on(this.el.pick, 'keydown', function (e) { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); self.openList(); } });
     this.on(document, 'click', function (e) { if (!self.el.cmp.contains(e.target)) self.closeList(); });
     /* 전체 제원 펼치기 */
-    this.el.dBtn.innerHTML = '<span>' + esc(b.short || b.name) + ' 전체 제원 보기</span><span class="mbvc-plus" aria-hidden="true"></span>';
+    this.setDetailLabel();
     this.on(this.el.dBtn, 'click', function () {
       var open = self.el.dBtn.getAttribute('aria-expanded') !== 'true';
       self.el.dBtn.setAttribute('aria-expanded', String(open));
@@ -315,15 +363,6 @@
     this.opts.forEach(function (o) {
       self.on(o, 'click', function () { self.choose(o.getAttribute('data-id')); });
       self.on(o, 'mousemove', function () { self.activate(self.opts.indexOf(o)); });
-    });
-    this.on(this.el.list, 'keydown', function (e) {
-      var i = self._active == null ? 0 : self._active;
-      if (e.key === 'ArrowDown') { e.preventDefault(); self.activate(Math.min(i + 1, self.opts.length - 1)); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); self.activate(Math.max(i - 1, 0)); }
-      else if (e.key === 'Home') { e.preventDefault(); self.activate(0); }
-      else if (e.key === 'End') { e.preventDefault(); self.activate(self.opts.length - 1); }
-      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); self.choose(self.opts[i].getAttribute('data-id')); }
-      else if (e.key === 'Escape' || e.key === 'Tab') { self.closeList(e.key === 'Escape'); }
     });
   };
   P.activate = function (i) {
@@ -493,6 +532,7 @@
   window.MercedesCompare = {
     version: VERSION, init: init, register: register,
     get: function (id) { return findVehicle(id); },
+    instance: function (el) { if (typeof el === 'string') el = document.querySelector(el); return el && el.__mbvc || null; },
     fields: FIELDS, categories: CATEGORIES
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', autoInit);

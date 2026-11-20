@@ -77,6 +77,7 @@
         tireFront: '245/45R19', tireRear: '275/40R19'
       },
       equipment: {
+        exteriorPackage: { status: 'std', text: 'EXCLUSIVE' },
         headlamp: { status: 'std', text: 'LED 하이 퍼포먼스' }, adaptiveHighBeam: 'std',
         wheels: { status: 'std', text: '19인치 경량 알로이 휠' }, panoramaRoof: 'std',
         acousticGlass: 'na',
@@ -103,7 +104,7 @@
     'e300-4matic-exclusive': {
       brand: 'Mercedes-Benz', model: 'E-Class', name: 'E 300 4MATIC', trim: 'EXCLUSIVE', short: 'E300',
       powertrain: 'gasoline', modelYear: null, market: '국내 판매',
-      source: { page: 'e300.html', note: 'E300 페이지 상세 제원·경쟁차 비교표 / E220d 페이지 E300 비교표', checked: CHECKED },
+      source: { page: 'e300.html', note: 'E300 페이지 상세 제원·트림 비교표·편의/안전 사양 / E220d 페이지 E300 비교표', checked: CHECKED },
       price: { value: 94800000 },
       specs: {
         engine: 'M254 직렬 4기통 가솔린 터보', displacement: 1999,
@@ -111,9 +112,17 @@
         drive: '4MATIC', transmission: { value: '9G-TRONIC', note: '자동 9단' }, accel: 6.1, topSpeed: 250,
         fuelCombined: { value: 11.1, note: '4등급' }, fuelCity: 9.6, fuelHighway: 13.6, co2: 153,
         length: 4955, width: 1880, height: 1475, wheelbase: 2960, weight: 1905,
-        trunk: 540, fuelTank: 66, turning: 6.0, tireFront: '245/45R19', tireRear: '275/40R19'
+        trunk: 540, fuelTank: 66, turning: 6.0, tireFront: '245/45R19', tireRear: '275/40R19',
+        suspension: '컴포트 서스펜션'
       },
       equipment: {
+        exteriorPackage: { status: 'std', text: 'EXCLUSIVE' },
+        seatType: { status: 'std', text: '컴포트 시트' },
+        steering: { status: 'std', text: '다기능 나파 가죽' },
+        passengerScreen: 'na', engineSound: 'na',
+        panoramaRoof: 'std', heatedSeats: 'std', arNavi: 'std',
+        wirelessCarplay: { status: 'std', text: '무선 애플 카플레이 · 안드로이드 오토' }, wirelessCharging: 'std',
+        powerTrunk: 'std', parkingAssist: { status: 'std', text: '액티브 주차 어시스트' },
         headlamp: { status: 'std', text: '디지털 라이트' }, adaptiveHighBeam: 'std', acousticGlass: 'std',
         seatMaterial: { status: 'std', text: '천연가죽' },
         interiorTrim: { status: 'std', text: '브라운 메이플 우드 + 알루미늄 라인' },
@@ -128,6 +137,44 @@
         'HUD 및 부메스터 사운드 등 추가 사양을 원하는 고객',
         '천연가죽 시트와 고급 트림을 선호하는 고객',
         '디지털 라이트와 액티브 앰비언트를 중요하게 생각하는 고객'
+      ]
+    },
+    'e300-4matic-amg-line': {
+      brand: 'Mercedes-Benz', model: 'E-Class', name: 'E 300 4MATIC', trim: 'AMG Line', short: 'E300 AMG', aliases: ['e300-amg-line', 'e300-4matic-amg'],
+      powertrain: 'gasoline', modelYear: null, market: '국내 판매',
+      source: { page: 'e300.html', note: 'E300 페이지 EXCLUSIVE vs AMG Line 비교표 (파워트레인 동일) · 휠/타이어·시트 소재 미표기', checked: CHECKED },
+      price: { value: 99000000 },
+      specs: {
+        engine: 'M254 직렬 4기통 가솔린 터보', displacement: 1999,
+        power: { value: 258, note: '5,800 rpm' }, torque: { value: 40.8, note: '2,000~3,200 rpm' },
+        drive: '4MATIC', transmission: { value: '9G-TRONIC', note: '자동 9단' }, accel: 6.1, topSpeed: 250,
+        fuelCombined: { value: 11.1, note: '4등급 · EXCLUSIVE와 동일 파워트레인 기준', verify: true }, co2: { value: 153, verify: true, note: 'EXCLUSIVE 수치 · AMG Line 인증값 미표기' },
+        length: 4955, width: 1880, height: 1475, wheelbase: 2960,
+        trunk: 540, fuelTank: 66,
+        suspension: '어질리티 컨트롤 서스펜션'
+      },
+      equipment: {
+        exteriorPackage: { status: 'std', text: 'AMG Line' },
+        seatType: { status: 'std', text: '스포츠 시트' },
+        steering: { status: 'std', text: '다기능 스포츠 나파 가죽' },
+        passengerScreen: { status: 'std', text: '슈퍼스크린' },
+        engineSound: { status: 'std', text: '스포티 엔진 사운드' },
+        panoramaRoof: 'std', heatedSeats: 'std', arNavi: 'std',
+        wirelessCarplay: { status: 'std', text: '무선 애플 카플레이 · 안드로이드 오토' }, wirelessCharging: 'std',
+        powerTrunk: 'std', parkingAssist: { status: 'std', text: '액티브 주차 어시스트' },
+        headlamp: { status: 'std', text: '디지털 라이트' }, adaptiveHighBeam: { status: 'check', note: 'AMG Line 적용 여부 자료 미표기' }, acousticGlass: 'std',
+        seatMaterial: { status: 'check', note: '시트 소재 자료 미표기' },
+        interiorTrim: { status: 'std', text: '블랙 피아노 라커 + 블랙 오픈 포어' },
+        ambient: { status: 'check', note: 'AMG Line 적용 사양 자료 미표기' },
+        rooflinerBlack: { status: 'check', note: 'AMG Line 적용 여부 자료 미표기' }, ventSeats: 'std', hud: 'std',
+        sound: { status: 'std', text: '부메스터 4D' }, keylessGo: 'std', surroundCamera: 'std',
+        semiAuto: 'std', distronic: 'std', laneKeeping: { status: 'std', text: '차선 이탈 방지' }, blindSpot: 'std',
+        activeBrake: 'std', preSafe: 'std'
+      },
+      recommend: [
+        '스포티한 디자인과 첨단 디스플레이를 선호하는 고객',
+        '스포츠 시트와 스포츠 스티어링 휠의 감각을 원하는 고객',
+        '조수석 디스플레이(슈퍼스크린)를 활용하고 싶은 고객'
       ]
     },
 
