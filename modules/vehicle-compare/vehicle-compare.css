@@ -1,0 +1,193 @@
+/*!
+ * Mercedes-Benz 공통 차량 제원 비교 모듈 — vehicle-compare.css  v1.0.0
+ * 모든 선택자는 .mbvc 범위 안에서만 동작합니다 (페이지 다른 스타일과 충돌 없음).
+ * 색상은 아래 변수만 바꾸면 전체에 반영됩니다.
+ */
+.mbvc {
+  --mbvc-ink: #111418;
+  --mbvc-ink-2: #4a5059;
+  --mbvc-ink-3: #8a9099;
+  --mbvc-line: #e3e6ea;
+  --mbvc-line-2: #f0f2f4;
+  --mbvc-bg: #ffffff;
+  --mbvc-navy: #0b2545;
+  --mbvc-navy-2: #1c3d6e;
+  --mbvc-base-bg: #eef3fa;
+  --mbvc-diff-bg: #fafbfd;
+  --mbvc-warn: #a15c00;
+  --mbvc-warn-bg: #fff5e6;
+  --mbvc-radius: 14px;
+  --mbvc-font: 'Pretendard', 'Pretendard Variable', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-family: var(--mbvc-font);
+  color: var(--mbvc-ink);
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: left;
+  -webkit-text-size-adjust: 100%;
+  word-break: keep-all;
+}
+.mbvc *, .mbvc *::before, .mbvc *::after { box-sizing: border-box; }
+.mbvc p { margin: 0; }
+.mbvc button { font-family: inherit; }
+.mbvc-sr { position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.mbvc-error { padding: 24px; text-align: center; color: var(--mbvc-ink-2); }
+
+/* ---------- 차량 카드 ---------- */
+.mbvc-cars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.mbvc-car { position: relative; background: var(--mbvc-bg); border: 1px solid var(--mbvc-line); border-radius: var(--mbvc-radius); padding: 22px 24px 20px; min-width: 0; }
+.mbvc-car--base { background: var(--mbvc-base-bg); border-color: #d5e0ef; }
+.mbvc-car-tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--mbvc-navy); background: #fff; border: 1px solid #c9d6ea; border-radius: 999px; padding: 3px 10px; margin-bottom: 12px; }
+.mbvc-car--cmp .mbvc-car-tag { color: var(--mbvc-ink-2); border-color: var(--mbvc-line); background: var(--mbvc-line-2); }
+.mbvc-car-brand { display: block; font-size: 13px; color: var(--mbvc-ink-3); font-weight: 500; }
+.mbvc-car-name { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; margin-top: 2px; }
+.mbvc-car-trim { display: block; font-size: 14px; color: var(--mbvc-ink-2); margin-top: 2px; }
+.mbvc-car-trim:empty { display: none; }
+.mbvc-car-price { font-size: 17px; font-weight: 700; color: var(--mbvc-navy); margin-top: 12px !important; }
+.mbvc-car-price.is-none { color: var(--mbvc-ink-3); font-weight: 500; font-size: 14px; }
+
+/* 비교 차량 선택 버튼 */
+.mbvc-pick { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; margin: 0; padding: 10px 14px; text-align: left; background: #fff; border: 1.5px solid var(--mbvc-ink); border-radius: 10px; cursor: pointer; color: inherit; transition: border-color .15s, box-shadow .15s; }
+.mbvc-pick:hover { box-shadow: 0 4px 14px rgba(11, 37, 69, .08); }
+.mbvc-pick:focus-visible { outline: 3px solid rgba(28, 61, 110, .35); outline-offset: 2px; }
+.mbvc-pick-text { flex: 1; min-width: 0; }
+.mbvc-pick .mbvc-car-name { font-size: 19px; }
+.mbvc-pick-ico { flex: none; width: 10px; height: 10px; border-right: 2px solid var(--mbvc-ink); border-bottom: 2px solid var(--mbvc-ink); transform: translateY(-3px) rotate(45deg); transition: transform .2s; }
+.mbvc-pick[aria-expanded="true"] .mbvc-pick-ico { transform: translateY(2px) rotate(-135deg); }
+
+/* 차량 목록 (listbox) */
+.mbvc-list { position: absolute; z-index: 30; left: 12px; right: 12px; top: calc(100% - 8px); max-height: 380px; overflow-y: auto; overscroll-behavior: contain; background: #fff; border: 1px solid var(--mbvc-line); border-radius: 12px; box-shadow: 0 18px 44px rgba(11, 20, 35, .16); padding: 6px; outline: none; }
+.mbvc-list[hidden] { display: none; }
+.mbvc-group + .mbvc-group { border-top: 1px solid var(--mbvc-line-2); margin-top: 4px; padding-top: 4px; }
+.mbvc-group-title { font-size: 12px; font-weight: 700; color: var(--mbvc-ink-3); letter-spacing: .04em; padding: 8px 12px 4px; }
+.mbvc-opt { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 15px; }
+.mbvc-opt.is-active { background: var(--mbvc-line-2); }
+.mbvc-opt[aria-selected="true"] { background: var(--mbvc-base-bg); color: var(--mbvc-navy); font-weight: 700; }
+.mbvc-opt[aria-selected="true"] .mbvc-opt-name::after { content: ''; display: inline-block; width: 5px; height: 10px; margin-left: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); }
+.mbvc-opt-name { min-width: 0; }
+.mbvc-opt-price { flex: none; font-size: 13px; color: var(--mbvc-ink-3); font-weight: 500; }
+
+/* ---------- 카테고리 · 차이점 토글 ---------- */
+.mbvc-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.mbvc-cats { display: flex; gap: 6px; min-width: 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.mbvc-cats::-webkit-scrollbar { display: none; }
+.mbvc-cat { flex: none; min-height: 44px; padding: 0 18px; font-size: 15px; font-weight: 600; color: var(--mbvc-ink-2); background: #fff; border: 1px solid var(--mbvc-line); border-radius: 999px; cursor: pointer; transition: background .15s, color .15s, border-color .15s; white-space: nowrap; }
+.mbvc-cat:hover { border-color: var(--mbvc-ink-3); color: var(--mbvc-ink); }
+.mbvc-cat[aria-selected="true"] { background: var(--mbvc-navy); border-color: var(--mbvc-navy); color: #fff; }
+.mbvc-cat:focus-visible { outline: 3px solid rgba(28, 61, 110, .35); outline-offset: 2px; }
+.mbvc-diff { flex: none; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; font-weight: 600; color: var(--mbvc-ink); cursor: pointer; user-select: none; }
+.mbvc-diff-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.mbvc-diff-box { width: 20px; height: 20px; border: 1.5px solid var(--mbvc-ink-3); border-radius: 5px; background: #fff; position: relative; transition: background .15s, border-color .15s; }
+.mbvc-diff-input:checked + .mbvc-diff-box { background: var(--mbvc-navy); border-color: var(--mbvc-navy); }
+.mbvc-diff-input:checked + .mbvc-diff-box::after { content: ''; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg); }
+.mbvc-diff-input:focus-visible + .mbvc-diff-box { outline: 3px solid rgba(28, 61, 110, .35); outline-offset: 2px; }
+
+/* ---------- 비교 표 ---------- */
+.mbvc-table-wrap { background: #fff; border: 1px solid var(--mbvc-line); border-radius: var(--mbvc-radius); overflow: hidden; }
+.mbvc-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 15px; }
+.mbvc-table th, .mbvc-table td { padding: 14px 20px; border-bottom: 1px solid var(--mbvc-line-2); vertical-align: top; text-align: left; line-height: 1.5; overflow-wrap: anywhere; }
+.mbvc-table tbody tr:last-child > * { border-bottom: 0; }
+.mbvc-table thead th { font-size: 13px; font-weight: 700; color: var(--mbvc-ink-2); background: #fff; border-bottom: 1px solid var(--mbvc-line); padding-top: 12px; padding-bottom: 12px; }
+.mbvc-th-label { width: 30%; }
+.mbvc-table thead .mbvc-th-base { background: var(--mbvc-base-bg); color: var(--mbvc-navy); }
+.mbvc-th-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; margin-right: 6px; border-radius: 4px; background: var(--mbvc-navy); color: #fff; vertical-align: 1px; }
+.mbvc-th-cmp .mbvc-th-tag { background: var(--mbvc-ink-3); }
+.mbvc-label { font-weight: 500; color: var(--mbvc-ink-2); }
+.mbvc-base { background: var(--mbvc-base-bg); }
+.mbvc-v { display: block; font-weight: 600; color: var(--mbvc-ink); }
+.mbvc-v.is-muted { color: var(--mbvc-ink-3); font-weight: 500; }
+.mbvc-v.is-na { color: var(--mbvc-ink-3); font-weight: 500; }
+.mbvc-sub { display: block; font-size: 12.5px; color: var(--mbvc-ink-3); margin-top: 2px; line-height: 1.45; }
+.mbvc-delta { display: inline-block; font-size: 12.5px; font-weight: 600; color: var(--mbvc-navy-2); background: var(--mbvc-line-2); border-radius: 4px; padding: 1px 6px; margin-top: 4px; }
+.mbvc-flag { display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--mbvc-warn); background: var(--mbvc-warn-bg); border-radius: 4px; padding: 1px 6px; margin-top: 4px; }
+.mbvc-v + .mbvc-flag, .mbvc-v + .mbvc-delta { margin-right: 4px; }
+.mbvc-table tr.is-diff .mbvc-cmp { background: var(--mbvc-diff-bg); }
+.mbvc-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--mbvc-navy-2); margin-left: 6px; vertical-align: 2px; }
+.mbvc-empty { padding: 36px 20px; text-align: center; color: var(--mbvc-ink-3); font-size: 15px; }
+
+/* ---------- 추천 고객 ---------- */
+.mbvc-rec { margin-top: 28px; }
+.mbvc-rec-title { font-size: 17px; font-weight: 800; margin-bottom: 12px !important; letter-spacing: -.01em; }
+.mbvc-rec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.mbvc-rec-card { border: 1px solid var(--mbvc-line); border-radius: var(--mbvc-radius); padding: 20px 22px; background: #fff; }
+.mbvc-rec-card:first-child { background: var(--mbvc-base-bg); border-color: #d5e0ef; }
+.mbvc-rec-name { font-size: 15px; font-weight: 700; color: var(--mbvc-navy); margin-bottom: 10px !important; }
+.mbvc-rec-card ul { list-style: none; margin: 0; padding: 0; }
+.mbvc-rec-card li { position: relative; padding-left: 16px; font-size: 14.5px; line-height: 1.6; color: var(--mbvc-ink-2); }
+.mbvc-rec-card li + li { margin-top: 6px; }
+.mbvc-rec-card li::before { content: ''; position: absolute; left: 2px; top: .7em; width: 5px; height: 5px; border-radius: 50%; background: var(--mbvc-navy-2); }
+
+/* ---------- 전체 제원 아코디언 ---------- */
+.mbvc-detail { margin-top: 28px; border-top: 1px solid var(--mbvc-line); border-bottom: 1px solid var(--mbvc-line); }
+.mbvc-detail-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 56px; padding: 0 4px; margin: 0; font-size: 16px; font-weight: 700; color: var(--mbvc-ink); background: none; border: 0; cursor: pointer; text-align: left; }
+.mbvc-detail-btn:focus-visible { outline: 3px solid rgba(28, 61, 110, .35); outline-offset: 2px; }
+.mbvc-plus { position: relative; flex: none; width: 16px; height: 16px; }
+.mbvc-plus::before, .mbvc-plus::after { content: ''; position: absolute; left: 0; top: 7px; width: 16px; height: 2px; background: var(--mbvc-ink); transition: transform .2s; }
+.mbvc-plus::after { transform: rotate(90deg); }
+.mbvc-detail-btn[aria-expanded="true"] .mbvc-plus::after { transform: rotate(0); }
+.mbvc-detail-body { padding: 4px 4px 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; }
+.mbvc-detail-body[hidden] { display: none; }
+.mbvc-dgroup { min-width: 0; }
+.mbvc-dtitle { font-size: 14px; font-weight: 800; color: var(--mbvc-navy); padding-bottom: 8px; border-bottom: 1.5px solid var(--mbvc-ink); }
+.mbvc-dgroup dl { margin: 0; }
+.mbvc-drow { display: grid; grid-template-columns: 42% 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--mbvc-line-2); font-size: 14.5px; line-height: 1.5; }
+.mbvc-drow dt { color: var(--mbvc-ink-2); }
+.mbvc-drow dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.mbvc-dsrc { grid-column: 1 / -1; font-size: 12.5px; color: var(--mbvc-ink-3); }
+
+.mbvc-note { margin-top: 18px !important; font-size: 12.5px; line-height: 1.6; color: var(--mbvc-ink-3); }
+.mbvc-note b { color: var(--mbvc-warn); font-weight: 700; }
+
+/* ---------- 태블릿 ---------- */
+@media (max-width: 900px) {
+  .mbvc-bar { flex-direction: column; align-items: stretch; gap: 8px; }
+  .mbvc-diff { align-self: flex-end; }
+  .mbvc-detail-body { grid-template-columns: 1fr; }
+}
+
+/* ---------- 모바일: 값 2열 구조 ---------- */
+@media (max-width: 640px) {
+  .mbvc-cars { gap: 8px; margin-bottom: 16px; }
+  .mbvc-car { padding: 14px 12px; border-radius: 12px; }
+  .mbvc-car-tag { font-size: 11px; padding: 2px 8px; margin-bottom: 8px; }
+  .mbvc-car-brand { font-size: 11.5px; }
+  .mbvc-car-name, .mbvc-pick .mbvc-car-name { font-size: 16px; }
+  .mbvc-car-trim { font-size: 12.5px; }
+  .mbvc-car-price { font-size: 14px; margin-top: 8px !important; }
+  .mbvc-pick { padding: 8px 10px; gap: 6px; border-radius: 8px; }
+  .mbvc-pick-ico { width: 8px; height: 8px; }
+  /* 목록은 두 카드 전체 폭으로 펼침 */
+  .mbvc-cars { position: relative; }
+  .mbvc-car--cmp { position: static; }
+  .mbvc-list { left: 0; right: 0; top: calc(100% + 6px); max-height: 60vh; }
+
+  .mbvc-bar { margin: 0 -16px 12px; }
+  .mbvc-cats { padding: 0 16px; scroll-padding: 0 16px; }
+  .mbvc-cat { padding: 0 15px; font-size: 14px; }
+  .mbvc-diff { align-self: flex-start; padding: 0 16px; font-size: 14px; }
+
+  /* 표 → 항목명은 위, 값은 2열 */
+  .mbvc-table, .mbvc-table tbody, .mbvc-table tr { display: block; }
+  .mbvc-table thead { display: block; position: sticky; top: 60px; z-index: 2; }
+  .mbvc-table thead tr { display: grid; grid-template-columns: 1fr 1fr; }
+  .mbvc-table thead .mbvc-th-label { display: none; }
+  .mbvc-table thead th { width: auto; padding: 10px 12px; font-size: 12.5px; box-shadow: 0 1px 0 var(--mbvc-line); }
+  .mbvc-table tbody tr { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--mbvc-line); }
+  .mbvc-table tbody tr:last-child { border-bottom: 0; }
+  .mbvc-table th, .mbvc-table td { border-bottom: 0; padding: 10px 12px; font-size: 14px; }
+  .mbvc-table tbody .mbvc-label { grid-column: 1 / -1; padding: 12px 12px 2px; font-size: 13px; color: var(--mbvc-ink-3); background: #fff; }
+  .mbvc-table tbody .mbvc-base { padding-top: 6px; padding-bottom: 12px; }
+  .mbvc-table tbody .mbvc-cmp { padding-top: 6px; padding-bottom: 12px; }
+  .mbvc-table-wrap { border-radius: 12px; overflow: visible; }
+  .mbvc-table thead th:first-of-type, .mbvc-table thead .mbvc-th-base { border-top-left-radius: 12px; }
+  .mbvc-table thead .mbvc-th-cmp { border-top-right-radius: 12px; }
+  .mbvc-sub { font-size: 12px; }
+
+  .mbvc-rec-grid { grid-template-columns: 1fr; gap: 10px; }
+  .mbvc-rec-card { padding: 16px; }
+  .mbvc-detail-btn { font-size: 15px; }
+  .mbvc-drow { grid-template-columns: 44% 1fr; font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mbvc *, .mbvc *::before, .mbvc *::after { transition: none !important; }
+}

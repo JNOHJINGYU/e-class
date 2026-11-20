@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="modules/vehicle-compare/vehicle-compare.css">
 
 <!-- ============================================================
      이미지 URL 관리 영역
@@ -43,27 +44,6 @@ const IMAGES = {
   burmester:          "images/e-class/opt/burmester-e220d-1195.webp",   // S3 카드 4 · 부메스터
   interior:           "images/e-class/opt/e220d-interior-1600.webp",   // S7 인테리어
   safety:             "images/e-class/opt/safety-1365.webp",   // S8 안전
-};
-</script>
-
-<!-- ============================================================
-     경쟁차 비교 데이터
-     ============================================================ -->
-<script>
-const COMPARE_DATA = {
-  headers: ["항목", "E220d 4MATIC\nEXCLUSIVE", "BMW 523d x-drive", "Audi A6 40 TDI quattro"],
-  highlight: 1,
-  rows: [
-    { label: "가격",              values: ["8,720만", "8,430만", "8,178만"] },
-    { label: "출력",              values: ["197ps",     "197ps", "204ps"] },
-    { label: "토크",              values: ["44.9kg.m",  "40kg.m", "40.8kg.m"] },
-    { label: "구동방식",          values: ["4MATIC","x-drive", "quattro"] },
-    { label: "복합연비",          values: ["16.0km/L",   "14.7km/L", "15.1km/L"] },
-    { label: "헤드업 디스플레이", values: ["✓ 기본",   "✓ 기본", "✓ 기본"] },
-    { label: "반자율 주행",       values: ["✓ 기본", "✓ 기본", "✓ 기본"] },
-    { label: "통풍 시트",         values: ["✓ 기본",   "✓ 기본", "✓ 기본"] },
-    { label: "브랜드 가치",       values: ["★★★★★",  "★★★★", "★★★"] },
-  ]
 };
 </script>
 
@@ -541,117 +521,6 @@ p  { color: #444; font-size: clamp(1.1rem, 2.05vw, 1.22rem); line-height: 1.85; 
 .eq-item span.eq-label { font-size: 1.02rem; font-weight: 600; color: var(--black); }
 
 /* ============================================================
-   S10 · 상세 제원
-   ============================================================ */
-.detail-spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--gray3); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
-@media (max-width: 640px) { .detail-spec-grid { grid-template-columns: 1fr; } }
-.ds-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; border-bottom: 1px solid var(--gray3); background: var(--white); gap: 16px; transition: background .2s; }
-.ds-row:nth-child(even) { border-left: 1px solid var(--gray3); background: var(--gray1); }
-.ds-row:hover { background: #EEF4FF; }
-.ds-label { font-size: .98rem; font-weight: 600; color: var(--gray4); white-space: nowrap; }
-.ds-value { font-size: 1.08rem; font-weight: 700; color: var(--black); text-align: right; }
-.ds-value.blue-val { color: var(--blue); }
-
-/* ============================================================
-   S11 · EXCLUSIVE vs AMG Line
-   ============================================================ */
-.vs-summary {
-  background: var(--gray1);
-  border: 1px solid var(--gray3);
-  border-radius: var(--radius);
-  padding: 28px 36px;
-  margin-bottom: 40px;
-  display: flex; flex-wrap: wrap; gap: 12px 32px;
-  align-items: center; justify-content: center;
-  text-align: center;
-}
-.vs-summary-item { font-size: .98rem; color: var(--gray4); line-height: 1.6; }
-.vs-summary-item strong { color: var(--black); font-weight: 800; }
-.vs-summary-sep { color: var(--gray3); font-size: 1.2rem; }
-@media (max-width: 600px) { .vs-summary-sep { display: none; } .vs-summary { flex-direction: column; } }
-.vs-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); box-shadow: var(--shadow-md); }
-.vs-table { width: 100%; min-width: 640px; border-collapse: collapse; }
-.vs-table th {
-  padding: 20px 24px; font-size: .9rem; font-weight: 800;
-  letter-spacing: .06em; text-align: center;
-  border-bottom: 2px solid var(--gray3);
-}
-.vs-table th.col-label-h {
-  text-align: left; padding-left: 28px;
-  background: var(--white); color: var(--gray4);
-  width: 160px;
-}
-.vs-table th.col-excl {
-  background: rgba(0,102,255,.06);
-  color: var(--blue); border-bottom-color: var(--blue);
-}
-.vs-table th.col-amg {
-  background: rgba(229,57,53,.06);
-  color: var(--red); border-bottom-color: var(--red);
-}
-.vs-table th .th-price {
-  display: block; font-size: .82rem; font-weight: 700;
-  margin-top: 4px; letter-spacing: 0;
-}
-.vs-table td {
-  padding: 19px 24px; font-size: 1.06rem;
-  text-align: center; border-bottom: 1px solid var(--gray3);
-  color: var(--black); font-weight: 500;
-}
-.vs-table td.col-label-d {
-  text-align: left; padding-left: 28px;
-  font-weight: 700; font-size: 1.03rem;
-  color: var(--black); background: var(--white); white-space: nowrap;
-}
-.vs-table td.col-excl { background: rgba(0,102,255,.04); font-weight: 600; }
-.vs-table td.col-amg  { background: rgba(229,57,53,.04);  font-weight: 600; }
-.vs-table td.empty-val { color: #CCC; }
-.vs-table tr:last-child td { border-bottom: none; }
-.vs-table tr:hover td { filter: brightness(.97); }
-.vs-table .row-highlight td { background: #FFFBF0; font-weight: 700; }
-.vs-table .row-highlight td.col-excl { background: rgba(0,102,255,.08); }
-.vs-table .row-highlight td.col-amg  { background: rgba(229,57,53,.08); }
-.vs-scroll-hint { display: none; font-size: .72rem; color: var(--gray4); text-align: right; margin-bottom: 10px; }
-@media (max-width: 768px) { .vs-scroll-hint { display: block; } }
-
-/* ============================================================
-   S11-2 · 추천 고객 카드
-   ============================================================ */
-.recommend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
-@media (max-width: 768px) { .recommend-grid { grid-template-columns: 1fr; } }
-.recommend-card { border-radius: var(--radius); padding: 36px 32px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray3); background: var(--white); transition: transform .3s, box-shadow .3s; }
-.recommend-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
-.recommend-card.excl { border-top: 4px solid var(--blue); }
-.recommend-card.gas { border-top: 4px solid var(--red); }
-.recommend-card h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 22px; }
-.recommend-card.excl h3 { color: var(--blue); }
-.recommend-card.gas h3 { color: var(--red); }
-.recommend-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-.recommend-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 1.02rem; color: #444; line-height: 1.75; }
-.recommend-list li::before { content: '✓'; flex-shrink: 0; font-weight: 800; }
-.recommend-card.excl .recommend-list li::before { color: var(--blue); }
-.recommend-card.gas .recommend-list li::before { color: var(--red); }
-
-/* ============================================================
-   S12 · 경쟁차 비교
-   ============================================================ */
-.compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius); box-shadow: var(--shadow-md); }
-.compare-table { width: 100%; min-width: 700px; border-collapse: collapse; }
-.compare-table th { padding: 20px 24px; font-size: .9rem; font-weight: 800; letter-spacing: .06em; text-align: center; white-space: pre-line; border-bottom: 2px solid var(--gray3); background: var(--gray1); }
-.compare-table th.col-e300 { background: var(--black); color: var(--white); }
-.compare-table th.col-e300::after { content: 'OUR MODEL'; display: block; font-size: .62rem; letter-spacing: .14em; color: var(--blue); margin-top: 4px; }
-.compare-table td { padding: 20px 24px; font-size: 1.05rem; font-weight: 500; text-align: center; border-bottom: 1px solid var(--gray3); color: var(--gray4); }
-.compare-table td.col-e300 { background: #F0F4FF; color: var(--black); font-weight: 700; }
-.compare-table td.col-label { text-align: left; font-weight: 700; color: var(--black); background: var(--white); font-size: 1.03rem; padding-left: 28px; white-space: nowrap; }
-.compare-table tr:last-child td { border-bottom: none; }
-.compare-table tr:hover td { background: #FAFAFA; }
-.compare-table tr:hover td.col-e300 { background: #E4EDFF; }
-.compare-notice { margin-top: 20px; font-size: .78rem; color: var(--gray4); text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
-.compare-notice::before { content: 'ⓘ'; }
-.scroll-hint { display: none; font-size: .72rem; color: var(--gray4); text-align: right; margin-bottom: 10px; }
-@media (max-width: 768px) { .scroll-hint { display: block; } }
-
-/* ============================================================
    RESPONSIVE GLOBAL
    ============================================================ */
 @media (max-width: 768px) { :root { --section-gap: 80px; } }
@@ -664,22 +533,15 @@ p  { color: #444; font-size: clamp(1.1rem, 2.05vw, 1.22rem); line-height: 1.85; 
   p { line-height: 1.95; }
   .reason-body p { line-height: 2.0; }
   .conv-card p, .safety-card p, .check-text p { line-height: 1.8; }
-  .recommend-list li { line-height: 1.85; }
 
   /* 카드 내부 여백 확대 */
   .reason-body { padding: 30px 26px 32px; }
   .conv-card { padding: 26px 22px; }
   .safety-card { padding: 22px 18px; }
-  .recommend-card { padding: 30px 24px; }
   .stat-card { padding: 28px 20px; }
 
   /* 체크리스트 가독성 향상 */
   .check-item, .eq-item { padding: 18px 22px; gap: 14px; }
-  .ds-row { padding: 16px 22px; }
-
-  /* 비교표 가독성 향상 */
-  .vs-table td, .compare-table td { padding: 16px 18px; }
-  .vs-table th, .compare-table th { padding: 16px 18px; }
 }
 </style>
 <style>
@@ -3442,146 +3304,34 @@ const ECLASS_SAFETY_CONFIG = {
 </section>
 
 <!-- ============================================================
-     S10 · 상세 제원
+     S10 · 차량 제원 비교 (공통 모듈: modules/vehicle-compare/)
+     - 기존 상세 제원 / E220d vs E300 / 경쟁차 비교 3개 섹션을 통합
+     - 데이터 수정은 modules/vehicle-compare/vehicle-data.js 에서만 합니다
      ============================================================ -->
-<section class="section section-alt">
+<section class="section section-alt" id="compare">
   <div class="container">
     <div class="section-heading">
-      <span class="label-en">Full Specifications</span>
-      <h2>E 220d 4MATIC<br>상세 제원</h2>
-      <p>고객이 가장 많이 질문하는 핵심 정보를 모두 담았습니다</p>
+      <span class="label-en">Specifications &amp; Comparison</span>
+      <h2>차량 제원 비교</h2>
+      <p>궁금한 차량을 선택하고 성능과 옵션의 차이를 직접 비교해 보세요.</p>
     </div>
-    <div class="detail-spec-grid reveal">
-      <div class="ds-row"><span class="ds-label">엔진</span><span class="ds-value">OM654M 직렬 4기통 디젤</span></div>
-      <div class="ds-row"><span class="ds-label">배기량</span><span class="ds-value blue-val">1,993cc</span></div>
-      <div class="ds-row"><span class="ds-label">최고 출력</span><span class="ds-value blue-val">197ps</span></div>
-      <div class="ds-row"><span class="ds-label">최대 토크</span><span class="ds-value blue-val">44.9kg.m</span></div>
-      <div class="ds-row"><span class="ds-label">구동 방식</span><span class="ds-value">4MATIC</span></div>
-      <div class="ds-row"><span class="ds-label">변속기</span><span class="ds-value">9G-TRONIC</span></div>
-      <div class="ds-row"><span class="ds-label">0→100 km/h</span><span class="ds-value blue-val">7.8초</span></div>
-      <div class="ds-row"><span class="ds-label">최고 속도</span><span class="ds-value">234km/h</span></div>
-      <div class="ds-row"><span class="ds-label">복합 연비</span><span class="ds-value blue-val">16.0km/L</span></div>
-      <div class="ds-row"><span class="ds-label">도심 연비</span><span class="ds-value">14.3km/L</span></div>
-      <div class="ds-row"><span class="ds-label">고속 연비</span><span class="ds-value">18.9km/L</span></div>
-      <div class="ds-row"><span class="ds-label">공차 중량</span><span class="ds-value">1,910kg</span></div>
-      <div class="ds-row"><span class="ds-label">전장</span><span class="ds-value">4,955mm</span></div>
-      <div class="ds-row"><span class="ds-label">전폭</span><span class="ds-value">1,880mm</span></div>
-      <div class="ds-row"><span class="ds-label">전고</span><span class="ds-value">1,465mm</span></div>
-      <div class="ds-row"><span class="ds-label">휠베이스</span><span class="ds-value">2,960mm</span></div>
-      <div class="ds-row"><span class="ds-label">트렁크 용량</span><span class="ds-value">540L</span></div>
-      <div class="ds-row"><span class="ds-label">연료 탱크</span><span class="ds-value">66L</span></div>
-      <div class="ds-row"><span class="ds-label">전륜 타이어</span><span class="ds-value">245/45R19</span></div>
-      <div class="ds-row"><span class="ds-label">후륜 타이어</span><span class="ds-value">275/40R19</span></div>
-    </div>
+    <div class="mbvc-container" id="mbvcE220d" data-mbvc-manual></div>
   </div>
 </section>
-
-<!-- ============================================================
-     S11 · EXCLUSIVE vs AMG Line 핵심 차이
-     ============================================================ -->
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <span class="label-en">Model Comparison</span>
-      <h2>E220d vs E300<br>핵심 차이 비교</h2>
-      <p>동일 EXCLUSIVE 라인 · 가격 차이 750만원</p>
-    </div>
-
-    <!-- 요약 배너 -->
-    <div class="vs-summary reveal">
-      <div class="vs-summary-item"><strong>동일 EXCLUSIVE 라인</strong><br>편안함과 고급스러움을 추구하는 디자인 동일</div>
-      <div class="vs-summary-sep">|</div>
-      <div class="vs-summary-item"><strong class="blue">E220d는</strong><br>탁월한 연비와 디젤 토크 선택</div>
-      <div class="vs-summary-sep">|</div>
-      <div class="vs-summary-item"><strong class="red">E300이 +750만원</strong><br>더 높은 출력과 추가 사양 선택</div>
-    </div>
-
-    <p class="vs-scroll-hint">← 좌우로 스크롤하여 비교하세요 →</p>
-    <div class="vs-wrap reveal reveal-delay-1">
-      <table class="vs-table">
-        <thead>
-          <tr>
-            <th class="col-label-h">구분</th>
-            <th class="col-excl">
-              E 220d EXCLUSIVE
-              <span class="th-price blue">8,720만원</span>
-            </th>
-            <th class="col-amg">
-              E 300 EXCLUSIVE
-              <span class="th-price red">9,480만원 <span style="font-size:.7rem; font-weight:600;">(+750만원)</span></span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td class="col-label-d">연료</td><td class="col-excl">디젤</td><td class="col-amg">가솔린</td></tr>
-          <tr><td class="col-label-d">엔진</td><td class="col-excl">OM654M 직렬 4기통 디젤</td><td class="col-amg">M254 직렬 4기통 가솔린 터보</td></tr>
-          <tr><td class="col-label-d">배기량</td><td class="col-excl">1,993cc</td><td class="col-amg">1,999cc</td></tr>
-          <tr><td class="col-label-d">최고출력</td><td class="col-excl">197ps</td><td class="col-amg">258ps</td></tr>
-          <tr><td class="col-label-d">최대토크</td><td class="col-excl">44.9kg.m</td><td class="col-amg">40.8kg.m</td></tr>
-          <tr><td class="col-label-d">복합연비</td><td class="col-excl">16.0km/L</td><td class="col-amg">11.1km/L</td></tr>
-          <tr><td class="col-label-d">0-100km/h</td><td class="col-excl">7.8초</td><td class="col-amg">6.1초</td></tr>
-          <tr><td class="col-label-d">최고속도</td><td class="col-excl">234km/h</td><td class="col-amg">250km/h</td></tr>
-          <tr><td class="col-label-d">공차중량</td><td class="col-excl">1,910kg</td><td class="col-amg">1,905kg</td></tr>
-          <tr><td class="col-label-d">헤드램프</td><td class="col-excl">LED 하이 퍼포먼스</td><td class="col-amg">디지털 라이트</td></tr>
-          <tr><td class="col-label-d">상향등 어시스트</td><td class="col-excl">어댑티브 상향등</td><td class="col-amg">어댑티브 상향등</td></tr>
-          <tr><td class="col-label-d">어쿠스틱 글래스</td><td class="col-excl empty-val">—</td><td class="col-amg">기본 포함</td></tr>
-          <tr><td class="col-label-d">시트소재</td><td class="col-excl">ARTICO</td><td class="col-amg">천연가죽</td></tr>
-          <tr><td class="col-label-d">실내트림</td><td class="col-excl">블랙 오픈포어 애쉬우드</td><td class="col-amg">브라운 메이플 우드 + 알루미늄 라인</td></tr>
-          <tr><td class="col-label-d">앰비언트 라이트</td><td class="col-excl">기본 포함</td><td class="col-amg">액티브 앰비언트 라이트</td></tr>
-          <tr><td class="col-label-d">헤드업 디스플레이</td><td class="col-excl empty-val">—</td><td class="col-amg">기본 포함</td></tr>
-          <tr><td class="col-label-d">사운드시스템</td><td class="col-excl empty-val">—</td><td class="col-amg">부메스터 4D</td></tr>
-          <tr><td class="col-label-d">키레스고 패키지</td><td class="col-excl">기본 포함</td><td class="col-amg">기본 포함</td></tr>
-          <tr><td class="col-label-d">루프라이너 블랙</td><td class="col-excl empty-val">—</td><td class="col-amg">기본 포함</td></tr>
-          <tr class="row-highlight">
-            <td class="col-label-d">추천 고객</td>
-            <td class="col-excl">연비와 장거리 주행<br>합리적인 유지비 선호</td>
-            <td class="col-amg">높은 출력과<br>추가 프리미엄 사양 선호</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- 추천 고객 카드 -->
-    <div class="recommend-grid">
-      <div class="recommend-card excl reveal">
-        <h3>E220d EXCLUSIVE 추천 고객</h3>
-        <ul class="recommend-list">
-          <li>연간 주행거리 2만km 이상</li>
-          <li>연비를 최우선으로 생각하는 고객</li>
-          <li>디젤 특유의 풍부한 토크감을 선호하는 고객</li>
-          <li>실용성과 프리미엄을 함께 원하는 고객</li>
-          <li>유지비를 합리적으로 관리하고 싶은 고객</li>
-        </ul>
-      </div>
-      <div class="recommend-card gas reveal reveal-delay-1">
-        <h3>E300 EXCLUSIVE 추천 고객</h3>
-        <ul class="recommend-list">
-          <li>더욱 높은 출력과 스포티한 가속감을 원하는 고객</li>
-          <li>HUD 및 부메스터 사운드 등 추가 사양을 원하는 고객</li>
-          <li>천연가죽 시트와 고급 트림을 선호하는 고객</li>
-          <li>디지털 라이트와 액티브 앰비언트를 중요하게 생각하는 고객</li>
-          <li>750만원 추가 투자 가치가 있다고 생각하는 고객</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     S12 · 경쟁차 비교
-     ============================================================ -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-heading">
-      <span class="label-en">Competitive Comparison</span>
-      <h2>왜 E-Class가<br>선택받는가</h2>
-      <p>경쟁 모델과 직접 비교해보십시오</p>
-    </div>
-    <p class="scroll-hint">← 좌우로 스크롤하여 비교하세요 →</p>
-    <div class="compare-wrap reveal" id="compareWrap"></div>
-    <p class="compare-notice">데이터는 추후 업데이트 예정입니다. 현재는 E220d EXCLUSIVE 기준 데이터만 반영되어 있습니다.</p>
-  </div>
-</section>
+<script src="modules/vehicle-compare/vehicle-data.js"></script>
+<script src="modules/vehicle-compare/vehicle-compare.js"></script>
+<script>
+MercedesCompare.init({
+  container: '#mbvcE220d',
+  baseModel: 'e220d-4matic-exclusive',          // 고정 기준 차량
+  defaultCompare: 'e300-4matic-exclusive',      // 처음 보여줄 비교 차량
+  compareModels: [                              // 선택 목록 (등록된 차량만 표시)
+    'e200-exclusive', 'e300-4matic-exclusive', 'e450-4matic-exclusive', 'e350e-4matic-exclusive', 'amg-e53-hybrid',
+    'bmw-520i', 'bmw-523d-xdrive', 'bmw-530i-xdrive', 'bmw-550e-xdrive',
+    'audi-a6', 'audi-a6-40-tdi-quattro', 'audi-a6-quattro', 'audi-a6-55-tfsi-quattro'
+  ]
+});
+</script>
 
 <!-- ============================================================
      JAVASCRIPT
@@ -3623,31 +3373,6 @@ function applyImages() {
   }
 }
 applyImages();
-
-/* -- 경쟁차 비교표 렌더링 -- */
-function renderCompareTable() {
-  const wrap = document.getElementById('compareWrap');
-  if (!wrap) return;
-  let html = '<table class="compare-table"><thead><tr>';
-  COMPARE_DATA.headers.forEach((h, i) => {
-    if (i === 0) html += `<th style="text-align:left;padding-left:28px;min-width:130px;">${h}</th>`;
-    else if (i === COMPARE_DATA.highlight) html += `<th class="col-e300" style="min-width:160px;">${h}</th>`;
-    else html += `<th style="min-width:120px;color:var(--gray4);">${h}</th>`;
-  });
-  html += '</tr></thead><tbody>';
-  COMPARE_DATA.rows.forEach(row => {
-    html += '<tr><td class="col-label">' + row.label + '</td>';
-    row.values.forEach((v, i) => {
-      const cls = (i + 1 === COMPARE_DATA.highlight) ? ' col-e300' : '';
-      const empty = v === '-' || v === '';
-      html += `<td class="${cls}"${empty ? ' style="color:#CCC"' : ''}>${v}</td>`;
-    });
-    html += '</tr>';
-  });
-  html += '</tbody></table>';
-  wrap.innerHTML = html;
-}
-renderCompareTable();
 
 /* -- Scroll Reveal -- */
 const revealObserver = new IntersectionObserver((entries) => {
