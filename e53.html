@@ -313,38 +313,74 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
 @media (prefers-reduced-motion:reduce){#awdSvg .awd-road,.awd-stage::after{transition:none;}}
 
 /* ==================================================
-   8. SUSPENSION
+   8. SUSPENSION — AMG RIDE CONTROL · AMG 리어 액슬 스티어링 (실제 도로 장면)
    ================================================== */
-.susp-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2vw,28px);}
+.susp-block{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(24px,3vw,44px);align-items:center;}
+.susp-block + .susp-block{margin-top:clamp(40px,5vw,64px);}
 .meter{margin-top:14px;display:grid;gap:10px;}
-/* AMG RIDE CONTROL — 실제 E 53 이미지 애니메이션 */
-#susSvg{background:transparent;}
-#susSvg .ride-fb{display:none;}
-#susSvg.ride-fallback .ride-img{display:none;}
-#susSvg.ride-fallback .ride-fb{display:inline;}
-#susSvg .ride-label{font-family:var(--sans);font-size:40px;font-weight:700;letter-spacing:.14em;fill:#757B84;}
-#susSvg .ride-dir{font-family:var(--sans);font-size:36px;font-weight:500;letter-spacing:.06em;fill:#A4A9B1;}
 .meter div{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center;font-size:13px;color:var(--sub);}
 .meter .bar{height:8px;background:var(--graphite);position:relative;overflow:hidden;}
 .meter .bar i{position:absolute;inset:0 auto 0 0;background:var(--red);transition:width .5s var(--ease);}
-.susp-text{margin-top:14px;font-size:14.5px;color:var(--ink);font-weight:500;min-height:3.2em;}
+.susp-text{margin-top:12px;font-size:15px;color:var(--sub);line-height:1.8;min-height:3.2em;}
+.sx-cap{font-size:clamp(19px,1.8vw,23px);font-weight:700;line-height:1.45;}
+.sx-cap,.susp-text{transition:opacity .25s;}
+/* 무대 */
+.sx-stage{position:relative;aspect-ratio:11/6;overflow:hidden;background:#2B2D31;}
+.sx-stage svg{display:block;width:100%;height:100%;}
+.sx-hud{position:absolute;left:12px;right:12px;top:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;}
+.sx-chip{white-space:nowrap;padding:5px 10px;background:rgba(11,12,14,.74);color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1.3;}
+.sx-chip--sub{font-weight:600;color:#E8EAED;}
+.sx-chip:empty{display:none;}
+.sx-ctrl{position:absolute;right:10px;bottom:10px;display:flex;gap:6px;}
+.sx-ctrl button{display:inline-flex;align-items:center;gap:7px;min-height:44px;min-width:44px;padding:0 14px;background:rgba(11,12,14,.78);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:12.5px;font-weight:700;}
+.sx-ctrl button:hover{border-color:rgba(255,255,255,.45);}
+/* 단계 표시 */
+.sx-steps{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:6px;}
+.sx-steps li{position:relative;padding:9px 12px 9px 16px;font-size:13.5px;color:var(--mute);background:var(--bg-3,#1B1D21);border-left:3px solid transparent;transition:color .25s,border-color .25s;}
+.sx-steps li.is-on{color:var(--ink);border-left-color:var(--red-2);}
+/* RIDE CONTROL */
+#susSvg .ride-fb{display:none;}
+#susSvg.ride-fallback .ride-img{display:none;}
+#susSvg.ride-fallback .ride-fb{display:inline;}
+#susSvg.road-missing #rideRoad{display:none;}
+/* 리어 액슬 스티어링 */
 .rs-wheel{fill:#3A3E45;}
-/* AMG 리어 액슬 스티어링 — 탑뷰 실제 이미지 */
 #rasSvg .ras-fb{display:none;}
 #rasSvg.ras-fallback .ras-img{display:none;}
 #rasSvg.ras-fallback .ras-fb{display:inline;}
-#rasSvg .ras-mode{opacity:0;transition:opacity .45s var(--ease);}
-#rasSvg .ras-mode.is-on{opacity:1;}
-#rasSvg .ras-draw{stroke-dasharray:1;stroke-dashoffset:1;}
-#rasSvg .ras-mode.is-on .ras-draw.is-drawn{stroke-dashoffset:0;transition:stroke-dashoffset 1.1s var(--ease) .15s;}
+#rasSvg.road-missing #rasRoad{display:none;}
+#rasSvg .ras-ghost{opacity:.5;filter:grayscale(1) brightness(1.15);}
+#rasSvg .ras-ghost .ras-tire{opacity:.85;}
 #rsText{transition:opacity .25s;}
-.ras-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:10px;font-size:12px;color:var(--sub);}
-.ras-legend span{display:inline-flex;align-items:center;gap:7px;}
-.ras-legend i{display:inline-block;width:22px;height:0;border-top:3px solid var(--red-2);}
-.ras-legend i.grey{border-top:2px dashed #6B7078;}
-.ras-legend .dir{color:var(--mute);}
-@media (max-width:900px){.susp-grid{grid-template-columns:1fr}}
-@media (max-width:767px){#dampTabs{gap:8px;flex-wrap:nowrap;}#dampTabs button{flex:1 1 0;min-height:44px;padding:10px 8px;}}
+.ras-legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-size:12.5px;color:var(--sub);}
+.ras-legend span{display:inline-flex;align-items:center;gap:8px;}
+.ras-legend i{display:inline-block;width:24px;height:0;border-top:4px solid var(--red-2);}
+.ras-legend i.grey{border-top:3px dashed #C9CDD3;}
+.ras-wrap{position:relative;}
+.ras-inset{position:absolute;left:10px;bottom:10px;width:132px;padding:8px 6px 6px;background:rgba(11,12,14,.78);border:1px solid rgba(255,255,255,.14);color:#E8EAED;text-align:center;pointer-events:none;}
+.ras-inset svg{display:block;margin:0 auto;width:96px;height:auto;}
+.ras-inset p{margin:2px 0 0;font-size:11.5px;font-weight:600;line-height:1.35;}
+.ras-inset p b{display:inline-block;min-width:16px;color:#A4A9B1;}
+.ras-inset p.is-rear span{color:#FF6B70;}
+.ras-read{margin:16px 0 0;display:grid;gap:0;border-top:1px solid var(--line);}
+.ras-read div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
+.ras-read dt{color:var(--sub);}
+.ras-read dd{margin:0;font-weight:700;text-align:right;}
+@media (max-width:960px){.susp-block{grid-template-columns:1fr}}
+@media (max-width:767px){
+  .sx-stage{aspect-ratio:4/3;}
+  .sx-hud{left:8px;right:8px;top:8px;}
+  .sx-chip{font-size:11.5px;padding:4px 8px;}
+  .sx-ctrl{right:8px;bottom:8px;}
+  .sx-ctrl .sx-ctrl-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  #dampTabs,#rsTabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px;}
+  #dampTabs button,#rsTabs button{min-height:44px;padding:10px 6px;}
+  .ras-inset{position:static;width:auto;display:flex;align-items:center;gap:14px;margin-top:8px;padding:8px 12px;text-align:left;}
+  .ras-inset svg{width:40px;margin:0;flex:none;}
+  .ras-inset p{font-size:13px;margin:0;}
+  .ras-inset p + p{margin-left:6px;}
+  .ras-legend{font-size:12px;}
+}
 
 /* ==================================================
    8-1. EXTERIOR COLOURS — 외장 컬러 시뮬레이터
@@ -1166,7 +1202,7 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
   </div>
 </section>
 
-<!-- 07 AMG SUSPENSION -->
+<!-- 07 AMG SUSPENSION — AMG RIDE CONTROL(방지턱 통과) · AMG 리어 액슬 스티어링(실제 도로 비교) -->
 <section id="suspension" aria-labelledby="suTitle">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1174,99 +1210,152 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
       <h2 class="section-title" id="suTitle">편안함과 날카로움을<br>버튼 하나로</h2>
       <p class="section-desc" id="suDesc"></p>
     </div>
-    <div class="susp-grid">
+
+    <!-- ① AMG RIDE CONTROL — 실제 도로의 과속방지턱을 왼쪽 → 오른쪽으로 통과 -->
+    <div class="susp-block">
       <div class="panel reveal">
         <p class="svg-tb" style="margin-bottom:10px">AMG RIDE CONTROL · 감쇠력 조절</p>
         <div class="seg" id="dampTabs"></div>
-        <!-- AMG RIDE CONTROL: 좌표계 = 차체 원본 사진(1672×941) 픽셀 좌표. 전면(앞바퀴) = 왼쪽, 후면(뒷바퀴) = 오른쪽 -->
-        <svg id="susSvg" viewBox="0 190 1672 630" role="img" aria-label="Mercedes-AMG E 53이 왼쪽으로 주행하며 방지턱을 통과할 때 주행 모드별 차체 움직임을 보여주는 개념 애니메이션">
-          <text class="ride-dir" x="40" y="236">◀ 주행 방향</text>
-          <path id="road" d="" fill="none" stroke="#757B84" stroke-width="5" stroke-linejoin="round"/>
-          <!-- 뒷바퀴 (오른쪽) — 브레이크(고정) + 휠(회전) -->
-          <g id="whR" transform="translate(1300.4 625)">
-            <image class="ride-img" id="rideBrakeR" x="-119" y="-119" width="238" height="238" preserveAspectRatio="xMidYMid meet"/>
-            <g id="spinR"><image class="ride-img" id="rideWheelR" x="-119" y="-119" width="238" height="238" preserveAspectRatio="xMidYMid meet"/></g>
-            <circle class="ride-fb" r="112" fill="#0B0B0C" stroke="#555A62" stroke-width="14"/>
-          </g>
-          <!-- 앞바퀴 (왼쪽) -->
-          <g id="whF" transform="translate(281.5 625)">
-            <image class="ride-img" id="rideBrakeF" x="-119" y="-119" width="238" height="238" preserveAspectRatio="xMidYMid meet"/>
-            <g id="spinF"><image class="ride-img" id="rideWheelF" x="-119" y="-119" width="238" height="238" preserveAspectRatio="xMidYMid meet"/></g>
-            <circle class="ride-fb" r="112" fill="#0B0B0C" stroke="#555A62" stroke-width="14"/>
-          </g>
-          <!-- 차체 (하나의 그룹으로 상하·피칭) — 서스펜션 표시(레드)는 휠하우스 안쪽에만 보이도록 차체 뒤에 배치 -->
-          <g id="susCar">
-            <g id="springF" opacity=".18"><path d="M162.2 587.6 A127 127 0 0 1 400.8 587.6" fill="none" stroke="#FF3B42" stroke-width="22" stroke-linecap="round" opacity=".35"/><path d="M162.2 587.6 A127 127 0 0 1 400.8 587.6" fill="none" stroke="#FF3B42" stroke-width="8" stroke-linecap="round"/></g>
-            <g id="springR" opacity=".18"><path d="M1181.1 588.6 A127 127 0 0 1 1419.7 588.6" fill="none" stroke="#FF3B42" stroke-width="22" stroke-linecap="round" opacity=".35"/><path d="M1181.1 588.6 A127 127 0 0 1 1419.7 588.6" fill="none" stroke="#FF3B42" stroke-width="8" stroke-linecap="round"/></g>
-            <image class="ride-img" id="rideBody" x="0" y="0" width="1672" height="941" preserveAspectRatio="xMidYMid meet"/>
-            <path class="ride-fb" d="M45 690 L40 600 Q60 530 160 500 L520 410 Q690 268 900 250 L1180 262 Q1330 300 1450 380 L1600 420 Q1650 470 1645 600 L1640 690 L1438 690 A135 135 0 0 0 1163 690 L421 690 A135 135 0 0 0 148 690 Z" fill="#2A2D32" stroke="#555A62" stroke-width="5"/>
-          </g>
-          <text class="ride-label" x="281.5" y="806" text-anchor="middle">FRONT</text>
-          <text class="ride-label" x="1300.4" y="806" text-anchor="middle">REAR</text>
-        </svg>
+        <div class="sx-stage" id="rideStage">
+          <!-- 좌표계 = 도로 사진(1672×941) 픽셀. 차량은 기존 측면 차체·휠 이미지를 좌우 반전해 오른쪽으로 주행 -->
+          <svg id="susSvg" viewBox="0 270 1100 600" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mercedes-AMG E 53이 실제 도로를 왼쪽에서 오른쪽으로 달리며 과속방지턱을 넘을 때, 주행 모드별로 차체가 반응하는 모습을 보여주는 개념 애니메이션">
+            <defs><radialGradient id="rideShadowGrad" cx="50%" cy="50%" r="50%"><stop offset="40%" stop-color="#000" stop-opacity=".5"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+            <rect x="0" y="0" width="1672" height="941" fill="#3A3C40"/>
+            <image id="rideRoad" x="0" y="0" width="1672" height="941" preserveAspectRatio="none"/>
+            <ellipse id="rideShadow" cx="0" cy="740" rx="430" ry="20" fill="url(#rideShadowGrad)"/>
+            <!-- 차량 그룹: 내부 좌표 = 차체 원본 사진(1672×941), 앞바퀴 = 내부 왼쪽 → 반전되어 화면 오른쪽 -->
+            <g id="rideCar" transform="translate(-9999 0)">
+              <g id="whR" transform="translate(1300.4 625)">
+                <image class="ride-img" id="rideBrakeR" x="-119" y="-119" width="238" height="238" preserveAspectRatio="xMidYMid meet"/>
+                <g id="spinR"><image class="ride-img" id="rideWheelR" x="-119" y="-119" width="238" height="238" preserveAspectRatio="xMidYMid meet"/></g>
+                <circle class="ride-fb" r="112" fill="#0B0B0C" stroke="#555A62" stroke-width="14"/>
+              </g>
+              <g id="whF" transform="translate(281.5 625)">
+                <image class="ride-img" id="rideBrakeF" x="-119" y="-119" width="238" height="238" preserveAspectRatio="xMidYMid meet"/>
+                <g id="spinF"><image class="ride-img" id="rideWheelF" x="-119" y="-119" width="238" height="238" preserveAspectRatio="xMidYMid meet"/></g>
+                <circle class="ride-fb" r="112" fill="#0B0B0C" stroke="#555A62" stroke-width="14"/>
+              </g>
+              <g id="susCar">
+                <g id="springF" opacity=".15"><path class="sp-glow" d="M162.2 587.6 A127 127 0 0 1 400.8 587.6" fill="none" stroke="#FF3B42" stroke-width="26" stroke-linecap="round" opacity=".35"/><path class="sp-line" d="M162.2 587.6 A127 127 0 0 1 400.8 587.6" fill="none" stroke="#FF3B42" stroke-width="9" stroke-linecap="round"/></g>
+                <g id="springR" opacity=".15"><path class="sp-glow" d="M1181.1 588.6 A127 127 0 0 1 1419.7 588.6" fill="none" stroke="#FF3B42" stroke-width="26" stroke-linecap="round" opacity=".35"/><path class="sp-line" d="M1181.1 588.6 A127 127 0 0 1 1419.7 588.6" fill="none" stroke="#FF3B42" stroke-width="9" stroke-linecap="round"/></g>
+                <image class="ride-img" id="rideBody" x="0" y="0" width="1672" height="941" preserveAspectRatio="xMidYMid meet"/>
+                <path class="ride-fb" d="M45 690 L40 600 Q60 530 160 500 L520 410 Q690 268 900 250 L1180 262 Q1330 300 1450 380 L1600 420 Q1650 470 1645 600 L1640 690 L1438 690 A135 135 0 0 0 1163 690 L421 690 A135 135 0 0 0 148 690 Z" fill="#2A2D32" stroke="#555A62" stroke-width="5"/>
+              </g>
+            </g>
+          </svg>
+          <div class="sx-hud" aria-hidden="true"><span class="sx-chip" id="rideMode"></span><span class="sx-chip sx-chip--sub" id="ridePhase"></span></div>
+        </div>
         <div class="meter">
           <div><span>충격 완화</span><span class="bar"><i id="mComfort"></i></span></div>
           <div><span>차체 제어</span><span class="bar"><i id="mControl"></i></span></div>
         </div>
-        <p class="susp-text" id="dampText"></p>
-        <p class="panel-note">※ 개념 애니메이션입니다. 실제 감쇠력은 노면과 주행 상태에 따라 연속적으로 조절됩니다.</p>
       </div>
+      <div class="reveal sx-info">
+        <p class="sx-cap" id="dampTitle"></p>
+        <p class="susp-text" id="dampText"></p>
+        <ol class="sx-steps" id="rideSteps">
+          <li data-p="0">평평한 도로 주행</li><li data-p="1">앞바퀴 방지턱 통과 · 앞쪽 서스펜션 반응</li><li data-p="2">차체 안정화</li><li data-p="3">뒷바퀴 방지턱 통과 · 뒤쪽 서스펜션 반응</li><li data-p="4">차체 전체 안정화</li>
+        </ol>
+        <p class="panel-note">※ 개념 애니메이션입니다. 바퀴는 방지턱 모양을 그대로 따라가고, 차체 움직임은 감쇠 특성을 비교하기 위해 강조했습니다. 실제 감쇠력은 노면과 주행 상태에 따라 연속적으로 조절됩니다.</p>
+      </div>
+    </div>
+
+    <!-- ② AMG 리어 액슬 스티어링 — 일반 조향(회색) vs 리어 액슬 스티어링(실제 차량) 비교 -->
+    <div class="susp-block">
       <div class="panel reveal">
         <p class="svg-tb" style="margin-bottom:10px">AMG 리어 액슬 스티어링 · <span id="rsMax"></span></p>
         <div class="seg" id="rsTabs">
-          <button class="active" data-rs="low">저속 주행</button>
-          <button data-rs="high">고속 주행</button>
+          <button type="button" class="active" data-rs="low" aria-pressed="true">저속 주행</button>
+          <button type="button" data-rs="high" aria-pressed="false">고속 주행</button>
         </div>
-        <!-- 탑뷰: 좌표계 = 차체 이미지(1822×689) 픽셀 기준. 전면 = 왼쪽. 각도 + = 바퀴 앞쪽(왼쪽 끝)이 화면 위로 -->
-        <svg id="rasSvg" viewBox="-780 -400 2620 1120" role="img" aria-label="위에서 본 Mercedes-AMG E 53. 저속에서는 뒷바퀴가 앞바퀴와 반대 방향, 고속에서는 같은 방향으로 조향되는 개념 애니메이션">
-          <defs>
-            <marker id="rasArrR" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#FF3B42"/></marker>
-            <marker id="rasArrW" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#E4E6EA"/></marker>
-            <marker id="rasArrPath" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#FF3B42"/></marker>
-          </defs>
-          <!-- 저속: 회전 궤적 비교 (빨강 = 적용, 회색 점선 = 후륜 조향 없음) -->
-          <g id="rasLow" class="ras-mode is-on">
-            <path d="M0 357.5 A1350 1350 0 0 1 -737.3 138.4" fill="none" stroke="#6B7078" stroke-width="7" stroke-dasharray="22 18"/>
-            <path class="ras-draw" pathLength="1" d="M0 357.5 A820 820 0 0 1 -667.6 13.7" fill="none" stroke="#FF3B42" stroke-width="10" stroke-linecap="round" marker-end="url(#rasArrPath)"/>
+        <div class="ras-wrap">
+        <div class="sx-stage" id="rasStage">
+          <!-- 좌표계 = 도로 사진(1672×941) 픽셀. 차량 내부 좌표 = 탑뷰 차체(1822×689), 전면 = 왼쪽 -->
+          <svg id="rasSvg" viewBox="0 0 1672 941" preserveAspectRatio="xMidYMid slice" role="img" aria-label="위에서 본 Mercedes-AMG E 53. 회색 차량은 일반 조향, 실제 차량은 리어 액슬 스티어링. 저속 U턴에서는 뒷바퀴가 반대 방향으로 조향되어 더 작게 돌고, 고속 차선 변경에서는 같은 방향으로 조향되어 더 매끄럽게 이동하는 비교 애니메이션">
+            <defs><radialGradient id="rasShadow" cx="50%" cy="50%" r="50%"><stop offset="55%" stop-color="#000" stop-opacity=".5"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+            <rect width="1672" height="941" fill="#34373C"/>
+            <image id="rasRoad" x="0" y="0" width="1672" height="941" preserveAspectRatio="none"/>
+            <path id="rasPathN" fill="none" stroke="#C9CDD3" stroke-width="7" stroke-dasharray="22 16" stroke-linecap="round" opacity=".85"/>
+            <path id="rasPathR" fill="none" stroke="#FF3B42" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <g class="ras-car ras-ghost" transform="translate(-9999 -9999)">
+           <g transform="translate(-911 -344.5)">
+            <rect x="-20" y="20" width="1862" height="680" rx="300" fill="url(#rasShadow)"/>
+            <image class="ras-img ras-body" x="0" y="0" width="1822" height="689" preserveAspectRatio="none"/>
+            <rect class="ras-fb" x="10" y="54" width="1800" height="607" rx="200" fill="#5A5E66" stroke="#3A3E45" stroke-width="8"/>
+            <g transform="translate(328 101)"><g class="rgNFR">
+                <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+                <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+                <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              </g></g><g transform="translate(328 614)"><g class="rgNFL">
+                <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+                <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+                <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              </g></g><g transform="translate(1410 101)"><g class="rgNRR">
+                <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+                <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+                <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              </g></g><g transform="translate(1410 614)"><g class="rgNRL">
+                <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+                <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+                <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              </g></g>
+           </g>
           </g>
-          <!-- 고속: 차선 변경 궤적 비교 -->
-          <g id="rasHigh" class="ras-mode">
-            <line x1="-780" y1="27.5" x2="1840" y2="27.5" stroke="#3A3E45" stroke-width="6" stroke-dasharray="40 34"/>
-            <path d="M0 357.5 C -230 357.5, -300 -360, -470 -338 S -660 -290, -760 -302.5" fill="none" stroke="#6B7078" stroke-width="7" stroke-dasharray="22 18"/>
-            <path class="ras-draw" pathLength="1" d="M0 357.5 C -320 357.5, -420 -302.5, -740 -302.5" fill="none" stroke="#FF3B42" stroke-width="10" stroke-linecap="round" marker-end="url(#rasArrPath)"/>
+          <g class="ras-car ras-main" transform="translate(-9999 -9999)">
+           <g transform="translate(-911 -344.5)">
+            <rect x="-20" y="20" width="1862" height="680" rx="300" fill="url(#rasShadow)"/>
+            <image class="ras-img ras-body" x="0" y="0" width="1822" height="689" preserveAspectRatio="none"/>
+            <rect class="ras-fb" x="10" y="54" width="1800" height="607" rx="200" fill="#1A1C20" stroke="#3A3E45" stroke-width="8"/>
+            <g transform="translate(328 101)"><g class="rgRFR">
+                <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+                <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+                <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              </g></g><g transform="translate(328 614)"><g class="rgRFL">
+                <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+                <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+                <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              </g></g><g transform="translate(1410 101)"><g class="rgRRR">
+                <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+                <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+                <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/><rect class="ras-hl" x="-140" y="-55" width="280" height="110" rx="24" fill="none" stroke="#FF3B42" stroke-width="9"/>
+              </g></g><g transform="translate(1410 614)"><g class="rgRRL">
+                <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+                <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+                <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/><rect class="ras-hl" x="-140" y="-55" width="280" height="110" rx="24" fill="none" stroke="#FF3B42" stroke-width="9"/>
+              </g></g>
+           </g>
           </g>
-          <!-- 차체 (고정) -->
-          <image class="ras-img" id="rasBody" x="0" y="0" width="1822" height="689" preserveAspectRatio="none"/>
-          <rect class="ras-fb" x="10" y="54" width="1800" height="607" rx="200" fill="#1A1C20" stroke="#3A3E45" stroke-width="8"/>
-          <!-- 바퀴 4개 (독립 제어) — 차량 왼쪽 = 화면 아래 -->
-          <g transform="translate(328 101)"><g id="rsFR" class="ras-steer">
-            <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
-            <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
-            <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
-            <line x1="-140" y1="0" x2="-262" y2="0" stroke="#FF3B42" stroke-width="9" stroke-linecap="round" marker-end="url(#rasArrR)"/>
-          </g></g>
-          <g transform="translate(328 614)"><g id="rsFL" class="ras-steer">
-            <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
-            <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
-            <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
-            <line x1="-140" y1="0" x2="-262" y2="0" stroke="#FF3B42" stroke-width="9" stroke-linecap="round" marker-end="url(#rasArrR)"/>
-          </g></g>
-          <g transform="translate(1410 101)"><g id="rsRR" class="ras-steer">
-            <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
-            <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
-            <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
-            <rect x="-136" y="-51" width="272" height="102" rx="22" fill="none" stroke="#FF3B42" stroke-width="6" opacity=".85"/><line x1="-140" y1="0" x2="-262" y2="0" stroke="#FF3B42" stroke-width="9" stroke-linecap="round" marker-end="url(#rasArrR)"/>
-          </g></g>
-          <g transform="translate(1410 614)"><g id="rsRL" class="ras-steer">
-            <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
-            <image class="ras-img ras-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
-            <rect class="ras-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
-            <rect x="-136" y="-51" width="272" height="102" rx="22" fill="none" stroke="#FF3B42" stroke-width="6" opacity=".85"/><line x1="-140" y1="0" x2="-262" y2="0" stroke="#FF3B42" stroke-width="9" stroke-linecap="round" marker-end="url(#rasArrR)"/>
-          </g></g>
-        </svg>
-        <div class="ras-legend" aria-hidden="true"><span class="dir">◀ 차량 앞쪽</span><span><i></i>리어 액슬 스티어링 적용</span><span><i class="grey"></i>후륜 조향이 없을 때 (비교)</span></div>
+          </svg>
+          <div class="sx-hud" aria-hidden="true"><span class="sx-chip" id="rasModeChip"></span></div>
+          <div class="sx-ctrl">
+            <button type="button" id="rasReplay" aria-label="처음부터 다시 재생"><span class="awd-ico awd-ico--re" aria-hidden="true"></span><span class="sx-ctrl-t">다시 재생</span></button>
+          </div>
+        </div>
+        <!-- 바퀴 각도 확대 표시 (실제 차량 = 리어 액슬 스티어링) -->
+          <div class="ras-inset" aria-hidden="true">
+            <svg viewBox="0 0 120 150" width="120" height="150">
+              <rect x="36" y="18" width="48" height="114" rx="16" fill="#1A1C20" stroke="#555A62" stroke-width="2"/>
+              <g transform="translate(30 42)"><rect id="riFL" x="-6" y="-14" width="12" height="28" rx="3" fill="#E8EAED"/></g>
+              <g transform="translate(90 42)"><rect id="riFR" x="-6" y="-14" width="12" height="28" rx="3" fill="#E8EAED"/></g>
+              <g transform="translate(30 110)"><rect id="riRL" x="-6" y="-14" width="12" height="28" rx="3" fill="#FF3B42"/></g>
+              <g transform="translate(90 110)"><rect id="riRR" x="-6" y="-14" width="12" height="28" rx="3" fill="#FF3B42"/></g>
+              <path d="M60 4 l-6 8 h12z" fill="#A4A9B1"/>
+            </svg>
+            <p><b>앞</b> <span id="riFront">직진</span></p>
+            <p class="is-rear"><b>뒤</b> <span id="riRear">0°</span></p>
+          </div>
+        </div>
+        <div class="ras-legend" aria-hidden="true"><span><i></i>리어 액슬 스티어링 (실제 차량 · 레드 = 뒷바퀴 조향)</span><span><i class="grey"></i>일반 조향 (회색 차량 · 뒷바퀴 0°)</span></div>
+      </div>
+      <div class="reveal sx-info">
+        <p class="sx-cap" id="rsCap"></p>
         <p class="susp-text" id="rsText"></p>
-        <p class="panel-note">※ 바퀴 각도는 이해를 위해 과장해 표현했습니다. 앞·뒷바퀴 방향이 바뀌는 속도 기준은 주행 조건과 제어 로직에 따릅니다.</p>
+        <dl class="ras-read">
+          <div><dt>앞바퀴</dt><dd id="rsReadF">—</dd></div>
+          <div><dt>뒷바퀴 · 리어 액슬 스티어링</dt><dd id="rsReadR">—</dd></div>
+          <div><dt>뒷바퀴 · 일반 조향</dt><dd>0° (조향 없음)</dd></div>
+        </dl>
+        <p class="panel-note">※ 개념 비교 애니메이션입니다. 바퀴 각도와 궤적 차이는 이해를 돕기 위해 확대해 표현했으며 실제 제원값이 아닙니다. 앞·뒷바퀴 방향이 바뀌는 속도 기준은 주행 조건과 제어 로직에 따릅니다.</p>
       </div>
     </div>
   </div>
@@ -3521,13 +3610,14 @@ const AWD_VISUAL_CONFIG = {
   set('cruise'); update();
 })();
 
-/* AMG RIDE CONTROL — 감쇠 모드별 차체 움직임 */
+/* AMG SUSPENSION — 섹션 소개 문구 */
 document.getElementById('suDesc').textContent = `${S.suspension.value || 'AMG 서스펜션'}은 주행 모드에 따라 댐핑 특성이 달라지고, ${S.rearSteer.label}(${S.rearSteer.value || '확인 필요'})이 민첩성과 안정성을 함께 높입니다.`;
 document.getElementById('rsMax').textContent = S.rearSteer.value || '';
 /* ==========================================
-   AMG RIDE CONTROL 이미지 · 좌표 설정 (▶ 수정 위치)
-   - 이미지: 차체(바퀴 없는 투명 PNG→WebP), 휠(회전), 브레이크 디스크·캘리퍼(고정)
-   - 좌표는 차체 원본 사진(1672×941) 픽셀 기준. 휠 위치·크기가 어긋나면 RIDE_GEOM만 수정하세요.
+   AMG RIDE CONTROL — 실제 도로의 과속방지턱 통과 (▶ 수정 위치)
+   - 차량 이미지: 기존 측면 차체·휠·브레이크 (좌우 반전해 왼쪽 → 오른쪽 주행)
+   - 도로 이미지: RIDE_ROAD_IMAGE (차량 없는 배경, 이미지가 없으면 회색 기본 배경)
+   - 좌표: 차체 = 원본 사진(1672×941) 픽셀, 도로 = 도로 사진(1672×941) 픽셀
    ========================================== */
 const AMG_RIDE_IMAGES = {
   body:       'https://raw.githubusercontent.com/JNOHJINGYU/images/main/e53-ride-body.webp',         // E 53 차체 (휠 자리 투명)
@@ -3536,49 +3626,50 @@ const AMG_RIDE_IMAGES = {
   rearWheel:  'https://raw.githubusercontent.com/JNOHJINGYU/images/main/e53-ride-rear-wheel.webp',   // 뒷바퀴 (회전)
   rearBrake:  'https://raw.githubusercontent.com/JNOHJINGYU/images/main/e53-ride-rear-brake.webp'    // 뒤 브레이크 (고정)
 };
+const RIDE_ROAD_IMAGE = { pc: 'images/e53/ride-bump.webp', mobile: 'images/e53/ride-bump-m.webp' };
 const RIDE_GEOM = {
-  front:  { cx: 281.5,  cy: 625, r: 119 },   // 앞바퀴(왼쪽) 중심·반지름 — 앞 휠하우스 기준
-  rear:   { cx: 1300.4, cy: 625, r: 119 },   // 뒷바퀴(오른쪽)
-  ground: 744,                               // 노면 높이 (= 바퀴 중심 + 반지름)
-  bump:   { h: 30, halfW: 60 },              // 방지턱 높이·반폭 — 모든 모드 동일
-  speed:  700,                               // 노면 이동 속도 (좌표/초) — 모든 모드 동일
-  startX: -160,                              // 방지턱 출발 위치 (화면 왼쪽 밖)
-  cycle:  4.8                                // 반복 주기 (초)
+  front:  { cx: 281.5,  cy: 625, r: 119 },   // 앞바퀴 중심·반지름 (차체 사진 좌표)
+  rear:   { cx: 1300.4, cy: 625, r: 119 },   // 뒷바퀴
+  ground: 744                                // 차체 사진에서 노면 높이 (= 바퀴 중심 + 반지름)
 };
-/* 모드별 감쇠 특성 (개념값): omega=고유진동수, zeta=감쇠비, gain=차체로 전달되는 움직임 비율. 차고는 모든 모드 동일 */
+const RIDE_SCENE = {
+  roadY: 735,                       // 도로 사진에서 바퀴가 닿는 높이 (방지턱 앞쪽 가장자리)
+  bump: { x0: 985, x1: 1345, h: 24 },// 도로 사진 속 방지턱 시작·끝 x, 높이 (모든 모드 동일)
+  carScale: 0.5,                    // 차량 크기 (차체 사진 대비)
+  speed: 430,                       // 주행 속도 (도로 좌표/초, 모든 모드 동일)
+  startX: -60, endX: 2580,          // 차량 앞쪽 끝 기준 출발·도착 위치
+  pause: 0.9,                       // 한 번 통과한 뒤 쉬는 시간(초)
+  view: { pc: { w: 1100, h: 600, y: 270 }, mobile: { w: 940, h: 705, y: 225 } }   // 카메라 (차량을 따라 좌우 이동)
+};
+/* 모드별 감쇠 특성 (개념값): omega = 차체 고유진동수, zeta = 감쇠비, gain = 차체로 전달되는 움직임 비율
+   hl = 서스펜션 강조(k: 반응 범위 — 클수록 부드럽고 넓게, peak: 최대 밝기, glow/line: 선 굵기) */
 const DAMP = {
-  comfort:{ label:'COMFORT', omega:6.5, zeta:.22, gain:1.0, mc:85, mk:45, text:'노면 충격을 부드럽게 흡수하여 편안한 승차감을 제공합니다.' },
-  sport:{ label:'SPORT', omega:9, zeta:.38, gain:.62, mc:62, mk:70, text:'차체 움직임을 줄여 안정적이고 민첩한 주행을 돕습니다.' },
-  sportp:{ label:'SPORT+', omega:12, zeta:.62, gain:.42, mc:42, mk:90, text:'강화된 감쇠력 제어로 더욱 즉각적인 차체 반응을 제공합니다.' },
+  comfort:{ label:'COMFORT', omega:5.2, zeta:.40, gain:1.0, mc:86, mk:55, hl:{ k:30, peak:.72, glow:32, line:8 },
+    title:'충격을 부드럽게 흡수', text:'일상 주행과 장거리 이동에서 노면 충격을 보다 부드럽게 흡수하도록 돕는 세팅입니다. 차체가 방지턱을 여유 있게 따라 움직이며 편안함을 우선합니다.' },
+  sport:{ label:'SPORT', omega:7.6, zeta:.55, gain:.64, mc:62, mk:76, hl:{ k:21, peak:.86, glow:22, line:9 },
+    title:'편안함과 제어력의 균형', text:'승차감과 차체 응답성을 균형 있게 조율한 세팅입니다. 방지턱을 넘은 뒤 차체가 더 짧고 단단하게 자리를 잡습니다.' },
+  sportp:{ label:'SPORT+', omega:10.5, zeta:.72, gain:.40, mc:40, mk:92, hl:{ k:14, peak:1, glow:15, line:10 },
+    title:'차체 제어를 우선하는 단단함', text:'급격한 하중 이동 상황에서도 차체의 움직임을 더욱 빠르고 단단하게 제어하는 세팅입니다. 바퀴는 방지턱을 그대로 타고 넘지만 차체의 출렁임은 가장 작습니다.' },
 };
 (function(){
-  const tabs = document.getElementById('dampTabs');
-  tabs.innerHTML = Object.entries(DAMP).map(([k,d],i) => `<button type="button" data-d="${k}" class="${i ? '' : 'active'}" aria-pressed="${!i}">${d.label}</button>`).join('');
-  let mode = 'comfort', onModeChange = null;
-  function set(k){
-    mode = k;
-    tabs.querySelectorAll('button').forEach(b => { const on = b.dataset.d === k; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
-    document.getElementById('mComfort').style.width = DAMP[k].mc + '%';
-    document.getElementById('mControl').style.width = DAMP[k].mk + '%';
-    document.getElementById('dampText').textContent = DAMP[k].text;
-    if(onModeChange) onModeChange();
-  }
-  tabs.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if(b) set(b.dataset.d); });
-  set('comfort');
-
-  const G = RIDE_GEOM;
-  const svg = document.getElementById('susSvg');
-  const car = document.getElementById('susCar'), road = document.getElementById('road');
-  const whF = document.getElementById('whF'), whR = document.getElementById('whR');
-  const spinF = document.getElementById('spinF'), spinR = document.getElementById('spinR');
-  const spF = document.getElementById('springF'), spR = document.getElementById('springR');
+  const $ = id => document.getElementById(id);
+  const tabs = $('dampTabs'), svg = $('susSvg'), stage = $('rideStage');
+  if(!tabs || !svg) return;
+  const G = RIDE_GEOM, SC = RIDE_SCENE, s = SC.carScale;
+  const carEl = $('rideCar'), car = $('susCar'), shadow = $('rideShadow');
+  const whF = $('whF'), whR = $('whR'), spinF = $('spinF'), spinR = $('spinR'), spF = $('springF'), spR = $('springR');
+  const modeChip = $('rideMode'), phaseChip = $('ridePhase'), steps = [...$('rideSteps').querySelectorAll('li')];
+  const PH = ['평평한 도로', '앞바퀴 통과', '차체 안정화', '뒷바퀴 통과', '차체 안정화'];
   const WB = G.rear.cx - G.front.cx, MIDX = (G.front.cx + G.rear.cx) / 2, MIDY = (G.front.cy + G.rear.cy) / 2;
-  /* RIDE_GEOM 값으로 휠 이미지 크기 적용 */
-  [['F', G.front], ['R', G.rear]].forEach(([s, g]) => ['rideBrake' + s, 'rideWheel' + s].forEach(id => {
-    const el = document.getElementById(id); el.setAttribute('x', -g.r); el.setAttribute('y', -g.r); el.setAttribute('width', 2 * g.r); el.setAttribute('height', 2 * g.r);
+  const mq = window.matchMedia('(max-width: 767px)');
+  let mode = 'comfort';
+
+  tabs.innerHTML = Object.entries(DAMP).map(([k,d]) => `<button type="button" data-d="${k}" aria-pressed="false">${d.label}</button>`).join('');
+  [['F', G.front], ['R', G.rear]].forEach(([k, g]) => ['rideBrake' + k, 'rideWheel' + k].forEach(id => {
+    const el = $(id); el.setAttribute('x', -g.r); el.setAttribute('y', -g.r); el.setAttribute('width', 2 * g.r); el.setAttribute('height', 2 * g.r);
   }));
 
-  /* 이미지는 섹션 근처에 왔을 때만 불러옴. 하나라도 실패하면 기존 SVG 도형으로 대체 */
+  /* 이미지: 섹션 근처에서만 불러옴. 차량 이미지 실패 → 도형, 도로 이미지 실패 → 회색 기본 배경 */
   let imgsSet = false;
   function setImages(){
     if(imgsSet) return; imgsSet = true;
@@ -3586,178 +3677,303 @@ const DAMP = {
     const fail = () => { if(failed) return; failed = true; svg.classList.add('ride-fallback'); };
     [['rideBody', AMG_RIDE_IMAGES.body], ['rideWheelF', AMG_RIDE_IMAGES.frontWheel], ['rideBrakeF', AMG_RIDE_IMAGES.frontBrake],
      ['rideWheelR', AMG_RIDE_IMAGES.rearWheel], ['rideBrakeR', AMG_RIDE_IMAGES.rearBrake]].forEach(([id, url]) => {
-      const el = document.getElementById(id);
-      if(!url){ fail(); return; }
-      el.addEventListener('error', fail, {once:true});
-      el.setAttribute('href', url);
+      const el = $(id); if(!url){ fail(); return; }
+      el.addEventListener('error', fail, {once:true}); el.setAttribute('href', url);
     });
+    const road = mq.matches ? RIDE_ROAD_IMAGE.mobile : RIDE_ROAD_IMAGE.pc;
+    if(!road){ svg.classList.add('road-missing'); return; }
+    const probe = new Image();
+    probe.onload = () => $('rideRoad').setAttribute('href', road);
+    probe.onerror = () => svg.classList.add('road-missing');
+    probe.src = road;
   }
 
-  /* 작은 화면 보정: SVG가 PC보다 작으면 방지턱·차체 움직임을 개념적으로 키워 차이가 보이게 함 (PC는 1배) */
-  let vg = 1;
-  function measure(){ const w = svg.getBoundingClientRect().width || 528; vg = w < 520 ? Math.min(1.8, 1.25 * 528 / w) : 1; }
-  const bump = d => Math.abs(d) < G.bump.halfW ? G.bump.h * vg * 0.5 * (1 + Math.cos(Math.PI * d / G.bump.halfW)) : 0;
-  /* 타이어가 방지턱을 타고 넘는 높이 (원형 타이어 외곽 기준 → 바퀴가 방지턱을 파고들지 않음) */
-  const lift = (d, r) => { let m = 0; for(let i = -6; i <= 6; i++){ const u = i / 6 * r * 0.6, v = bump(d + u) - (r - Math.sqrt(r * r - u * u)); if(v > m) m = v; } return m; };
+  /* 방지턱 모양 (도로 좌표) → 차량 내부 좌표로 변환해 바퀴가 타고 넘는 높이 계산 */
+  const B = SC.bump, BW = B.x1 - B.x0;
+  const bumpW = X => (X > B.x0 && X < B.x1) ? B.h * 0.5 * (1 - Math.cos(2 * Math.PI * (X - B.x0) / BW)) : 0;
+  let carX = SC.startX;                                  // 차량 내부 좌표 x=0 의 도로 좌표 (반전: 도로 X = carX − s·x)
+  const bumpL = xl => bumpW(carX - s * xl) / s;
+  const lift = (xw, r) => { let m = 0; for(let i = -6; i <= 6; i++){ const u = i / 6 * r * 0.6, v = bumpL(xw + u) - (r - Math.sqrt(r * r - u * u)); if(v > m) m = v; } return m; };
 
-  /* 차체 앞·뒤 모서리를 각각 스프링-댐퍼로 계산 (노면 → 바퀴 → 차체). 앞바퀴가 먼저, 뒷바퀴가 휠베이스만큼 늦게 통과 */
+  /* 차체 앞·뒤를 각각 스프링-댐퍼로 계산 (노면 → 바퀴 → 차체) */
   const DT = 1 / 240;
-  let st, simT, acc = 0, wheelAng = 0, last = 0;
-  function reset(){ st = { z:[0,0], v:[0,0], w:[0,0] }; simT = 0; acc = 0; }
-  const bumpX = () => G.startX + G.speed * (simT % G.cycle);   // 방지턱 위치: 왼쪽 → 오른쪽 이동
+  let st, acc = 0, wheelAng = 0, wait = 0, phase = -1;
+  function reset(){ st = { z:[0,0], v:[0,0], w:[0,0] }; carX = SC.startX; acc = 0; wait = 0; }
   function step(dt){
-    const d = DAMP[mode], X = bumpX();
-    const w = [lift(G.front.cx - X, G.front.r), lift(G.rear.cx - X, G.rear.r)];
+    if(wait > 0){ wait -= dt; if(wait <= 0) reset(); return; }
+    const d = DAMP[mode];
+    carX += SC.speed * dt;
+    const w = [lift(G.front.cx, G.front.r), lift(G.rear.cx, G.rear.r)];
     for(let k = 0; k < 2; k++){
       const wd = (w[k] - st.w[k]) / dt;
       const a = d.omega * d.omega * (w[k] - st.z[k]) + 2 * d.zeta * d.omega * (wd - st.v[k]);
       st.v[k] += a * dt; st.z[k] += st.v[k] * dt; st.w[k] = w[k];
     }
-    simT += dt;
+    if(carX > SC.endX) wait = SC.pause;
   }
   function draw(){
-    const d = DAMP[mode], X = bumpX();
-    let p = '';
-    for(let x = 0; x <= 1672; x += 12){ p += (x ? 'L' : 'M') + x + ' ' + (G.ground - bump(x - X)).toFixed(1) + ' '; }
-    road.setAttribute('d', p);
-    const wF = st.w[0], wR = st.w[1];
-    const zf = st.z[0] * d.gain, zr = st.z[1] * d.gain;
-    const heave = (zf + zr) / 2, pitch = Math.atan((zf - zr) / WB) * 180 / Math.PI;   // 앞(왼쪽)이 올라가면 시계 방향(+)
+    const d = DAMP[mode], V = mq.matches ? SC.view.mobile : SC.view.pc;
+    const midW = carX - s * 836;
+    const vx = Math.max(0, Math.min(1672 - V.w, midW - V.w / 2));
+    svg.setAttribute('viewBox', `${vx.toFixed(1)} ${V.y} ${V.w} ${V.h}`);
+    carEl.setAttribute('transform', `translate(${carX.toFixed(1)} ${SC.roadY}) scale(${-s} ${s}) translate(0 ${-G.ground})`);
+    const wF = st.w[0], wR = st.w[1], zf = st.z[0] * d.gain, zr = st.z[1] * d.gain;
+    const heave = (zf + zr) / 2, pitch = Math.atan((zf - zr) / WB) * 180 / Math.PI;
     car.setAttribute('transform', `translate(0 ${(-heave).toFixed(2)}) rotate(${pitch.toFixed(3)} ${MIDX} ${MIDY})`);
     whF.setAttribute('transform', `translate(${G.front.cx} ${(G.front.cy - wF).toFixed(2)})`);
     whR.setAttribute('transform', `translate(${G.rear.cx} ${(G.rear.cy - wR).toFixed(2)})`);
     spinF.setAttribute('transform', `rotate(${wheelAng.toFixed(1)})`);
     spinR.setAttribute('transform', `rotate(${wheelAng.toFixed(1)})`);
-    /* 서스펜션 압축(바퀴가 차체 쪽으로 올라간 양)에 따라 레드 강조 — 은은하게 */
-    const k = 16 * vg;
-    spF.setAttribute('opacity', (0.18 + Math.min(1, Math.abs(wF - zf) / k) * 0.72).toFixed(3));
-    spR.setAttribute('opacity', (0.18 + Math.min(1, Math.abs(wR - zr) / k) * 0.72).toFixed(3));
+    shadow.setAttribute('cx', (midW).toFixed(1)); shadow.setAttribute('cy', (SC.roadY + 4 - s * (wF + wR) / 2).toFixed(1));
+    /* 서스펜션 압축(바퀴가 차체 쪽으로 올라간 양)에 따라 레드 강조 — 모드별 범위·밝기 */
+    const h = d.hl;
+    spF.setAttribute('opacity', (0.15 + Math.min(1, Math.abs(wF - zf) / h.k) * (h.peak - 0.15)).toFixed(3));
+    spR.setAttribute('opacity', (0.15 + Math.min(1, Math.abs(wR - zr) / h.k) * (h.peak - 0.15)).toFixed(3));
+    /* 단계 표시 */
+    const Xf = carX - s * G.front.cx, Xr = carX - s * G.rear.cx;
+    const p = Xf < B.x0 ? 0 : Xf <= B.x1 ? 1 : Xr < B.x0 ? 2 : Xr <= B.x1 ? 3 : 4;
+    if(p !== phase){ phase = p; phaseChip.textContent = `${p + 1} · ${PH[p]}`; steps.forEach((li, i) => li.classList.toggle('is-on', i === p)); }
   }
-  /* 동작 줄이기 설정: 앞바퀴가 방지턱을 넘은 직후의 정지 화면 (모드별 차체 높이 차이 표시, 회전 없음) */
-  function drawStatic(){
-    reset();
-    const until = (G.front.cx - G.startX) / G.speed + 0.12;
-    while(simT < until) step(DT);
-    draw();
+  function set(k){
+    if(!DAMP[k]) return;
+    mode = k; const d = DAMP[k];
+    tabs.querySelectorAll('button').forEach(b => { const on = b.dataset.d === k; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
+    $('mComfort').style.width = d.mc + '%'; $('mControl').style.width = d.mk + '%';
+    $('dampTitle').textContent = d.title; $('dampText').textContent = d.text; modeChip.textContent = d.label;
+    [spF, spR].forEach(g => { g.querySelector('.sp-glow').setAttribute('stroke-width', d.hl.glow); g.querySelector('.sp-line').setAttribute('stroke-width', d.hl.line); });
+    /* 모드 변경·같은 탭 재선택 → 같은 노면 조건에서 처음부터 */
+    if(reduceMotion){ drawStatic(); return; }
+    reset(); last = 0; draw(); update();
   }
+  /* 동작 줄이기: 앞바퀴가 방지턱 위에 있는 순간의 정지 화면 */
+  function drawStatic(){ reset(); const until = B.x0 + BW * 0.7 + s * G.front.cx; while(carX < until) step(DT); for(let i = 0; i < 40; i++) step(DT); draw(); }
 
-  function svgInView(margin){ const r = svg.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight; return r.bottom > -margin && r.top < vh + margin && r.width > 0; }
-  let raf = 0, visible = false;
+  let raf = 0, last = 0, visible = false;
+  function inView(m){ const r = stage.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight; return r.bottom > -m && r.top < vh + m && r.width > 0; }
   function loop(now){
     raf = 0;
     if(!visible || document.hidden){ last = 0; return; }
     const dtReal = last ? Math.min(0.05, (now - last) / 1000) : 0; last = now;
     acc += dtReal;
     while(acc >= DT){ step(DT); acc -= DT; }
-    wheelAng -= G.speed * dtReal / G.front.r * 180 / Math.PI;   // 왼쪽 주행 → 반시계 방향 회전
-    if(wheelAng < -360) wheelAng += 360;
+    if(wait <= 0){ wheelAng -= SC.speed * dtReal / (s * G.front.r) * 180 / Math.PI; if(wheelAng < -360) wheelAng += 360; }   // 반전 화면에서 시계 방향 회전
     draw();
     raf = requestAnimationFrame(loop);
   }
   function update(){
-    if(svgInView(window.innerHeight || 800)) setImages();
-    visible = svgInView(100);
-    if(reduceMotion){ if(visible) drawStatic(); return; }
+    if(inView(window.innerHeight || 800)) setImages();
+    visible = inView(0);
+    if(reduceMotion){ if(visible) draw(); return; }
     if(visible && !document.hidden){ if(!raf){ last = 0; raf = requestAnimationFrame(loop); } }
     else if(raf){ cancelAnimationFrame(raf); raf = 0; last = 0; }
   }
   let ticking = false;
   const onScroll = () => { if(!ticking){ ticking = true; requestAnimationFrame(() => { ticking = false; update(); }); } };
-  if('IntersectionObserver' in window) new IntersectionObserver(update, {rootMargin:'100% 0px'}).observe(svg);
+  if('IntersectionObserver' in window) new IntersectionObserver(update, {rootMargin:'50% 0px'}).observe(stage);
   addEventListener('scroll', onScroll, {passive:true});
-  addEventListener('resize', () => { measure(); onScroll(); }, {passive:true});
+  addEventListener('resize', onScroll, {passive:true});
   addEventListener('pageshow', update);
   document.addEventListener('visibilitychange', update);
-
-  /* 모드 변경 → 같은 노면 조건에서 처음부터 다시 시작 (연속 클릭해도 상태가 꼬이지 않음) */
-  onModeChange = () => { if(reduceMotion){ drawStatic(); return; } reset(); last = 0; draw(); update(); };
-  measure(); reset(); draw(); update();
+  tabs.addEventListener('click', e => { const b = e.target.closest('[data-d]'); if(b) set(b.dataset.d); });
+  reset(); set('comfort');
 })();
 
-/* 리어 액슬 스티어링 — 탑뷰 실제 이미지 (차체 고정, 바퀴 4개 독립 조향)
-   ▶ 이미지 경로·바퀴 위치·각도는 아래 3개 설정값에서 수정 */
+/* ==========================================
+   AMG 리어 액슬 스티어링 — 실제 도로 위 비교 (▶ 수정 위치)
+   - 회색 차량 = 일반 조향(뒷바퀴 0°), 실제 차량 = 리어 액슬 스티어링 (같은 탑뷰 이미지 사용)
+   - 각도·궤적 차이는 이해를 돕기 위해 확대한 개념값입니다 (실제 제원 아님)
+   ========================================== */
 const REAR_AXLE_STEER_ASSETS = {
-  body: E53_TOPVIEW_ASSETS.body,  // 탑뷰 차체 (바퀴 없음, 투명 배경) — 주소는 스크립트 상단 E53_TOPVIEW_ASSETS
-  tire: E53_TOPVIEW_ASSETS.tire   // 탑뷰 타이어 1장 → 4개 바퀴에 공통 사용
+  body: E53_TOPVIEW_ASSETS.body,  // 탑뷰 차체 — 주소는 스크립트 상단 E53_TOPVIEW_ASSETS
+  tire: E53_TOPVIEW_ASSETS.tire   // 탑뷰 타이어 1장 → 바퀴 8개(차량 2대)에 공통 사용
 };
-/* 바퀴 중심 좌표 (차체 이미지 1822×689 픽셀 기준). 전면 = 왼쪽이므로 차량의 왼쪽 바퀴는 화면 아래쪽 */
-const REAR_STEER_LAYOUT = {
-  frontLeft:  { x: 328,  y: 614, id: 'rsFL' },
-  frontRight: { x: 328,  y: 101, id: 'rsFR' },
-  rearLeft:   { x: 1410, y: 614, id: 'rsRL' },
-  rearRight:  { x: 1410, y: 101, id: 'rsRR' }
+const RAS_ROAD_IMAGES = {
+  low:  { pc: 'images/e53/ras-uturn.webp',   mobile: 'images/e53/ras-uturn-m.webp' },    // 저속: U턴 도로 (항공뷰)
+  high: { pc: 'images/e53/ras-highway.webp', mobile: 'images/e53/ras-highway-m.webp' }   // 고속: 곡선 고속도로
 };
-/* 화면 표시 각도(°) — 이해를 위해 과장한 값. + = 바퀴 앞쪽이 화면 위로 (차량 기준 오른쪽으로 선회). 실제 뒷바퀴 최대 조향각은 2.5° */
-const REAR_AXLE_STEER_CONFIG = {
-  frontAngle: 20,      // 앞바퀴 (저속·고속 공통)
-  rearAngleLow: -9,    // 저속: 앞바퀴와 반대 방향
-  rearAngleHigh: 5,    // 고속: 앞바퀴와 같은 방향 (아주 소폭)
-  duration: 750        // 전환 시간(ms)
+/* 탑뷰 차체 기준 바퀴 위치 (1822×689) — 전면 = 왼쪽, 차량 왼쪽 바퀴 = 화면 아래 */
+const REAR_STEER_LAYOUT = { frontX: 328, rearX: 1410, centerX: 911, centerY: 344.5 };
+const RAS_SCENES = {
+  low: {
+    label: '저속 · U턴', cap: '저속에서는 반대 방향, 더 작은 회전',
+    text: '저속에서는 뒷바퀴가 앞바퀴와 반대 방향으로 움직여 회전 반경을 줄이고, 좁은 공간에서도 보다 민첩하게 방향을 바꿀 수 있도록 돕습니다.',
+    carScale: 0.17, speed: 300,
+    /* U턴: 아래 도로(동쪽 방향) → 오른쪽에서 좌회전 U턴 → 위 도로(서쪽 방향). 우측 통행 기준 */
+    startX: 520, endX: 430, turnX: 1110, laneY: 712,
+    radius: { ras: 225, normal: 270 },       // 같은 앞바퀴 조향에서 회전 반경 (도로 사진 좌표)
+    frontDeg: -34,                           // 앞바퀴 표시 각도 (− = 왼쪽)
+    rearVisual: 1.6                          // 뒷바퀴 각도 시각적 확대 배율
+  },
+  high: {
+    label: '고속 · 차선 변경', cap: '고속에서는 같은 방향, 더 매끄러운 이동',
+    text: '고속에서는 뒷바퀴가 앞바퀴와 같은 방향으로 조향되어 차선 변경이나 완만한 곡선 주행에서 보다 자연스럽고 안정적인 거동을 돕습니다.',
+    carScale: 0.17, speed: 640,
+    /* 곡선 고속도로 차선 (도로 사진 좌표, 2차식 y = a·x² + b·x + c): 바깥선·점선1·점선2 */
+    edgeTop: [2.9928e-5, -0.143584793, 209.003], dash1: [2.7143e-5, -0.130371857, 410.224], dash2: [3.1116e-5, -0.141338077, 631.568],
+    startX: -260, endX: 1960, lcX0: 420, lcX1: 1260,   // 가운데 차로 → 왼쪽(위) 차로 차선 변경 구간
+    normalOvershoot: [[-400,0],[420,0],[600,.10],[780,.62],[930,1.12],[1080,.92],[1230,1.04],[1400,1],[2100,1]],
+    yawShare: 0.55,      // 리어 액슬 스티어링: 차체 회전량 비율 (일반 조향 = 1)
+    steerGain: 5, rearShare: 0.5, maxDeg: 16
+  }
 };
 (function(){
-  const C = REAR_AXLE_STEER_CONFIG, L = REAR_STEER_LAYOUT;
-  const RS = {
-    low:{ rear: C.rearAngleLow, text:'저속에서는 뒷바퀴가 앞바퀴와 반대 방향으로 움직여 회전 반경을 줄여줍니다. 좁은 골목이나 주차 시 유리합니다.' },
-    high:{ rear: C.rearAngleHigh, text:'고속에서는 뒷바퀴가 앞바퀴와 같은 방향으로 움직여 안정적인 주행을 돕습니다. 차선 변경과 고속 코너링에서 안정감이 높아집니다.' },
-  };
-  const svg = document.getElementById('rasSvg'), tabs = document.getElementById('rsTabs'), textEl = document.getElementById('rsText');
+  const $ = id => document.getElementById(id);
+  const svg = $('rasSvg'), tabs = $('rsTabs'), stage = $('rasStage');
   if(!svg || !tabs) return;
-  const wheels = Object.values(L).map(w => ({ ...w, el: document.getElementById(w.id), front: w.id.indexOf('rsF') === 0 }));
-  wheels.forEach(w => { const g = w.el && w.el.parentNode; if(g) g.setAttribute('transform', `translate(${w.x} ${w.y})`); });
-  const groups = { low: document.getElementById('rasLow'), high: document.getElementById('rasHigh') };
+  const L = REAR_STEER_LAYOUT, WBL = L.rearX - L.frontX;
+  const mq = window.matchMedia('(max-width: 767px)');
+  const cars = ['ras-main', 'ras-ghost'].map(c => {
+    const g = svg.querySelector('.' + c), p = c === 'ras-main' ? 'rgR' : 'rgN';
+    return { g, FL: g.querySelector('.' + p + 'FL'), FR: g.querySelector('.' + p + 'FR'), RL: g.querySelector('.' + p + 'RL'), RR: g.querySelector('.' + p + 'RR') };
+  });
+  const pathR = $('rasPathR'), pathN = $('rasPathN');
+  const ins = { FL: $('riFL'), FR: $('riFR'), RL: $('riRL'), RR: $('riRR'), f: $('riFront'), r: $('riRear') };
 
-  /* 이미지: 섹션 근처에서만 불러오고, 실패하면 기존 도형으로 대체 */
-  let loaded = false;
-  function loadImages(){
-    if(loaded) return; loaded = true;
-    const fail = () => svg.classList.add('ras-fallback');
-    if(!REAR_AXLE_STEER_ASSETS.body || !REAR_AXLE_STEER_ASSETS.tire){ fail(); return; }
-    const body = document.getElementById('rasBody');
-    body.addEventListener('error', fail, {once:true}); body.setAttribute('href', REAR_AXLE_STEER_ASSETS.body);
-    svg.querySelectorAll('.ras-tire').forEach(t => { t.addEventListener('error', fail, {once:true}); t.setAttribute('href', REAR_AXLE_STEER_ASSETS.tire); });
+  /* 이미지: 섹션 근처에서만. 차량 실패 → 도형, 도로 실패 → 회색 배경 */
+  let carSet = false; const roadLoaded = {};
+  function loadImages(k){
+    if(!carSet){ carSet = true;
+      const fail = () => svg.classList.add('ras-fallback');
+      if(!REAR_AXLE_STEER_ASSETS.body || !REAR_AXLE_STEER_ASSETS.tire) fail();
+      else { svg.querySelectorAll('.ras-body').forEach(b => { b.addEventListener('error', fail, {once:true}); b.setAttribute('href', REAR_AXLE_STEER_ASSETS.body); });
+             svg.querySelectorAll('.ras-tire').forEach(t => { t.addEventListener('error', fail, {once:true}); t.setAttribute('href', REAR_AXLE_STEER_ASSETS.tire); }); }
+    }
+    const url = RAS_ROAD_IMAGES[k] && (mq.matches ? RAS_ROAD_IMAGES[k].mobile : RAS_ROAD_IMAGES[k].pc);
+    const road = $('rasRoad');
+    if(!url){ svg.classList.add('road-missing'); return; }
+    svg.classList.remove('road-missing');
+    if(roadLoaded[k] === 'ok'){ road.setAttribute('href', url); return; }
+    if(roadLoaded[k] === 'fail'){ svg.classList.add('road-missing'); return; }
+    const probe = new Image();
+    probe.onload = () => { roadLoaded[k] = 'ok'; if(cur === k) road.setAttribute('href', url); };
+    probe.onerror = () => { roadLoaded[k] = 'fail'; if(cur === k) svg.classList.add('road-missing'); };
+    probe.src = url; road.removeAttribute('href');
   }
-  if('IntersectionObserver' in window){
-    const io = new IntersectionObserver(es => { if(es.some(e => e.isIntersecting)){ io.disconnect(); loadImages(); } }, {rootMargin:'100% 0px'});
-    io.observe(svg);
-    addEventListener('load', () => { const r = svg.getBoundingClientRect(); if(r.top < innerHeight * 2) loadImages(); }, {once:true});
-  } else loadImages();
 
-  /* 바퀴 각도 전환 — 현재 각도에서 목표 각도로 부드럽게 (연속 클릭해도 끊김 없이 이어짐) */
-  const cur = {}; wheels.forEach(w => cur[w.id] = 0);
-  let raf = 0;
-  const ease = t => 1 - Math.pow(1 - t, 3);
-  function apply(){ wheels.forEach(w => w.el && w.el.setAttribute('transform', `rotate(${cur[w.id].toFixed(2)})`)); }
-  function steerTo(target){
-    cancelAnimationFrame(raf);
-    const from = { ...cur }, t0 = performance.now(), dur = reduceMotion ? 0 : C.duration;
-    const tick = now => {
-      const k = dur ? Math.min(1, (now - t0) / dur) : 1, e = ease(k);
-      wheels.forEach(w => cur[w.id] = from[w.id] + (target[w.id] - from[w.id]) * e);
-      apply();
-      if(k < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-  }
-  let mode = '';
-  function set(k){
-    if(!RS[k]) return;
-    tabs.querySelectorAll('button').forEach(b => { const on = b.dataset.rs === k; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
-    if(k === mode) return; mode = k;
-    const target = {}; wheels.forEach(w => target[w.id] = w.front ? C.frontAngle : RS[k].rear);
-    steerTo(target);
-    Object.entries(groups).forEach(([gk, g]) => {
-      if(!g) return;
-      const on = gk === k; g.classList.toggle('is-on', on);
-      const d = g.querySelector('.ras-draw');
-      if(d){ d.classList.remove('is-drawn'); if(on){ void d.getBoundingClientRect(); requestAnimationFrame(() => d.classList.add('is-drawn')); } }
+  /* ---------- 시나리오 → 시간별 차량 상태표 (x, y, 방향, 앞·뒤 바퀴 각도) ---------- */
+  const deg = r => r * 180 / Math.PI;
+  function buildLow(S){
+    const s = S.carScale, Lw = WBL * s, out = { ras: [], normal: [] };
+    ['ras', 'normal'].forEach(kind => {
+      const R = S.radius[kind], cy = S.laneY - R, tf = Math.tan(Math.abs(S.frontDeg) * Math.PI / 180);
+      /* 미끄럼 없는 기준점: 일반 조향 = 뒤차축 중심, 리어 액슬 스티어링 = 뒤차축에서 a 만큼 앞 */
+      const trTrue = tf - Lw / R;                                 // 뒷바퀴 실제 각도의 tan (음수 = 반대 방향)
+      const a = kind === 'ras' ? -trTrue * Lw / (tf - trTrue) : 0;
+      const rearDeg = kind === 'ras' ? -Math.sign(S.frontDeg) * Math.abs(deg(Math.atan(trTrue))) * S.rearVisual : 0;
+      const seg = [];   // 기준점 경로: 직선(동쪽) → 반원(좌회전) → 직선(서쪽)
+      for(let x = S.startX; x < S.turnX; x += 4) seg.push([x, S.laneY, 0, 0]);
+      const arcN = Math.ceil(Math.PI * R / 4);
+      for(let i = 0; i <= arcN; i++){ const f = i / arcN * Math.PI; seg.push([S.turnX + R * Math.sin(f), cy + R * Math.cos(f), -f, 1]); }
+      for(let x = S.turnX - 4; x > S.endX; x -= 4) seg.push([x, cy - R, -Math.PI, 2]);
+      /* 조향 각도: 반원 시작 90px 전부터 서서히 → 반원 → 끝난 뒤 90px 동안 복귀 */
+      let dist = 0; const arcStartD = (S.turnX - S.startX), arcEndD = arcStartD + Math.PI * R;
+      seg.forEach((p, i) => {
+        if(i) dist += Math.hypot(p[0] - seg[i-1][0], p[1] - seg[i-1][1]);
+        const ramp = Math.max(0, Math.min(1, (dist - (arcStartD - 90)) / 90, (arcEndD + 90 - dist) / 90));
+        const e = ramp * ramp * (3 - 2 * ramp), h = p[2];
+        const off = (L.rearX - L.centerX) * s - a;   // 기준점 → 차체 중심 (앞쪽으로)
+        out[kind].push({ d: dist, x: p[0] + Math.cos(h) * off, y: p[1] + Math.sin(h) * off, h, f: S.frontDeg * e, r: rearDeg * e });
+      });
     });
-    textEl.style.opacity = 0;
-    setTimeout(() => { if(mode === k){ textEl.textContent = RS[k].text; textEl.style.opacity = 1; } }, reduceMotion ? 0 : 180);
+    return out;
   }
-  tabs.querySelectorAll('button').forEach(b => b.type = 'button');
+  function buildHigh(S){
+    const q = (c, x) => c[0] * x * x + c[1] * x + c[2];
+    const mid = x => (q(S.dash1, x) + q(S.dash2, x)) / 2, top = x => (q(S.edgeTop, x) + q(S.dash1, x)) / 2;
+    const smooth = u => u <= 0 ? 0 : u >= 1 ? 1 : u * u * u * (u * (u * 6 - 15) + 10);
+    const cr = (P, x) => { let i = 0; while(i < P.length - 2 && x > P[i+1][0]) i++;
+      const p0 = P[Math.max(0, i-1)], p1 = P[i], p2 = P[i+1], p3 = P[Math.min(P.length-1, i+2)], t = (x - p1[0]) / (p2[0] - p1[0]), t2 = t*t, t3 = t2*t;
+      return 0.5 * ((2*p1[1]) + (-p0[1]+p2[1])*t + (2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2 + (-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3); };
+    const frac = { ras: x => smooth((x - S.lcX0) / (S.lcX1 - S.lcX0)), normal: x => cr(S.normalOvershoot, x) };
+    const s = S.carScale, Lw = WBL * s, out = { ras: [], normal: [] };
+    ['ras', 'normal'].forEach(kind => {
+      const Y = x => mid(x) + (top(x) - mid(x)) * frac[kind](x);
+      let dist = 0, px = null, py = null;
+      for(let x = S.startX; x <= S.endX; x += 4){
+        const y = Y(x); if(px !== null) dist += Math.hypot(x - px, y - py); px = x; py = y;
+        const th = Math.atan2(Y(x + 3) - Y(x - 3), 6), road = Math.atan2(mid(x + 3) - mid(x - 3), 6);
+        const curv = F => (Math.atan2(F(x + 30) - F(x), 30) - Math.atan2(F(x) - F(x - 30), 30)) / 30;
+        const k = curv(Y) - curv(mid);   // 차선 변경에 의한 곡률만 (완만한 도로 곡선 자체는 제외 → 직선 구간은 '직진')
+        const f = Math.max(-S.maxDeg, Math.min(S.maxDeg, deg(Math.atan(Lw * k)) * S.steerGain));
+        const h = kind === 'ras' ? road + (th - road) * S.yawShare : th;
+        out[kind].push({ d: dist, x, y, h, f, r: kind === 'ras' ? f * S.rearShare : 0 });
+      }
+    });
+    return out;
+  }
+  const DATA = { low: buildLow(RAS_SCENES.low), high: buildHigh(RAS_SCENES.high) };
+  const sample = (arr, d) => { let lo = 0, hi = arr.length - 1; if(d >= arr[hi].d) return arr[hi]; while(hi - lo > 1){ const m = (lo + hi) >> 1; if(arr[m].d <= d) lo = m; else hi = m; }
+    const A = arr[lo], Bp = arr[hi], t = (d - A.d) / ((Bp.d - A.d) || 1); return { x: A.x + (Bp.x - A.x) * t, y: A.y + (Bp.y - A.y) * t, h: A.h + (Bp.h - A.h) * t, f: A.f + (Bp.f - A.f) * t, r: A.r + (Bp.r - A.r) * t, i: lo }; };
+  const trail = (arr, upto) => { let d = ''; for(let i = 0; i <= upto && i < arr.length; i += 2) d += (i ? 'L' : 'M') + arr[i].x.toFixed(1) + ' ' + arr[i].y.toFixed(1); return d; };
+
+  function place(c, p, scale){
+    c.g.setAttribute('transform', `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${(deg(p.h) - 180).toFixed(2)}) scale(${scale})`);
+    c.FL.setAttribute('transform', `rotate(${p.f.toFixed(2)})`); c.FR.setAttribute('transform', `rotate(${p.f.toFixed(2)})`);
+    c.RL.setAttribute('transform', `rotate(${p.r.toFixed(2)})`); c.RR.setAttribute('transform', `rotate(${p.r.toFixed(2)})`);
+  }
+  function readout(p){
+    const side = v => Math.abs(v) < 0.6 ? null : v < 0 ? '왼쪽' : '오른쪽';
+    const fs = side(p.f), rs = side(p.r);
+    const rel = !rs ? '0°' : (Math.sign(p.f) === Math.sign(p.r) ? '같은 방향' : '반대 방향');
+    ins.f.textContent = fs || '직진'; ins.r.textContent = rel;
+    $('rsReadF').textContent = fs ? `${fs}으로 조향` : '직진';
+    $('rsReadR').textContent = rs ? `${rel} (${rs})` : '0° (직진)';
+    ['FL','FR'].forEach(k => ins[k].setAttribute('transform', `rotate(${(p.f * 1.2).toFixed(1)})`));
+    ['RL','RR'].forEach(k => ins[k].setAttribute('transform', `rotate(${(p.r * 1.2).toFixed(1)})`));
+  }
+
+  /* ---------- 재생: 한 번 재생 후 마지막 장면 유지 (다시 재생·탭 재선택으로 처음부터) ---------- */
+  let cur = 'low', t = 0, playing = false, raf = 0, last = 0, visible = false, started = false;
+  function frame(){
+    const S = RAS_SCENES[cur], D = DATA[cur], dist = t * S.speed;
+    const pr = sample(D.ras, dist), pn = sample(D.normal, dist);
+    place(cars[0], pr, S.carScale); place(cars[1], pn, S.carScale);
+    pathR.setAttribute('d', trail(D.ras, pr.i)); pathN.setAttribute('d', trail(D.normal, pn.i));
+    readout(pr);
+    /* 카메라: PC = 도로 전체, 모바일(4:3) = 차량을 따라 좌우 이동 */
+    const r = stage.getBoundingClientRect(), visW = Math.min(1672, r.height ? 941 * r.width / r.height : 1672);
+    const cx = Math.max(visW / 2, Math.min(1672 - visW / 2, (pr.x + pn.x) / 2));
+    svg.setAttribute('viewBox', `${(cx - visW / 2).toFixed(1)} 0 ${visW.toFixed(1)} 941`);
+    const total = Math.max(D.ras[D.ras.length - 1].d, D.normal[D.normal.length - 1].d);
+    if(dist >= total) playing = false;
+  }
+  function loop(now){
+    raf = 0;
+    if(!visible || document.hidden || !playing){ last = 0; return; }
+    const dt = last ? Math.min(0.05, (now - last) / 1000) : 0; last = now;
+    t += dt; frame();
+    if(playing) raf = requestAnimationFrame(loop);
+  }
+  function kick(){ if(!raf && playing && visible && !document.hidden){ last = 0; raf = requestAnimationFrame(loop); } }
+  function play(){ t = 0; playing = !reduceMotion; if(reduceMotion) t = 999; frame(); kick(); }
+  function set(k){
+    if(!RAS_SCENES[k]) return;
+    const S = RAS_SCENES[k];
+    tabs.querySelectorAll('button').forEach(b => { const on = b.dataset.rs === k; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
+    cur = k; loadImages(k);
+    $('rasModeChip').textContent = S.label; $('rsCap').textContent = S.cap; $('rsText').textContent = S.text;
+    play();                                   // 탭 선택(같은 탭 포함) → 처음부터 재생
+  }
+  function inView(m){ const r = stage.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight; return r.bottom > -m && r.top < vh + m && r.width > 0; }
+  function update(){
+    if(inView(window.innerHeight || 800)) loadImages(cur);
+    const was = visible; visible = inView(0);
+    if(visible && !started){ started = true; play(); return; }     // 처음 화면에 들어올 때 자동 재생
+    if(visible) kick(); else if(raf){ cancelAnimationFrame(raf); raf = 0; last = 0; }
+  }
+  let ticking = false;
+  const onScroll = () => { if(!ticking){ ticking = true; requestAnimationFrame(() => { ticking = false; update(); }); } };
+  if('IntersectionObserver' in window) new IntersectionObserver(update, {rootMargin:'50% 0px'}).observe(stage);
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', () => { frame(); onScroll(); }, {passive:true});
+  addEventListener('pageshow', update);
+  document.addEventListener('visibilitychange', update);
   tabs.addEventListener('click', e => { const b = e.target.closest('[data-rs]'); if(b) set(b.dataset.rs); });
-  textEl.textContent = RS.low.text;
-  set('low');
+  $('rasReplay').addEventListener('click', play);
+  mq.addEventListener && mq.addEventListener('change', () => loadImages(cur));
+  cur = 'low'; tabs.querySelectorAll('button').forEach(b => { const on = b.dataset.rs === 'low'; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
+  $('rasModeChip').textContent = RAS_SCENES.low.label; $('rsCap').textContent = RAS_SCENES.low.cap; $('rsText').textContent = RAS_SCENES.low.text;
+  t = 0; frame(); update();
 })();
 
 /* EXTERIOR COLOURS — 원형 버튼 → 이미지 전환 (선택 컬러만 먼저 로딩, 나머지는 유휴 시간에 미리 받음) */
