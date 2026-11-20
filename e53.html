@@ -922,18 +922,36 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
 
 
 
-/* ===== E-Class 페이지 적용 (페이지 폰트 · 화이트 배경 · 블랙/골드 선택 표시 · 센서 블루) ===== */
-.mbis-mount.mbis{--mbis-bg:transparent;--mbis-bg2:#ffffff;--mbis-card:#ffffff;--mbis-sky1:#e7ebef;--mbis-line:rgba(15,23,42,.10);}
-.mbis-mount .mbis-wrap{max-width:none;padding:clamp(8px,2vw,24px) 0 0;}
-.mbis-mount .mbis-tab.is-active{border-color:#111317;}
-.mbis-mount .mbis-tab.is-active .mbis-tab-no{color:#9b7440;}
-.mbis-mount .mbis-tab-bar i{background:#c9a86a;}
-.mbis-mount .mbis-btn--all[aria-pressed="true"]{border-color:#111317;}
-/* 섹션 틀 (이 섹션 전용) */
-.eis-section{background:#ffffff;padding:clamp(64px,8vw,112px) 0;border-top:1px solid rgba(15,23,42,.08);}
-.eis-inner{width:min(100% - 40px,1200px);margin-inline:auto;}
-.eis-inner > .section-heading{margin-bottom:clamp(8px,1.5vw,16px);}
-@media (max-width:480px){.eis-inner{width:calc(100% - 32px);}}
+/* ===== E53 전용 안전 섹션 테마 (.e53-safety 범위 · 공통 .mbis 기본 스타일은 수정하지 않음) =====
+   - 배경·카드·글자·구분선 = E53 변수 재사용 / 선택 표시 = AMG 레드
+   - 기능 색상(블루 = 감지·보조, 앰버 = 경고, 레드 = 위험·충돌)은 모듈 기본값 유지 */
+.e53-safety{background:var(--bg);border-top:1px solid var(--line);}
+.e53-safety .mbis-mount.mbis{
+  --mbis-bg:transparent;--mbis-bg2:var(--bg-2);--mbis-card:var(--bg-3);
+  --mbis-text:var(--ink);--mbis-sub:var(--sub);--mbis-muted:var(--mute);
+  --mbis-line:var(--graphite);--mbis-line2:#3A3E45;--mbis-hud:rgba(11,11,12,.74);
+  --mbis-font:var(--sans);
+}
+.e53-safety .mbis-wrap{max-width:none;padding:0;}
+.e53-safety .mbis-stage{border-radius:0;border-color:var(--graphite);}
+.e53-safety .mbis-tab{border-radius:0;background:var(--bg-3);border-color:var(--graphite);color:var(--sub);}
+.e53-safety .mbis-tab:hover{border-color:#3A3E45;color:var(--ink);}
+.e53-safety .mbis-tab.is-active{background:#202227;border-color:var(--graphite);color:#fff;box-shadow:inset 0 3px 0 var(--red-2);}
+.e53-safety .mbis-tab.is-active .mbis-tab-no{color:var(--red-2);}
+.e53-safety .mbis-tab-bar i{background:var(--red-2);}
+.e53-safety .mbis-btn{border-radius:0;}
+.e53-safety .mbis-btn--all[aria-pressed="true"]{border-color:var(--red-2);background:rgba(255,59,66,.08);}
+.e53-safety .mbis button:focus-visible{outline-color:var(--red-2);border-radius:0;}
+/* 실사 도로·실내 장면 안의 라벨은 밝은 사진 위에 놓이므로 기존(라이트) 글자색 유지 — 흰 테두리 + 어두운 글자 */
+.e53-safety .mbis--road .mbis-svg,.e53-safety .mbis-int-svg{--mbis-text:#111317;--mbis-sub:#3e434a;}
+@media (max-width:767px){
+  /* 모듈 전체를 화면 폭으로 넓히고(모듈 바깥 overflow 유지), 버튼·설명은 20px 안쪽, 애니메이션만 가장자리까지 */
+  .e53-safety .mbis-mount{margin-inline:-20px;}
+  .e53-safety .mbis--compact .mbis-wrap{padding-inline:20px;}
+  .e53-safety .mbis--compact .mbis-stage{margin-inline:-20px;border-left:0;border-right:0;}
+  .e53-safety .mbis--compact .mbis-nav{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}   /* 4단계 버튼 2×2 — 잘림 없이 */
+  .e53-safety .mbis--compact .mbis-tab{min-height:50px;}
+}
 </style>
 </head>
 <body>
@@ -947,6 +965,7 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
       <a href="#boost">E-BOOST</a>
       <a href="#awd">4MATIC+</a>
       <a href="#suspension">SUSPENSION</a>
+      <a href="#integral-safety">SAFETY</a>
       <a href="#colors">COLOURS</a>
       <a href="#equipment">EQUIPMENT</a>
       <a href="#specs">SPECS</a>
@@ -966,6 +985,7 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
     <li><a href="#boost">ELECTRIC BOOST</a></li>
     <li><a href="#awd">AMG 4MATIC+</a></li>
     <li><a href="#suspension">AMG SUSPENSION</a></li>
+    <li><a href="#integral-safety">INTEGRAL SAFETY</a></li>
     <li><a href="#colors">EXTERIOR COLOURS</a></li>
     <li><a href="#equipment">EQUIPMENT</a></li>
     <li><a href="#specs">SPECIFICATIONS</a></li>
@@ -1361,7 +1381,20 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
   </div>
 </section>
 
-<!-- 08 EXTERIOR COLOURS — 컬러 목록·이미지 URL은 아래 스크립트의 E53_COLORS 에서 수정 -->
+<!-- 08 INTEGRAL SAFETY — 4단계 통합 안전대책 (공통 모듈 · 다크 테마 + E53 전용 스타일 .e53-safety)
+     - 모듈 스크립트·설정(ECLASS_SAFETY_CONFIG)은 페이지 아래쪽에 그대로 있습니다 (초기화 순서 동일) -->
+<section class="eis-section e53-safety" id="integral-safety" aria-labelledby="isTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">AMG Integral Safety</p>
+      <h2 class="section-title" id="isTitle">퍼포먼스의 완성은<br>안전입니다.</h2>
+      <p class="section-desc">사고를 예방하는 순간부터 탑승자를 보호하고 사고 이후 구조를 지원하기까지, 메르세데스-벤츠의 4단계 통합 안전대책을 경험해 보세요.</p>
+    </div>
+    <div class="mbis-mount" id="mbis-e53"></div>
+  </div>
+</section>
+
+<!-- 09 EXTERIOR COLOURS — 컬러 목록·이미지 URL은 아래 스크립트의 E53_COLORS 에서 수정 -->
 <section class="bg-2" id="colors" aria-labelledby="colTitle">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1377,7 +1410,7 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
   </div>
 </section>
 
-<!-- 09 INTERIOR DESIGN — 이미지 URL은 아래 스크립트의 E53_INTERIOR_IMAGES 에서 입력 -->
+<!-- 10 INTERIOR DESIGN — 이미지 URL은 아래 스크립트의 E53_INTERIOR_IMAGES 에서 입력 -->
 <section id="interior" aria-labelledby="e53IntTitle">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1396,7 +1429,7 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
   </div>
 </section>
 
-<!-- 10 EQUIPMENT -->
+<!-- 11 EQUIPMENT -->
 <section id="equipment" aria-labelledby="eqTitle">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1412,7 +1445,7 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
   </div>
 </section>
 
-<!-- 11 SPECS -->
+<!-- 12 SPECS -->
 <section class="bg-2" id="specs" aria-labelledby="spTitle">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1427,11 +1460,6 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
      INTEGRAL SAFETY · 4단계 통합 안전대책 (GLC 모듈 이식 · E-Class W214 세단 설정)
      - 이미지 경로·안전 사양은 아래 스크립트의 ECLASS_SAFETY_IMAGES / ECLASS_SAFETY_CONFIG에서 수정합니다.
      ============================================================ -->
-<section class="eis-section" id="integral-safety" aria-label="4단계 통합 안전대책">
-  <div class="eis-inner">
-    <div class="mbis-mount" id="mbis-e53"></div>
-  </div>
-</section>
 <script>
 /*!
  * Mercedes-Benz Integral Safety — interactive module
@@ -3049,10 +3077,10 @@ const ECLASS_SAFETY_GEOMETRY = {
 const ECLASS_SAFETY_CONFIG = {
   vehicleModel: "Mercedes-AMG E 53 HYBRID 4MATIC+",
   vehicleType: "phev",   // 'combustion' = 가솔린·디젤 · 'phev' = 플러그인 하이브리드(고전압 차단 기능 표시)
-  theme: 'light',
+  theme: 'dark',          // E53: 모듈 공식 다크 테마 (다른 페이지는 각자 설정 그대로)
   autoplay: false,
   startStep: 0,
-  showHeader: true,
+  showHeader: false,      // 섹션 제목은 바깥 .section-head 에서 표시 (중복 방지)
   title: "안전은 사고 전부터, 사고 이후까지.",
   description: "메르세데스-벤츠는 사고 예방부터 충돌 위험 대비, 탑승자 보호, 사고 이후 구조 지원까지 4단계로 안전을 설계합니다.",
   assetBasePath: '',
