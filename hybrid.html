@@ -338,6 +338,420 @@ section{scroll-margin-top:var(--header-h);padding-block:clamp(72px,8vw,120px);}
 .lightbox-close{position:absolute;top:max(18px,env(safe-area-inset-top));right:18px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.4);color:#fff;font-size:24px;line-height:1;}
 .lightbox-cap{position:absolute;bottom:max(18px,env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:rgba(255,255,255,.75);font-size:13px;padding:0 20px;}
 </style>
+<style>
+/* ===== Integral Safety module (mb-integral-safety v1.1, .mbis 범위 전용) ===== */
+/*!
+ * Mercedes-Benz Integral Safety — module styles v1.2.0
+ * 모든 선택자는 .mbis 범위 안에서만 동작합니다. (기존 페이지 CSS에 영향 없음)
+ */
+.mbis {
+  all: initial;
+  display: block;
+  container-type: inline-size;
+  --mbis-bg: #0a0b0d;
+  --mbis-bg2: #121418;
+  --mbis-card: #16191e;
+  --mbis-text: #eceef1;
+  --mbis-sub: #b9bdc4;
+  --mbis-muted: #868b93;
+  --mbis-line: rgba(255, 255, 255, .1);
+  --mbis-line2: rgba(255, 255, 255, .18);
+  --mbis-silver: #d4d7dc;
+  --mbis-blue: #3d9bff;
+  --mbis-amber: #ffb224;
+  --mbis-red: #ff3d3d;
+  --mbis-warm: #fff1d2;
+  --mbis-sky1: #08090b;
+  --mbis-sky2: #1c2026;
+  --mbis-hills: #15181d;
+  --mbis-road: #1a1d22;
+  --mbis-roadline: #5c6168;
+  --mbis-car1: #e9ecef;
+  --mbis-car2: #a9aeb5;
+  --mbis-car3: #5d636b;
+  --mbis-lead1: #565b63;
+  --mbis-lead2: #2c3036;
+  --mbis-aperture: #0d0f12;
+  --mbis-hud: rgba(10, 11, 13, .72);
+  --mbis-hv: #ff7a1a;
+  --mbis-font: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--mbis-bg);
+  color: var(--mbis-text);
+  font-family: var(--mbis-font);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+  overflow: hidden;
+}
+.mbis--light {
+  --mbis-bg: #f5f5f3;
+  --mbis-bg2: #ffffff;
+  --mbis-card: #ffffff;
+  --mbis-text: #111317;
+  --mbis-sub: #3e434a;
+  --mbis-muted: #6b7078;
+  --mbis-line: rgba(0, 0, 0, .1);
+  --mbis-line2: rgba(0, 0, 0, .2);
+  --mbis-silver: #4b5058;
+  --mbis-blue: #0a6fd6;
+  --mbis-amber: #e08a00;
+  --mbis-red: #e01e1e;
+  --mbis-sky1: #f3f4f5;
+  --mbis-sky2: #dfe2e6;
+  --mbis-hills: #d3d7dc;
+  --mbis-road: #3a3e44;
+  --mbis-roadline: #c6cad0;
+  --mbis-car1: #f4f5f7;
+  --mbis-car2: #b9bec5;
+  --mbis-car3: #6e747c;
+  --mbis-lead1: #7b8189;
+  --mbis-lead2: #464b52;
+  --mbis-aperture: #1b1e22;
+  --mbis-hud: rgba(255, 255, 255, .86);
+}
+.mbis *, .mbis *::before, .mbis *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: inherit; letter-spacing: inherit; text-transform: none; float: none; }
+.mbis-lbl-text, .mbis-tag, .mbis-i-lbl { letter-spacing: 0; }
+.mbis :where(ul, ol, li) { list-style: none; }
+.mbis :where(button) { all: unset; box-sizing: border-box; cursor: pointer; font-family: var(--mbis-font); -webkit-tap-highlight-color: transparent; }
+.mbis button:focus-visible, .mbis summary:focus-visible { outline: 2px solid var(--mbis-blue); outline-offset: 3px; border-radius: 10px; }
+.mbis svg { overflow: visible; max-width: none; }
+.mbis .mbis-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.mbis-wrap { max-width: 1280px; margin: 0 auto; padding: 72px 32px 56px; }
+
+/* 헤더 */
+.mbis-head { text-align: center; margin-bottom: 36px; }
+.mbis-eyebrow { font-size: 12px; letter-spacing: .32em; color: var(--mbis-muted); font-weight: 600; }
+.mbis-title { margin-top: 14px !important; font-size: clamp(24px, 3.4vw, 40px); font-weight: 300; letter-spacing: -.01em; line-height: 1.3; color: var(--mbis-text); }
+.mbis-desc { margin: 14px auto 0 !important; max-width: 640px; color: var(--mbis-sub); font-size: 16px; }
+
+/* 스테이지 */
+.mbis-stage { position: relative; border-radius: 20px; overflow: hidden; background: var(--mbis-sky1); border: 1px solid var(--mbis-line); }
+.mbis-svg { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 520; }
+.mbis--compact .mbis-svg { aspect-ratio: 910 / 350; }
+.mbis-hud { position: absolute; inset: 0; padding: 22px 24px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; pointer-events: none; z-index: 2; }
+.mbis-hud-l { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; max-width: 54%; }
+.mbis-hud-r { position: relative; width: 31%; min-width: 230px; }
+
+.mbis-caption { display: flex; align-items: baseline; gap: 10px; padding: 9px 14px; border-radius: 10px; background: var(--mbis-hud); border: 1px solid var(--mbis-line); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.mbis-caption-step { flex: none; font-size: 11px; letter-spacing: .18em; color: var(--mbis-muted); font-weight: 700; }
+.mbis-caption-text { font-size: 15px; font-weight: 500; color: var(--mbis-text); }
+.mbis-caption.is-fresh .mbis-caption-text { animation: mbis-fade .45s ease both; }
+@keyframes mbis-fade { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+
+.mbis-banner { display: none; font-size: 12.5px; font-weight: 600; letter-spacing: .02em; color: var(--mbis-amber); padding: 6px 12px; border-radius: 8px; border: 1px solid color-mix(in srgb, var(--mbis-amber) 45%, transparent); background: color-mix(in srgb, var(--mbis-amber) 10%, var(--mbis-hud)); }
+.mbis-banner.is-on { display: block; }
+
+/* 계기판 */
+.mbis-cluster { display: flex; align-items: center; gap: 12px; padding: 8px 14px; border-radius: 12px; background: var(--mbis-hud); border: 1px solid var(--mbis-line); }
+.mbis-cluster.is-hidden { display: none; }
+.mbis-speed { display: flex; align-items: baseline; gap: 4px; padding-right: 12px; border-right: 1px solid var(--mbis-line); }
+.mbis-speed b { font-size: 22px; font-weight: 300; font-variant-numeric: tabular-nums; min-width: 2.2ch; text-align: right; color: var(--mbis-text); }
+.mbis-speed span { font-size: 10px; color: var(--mbis-muted); }
+.mbis-ico { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--mbis-muted); opacity: .38; transition: color .25s, opacity .25s; }
+.mbis-ico svg { width: 24px; height: 24px; }
+.mbis-ico small { font-size: 9px; letter-spacing: .04em; }
+.mbis-ico.is-gone { display: none; }
+.mbis-ico.is-on { color: var(--mbis-text); opacity: .95; }
+.mbis-ico.is-active { color: var(--mbis-blue); opacity: 1; }
+.mbis-ico.is-warn { color: var(--mbis-amber); opacity: 1; }
+.mbis-ico.is-alert { color: var(--mbis-red); opacity: 1; }
+
+/* 보조 패널 공통 */
+.mbis-inset, .mbis-ecall { position: absolute; top: 0; right: 0; width: 100%; display: none; padding: 10px 12px 12px; border-radius: 14px; background: var(--mbis-hud); border: 1px solid var(--mbis-line); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.mbis-inset.is-on, .mbis-ecall.is-on { display: block; }
+.mbis-panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.mbis-panel-head span { font-size: 10.5px; letter-spacing: .2em; font-weight: 700; color: var(--mbis-muted); }
+.mbis-panel-head em { font-style: normal; font-size: 11.5px; color: var(--mbis-sub); text-align: right; }
+.mbis-inset-svg { display: block; width: 100%; height: auto; }
+.mbis-i-road { fill: var(--mbis-road); }
+.mbis-i-edge { stroke: var(--mbis-roadline); stroke-width: 2; fill: none; }
+.mbis-i-dash { stroke: var(--mbis-roadline); stroke-width: 2.5; }
+.mbis-i-warn { fill: var(--mbis-amber); }
+.mbis-i-car { fill: var(--mbis-car1); stroke: var(--mbis-car3); stroke-width: 1; }
+.mbis-i-glass { fill: var(--mbis-aperture); opacity: .75; }
+.mbis-i-wheel { fill: #0b0c0e; }
+.mbis-i-wheelhi { fill: none; stroke: var(--mbis-amber); stroke-width: 2.5; }
+.mbis-i-arrow { fill: none; stroke: var(--mbis-blue); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.mbis-i-skid { fill: none; stroke: var(--mbis-muted); stroke-width: 2; stroke-dasharray: 3 4; }
+.mbis-i-lbl { fill: var(--mbis-text); font: 600 11px var(--mbis-font); }
+
+.mbis-ecall-steps { list-style: none; display: grid; gap: 4px; margin-bottom: 8px !important; }
+.mbis-ecall-steps li { position: relative; padding-left: 18px; font-size: 12.5px; color: var(--mbis-muted); transition: color .3s; }
+.mbis-ecall-steps li::before { content: ""; position: absolute; left: 2px; top: .55em; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid currentColor; }
+.mbis-ecall-steps li.is-current { color: var(--mbis-text); font-weight: 600; }
+.mbis-ecall-steps li.is-current::before { background: var(--mbis-blue); border-color: var(--mbis-blue); }
+.mbis-ecall-steps li.is-done { color: var(--mbis-sub); }
+.mbis-ecall-steps li.is-done::before { background: currentColor; }
+.mbis-ecall-map { display: block; width: 100%; height: auto; opacity: .3; transition: opacity .4s; }
+.mbis-ecall-map.is-on { opacity: 1; }
+.mbis-m-bg { fill: color-mix(in srgb, var(--mbis-text) 6%, transparent); }
+.mbis-m-road { fill: none; stroke: var(--mbis-line2); stroke-width: 3; }
+.mbis-m-pin { fill: var(--mbis-red); }
+.mbis-m-pindot { fill: #fff; }
+.mbis-m-pulse { fill: none; stroke: var(--mbis-red); stroke-width: 1.5; }
+.mbis-ecall-note { margin-top: 6px !important; font-size: 10.5px; color: var(--mbis-muted); line-height: 1.4; }
+
+/* 자동 재생 단계 전환 */
+.mbis-transition { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 20px; background: color-mix(in srgb, var(--mbis-bg) 82%, transparent); opacity: 0; visibility: hidden; transition: opacity .5s ease, visibility .5s; }
+.mbis-transition.is-on { opacity: 1; visibility: visible; }
+.mbis-transition-no { font-size: 11px; letter-spacing: .28em; color: var(--mbis-muted); font-weight: 700; }
+.mbis-transition strong { font-size: clamp(22px, 3vw, 34px); font-weight: 300; color: var(--mbis-text); }
+.mbis-transition-tag { font-size: 14px; color: var(--mbis-sub); }
+.mbis-rm-note { display: none; position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 2; width: max-content; max-width: 92%; font-size: 12px; color: var(--mbis-sub); background: var(--mbis-hud); padding: 6px 12px; border-radius: 8px; }
+.mbis-rm-note.is-on { display: block; }
+
+/* SVG 장면 색상 */
+.mbis .mbis-c-sky1 { stop-color: var(--mbis-sky1); }
+.mbis .mbis-c-sky2 { stop-color: var(--mbis-sky2); }
+.mbis .mbis-c-car1 { stop-color: var(--mbis-car1); }
+.mbis .mbis-c-car2 { stop-color: var(--mbis-car2); }
+.mbis .mbis-c-car3 { stop-color: var(--mbis-car3); }
+.mbis .mbis-c-lead1 { stop-color: var(--mbis-lead1); }
+.mbis .mbis-c-lead2 { stop-color: var(--mbis-lead2); }
+.mbis .mbis-c-blue { stop-color: var(--mbis-blue); }
+.mbis .mbis-c-amber { stop-color: var(--mbis-amber); }
+.mbis .mbis-c-red { stop-color: var(--mbis-red); }
+.mbis .mbis-c-warm { stop-color: var(--mbis-warm); }
+.mbis-hills { fill: var(--mbis-hills); }
+.mbis-verge { fill: color-mix(in srgb, var(--mbis-hills) 70%, var(--mbis-road)); }
+.mbis-post, .mbis-rail { fill: color-mix(in srgb, var(--mbis-roadline) 55%, transparent); }
+.mbis-road { fill: var(--mbis-road); }
+.mbis-roadline { fill: var(--mbis-roadline); opacity: .55; }
+.mbis-roaddash { fill: var(--mbis-roadline); opacity: .7; }
+.mbis-shadow { fill: #000; opacity: .45; }
+.mbis-ego-body { stroke: color-mix(in srgb, var(--mbis-car3) 60%, transparent); stroke-width: .8; }
+.mbis-lead-body { stroke: rgba(0, 0, 0, .25); stroke-width: .8; }
+.mbis-aperture { fill: var(--mbis-aperture); }
+.mbis-sill { fill: rgba(0, 0, 0, .28); }
+.mbis-shoulder { fill: none; stroke: rgba(255, 255, 255, .55); stroke-width: 1.2; }
+.mbis-doorline { fill: none; stroke: rgba(0, 0, 0, .3); stroke-width: 1; stroke-linecap: round; }
+.mbis-head { fill: #f7f9fb; opacity: .9; }
+.mbis-tail { fill: #6e0d0d; }
+.mbis-tire { fill: #0b0c0e; }
+.mbis-rim { fill: #3a3e44; stroke: #8d939b; stroke-width: 1.2; }
+.mbis-spoke { stroke: #b8bdc4; stroke-width: 3; stroke-linecap: round; }
+.mbis-hub { fill: #c7ccd2; }
+.mbis-outline { fill: none; stroke: var(--mbis-silver); stroke-width: 1.4; }
+.mbis-buckle { fill: none; stroke: rgba(0, 0, 0, .45); stroke-width: 1.6; stroke-linejoin: round; }
+.mbis-cell { fill: color-mix(in srgb, var(--mbis-text) 5%, transparent); stroke: var(--mbis-text); stroke-width: 2.4; stroke-dasharray: 7 4; }
+.mbis-seat { fill: #3b4048; }
+.mbis--light .mbis-seat { fill: #5a6068; }
+.mbis-wheelrim { fill: none; stroke: #7d838b; stroke-width: 3.5; stroke-linecap: round; }
+.mbis-occ-head { fill: #c9ced5; }
+.mbis-occ-torso { stroke: #a7adb5; stroke-width: 12; stroke-linecap: round; fill: none; }
+.mbis-occ-arm { stroke: #c0c5cc; stroke-width: 5.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.mbis-occ-leg { stroke: #8e949c; stroke-width: 9; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.mbis-airbag { fill: #f2f3f5; stroke: #b8bdc4; stroke-width: 1; opacity: .95; }
+.mbis-retractor { fill: #5d636b; }
+.mbis-belt { fill: none; stroke: var(--mbis-blue); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+.mbis-retract { fill: none; stroke: var(--mbis-blue); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.mbis-sound { fill: none; stroke: var(--mbis-blue); stroke-width: 1.8; stroke-linecap: round; }
+.mbis-glass { fill: rgba(170, 196, 222, .3); stroke: rgba(210, 225, 240, .7); stroke-width: 1; }
+.mbis-glass-edge { stroke: rgba(240, 246, 252, .95); stroke-width: 1.6; }
+.mbis-winframe { fill: none; stroke: var(--mbis-silver); stroke-width: 1; opacity: .6; }
+.mbis-energy-line { fill: none; stroke: var(--mbis-amber); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 22 18; }
+.mbis-wave { fill: none; stroke: var(--mbis-blue); stroke-width: 2; stroke-linecap: round; }
+.mbis-cone { stroke: none; }
+.mbis-cone-arc { fill: none; stroke-width: 1.6; }
+.mbis-cone-arc--blue { stroke: var(--mbis-blue); }
+.mbis-cone-arc--amber { stroke: var(--mbis-amber); }
+.mbis-cone-arc--red { stroke: var(--mbis-red); }
+.mbis-gap-line { fill: none; stroke: var(--mbis-blue); stroke-width: 1.6; }
+.mbis-tag { fill: var(--mbis-sub); font: 600 14px var(--mbis-font); letter-spacing: .02em; }
+.mbis .mbis-tag--sm { font-size: 11px; opacity: .8; }
+.mbis-barrier { fill: #2b2f35; stroke: #4a5058; }
+.mbis--light .mbis .mbis-tag--sm { font-size: 11px; opacity: .8; }
+.mbis-barrier { fill: #50565e; }
+.mbis-barrier-face { fill: #c9a227; opacity: .85; }
+.mbis-hexline { fill: none; stroke: rgba(0, 0, 0, .35); stroke-width: .8; }
+.mbis-barrier-line { stroke: #8a9099; stroke-width: 2; }
+.mbis-lbl-text { fill: var(--mbis-text); font-family: var(--mbis-font); font-weight: 600; paint-order: stroke; stroke: var(--mbis-sky1); stroke-width: 3px; stroke-linejoin: round; }
+.mbis-lbl-line { fill: none; stroke: var(--mbis-sub); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.mbis-lbl-dot { fill: var(--mbis-text); }
+
+/* 컨트롤 */
+.mbis-controls { margin-top: 18px; display: flex; flex-direction: column; gap: 14px; }
+.mbis-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.mbis-tab { position: relative; display: flex; flex-direction: column; gap: 2px; min-height: 76px; padding: 14px 16px 18px; border-radius: 14px; background: var(--mbis-card); border: 1px solid var(--mbis-line); color: var(--mbis-sub); transition: border-color .25s, background .25s, color .25s; }
+.mbis-tab:hover { border-color: var(--mbis-line2); color: var(--mbis-text); }
+.mbis-tab.is-active { border-color: var(--mbis-text); color: var(--mbis-text); background: color-mix(in srgb, var(--mbis-text) 7%, var(--mbis-card)); }
+.mbis-tab-no { font-size: 11px; letter-spacing: .2em; font-weight: 700; color: var(--mbis-muted); }
+.mbis-tab.is-active .mbis-tab-no { color: var(--mbis-blue); }
+.mbis-tab-ko { font-size: 16px; font-weight: 600; }
+.mbis-tab-en { font-size: 10px; letter-spacing: .12em; color: var(--mbis-muted); }
+.mbis-tab-bar { position: absolute; left: 16px; right: 16px; bottom: 9px; height: 2px; border-radius: 2px; background: var(--mbis-line); overflow: hidden; }
+.mbis-tab-bar i { display: block; height: 100%; width: 0; background: var(--mbis-text); }
+.mbis-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+.mbis-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--mbis-line2); color: var(--mbis-text); font-size: 14px; font-weight: 500; transition: background .2s, border-color .2s; }
+.mbis-btn:hover { background: color-mix(in srgb, var(--mbis-text) 8%, transparent); }
+.mbis-btn-ico svg { display: block; width: 18px; height: 18px; }
+.mbis-btn--all[aria-pressed="true"] { border-color: var(--mbis-text); background: color-mix(in srgb, var(--mbis-text) 10%, transparent); }
+
+/* 설명 패널 */
+.mbis-panel { margin-top: 26px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px; padding: 28px; border-radius: 20px; background: var(--mbis-bg2); border: 1px solid var(--mbis-line); }
+.mbis-panel-kicker { font-size: 11px; letter-spacing: .22em; font-weight: 700; color: var(--mbis-muted); }
+.mbis-panel-title { margin-top: 8px !important; font-size: 28px; font-weight: 300; color: var(--mbis-text); }
+.mbis-panel-theme { margin-top: 6px !important; color: var(--mbis-sub); font-size: 15px; }
+.mbis-panel-tag { margin-top: 18px !important; font-size: 17px; line-height: 1.5; color: var(--mbis-text); }
+.mbis-panel-note { margin-top: 16px !important; font-size: 13px; color: var(--mbis-sub); padding: 10px 12px; border-left: 2px solid var(--mbis-amber); background: color-mix(in srgb, var(--mbis-amber) 6%, transparent); border-radius: 0 8px 8px 0; }
+.mbis-feats { list-style: none; display: grid; gap: 10px; }
+.mbis-feat { padding: 14px 16px; border-radius: 14px; border: 1px solid var(--mbis-line); background: var(--mbis-card); }
+.mbis-feat-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+.mbis-feat-head strong { font-size: 15px; font-weight: 600; color: var(--mbis-text); }
+.mbis-badge { font-size: 10.5px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--mbis-line2); color: var(--mbis-sub); white-space: nowrap; }
+.mbis-feat--supported .mbis-badge { color: var(--mbis-blue); border-color: color-mix(in srgb, var(--mbis-blue) 50%, transparent); }
+.mbis-feat--generic .mbis-badge { color: var(--mbis-amber); border-color: color-mix(in srgb, var(--mbis-amber) 45%, transparent); }
+.mbis-feat > p { margin-top: 6px !important; font-size: 13.5px; color: var(--mbis-sub); }
+.mbis-feat details { margin-top: 8px; }
+.mbis-feat summary, .mbis-overview summary { cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--mbis-text); list-style: none; display: inline-flex; align-items: center; gap: 6px; min-height: 32px; }
+.mbis-feat summary::-webkit-details-marker, .mbis-overview summary::-webkit-details-marker { display: none; }
+.mbis-feat summary::after, .mbis-overview summary::after { content: "+"; font-weight: 400; color: var(--mbis-muted); }
+.mbis-feat details[open] summary::after, .mbis-overview[open] summary::after { content: "–"; }
+.mbis-feat details p { font-size: 13px; color: var(--mbis-sub); line-height: 1.65; padding-top: 4px; }
+
+.mbis-overview { margin-top: 18px; padding: 8px 20px; border-radius: 14px; border: 1px solid var(--mbis-line); }
+.mbis-overview ol { list-style: none; display: grid; gap: 14px; padding: 8px 0 14px; }
+.mbis-overview strong { font-size: 14px; color: var(--mbis-text); }
+.mbis-overview li p { font-size: 13px; color: var(--mbis-sub); margin-top: 2px; }
+.mbis-overview .mbis-overview-f { color: var(--mbis-muted); }
+.mbis-disclaimer { margin-top: 18px !important; font-size: 11.5px; line-height: 1.6; color: var(--mbis-muted); }
+
+/* ---------- 모바일 / 좁은 컨테이너 ---------- */
+@container (max-width: 680px) {
+  .mbis-wrap { padding: 44px 16px 36px; }
+  .mbis-head { margin-bottom: 22px; }
+  .mbis-desc { font-size: 14px; }
+  .mbis-panel { grid-template-columns: 1fr; gap: 18px; padding: 20px 16px; }
+  .mbis-panel-title { font-size: 24px; }
+  .mbis-panel-tag { font-size: 16px; margin-top: 12px !important; }
+}
+.mbis--compact .mbis-hud { position: relative; inset: auto; padding: 12px 12px 4px; flex-direction: column; gap: 8px; min-height: 132px; }
+.mbis--compact .mbis-hud-l { max-width: none; width: 100%; gap: 8px; }
+.mbis--compact .mbis-hud-r { position: static; width: 100%; min-width: 0; }
+.mbis--compact .mbis-caption { width: 100%; padding: 8px 12px; min-height: 58px; align-items: center; }
+.mbis--compact .mbis-hud-l { display: grid; grid-template-columns: auto 1fr; align-items: center; }
+.mbis--compact .mbis-caption { grid-column: 1 / -1; }
+.mbis--compact .mbis-cluster { grid-column: 1; grid-row: 2; }
+.mbis--compact .mbis-banner { grid-column: 2; grid-row: 2; line-height: 1.35; }
+.mbis--compact.mbis-step-3 .mbis-banner { grid-column: 1 / -1; }
+.mbis--compact .mbis-hud-l::after { content: ""; grid-column: 1 / -1; grid-row: 2; min-height: 46px; }
+.mbis--compact.mbis-step-1 .mbis-hud-r, .mbis--compact.mbis-step-4 .mbis-hud-r { min-height: 162px; }
+.mbis--compact .mbis-caption-text { font-size: 14px; line-height: 1.4; }
+.mbis--compact .mbis-caption-step { font-size: 10px; }
+.mbis--compact .mbis-banner { font-size: 11.5px; }
+.mbis--compact .mbis-cluster { padding: 6px 10px; gap: 10px; }
+.mbis--compact .mbis-speed b { font-size: 18px; }
+.mbis--compact .mbis-ico svg { width: 20px; height: 20px; }
+.mbis--compact .mbis-inset, .mbis--compact .mbis-ecall { position: relative; }
+.mbis--compact .mbis-inset.is-on { display: grid; grid-template-columns: 1fr; }
+.mbis--compact .mbis-inset-svg { max-height: 120px; }
+.mbis--compact .mbis-ecall.is-on { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+.mbis--compact .mbis-ecall .mbis-panel-head, .mbis--compact .mbis-ecall-note { grid-column: 1 / -1; }
+.mbis--compact .mbis-ecall-steps li { font-size: 11.5px; }
+.mbis--compact .mbis-lbl { display: none; }
+.mbis--compact .mbis-tag { font-size: 18px; }
+.mbis--compact .mbis-nav { gap: 6px; }
+.mbis--compact .mbis-tab { min-height: 64px; padding: 10px 8px 14px; border-radius: 12px; align-items: center; text-align: center; }
+.mbis--compact .mbis-tab-ko { font-size: 13px; line-height: 1.3; word-break: keep-all; }
+.mbis--compact .mbis-tab-en { display: none; }
+.mbis--compact .mbis-tab-bar { left: 10px; right: 10px; bottom: 7px; }
+.mbis--compact .mbis-btn { padding: 0 14px; font-size: 13px; }
+.mbis--compact .mbis-stage { border-radius: 16px; }
+.mbis--compact .mbis-rm-note { position: static; transform: none; margin: 0 12px 10px; width: auto; }
+
+/* ---------- v1.1 실사 이미지 레이어 ---------- */
+.mbis-photo-only, .mbis-wimg, .mbis-photoroad { display: none; }
+.mbis--photo .mbis-photo-only { display: inline; }
+.mbis--photo .mbis-photo-fallback { display: none; }
+.mbis--wimg .mbis-wimg { display: inline; }
+.mbis--wimg .mbis-wsvg { display: none; }
+.mbis--road .mbis-photoroad { display: inline; }
+.mbis--road .mbis-svgroad { display: none; }
+.mbis--road .mbis-shadow { opacity: .32; }
+.mbis-lead-shade { fill: #11151a; opacity: .34; }
+.mbis .mbis-svg { overflow: hidden; }
+.mbis--road .mbis-lbl-text { stroke: rgba(255, 255, 255, .94); stroke-width: 4px; }
+
+/* 고전압 시스템 (개념) */
+.mbis-hv-batt { fill: color-mix(in srgb, var(--mbis-hv) 14%, #20242a); stroke: var(--mbis-hv); stroke-width: 1.3; }
+.mbis-hv-batt.is-residual { stroke: var(--mbis-amber); stroke-dasharray: 4 3; }
+.mbis-hv-cell { fill: none; stroke: var(--mbis-hv); stroke-width: .7; opacity: .45; }
+.mbis-hv-line { fill: none; stroke: var(--mbis-hv); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 9 9; transition: stroke .3s, opacity .3s; }
+.mbis-hv-line.is-off { stroke: #8b9097; stroke-dasharray: 2 5; opacity: .75; }
+.mbis-hv-motor { fill: #2a2e34; stroke: var(--mbis-hv); stroke-width: 1.3; }
+.mbis-hv-box { fill: #2a2e34; stroke: var(--mbis-red); stroke-width: 1.1; }
+.mbis-hv-blade { fill: none; stroke: var(--mbis-red); stroke-width: 2.2; stroke-linecap: round; }
+
+/* ---------- v1.1 모바일 순서: 단계 버튼 → 애니메이션 → 한 줄 캡션 → 재생 버튼 → 상세 ---------- */
+.mbis--compact .mbis-wrap { display: flex; flex-direction: column; }
+.mbis--compact .mbis-head { order: 0; }
+.mbis--compact .mbis-controls { display: contents; }
+.mbis--compact .mbis-nav { order: 1; margin-bottom: 12px; }
+.mbis--compact .mbis-stage { order: 2; display: flex; flex-direction: column; }
+.mbis--compact .mbis-svg { order: 1; }
+.mbis--compact .mbis-hud { order: 2; padding: 10px 12px 12px; min-height: 0; }
+.mbis--compact .mbis-rm-note { order: 3; }
+.mbis--compact .mbis-buttons { order: 3; margin-top: 14px; }
+.mbis--compact .mbis-panel { order: 4; }
+.mbis--compact .mbis-overview { order: 5; }
+.mbis--compact .mbis-disclaimer { order: 6; }
+.mbis--compact .mbis-sr { order: 7; }
+.mbis--compact .mbis-caption { min-height: 46px; }
+.mbis--compact.mbis-step-1 .mbis-hud-r, .mbis--compact.mbis-step-4 .mbis-hud-r { min-height: 0; }
+.mbis--compact .mbis-caption-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.mbis--compact .mbis-tab { min-height: 56px; justify-content: center; }
+.mbis--compact .mbis-tab-no { font-size: 10px; letter-spacing: .14em; }
+.mbis--compact .mbis-tab-ko { white-space: nowrap; }
+.mbis--compact .mbis-btn--all .mbis-btn-lbl { font-size: 12.5px; }
+
+/* ---------- v1.2 STEP 02 운전석 실사 장면 ---------- */
+.mbis-int { position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 1200 / 520; z-index: 1; display: none; pointer-events: none; overflow: hidden; }
+.mbis--compact .mbis-int { aspect-ratio: 910 / 350; }
+.mbis--compact.mbis--int.mbis-step-2 .mbis-svg, .mbis--compact.mbis--int.mbis-step-2 .mbis-int { aspect-ratio: 4 / 3; }
+.mbis-int-svg { display: block; width: 100%; height: 100%; }
+.mbis-int-scene { visibility: hidden; }
+.mbis--intimg .mbis-int-scene { visibility: visible; }
+.mbis-i-glass-edge { fill: none; stroke: rgba(255, 255, 255, .95); stroke-width: 5; stroke-linejoin: round; }
+.mbis-i-web { fill: none; stroke: #2a2d32; stroke-linecap: butt; stroke-linejoin: round; }
+.mbis-i-webshadow { fill: none; stroke: rgba(0, 0, 0, .28); stroke-linecap: butt; stroke-linejoin: round; transform: translate(2px, 4px); }
+.mbis-i-webhi { fill: none; stroke: rgba(255, 255, 255, .16); stroke-width: 2; transform: translate(-4px, -6px); }
+.mbis-i-glow { fill: none; stroke: var(--mbis-blue); stroke-linecap: round; stroke-linejoin: round; }
+.mbis-i-flow { fill: none; stroke: color-mix(in srgb, var(--mbis-blue) 70%, #fff); stroke-dasharray: 16 44; stroke-linecap: round; }
+.mbis-i-buckle { fill: #1c1e22; stroke: #5a5f66; stroke-width: 2; }
+.mbis-i-buckle-btn { fill: #b33b3b; }
+.mbis-i-dring { fill: #3a3e44; stroke: #9aa0a8; stroke-width: 2; }
+.mbis-i-dring-slot { fill: #121417; }
+.mbis-i-arrow path { fill: none; stroke: var(--mbis-blue); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.mbis-i-sound { fill: none; stroke: var(--mbis-blue); stroke-width: 4; stroke-linecap: round; }
+.mbis .mbis-int-lbl { font-size: 27px; stroke-width: 6px; }
+.mbis-i-lbls .mbis-lbl-line { stroke-width: 1.4; }
+.mbis--compact .mbis-i-lbls { display: none; }
+.mbis-i-ready-bg { fill: rgba(255, 255, 255, .94); stroke: var(--mbis-blue); stroke-width: 3; }
+.mbis-i-ready-ck { fill: none; stroke: var(--mbis-blue); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.mbis .mbis-i-ready-t { fill: #111317; font: 700 31px var(--mbis-font); letter-spacing: 0; }
+.mbis--compact .mbis-i-ready-in { transform: scale(1.35); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mbis *, .mbis *::before, .mbis *::after { animation: none !important; transition: none !important; }
+}
+
+
+
+/* ===== E-Class 페이지 적용 (페이지 폰트 · 화이트 배경 · 블랙/골드 선택 표시 · 센서 블루) ===== */
+.mbis-mount.mbis{--mbis-bg:transparent;--mbis-bg2:#ffffff;--mbis-card:#ffffff;--mbis-sky1:#e7ebef;--mbis-line:rgba(15,23,42,.10);}
+.mbis-mount .mbis-wrap{max-width:none;padding:clamp(8px,2vw,24px) 0 0;}
+.mbis-mount .mbis-tab.is-active{border-color:#111317;}
+.mbis-mount .mbis-tab.is-active .mbis-tab-no{color:#9b7440;}
+.mbis-mount .mbis-tab-bar i{background:#c9a86a;}
+.mbis-mount .mbis-btn--all[aria-pressed="true"]{border-color:#111317;}
+/* 섹션 틀 (이 섹션 전용) */
+.eis-section{background:#ffffff;padding:clamp(64px,8vw,112px) 0;border-top:1px solid rgba(15,23,42,.08);}
+.eis-inner{width:min(100% - 40px,1200px);margin-inline:auto;}
+.eis-inner > .section-heading{margin-bottom:clamp(8px,1.5vw,16px);}
+@media (max-width:480px){.eis-inner{width:calc(100% - 32px);}}
+</style>
 </head>
 <body>
 
@@ -562,6 +976,1667 @@ section{scroll-margin-top:var(--header-h);padding-block:clamp(72px,8vw,120px);}
     <div class="choose-grid" id="chooseGrid"></div>
   </div>
 </section>
+
+<!-- ============================================================
+     INTEGRAL SAFETY · 4단계 통합 안전대책 (GLC 모듈 이식 · E-Class W214 세단 설정)
+     - 이미지 경로·안전 사양은 아래 스크립트의 ECLASS_SAFETY_IMAGES / ECLASS_SAFETY_CONFIG에서 수정합니다.
+     ============================================================ -->
+<section class="eis-section" id="integral-safety" aria-label="4단계 통합 안전대책">
+  <div class="eis-inner">
+    <div class="mbis-mount" id="mbis-hybrid"></div>
+  </div>
+</section>
+<script>
+/*!
+ * Mercedes-Benz Integral Safety — interactive module
+ * v1.2.0 · standalone · no dependencies
+ *   v1.2: preSafeInteriorImage · preSafeInterior — STEP 02 운전석 실사 장면(벨트 장력·창문) 선택 옵션
+ *   v1.1: wheelImage · roadImage · vehicleGeometry · stepCopy · featureNames 옵션 추가
+ *         실사 차체 이미지는 변형하지 않고, 충돌 단계에서는 SVG 구조도로 전환합니다.
+ *
+ * 사용법
+ *   <div data-mb-integral-safety data-mb-config='{"vehicleModel":"E-Class"}'></div>
+ *   <link rel="stylesheet" href="mb-integral-safety.css">
+ *   별도 파일로 적용 시 mb-integral-safety.js를 defer 속성으로 연결합니다.
+ *
+ *   또는 JS:  MBIntegralSafety.mount(element, { ...config })
+ *
+ * 전역 노출: window.MBIntegralSafety 하나만 사용합니다.
+ * 모든 CSS 클래스는 "mbis-" 접두어, SVG id는 인스턴스별 고유 접두어를 사용합니다.
+ */
+(function (window, document) {
+  'use strict';
+  if (window.MBIntegralSafety) return;
+
+  var VERSION = '1.2.0';
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var uidCounter = 0;
+
+  /* ------------------------------------------------------------------ *
+   * 수학 유틸
+   * ------------------------------------------------------------------ */
+  function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+  function lerp(a, b, k) { return a + (b - a) * k; }
+  function smooth(k) { k = clamp(k, 0, 1); return k * k * (3 - 2 * k); }
+  function seg(t, a, b) { return smooth((t - a) / (b - a)); }
+  function lin(t, a, b) { return clamp((t - a) / (b - a), 0, 1); }
+  function easeOut(k) { k = clamp(k, 0, 1); return 1 - (1 - k) * (1 - k); }
+  /* a→b 페이드 인, c→d 페이드 아웃 */
+  function win(t, a, b, c, d) { return Math.min(seg(t, a, b), 1 - seg(t, c, d)); }
+  function blink(t, hz) { return Math.floor(t * hz * 2) % 2 === 0; }
+  /* 속도 함수 적분 → 결정적(deterministic) 주행 거리 */
+  function travel(t, v) {
+    var s = 0, dt = 0.02, x = 0;
+    while (x < t) { var h = Math.min(dt, t - x); s += v(x + h / 2) * h; x += h; }
+    return s;
+  }
+  function f1(n) { return Math.round(n * 10) / 10; }
+
+  /* ------------------------------------------------------------------ *
+   * DOM 유틸
+   * ------------------------------------------------------------------ */
+  function sv(tag, attrs, parent) {
+    var e = document.createElementNS(SVGNS, tag);
+    if (attrs) for (var k in attrs) {
+      if (k === 'text') e.textContent = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    }
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function el(tag, cls, parent, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function attr(e, k, v) { if (e.__c === undefined) e.__c = {}; if (e.__c[k] !== v) { e.__c[k] = v; e.setAttribute(k, v); } }
+  function op(e, v) { v = f1(clamp(v, 0, 1) * 100) / 100; attr(e, 'opacity', v); attr(e, 'display', v <= 0.001 ? 'none' : 'inline'); }
+  function cls(e, name, on) { if (e.classList.contains(name) !== !!on) e.classList.toggle(name, !!on); }
+  function txt(e, s) { if (e.textContent !== s) e.textContent = s; }
+  function extend(a, b) { var o = {}, k; for (k in a) o[k] = a[k]; if (b) for (k in b) o[k] = b[k]; return o; }
+
+  /* ------------------------------------------------------------------ *
+   * 안전 기능 카탈로그
+   *   common : 모든 차량 공통 구조 개념(차종 사양과 무관하게 표시)
+   *   whenUnverified : 지원 여부 미확인 시 'generic'(공통 개념으로 표시) | 'hidden'
+   * ------------------------------------------------------------------ */
+  var FEATURES = {
+    distronic: {
+      name: '액티브 디스턴스 어시스트 디스트로닉', en: 'Active Distance Assist DISTRONIC',
+      generic: '차간거리 유지 보조',
+      short: '전방 차량과의 거리를 감지해, 설정한 차간거리를 유지하도록 속도를 조절합니다.',
+      detail: '레이더 등 센서로 전방 차량을 감지하고, 앞차가 감속하거나 가속하면 그에 맞춰 차량 속도를 자동으로 조절해 운전자가 설정한 차간거리를 유지하도록 지원합니다. 화면의 감지 영역은 이해를 돕기 위한 개념 그래픽이며 실제 센서의 형태와 다릅니다. 운전자는 항상 교통 상황을 주시해야 합니다.',
+      whenUnverified: 'generic'
+    },
+    activeLaneKeeping: {
+      name: '액티브 차선 유지 어시스트', en: 'Active Lane Keeping Assist',
+      generic: '차선 유지 보조',
+      short: '차선 이탈 위험을 감지하면 경고하고, 필요 시 조향·제동 개입으로 차선 이탈 방지를 지원합니다.',
+      detail: '카메라로 차선을 인식해 의도치 않은 차선 이탈 위험이 있을 때 스티어링 휠 진동 등으로 경고하고, 사양에 따라 조향 개입 또는 한쪽 바퀴 제동 개입으로 차선 복귀를 지원합니다. 차선이 불분명하거나 작동 속도 범위를 벗어나면 기능이 제한될 수 있습니다.',
+      whenUnverified: 'generic'
+    },
+    esp: {
+      name: 'ESP® 차체 자세 제어', en: 'Electronic Stability Program',
+      generic: '차체 자세 제어',
+      short: '미끄러짐이 감지되면 개별 바퀴 제동과 구동력 조절로 주행 안정성 유지를 지원합니다.',
+      detail: '차량의 실제 회전(요) 움직임과 운전자의 조향 의도를 비교해, 오버스티어나 언더스티어가 감지되면 필요한 바퀴에 개별 제동을 걸고 구동력을 조절해 안정성 유지를 지원합니다. 물리적 한계를 넘는 상황에서는 효과가 제한됩니다. 화면의 상단 뷰는 개념적 보조 장면입니다.',
+      whenUnverified: 'generic'
+    },
+    activeBrakeAssist: {
+      name: '액티브 브레이크 어시스트', en: 'Active Brake Assist',
+      generic: '긴급 제동 보조',
+      short: '전방 충돌 위험 시 경고하고, 운전자 제동을 보조하거나 자동 제동으로 충돌 회피 또는 피해 경감을 지원합니다.',
+      detail: '전방 차량·장애물과의 충돌 위험을 감지하면 먼저 시각·청각 경고를 제공합니다. 운전자가 브레이크를 밟으면 상황에 맞게 제동력을 보조하고, 반응이 없으면 자동 제동을 개입할 수 있습니다. 목적은 충돌 회피 또는 충돌 속도·피해 경감이며, 모든 충돌을 막을 수는 없습니다. 자동 제동이 작동했다고 해서 반드시 충돌이 발생하는 것은 아닙니다. (애니메이션에서 경고음은 재생되지 않습니다.)',
+      whenUnverified: 'generic'
+    },
+    preSafe: {
+      name: 'PRE-SAFE® 예방 안전 시스템', en: 'PRE-SAFE®',
+      generic: '충돌 전 탑승자 보호 준비',
+      short: '충돌 위험을 감지하면 안전벨트 장력 조절, 측면 윈도우 닫힘 등으로 탑승자 보호를 미리 준비합니다.',
+      detail: '급제동이나 위험한 미끄러짐 등 충돌 가능성이 높은 상황에서 작동합니다. 전동식(가역식) 벨트 텐셔너로 안전벨트의 느슨함을 미리 없애고, 열려 있는 측면 윈도우(사양에 따라 선루프 포함)를 닫으며, 사양에 따라 전동 시트 위치를 조정합니다. 충돌이 회피되면 벨트 장력은 다시 풀립니다. 제동을 지원하는 액티브 브레이크 어시스트와는 다른 기능입니다.',
+      whenUnverified: 'generic'
+    },
+    preSafeSound: {
+      name: 'PRE-SAFE® Sound', en: 'PRE-SAFE® Sound',
+      generic: 'PRE-SAFE® Sound',
+      short: '충돌 직전 짧은 보호음을 내보내 귀의 자연스러운 보호 반사를 유도합니다. (적용 차량에 한함)',
+      detail: '충돌이 임박하면 오디오 시스템으로 짧은 잡음 신호(핑크 노이즈)를 내보내, 큰 충돌음이 전달되기 전에 귀 속 등골근의 자연스러운 보호 반사를 유도하도록 설계되었습니다. 본 애니메이션에서는 실제 소리를 재생하지 않고 시각적으로만 표현합니다.',
+      whenUnverified: 'hidden'
+    },
+    crumpleZone: {
+      common: true, name: '크럼플 존 (충격 흡수 구조)', en: 'Crumple zone',
+      short: '차체 전면 구조가 계획된 방식으로 변형되며 충돌 에너지를 흡수합니다.',
+      detail: '전면의 변형 구조가 정해진 방식으로 접히면서 충돌 에너지를 흡수·분산해, 승객실로 전달되는 힘과 변형을 줄이도록 설계됩니다. 애니메이션의 변형 정도와 속도는 이해를 돕기 위한 개념적 표현입니다.'
+    },
+    passengerCell: {
+      common: true, name: '고강성 승객실', en: 'Safety passenger cell',
+      short: '고강도 소재로 보강된 승객실이 탑승자의 생존 공간 유지를 돕습니다.',
+      detail: '크럼플 존이 에너지를 흡수하는 동안, 고강도·초고강도 강판 등으로 보강된 승객실은 변형을 최소화해 탑승 공간을 유지하도록 설계됩니다.'
+    },
+    beltSystem: {
+      common: true, name: '안전벨트 시스템 (프리텐셔너 · 하중 제한 장치)', en: 'Seat belt system',
+      short: '충돌 순간 벨트 프리텐셔너가 벨트를 당겨 몸을 고정하고, 하중 제한 장치가 흉부에 가해지는 힘을 조절합니다.',
+      detail: '충돌이 감지되면 벨트 프리텐셔너(일반적으로 화약식)가 순간적으로 벨트를 되감아 탑승자를 시트에 밀착시킵니다. 이후 벨트 하중이 일정 수준을 넘으면 하중 제한 장치가 벨트를 조금씩 풀어 흉부 부담을 줄입니다. 충돌 전에 작동하는 PRE-SAFE®의 전동식(가역식) 벨트 장력 조절과는 별개의 장치입니다.'
+    },
+    airbags: {
+      common: true, name: '에어백', en: 'Airbags',
+      short: '충돌이 감지된 뒤, 충돌 방향과 강도에 맞는 에어백만 전개됩니다.',
+      detail: '에어백 제어 장치가 충돌의 방향과 강도를 판단해, 해당 조건에 필요한 에어백만 충돌 감지 직후 매우 짧은 시간 안에 전개합니다. 이 시뮬레이션의 전방 충돌에서는 전면 에어백이 전개되며, 측면·윈도우(커튼) 에어백 등은 측면 충돌 등 해당 조건에서 작동합니다. 에어백 구성은 차종·사양에 따라 다릅니다.'
+    },
+    emergencyCall: {
+      name: 'Mercedes-Benz 긴급 호출 시스템', en: 'Mercedes-Benz Emergency Call',
+      generic: '사고 후 긴급 호출',
+      short: '심각한 사고가 감지되면 자동으로 긴급 호출을 시도하고, 사고 위치 등 구조에 필요한 정보를 전달합니다.',
+      detail: '에어백이나 벨트 텐셔너가 작동하는 등 중대한 사고가 감지되면, 차량이 자동으로 구조센터 연결을 시도하고 사고 위치·시각 등 구조에 필요한 정보를 전달해 신속한 구조를 지원합니다. 사양에 따라 SOS 버튼으로 수동 호출도 가능합니다. 서비스 제공 여부와 명칭은 국가, 차량 사양, 서비스 가입 상태에 따라 다르며, 통신 환경이나 사고 조건에 따라 연결되지 않을 수 있습니다.',
+      whenUnverified: 'generic'
+    },
+    postCrash: {
+      name: '사고 후 보호 기능', en: 'Post-crash functions',
+      generic: '사고 후 보호 기능',
+      short: '조건에 따라 비상등 점멸, 실내 조명 점등, 도어 잠금 해제로 2차 사고 방지와 구조 활동을 돕습니다.',
+      detail: '사고 조건과 차량 사양에 따라 비상등이 자동으로 점멸해 후속 차량에 위험을 알리고, 실내 조명이 켜지며, 도어 잠금이 해제되어 구조대의 접근을 돕습니다. 차량 손상 정도에 따라 일부 기능은 작동하지 않을 수 있습니다.',
+      whenUnverified: 'generic'
+    },
+    rescueQR: {
+      name: 'QR 구조 정보', en: 'Rescue QR code',
+      generic: '디지털 구조 정보',
+      short: '차량에 부착된 QR 코드로 구조대가 해당 차종의 구조 정보를 확인할 수 있습니다.',
+      detail: '주유구(충전구) 커버와 B필러 등에 부착된 QR 코드를 스캔하면, 구조대가 해당 차종의 구조 정보(차체 보강 위치, 에어백·배터리 위치 등)를 확인해 안전하고 신속한 구조에 활용할 수 있습니다. 부착 위치는 차종에 따라 다를 수 있습니다.',
+      whenUnverified: 'generic'
+    },
+    hvDisconnect: {
+      name: '고전압 시스템 자동 차단', en: 'High-voltage disconnection',
+      generic: '고전압 시스템 차단',
+      onlyFor: ['electric', 'hybrid', 'phev'],
+      short: '사고가 감지되면 조건에 따라 배터리와 구동계 사이의 고전압 연결을 자동으로 차단합니다.',
+      detail: '전기차·하이브리드 차량은 사고 감지 시 조건에 따라 고전압 배터리와 모터·전력 장치 사이의 연결을 자동으로 차단해, 구조 활동 중 감전 위험을 줄이도록 설계됩니다. 연결이 차단되더라도 배터리 내부에는 에너지가 남아 있을 수 있으므로, 손상된 차량의 고전압 부품(주황색 배선 등)은 만지지 말고 구조 전문 인력의 안내를 따라야 합니다. 화면의 배터리·배선 위치는 개념적 표현입니다.',
+      whenUnverified: 'generic'
+    }
+  };
+
+  /* ------------------------------------------------------------------ *
+   * 4단계 정의 (공식 4단계 통합 안전 개념)
+   * ------------------------------------------------------------------ */
+  var STEPS = [
+    {
+      no: '01', ko: '안전 주행', en: 'SAFE DRIVING', dur: 15, keyT: 9.2,
+      theme: '사고가 발생하지 않도록 돕는 기술',
+      tagline: '운전자의 주행을 돕고, 위험 상황을 예방합니다.',
+      features: ['distronic', 'activeLaneKeeping', 'esp'],
+      phases: [
+        { t: 0, x: '고속도로 정상 주행', xs: '고속도로 정상 주행' },
+        { t: 2, x: '전방 차량 등장', xs: '전방 차량 등장' },
+        { t: 3.2, x: '센서가 전방 차량을 감지합니다 (감지 영역은 개념 그래픽)', xs: '센서가 전방 차량 감지 (개념)' },
+        { t: 4.6, x: '앞차 감속 → 설정한 차간거리를 유지하도록 속도 자동 조절', xs: '앞차 감속 → 차간거리 자동 유지', f: 'distronic' },
+        { t: 7.6, x: '차선 이탈 위험 감지 → 경고 및 조향 개입으로 차선 유지 지원', xs: '차선 이탈 위험 → 경고·조향 지원', f: 'activeLaneKeeping' },
+        { t: 10.9, x: 'ESP® 보조 장면 — 미끄러짐 시 개별 바퀴 제동으로 자세 안정 지원', xs: 'ESP® 개별 바퀴 제동 · 자세 안정', f: 'esp' },
+        { t: 13.8, x: '안정적인 주행 유지', xs: '안정적인 주행 유지' }
+      ]
+    },
+    {
+      no: '02', ko: '충돌 위험 대비', en: 'PREPARE FOR A POSSIBLE CRASH', dur: 12.5, keyT: 8.8,
+      theme: '위험을 감지하고, 충돌을 피하거나 피해를 줄이도록 준비하는 기술',
+      tagline: '충돌 위험을 감지하고, 사고에 대비해 탑승자를 보호할 준비를 합니다.',
+      features: ['activeBrakeAssist', 'preSafe', 'preSafeSound'],
+      note: '액티브 브레이크 어시스트는 충돌 회피·피해 경감을 위한 제동 지원 기능이고, PRE-SAFE®는 탑승자 보호를 미리 준비하는 별개의 기능입니다.',
+      phases: [
+        { t: 0, x: '정상 주행 — 설정 차간거리 유지 중', xs: '정상 주행 · 차간거리 유지 중' },
+        { t: 1.4, x: '앞차 급감속', xs: '앞차 급감속' },
+        { t: 1.9, x: '전방 충돌 위험 감지 → 시각·청각 경고 (소리는 재생되지 않음)', xs: '충돌 위험 감지 → 경고', f: 'activeBrakeAssist' },
+        { t: 3.0, x: '제동 지원 · 자동 제동 개입으로 충돌 회피 또는 피해 경감 지원', xs: '제동 지원 · 자동 제동 개입', f: 'activeBrakeAssist' },
+        { t: 4.3, x: '가상 상황: 충돌이 임박한 경우 — 탑승자 보호 준비 시작', xs: '가상 상황 · 탑승자 보호 준비', f: 'preSafe' },
+        { t: 5.0, x: '안전벨트 사전 장력 조절 — 벨트를 되감아 느슨함 제거', xs: '안전벨트 사전 장력 조절', f: 'preSafe' },
+        { t: 6.6, x: '열려 있던 측면 윈도우 닫힘', xs: '열린 측면 윈도우 닫힘', f: 'preSafe' },
+        { t: 8.0, x: 'PRE-SAFE® Sound — 충돌 직전 보호음 (적용 차량 · 소리 재생 없음)', xs: 'PRE-SAFE® Sound (소리 없음)', f: 'preSafeSound' },
+        { t: 10.0, x: '충돌이 회피되면 벨트 장력 등은 원래 상태로 돌아갑니다', xs: '충돌 회피 시 벨트 장력 해제' },
+        { t: 11.3, x: '다음 단계: 충돌을 피하지 못한 가상 상황', xs: '다음: 충돌을 피하지 못한 가상 상황' }
+      ]
+    },
+    {
+      no: '03', ko: '충돌 순간 보호', en: 'PROTECT DURING A CRASH', dur: 11, keyT: 6.5,
+      theme: '충돌 순간 탑승자의 부상 위험을 줄이는 기술',
+      tagline: '충돌 에너지를 흡수하고, 탑승자의 생존 공간을 보호합니다.',
+      features: ['crumpleZone', 'passengerCell', 'beltSystem', 'airbags'],
+      note: '충돌을 피하지 못한 경우를 가정한 개념 시뮬레이션입니다. 실제 충돌은 수십~수백 밀리초 안에 일어나며, 화면은 슬로 모션으로 표현했습니다.',
+      phases: [
+        { t: 0, x: '가상 상황: 충돌을 피하지 못한 경우', xs: '가상 상황 · 충돌을 피하지 못한 경우' },
+        { t: 0.6, x: '충돌 직전 — 안전벨트는 이미 조여진 상태', xs: '충돌 직전 · 벨트는 이미 조여진 상태', f: 'preSafe' },
+        { t: 1.6, x: '전방 충돌 발생 (이후 슬로 모션 개념 표현)', xs: '전방 충돌 · 이후 슬로 모션' },
+        { t: 1.85, x: '충돌 감지 직후 벨트 프리텐셔너 작동', xs: '벨트 프리텐셔너 작동' },
+        { t: 2.1, x: '충돌 조건에 맞는 전면 에어백 전개 — 충돌 감지 이후', xs: '조건에 맞는 전면 에어백 전개' },
+        { t: 2.6, x: '크럼플 존이 계획된 방식으로 변형되며 충돌 에너지 흡수', xs: '크럼플 존이 충돌 에너지 흡수' },
+        { t: 3.2, x: '벨트 하중 제한 장치가 흉부에 가해지는 힘을 조절', xs: '하중 제한 장치가 흉부 부담 조절' },
+        { t: 4.2, x: '고강성 승객실이 탑승 공간을 유지', xs: '고강성 승객실이 탑승 공간 유지' },
+        { t: 6.2, x: '충돌 에너지를 흡수하고, 탑승자의 생존 공간을 보호합니다', xs: '에너지 흡수 · 생존 공간 보호' }
+      ]
+    },
+    {
+      no: '04', ko: '사고 이후 보호', en: 'HELP AFTER A CRASH', dur: 12.5, keyT: 9.6,
+      theme: '사고 이후 2차 피해를 줄이고 신속한 구조를 지원하는 기술',
+      tagline: '사고 이후에도 탑승자의 안전과 신속한 구조를 지원합니다.',
+      features: ['emergencyCall', 'postCrash', 'rescueQR', 'hvDisconnect'],
+      note: '차량 사양, 사고 조건, 통신 환경에 따라 긴급 호출 연결 및 각 기능의 작동 여부는 달라질 수 있습니다.',
+      phases: [
+        { t: 0, x: '충돌 후 차량 정지', xs: '충돌 후 차량 정지' },
+        { t: 0.8, x: '비상등 자동 점멸 — 후속 차량에 위험 알림 (조건에 따라)', xs: '비상등 자동 점멸 (조건에 따라)', f: 'postCrash' },
+        { t: 1.8, x: '실내 조명 점등 · 도어 잠금 해제 (조건·사양에 따라)', xs: '실내 조명 · 도어 잠금 해제', f: 'postCrash' },
+        { t: 2.4, x: '고전압 연결 자동 차단 (조건에 따라) — 배터리 내부에는 에너지가 남아 있을 수 있습니다', xs: '고전압 연결 차단 (조건에 따라)', f: 'hvDisconnect' },
+        { t: 3.0, x: '긴급 호출 자동 연결 시도', xs: '긴급 호출 자동 연결 시도', f: 'emergencyCall' },
+        { t: 5.0, x: '구조센터 연결 · 사고 위치와 시각 등 정보 전달', xs: '구조센터 연결 · 위치 정보 전달', f: 'emergencyCall' },
+        { t: 7.0, x: '구조대가 사고 위치를 확인하고 출동', xs: '구조대 위치 확인 · 출동', f: 'emergencyCall' },
+        { t: 8.8, x: 'QR 구조 정보 — 구조대가 차종별 구조 정보 확인', xs: 'QR 구조 정보 확인', f: 'rescueQR' },
+        { t: 10.6, x: '사양·사고 조건·통신 환경에 따라 작동은 달라질 수 있습니다', xs: '사양·조건에 따라 작동은 다를 수 있음' }
+      ]
+    }
+  ];
+
+  /* STEP 02 — 운전석 실사 장면 사용 시 타임라인 */
+  var INT_STEP2 = {
+    dur: 14.5, keyT: 10.6,
+    phases: [
+      { t: 0, x: '정상 주행 — 설정 차간거리 유지 중', xs: '정상 주행 · 차간거리 유지 중' },
+      { t: 1.4, x: '앞차 급감속', xs: '앞차 급감속' },
+      { t: 1.9, x: '전방 충돌 위험을 감지했습니다 — 시각·청각 경고 (소리는 재생되지 않음)', xs: '전방 충돌 위험을 감지했습니다', f: 'activeBrakeAssist' },
+      { t: 3.0, x: '제동 지원 · 자동 제동 개입으로 충돌 회피 또는 피해 경감 지원', xs: '제동 지원 · 자동 제동 개입', f: 'activeBrakeAssist' },
+      { t: 4.3, x: '가상 상황: 충돌이 임박한 경우 — 탑승자 보호 준비 시작', xs: '가상 상황 · 탑승자 보호 준비', f: 'preSafe' },
+      { t: 5.6, x: '충돌 위험에 대비해 안전벨트의 느슨함을 줄입니다', xs: '안전벨트의 느슨함을 줄입니다', f: 'preSafe' },
+      { t: 7.9, x: '위험 상황에 대비해 열려 있던 창문을 닫습니다 (사양·조건에 따라)', xs: '열려 있던 창문을 닫습니다', f: 'preSafe' },
+      { t: 10.2, x: '탑승자 보호를 위한 준비가 완료되었습니다', xs: '탑승자 보호 준비 완료' },
+      { t: 10.9, x: 'PRE-SAFE® Sound — 충돌 직전 보호음 (적용 차량 · 소리 재생 없음)', xs: 'PRE-SAFE® Sound (소리 없음)', f: 'preSafeSound' },
+      { t: 11.8, x: '충돌을 피하면 벨트의 사전 장력은 다시 완화됩니다 — 벨트는 착용 상태 그대로', xs: '충돌 회피 시 벨트 장력 완화' },
+      { t: 13.4, x: '다음 단계: 충돌을 피하지 못한 가상 상황', xs: '다음: 충돌을 피하지 못한 가상 상황' }
+    ]
+  };
+
+  var DEFAULTS = {
+    vehicleModel: '',             // 예: 'E-Class', 'S-Class', 'EQS'
+    vehicleType: 'combustion',    // 'combustion' | 'hybrid' | 'phev' | 'electric'
+    vehicleImage: null,           // 측면(우향) 투명 PNG/WebP/AVIF 경로. null이면 내장 SVG 세단
+    vehicleImageHasWheels: true,  // 이미지에 바퀴가 포함되어 있으면 true (내장 바퀴 숨김)
+    supportedSafetyFeatures: null,// 해당 모델 확인 사양 키 배열. null = 미확인 → 공통 개념으로 표시
+    theme: 'dark',                // 'dark' | 'light'
+    assetBasePath: 'mb-integral-safety-assets/',
+    autoplay: 'all',              // 'all'(화면에 보이면 전체 자동 재생) | 'step' | false
+    startStep: 0,
+    showHeader: true,
+    title: '안전은 사고가 나기 전부터, 사고가 끝난 이후까지.',
+    description: '메르세데스-벤츠는 사고 예방부터 충돌 보호, 사고 이후 구조까지 모든 순간의 안전을 고려합니다.',
+    compactBreakpoint: 680,
+    /* v1.1 옵션 (모두 선택) */
+    wheelImage: null,             // 바퀴 단독 투명 이미지(정면, 원형). 지정 시 도로와 같은 거리만큼 시계 방향 회전
+    roadImage: null,              // { src, width, height, scale, top, sky:[[0~1,'#색']], skyTop, below } — 좌우 이음매 없는 도로 타일
+    vehicleGeometry: null,        // 차체 이미지·SVG 구조도 좌표(CAR 단위) 재정의. 예: SUV 실루엣, 바퀴 위치
+    stepCopy: null,               // [{ tab, title, theme, tagline }] 단계별 문구 재정의
+    featureNames: null,           // { distronic: '국내 명칭' } 기능 표시명 재정의
+    preSafeInteriorImage: null,   // STEP 02 운전석 실사 이미지(투명 PNG/WebP). 없거나 로드 실패 시 기존 SVG 실내 장면
+    preSafeInterior: null         // 위 이미지 좌표계의 벨트·창문·화면 구도 정의
+  };
+
+  var VB = {
+    wide: { x: 0, y: 0, w: 1200, h: 520 },
+    compact: { x: 120, y: 190, w: 910, h: 350 },
+    compact2: { x: 140, y: -60, w: 860, h: 645 }   // 모바일 STEP 02(실내 장면 사용 시) 4:3
+  };
+
+  /* 차량(측면, 우향) 로컬 좌표 — 지면 y=0, 길이 0~320 */
+  var CAR = {
+    body: 'M10,-24 L7,-50 C9,-61 22,-66 42,-67 L94,-70 C114,-96 142,-108 172,-110 C200,-111 220,-107 234,-99 L262,-74 C290,-70 308,-64 314,-56 C320,-48 320,-34 316,-24 L284,-24 A29,29 0 0 0 226,-24 L99,-24 A29,29 0 0 0 41,-24 Z',
+    sill: 'M99,-24 L226,-24 L223,-31 L102,-31 Z',
+    shoulder: 'M16,-50 C70,-57 200,-61 312,-55',
+    aperture: 'M100,-71 C118,-93 142,-103 170,-105 L226,-103 L252,-74 Z',
+    bpillar: 'M143,-106 L152,-106 L152,-71 L143,-71 Z',
+    frontWin: 'M152,-71 L152,-104.5 L170,-105 L226,-103 L252,-74 Z',
+    doors: 'M150,-71 L148,-31 M246,-73 C248,-58 247,-42 240,-31 M98,-70 C97,-56 98,-42 100,-31',
+    handles: 'M118,-60 h12 M212,-62 h12',
+    mirror: 'M244,-76 L257,-81 L262,-74 L249,-71 Z',
+    head: 'M298,-61 C307,-61 313,-58 316,-53 L303,-52 Z',
+    tail: 'M8,-52 L22,-60 L31,-58 L10,-47 Z',
+    cell: 'M100,-29 L100,-70 C118,-94 142,-104 170,-106 L228,-104 L262,-74 L262,-29 Z',
+    crumple: 'M262,-74 C290,-70 308,-64 314,-56 C320,-48 320,-34 316,-24 L284,-24 A29,29 0 0 0 262,-52 Z',
+    buckle: 'M266,-72 L276,-77 L286,-70 L296,-75 L306,-66 M270,-36 L282,-42 L292,-34 L304,-40',
+    split: 262,
+    frontLen: 58,
+    rearWheel: 70, frontWheel: 255,
+    wheelR: 22,
+    tailPt: [18, -54], headPt: [306, -52],
+    glassRect: [150, -108, 106, 40],
+    imageBox: { x: 0, y: -122, w: 320, h: 122 },
+    shadow: [160, 170],
+    hv: { batt: [100, -22, 120, 9], box: [152, -28], rearMotor: [78, -22], frontMotor: [247, -22], busY: -29 },
+    labels: null
+  };
+
+  /* ------------------------------------------------------------------ *
+   * 기능 지원 상태 계산
+   * ------------------------------------------------------------------ */
+  function resolveFeatures(cfg) {
+    var list = cfg.supportedSafetyFeatures, verified = Array.isArray(list), set = {}, out = {};
+    if (verified) for (var i = 0; i < list.length; i++) set[list[i]] = true;
+    Object.keys(FEATURES).forEach(function (k) {
+      var f = FEATURES[k], st;
+      if (f.common) st = 'common';
+      else if (f.onlyFor && f.onlyFor.indexOf(cfg.vehicleType) < 0) st = 'hidden';
+      else if (set[k]) st = 'supported';
+      else st = f.whenUnverified || 'generic';
+      out[k] = st;
+    });
+    return out;
+  }
+  function featName(k, st, names) { var f = FEATURES[k]; if (names && names[k] && st === 'supported') return names[k]; return (st === 'supported' || st === 'common') ? f.name : f.generic; }
+
+  /* ------------------------------------------------------------------ *
+   * 아이콘(계기판 스타일, 자체 제작 단순 아이콘)
+   * ------------------------------------------------------------------ */
+  var ICONS = {
+    dist: '<svg viewBox="0 0 32 32"><path d="M9 8h14l2 6v7H7v-7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 25h20M9 28.5h14" stroke="currentColor" stroke-width="2"/></svg>',
+    lane: '<svg viewBox="0 0 32 32"><path d="M7 29L12 3M25 29L20 3" stroke="currentColor" stroke-width="2.4" fill="none"/><rect x="13" y="15" width="6" height="9" rx="2" fill="currentColor"/></svg>',
+    brake: '<svg viewBox="0 0 32 32"><path d="M16 4L29 27H3z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 12v7" stroke="currentColor" stroke-width="2.6"/><circle cx="16" cy="23" r="1.6" fill="currentColor"/></svg>',
+    esp: '<svg viewBox="0 0 32 32"><path d="M9 6h14l2 6v7H7v-7z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 24c3-2 3 4 6 2M18 24c3-2 3 4 6 2" stroke="currentColor" stroke-width="2" fill="none"/></svg>',
+    hazard: '<svg viewBox="0 0 32 32"><path d="M16 3L30 28H2z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 12L23 24H9z" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+    sos: '<svg viewBox="0 0 32 32"><rect x="2" y="7" width="28" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><text x="16" y="20.5" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" font-family="Arial,sans-serif">SOS</text></svg>',
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>',
+    pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>',
+    replay: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z" fill="currentColor"/></svg>',
+    all: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h2v12H3zM7 6l7 6-7 6zM14 6l7 6-7 6z" fill="currentColor"/></svg>'
+  };
+
+  /* ------------------------------------------------------------------ *
+   * 인스턴스
+   * ------------------------------------------------------------------ */
+  function Instance(root, cfg) {
+    this.root = root;
+    this.cfg = extend(DEFAULTS, cfg);
+    this.id = 'mbis' + (++uidCounter) + '_' + Math.random().toString(36).slice(2, 6);
+    this.feat = resolveFeatures(this.cfg);
+    var vg = this.cfg.vehicleGeometry || {};
+    this.G = extend(CAR, vg);
+    this.G.hv = extend(CAR.hv, vg.hv);
+    var sc = this.cfg.stepCopy || [];
+    this.S = STEPS.map(function (s, i) { return extend(s, sc[i]); });
+    this.hasHV = this.feat.hvDisconnect !== 'hidden';
+    this.photoOk = false; this.wheelOk = false; this.roadOk = false; this._lazy = [];
+    this.S1base = this.S[1];
+    this.hasInt = !!(this.cfg.preSafeInteriorImage && this.cfg.preSafeInterior);
+    this.intOk = false;
+    if (this.hasInt) this.S[1] = extend(this.S1base, INT_STEP2);
+    this.step = 0; this.t = 0; this.mode = 'single';
+    this.want = false; this.visible = true; this.pageVisible = !document.hidden;
+    this.ended = false; this.trans = 0; this.compact = false; this.userStarted = false;
+    this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this._raf = 0; this._last = 0; this._caption = null; this._listeners = [];
+    this.phases = this.S.map(function (s) {
+      return s.phases.filter(function (p) { return !p.f || this.feat[p.f] !== 'hidden'; }, this);
+    }, this);
+    this.build();
+    this.bind();
+    var a = this.cfg.autoplay;
+    this.select(clamp(this.cfg.startStep | 0, 0, 3), { play: !!a && !this.reduced, mode: a === 'all' ? 'all' : 'single', silent: true });
+  }
+
+  var P_ = Instance.prototype;
+
+  /* ---------- DOM 구축 ---------- */
+  P_.build = function () {
+    var root = this.root, cfg = this.cfg, self = this;
+    root.innerHTML = '';
+    root.classList.add('mbis');
+    root.classList.toggle('mbis--light', cfg.theme === 'light');
+    root.setAttribute('data-mbis-ready', '');
+    if (!root.getAttribute('aria-label')) root.setAttribute('aria-label', 'Mercedes-Benz 통합 안전 시스템 인터랙티브 시뮬레이션');
+    if (!root.getAttribute('role')) root.setAttribute('role', 'region');
+
+    var wrap = el('div', 'mbis-wrap', root);
+    var ui = this.ui = {};
+
+    if (cfg.showHeader) {
+      var head = el('header', 'mbis-head', wrap);
+      el('p', 'mbis-eyebrow', head, 'MERCEDES-BENZ INTEGRAL SAFETY' + (cfg.vehicleModel ? ' · ' + cfg.vehicleModel : ''));
+      el('h2', 'mbis-title', head, cfg.title);
+      el('p', 'mbis-desc', head, cfg.description);
+    }
+
+    /* 스테이지 */
+    var stage = ui.stage = el('div', 'mbis-stage', wrap);
+    var hud = el('div', 'mbis-hud', stage);
+    var hudL = el('div', 'mbis-hud-l', hud);
+    var cap = ui.caption = el('div', 'mbis-caption', hudL);
+    ui.capStep = el('span', 'mbis-caption-step', cap);
+    ui.capText = el('span', 'mbis-caption-text', cap);
+    ui.banner = el('div', 'mbis-banner', hudL);
+    var cluster = ui.cluster = el('div', 'mbis-cluster', hudL);
+    cluster.setAttribute('aria-hidden', 'true');
+    ui.speedWrap = el('div', 'mbis-speed', cluster);
+    ui.speed = el('b', null, ui.speedWrap, '100');
+    el('span', null, ui.speedWrap, 'km/h');
+    ui.icons = {};
+    [['dist', '거리'], ['lane', '차선'], ['brake', '경고'], ['esp', 'ESP'], ['hazard', '비상등'], ['sos', 'SOS']].forEach(function (d) {
+      var i = el('span', 'mbis-ico mbis-ico--' + d[0], cluster);
+      i.innerHTML = ICONS[d[0]];
+      el('small', null, i, d[1]);
+      ui.icons[d[0]] = i;
+    });
+
+    var hudR = el('div', 'mbis-hud-r', hud);
+    this.buildInset(hudR);
+    this.buildEcall(hudR);
+
+    var svg = ui.svg = sv('svg', { 'class': 'mbis-svg', viewBox: '0 0 1200 520', preserveAspectRatio: 'xMidYMid meet', 'aria-hidden': 'true', focusable: 'false' }, stage);
+    this.buildScene(svg);
+    if (this.hasInt) this.buildInterior(stage);
+
+    ui.transition = el('div', 'mbis-transition', stage);
+    ui.transNo = el('span', 'mbis-transition-no', ui.transition);
+    ui.transTitle = el('strong', null, ui.transition);
+    ui.transTag = el('span', 'mbis-transition-tag', ui.transition);
+
+    ui.rmNote = el('p', 'mbis-rm-note', stage, '‘동작 줄이기’ 설정으로 자동 재생이 꺼져 있습니다. 재생 버튼을 누르면 애니메이션을 볼 수 있습니다.');
+
+    /* 컨트롤 */
+    var ctr = el('div', 'mbis-controls', wrap);
+    var nav = ui.nav = el('div', 'mbis-nav', ctr);
+    nav.setAttribute('role', 'tablist');
+    nav.setAttribute('aria-label', '통합 안전 4단계 선택');
+    ui.tabs = self.S.map(function (s, i) {
+      var b = el('button', 'mbis-tab', nav);
+      b.type = 'button';
+      b.id = self.id + '-tab' + i;
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-controls', self.id + '-panel');
+      el('span', 'mbis-tab-no', b, s.no);
+      el('span', 'mbis-tab-ko', b, s.tab || s.ko);
+      el('span', 'mbis-tab-en', b, s.en);
+      var bar = el('span', 'mbis-tab-bar', b);
+      b._fill = el('i', null, bar);
+      return b;
+    });
+
+    var btns = el('div', 'mbis-buttons', ctr);
+    ui.btnPlay = this.mkBtn(btns, 'play', '재생');
+    ui.btnReplay = this.mkBtn(btns, 'replay', '다시 보기');
+    ui.btnAll = this.mkBtn(btns, 'all', '전체 자동 재생');
+    ui.btnAll.classList.add('mbis-btn--all');
+
+    ui.status = el('p', 'mbis-sr', wrap);
+    ui.status.setAttribute('aria-live', 'polite');
+
+    /* 단계 설명 패널 */
+    ui.panel = el('section', 'mbis-panel', wrap);
+    ui.panel.id = this.id + '-panel';
+    ui.panel.setAttribute('role', 'tabpanel');
+
+    /* 텍스트 요약(애니메이션 없이도 읽을 수 있는 4단계) */
+    var ov = el('details', 'mbis-overview', wrap);
+    el('summary', null, ov, '통합 안전 4단계 한눈에 보기 (텍스트)');
+    var ol = el('ol', null, ov);
+    self.S.forEach(function (s) {
+      var li = el('li', null, ol);
+      el('strong', null, li, s.no + ' ' + (s.title || s.ko));
+      el('p', null, li, (s.theme ? s.theme + '. ' : '') + s.tagline);
+      var names = s.features.filter(function (k) { return self.feat[k] !== 'hidden'; }).map(function (k) { return featName(k, self.feat[k], self.cfg.featureNames); });
+      el('p', 'mbis-overview-f', li, names.join(' · '));
+    });
+
+    el('p', 'mbis-disclaimer', wrap,
+      '본 애니메이션은 이해를 돕기 위한 개념적 시뮬레이션이며 실제 작동 장면이 아닙니다. 안전 시스템은 운전자를 보조하는 기능으로, 사고 예방이나 완전한 보호를 보장하지 않습니다. 기능의 적용 여부와 작동 조건은 차종·사양·국가에 따라 다르며, 운전자는 항상 주의 의무를 다해야 합니다.' +
+      (cfg.supportedSafetyFeatures ? '' : ' (‘공통 안전 개념’으로 표시된 기능은 해당 모델의 사양 확인이 필요합니다.)'));
+  };
+
+  P_.mkBtn = function (parent, icon, label) {
+    var b = el('button', 'mbis-btn', parent);
+    b.type = 'button';
+    b._ico = el('span', 'mbis-btn-ico', b);
+    b._ico.innerHTML = ICONS[icon];
+    b._lbl = el('span', 'mbis-btn-lbl', b, label);
+    return b;
+  };
+  P_.setBtn = function (b, icon, label) {
+    if (b._icon !== icon) { b._icon = icon; b._ico.innerHTML = ICONS[icon]; }
+    txt(b._lbl, label);
+    b.setAttribute('aria-label', label);
+  };
+
+  /* 상단 뷰 보조 장면 (차선 유지 / ESP) */
+  P_.buildInset = function (parent) {
+    var ui = this.ui, I = ui.inset = el('div', 'mbis-inset', parent);
+    I.setAttribute('aria-hidden', 'true');
+    var h = el('div', 'mbis-panel-head', I);
+    el('span', null, h, 'TOP VIEW');
+    ui.insetMode = el('em', null, h, '');
+    var s = sv('svg', { viewBox: '0 0 300 150', 'class': 'mbis-inset-svg' }, I);
+    sv('rect', { x: 0, y: 22, width: 300, height: 106, 'class': 'mbis-i-road' }, s);
+    sv('path', { d: 'M0,26 H300 M0,124 H300', 'class': 'mbis-i-edge' }, s);
+    var dash = ui.iDash = sv('g', null, s);
+    for (var x = -40; x < 360; x += 40) sv('path', { d: 'M' + x + ',75 h22', 'class': 'mbis-i-dash' }, dash);
+    ui.iWarn = sv('rect', { x: 0, y: 72, width: 300, height: 6, rx: 3, 'class': 'mbis-i-warn' }, s);
+    ui.iTrail = sv('g', { 'class': 'mbis-i-trail' }, s);
+    sv('path', { d: 'M40,104 C80,104 100,106 120,108', 'class': 'mbis-i-skid' }, ui.iTrail);
+    sv('path', { d: 'M40,91 C80,91 100,92 120,94', 'class': 'mbis-i-skid' }, ui.iTrail);
+    var car = ui.iCar = sv('g', null, s);
+    sv('rect', { x: -26, y: -11, width: 52, height: 22, rx: 7, 'class': 'mbis-i-car' }, car);
+    sv('path', { d: 'M4,-9 L12,-9 L12,9 L4,9 Z', 'class': 'mbis-i-glass' }, car);
+    sv('path', { d: 'M-16,-8 L-10,-8 L-10,8 L-16,8 Z', 'class': 'mbis-i-glass' }, car);
+    [[-15, -12.5], [15, -12.5], [-15, 12.5]].forEach(function (p) { sv('rect', { x: p[0] - 5, y: p[1] - 2.2, width: 10, height: 4.4, rx: 1.5, 'class': 'mbis-i-wheel' }, car); });
+    ui.iWheel = sv('rect', { x: 10, y: 10.3, width: 10, height: 4.4, rx: 1.5, 'class': 'mbis-i-wheel' }, car);
+    ui.iWheelHi = sv('circle', { cx: 15, cy: 12.5, r: 7, 'class': 'mbis-i-wheelhi' }, car);
+    ui.iSteer = sv('path', { d: 'M184,78 C200,82 206,90 206,100', 'class': 'mbis-i-arrow' }, s);
+    ui.iSteerHead = sv('path', { d: 'M200,96 L206,104 L212,96', 'class': 'mbis-i-arrow' }, s);
+    ui.iYaw = sv('path', { d: 'M110,70 A40,40 0 0 1 168,82', 'class': 'mbis-i-arrow' }, s);
+    ui.iYawHead = sv('path', { d: 'M160,76 L168,82 L160,88', 'class': 'mbis-i-arrow' }, s);
+    ui.iLbl = sv('text', { x: 150, y: 145, 'text-anchor': 'middle', 'class': 'mbis-i-lbl' }, s);
+  };
+
+  /* 긴급 호출 패널 */
+  P_.buildEcall = function (parent) {
+    var ui = this.ui, E = ui.ecall = el('div', 'mbis-ecall', parent);
+    E.setAttribute('aria-hidden', 'true');
+    var h = el('div', 'mbis-panel-head', E);
+    el('span', null, h, 'EMERGENCY CALL');
+    el('em', null, h, '개념도');
+    var ol = el('ol', 'mbis-ecall-steps', E);
+    ui.ecallSteps = ['자동 연결 시도', '구조센터 연결 · 위치·시각 정보 전달', '구조대 사고 위치 확인'].map(function (s) { return el('li', null, ol, s); });
+    var m = ui.ecallMap = sv('svg', { viewBox: '0 0 220 70', 'class': 'mbis-ecall-map' }, E);
+    sv('rect', { x: 0, y: 0, width: 220, height: 70, rx: 6, 'class': 'mbis-m-bg' }, m);
+    sv('path', { d: 'M0,40 C60,36 120,48 220,30 M70,0 C74,24 82,50 76,70 M150,0 C146,22 156,52 170,70 M0,14 H220', 'class': 'mbis-m-road' }, m);
+    ui.pinPulse = sv('circle', { cx: 118, cy: 41, r: 6, 'class': 'mbis-m-pulse' }, m);
+    sv('path', { d: 'M118,42 C112,34 110,30 110,26 A8,8 0 1 1 126,26 C126,30 124,34 118,42 Z', 'class': 'mbis-m-pin' }, m);
+    sv('circle', { cx: 118, cy: 26, r: 3, 'class': 'mbis-m-pindot' }, m);
+    el('p', 'mbis-ecall-note', E, '서비스 제공 여부·통신 환경·사고 조건에 따라 연결되지 않을 수 있습니다.');
+  };
+
+  /* SVG 장면 */
+  P_.buildScene = function (svg) {
+    var id = this.id, r = this.r = {}, self = this, feat = this.feat, cfg = this.cfg, G = this.G;
+    var defs = sv('defs', null, svg);
+    function lg(gid, x2, y2, stops) {
+      var g = sv('linearGradient', { id: id + gid, x1: 0, y1: 0, x2: x2, y2: y2 }, defs);
+      stops.forEach(function (s) { sv('stop', { offset: s[0], 'class': s[1], 'stop-opacity': s[2] == null ? 1 : s[2] }, g); });
+      return g;
+    }
+    function rg(gid, stops) {
+      var g = sv('radialGradient', { id: id + gid }, defs);
+      stops.forEach(function (s) { sv('stop', { offset: s[0], 'class': s[1], 'stop-opacity': s[2] }, g); });
+    }
+    lg('-sky', 0, 1, [[0, 'mbis-c-sky1'], [1, 'mbis-c-sky2']]);
+    lg('-car', 0, 1, [[0, 'mbis-c-car1'], [0.55, 'mbis-c-car2'], [1, 'mbis-c-car3']]);
+    lg('-lead', 0, 1, [[0, 'mbis-c-lead1'], [1, 'mbis-c-lead2']]);
+    lg('-coneblue', 1, 0, [[0, 'mbis-c-blue', 0.42], [1, 'mbis-c-blue', 0.02]]);
+    lg('-coneamber', 1, 0, [[0, 'mbis-c-amber', 0.45], [1, 'mbis-c-amber', 0.03]]);
+    lg('-conered', 1, 0, [[0, 'mbis-c-red', 0.5], [1, 'mbis-c-red', 0.04]]);
+    lg('-crumple', 1, 0, [[0, 'mbis-c-amber', 0.15], [1, 'mbis-c-amber', 0.75]]);
+    rg('-glowA', [[0, 'mbis-c-amber', 0.95], [1, 'mbis-c-amber', 0]]);
+    rg('-glowR', [[0, 'mbis-c-red', 0.95], [1, 'mbis-c-red', 0]]);
+    rg('-glowW', [[0, 'mbis-c-warm', 0.75], [1, 'mbis-c-warm', 0]]);
+    rg('-glowO', [[0, 'mbis-c-amber', 1], [0.5, 'mbis-c-red', 0.6], [1, 'mbis-c-red', 0]]);
+    var cm = sv('clipPath', { id: id + '-clipMain' }, defs);
+    sv('rect', { x: -40, y: -200, width: 40 + G.split, height: 230 }, cm);
+    var cf = sv('clipPath', { id: id + '-clipFront' }, defs);
+    sv('rect', { x: G.split, y: -200, width: 120, height: 230 }, cf);
+    var cw = sv('clipPath', { id: id + '-clipWin' }, defs);
+    sv('path', { d: G.frontWin }, cw);
+    var pat = sv('pattern', { id: id + '-hex', width: 10, height: 9, patternUnits: 'userSpaceOnUse' }, defs);
+    sv('path', { d: 'M0,4.5 L2.5,0 L7.5,0 L10,4.5 L7.5,9 L2.5,9 Z', 'class': 'mbis-hexline' }, pat);
+
+    sv('rect', { x: -400, y: -200, width: 2000, height: 1000, fill: 'url(#' + id + '-sky)' }, svg);
+    var cam = r.cam = sv('g', null, svg);
+    var world = sv('g', { transform: 'translate(0 400)' }, cam);
+
+    /* 실사 도로(선택): 하늘은 고정 그라데이션, 도로 타일만 이동 */
+    var RI = cfg.roadImage;
+    if (RI && RI.src) {
+      var rsc = RI.scale || 1, tw = this.roadTileW = RI.width * rsc, th = RI.height * rsc, top = RI.top || 0;
+      var pr = r.photoRoad = sv('g', { 'class': 'mbis-photoroad' }, world);
+      var skyTop = RI.skyTop != null ? RI.skyTop : top - 160;
+      var sg = sv('linearGradient', { id: id + '-psky', x1: 0, y1: skyTop, x2: 0, y2: top, gradientUnits: 'userSpaceOnUse' }, defs);
+      (RI.sky || [[0, '#9aa8b7'], [1, '#efe9e1']]).forEach(function (s) { sv('stop', { offset: s[0], 'stop-color': s[1] }, sg); });
+      sv('rect', { x: -2000, y: -3000, width: 6000, height: 3000 + top + 1, fill: 'url(#' + id + '-psky)' }, pr);
+      sv('rect', { x: -2000, y: top + th - 1, width: 6000, height: 2000, fill: RI.below || '#2c2f33' }, pr);
+      r.roadTiles = sv('g', null, pr);
+      for (var tx = -3 * tw; tx < 1700 + tw; tx += tw) {
+        var ti = sv('image', { x: f1(tx * 100) / 100, y: top, width: f1(tw * 100) / 100 + 0.6, height: th, preserveAspectRatio: 'none' }, r.roadTiles);
+        this._lazy.push({ el: ti, src: RI.src, kind: 'road' });
+      }
+    }
+    var svgRoad = r.svgRoad = sv('g', { 'class': 'mbis-svgroad' }, world);
+    /* 배경 */
+    r.hills = sv('g', null, svgRoad);
+    var hd = 'M-600,-40';
+    for (var hx = -600; hx < 2400; hx += 300) hd += ' C' + (hx + 80) + ',-' + (hx % 600 === 0 ? 120 : 85) + ' ' + (hx + 200) + ',-' + (hx % 600 === 0 ? 95 : 130) + ' ' + (hx + 300) + ',-40';
+    sv('path', { d: hd + ' L2400,0 L-600,0 Z', 'class': 'mbis-hills' }, r.hills);
+    sv('rect', { x: -400, y: -40, width: 2000, height: 14, 'class': 'mbis-verge' }, svgRoad);
+    r.posts = sv('g', null, svgRoad);
+    for (var px = -90; px < 1500; px += 90) sv('rect', { x: px, y: -52, width: 4, height: 24, 'class': 'mbis-post' }, r.posts);
+    sv('rect', { x: -400, y: -50, width: 2000, height: 5, 'class': 'mbis-rail' }, svgRoad);
+    sv('rect', { x: -400, y: -28, width: 2000, height: 220, 'class': 'mbis-road' }, svgRoad);
+    sv('rect', { x: -400, y: -26, width: 2000, height: 3, 'class': 'mbis-roadline' }, svgRoad);
+    sv('rect', { x: -400, y: 64, width: 2000, height: 4, 'class': 'mbis-roadline' }, svgRoad);
+    r.dashes = sv('g', null, svgRoad);
+    for (var dx = -120; dx < 1500; dx += 120) sv('rect', { x: dx, y: 28, width: 60, height: 4, 'class': 'mbis-roaddash' }, r.dashes);
+
+    /* 장애물(개념) */
+    var bar = r.barrier = sv('g', null, world);
+    sv('ellipse', { cx: 50, cy: 2, rx: 70, ry: 6, 'class': 'mbis-shadow' }, bar);
+    sv('rect', { x: 18, y: -150, width: 74, height: 150, rx: 3, 'class': 'mbis-barrier' }, bar);
+    sv('rect', { x: 0, y: -112, width: 20, height: 82, 'class': 'mbis-barrier-face' }, bar);
+    sv('rect', { x: 0, y: -112, width: 20, height: 82, fill: 'url(#' + id + '-hex)' }, bar);
+    sv('path', { d: 'M30,-140 H80 M30,-128 H80', 'class': 'mbis-barrier-line' }, bar);
+    sv('text', { x: 55, y: 92, 'text-anchor': 'middle', 'class': 'mbis-tag mbis-tag--sm', text: '장애물 (개념)'}, bar);
+
+    var useImg = !!cfg.vehicleImage, imgSrc = useImg ? this.assetUrl(cfg.vehicleImage) : null, IB = G.imageBox;
+    function photo(parent, cl) {
+      var im = sv('image', { x: IB.x, y: IB.y, width: IB.w, height: IB.h, preserveAspectRatio: 'none', 'class': cl }, parent);
+      self._lazy.push({ el: im, src: imgSrc, kind: cl === 'mbis-photo-ego' ? 'photo' : 'photo2' });
+      return im;
+    }
+    /* 앞차 */
+    var lead = r.lead = sv('g', null, world);
+    sv('ellipse', { cx: G.shadow[0], cy: 2, rx: G.shadow[1], ry: 7, 'class': 'mbis-shadow' }, lead);
+    r.leadWheels = sv('g', null, lead);
+    var lb = sv('g', { 'class': useImg ? 'mbis-photo-fallback' : null }, lead);
+    sv('path', { d: G.body, fill: 'url(#' + id + '-lead)', 'class': 'mbis-lead-body' }, lb);
+    sv('path', { d: G.aperture, 'class': 'mbis-aperture' }, lb);
+    sv('path', { d: G.bpillar, fill: 'url(#' + id + '-lead)' }, lb);
+    sv('path', { d: G.sill, 'class': 'mbis-sill' }, lb);
+    sv('path', { d: G.tail, 'class': 'mbis-tail' }, lb);
+    sv('path', { d: G.head, 'class': 'mbis-head' }, lb);
+    if (useImg) {
+      var lp = sv('g', { 'class': 'mbis-photo-only' }, lead);
+      photo(lp, 'mbis-photo-lead');
+      sv('path', { d: G.body, 'class': 'mbis-lead-shade' }, lp);
+    }
+    r.leadBrake = sv('ellipse', { cx: G.tailPt[0], cy: G.tailPt[1], rx: 26, ry: 14, fill: 'url(#' + id + '-glowR)' }, lead);
+    r.leadSpokes = [this.wheel(r.leadWheels, G.rearWheel), this.wheel(r.leadWheels, G.frontWheel)];
+
+    /* 센서 감지 영역(개념 그래픽 — 빔이 아닌 부드러운 영역) */
+    var cone = r.cone = sv('g', null, world);
+    r.coneShape = sv('path', { 'class': 'mbis-cone' }, cone);
+    r.coneArcs = [0, 1, 2].map(function () { return sv('path', { 'class': 'mbis-cone-arc' }, cone); });
+
+    /* 차간거리 브래킷 */
+    r.gap = sv('g', { 'class': 'mbis-gap' }, world);
+    r.gapPath = sv('path', { 'class': 'mbis-gap-line' }, r.gap);
+    r.gapText = sv('text', { 'text-anchor': 'middle', 'class': 'mbis-tag', text: '설정 차간거리 유지' }, r.gap);
+    r.sensorLbl = sv('text', { 'text-anchor': 'middle', 'class': 'mbis-tag mbis-lbl', text: '센서 감지 영역 · 개념 그래픽' }, world);
+
+    /* 내 차 */
+    var ego = r.ego = sv('g', null, world);
+    sv('ellipse', { cx: G.shadow[0], cy: 2, rx: G.shadow[1], ry: 7, 'class': 'mbis-shadow' }, ego);
+    var wheels = sv('g', null, ego);
+    r.egoSpokes = (!useImg || !cfg.vehicleImageHasWheels) ? [this.wheel(wheels, G.rearWheel), this.wheel(wheels, G.frontWheel)] : [];
+    var body = r.egoBody = sv('g', null, ego);
+    r.egoMain = sv('g', null, body);
+    var mainIn = sv('g', { 'clip-path': 'url(#' + id + '-clipMain)' }, r.egoMain);
+    r.egoFrontWrap = sv('g', null, body);
+    r.egoFront = sv('g', null, r.egoFrontWrap);
+    var frontIn = sv('g', { 'clip-path': 'url(#' + id + '-clipFront)' }, r.egoFront);
+    /* SVG 구조도: 실사 이미지가 있으면 충돌 장면에서만 보이는 구조 레이어(실사 사진은 변형하지 않음) */
+    [mainIn, frontIn].forEach(function (g) {
+      {
+        sv('path', { d: G.body, fill: 'url(#' + id + '-car)', 'class': 'mbis-ego-body' }, g);
+        sv('path', { d: G.aperture, 'class': 'mbis-aperture' }, g);
+        sv('path', { d: G.bpillar, fill: 'url(#' + id + '-car)' }, g);
+        sv('path', { d: G.sill, 'class': 'mbis-sill' }, g);
+        sv('path', { d: G.shoulder, 'class': 'mbis-shoulder' }, g);
+        sv('path', { d: G.doors + ' ' + G.handles, 'class': 'mbis-doorline' }, g);
+        sv('path', { d: G.mirror, fill: 'url(#' + id + '-car)', 'class': 'mbis-ego-body' }, g);
+        sv('path', { d: G.tail, 'class': 'mbis-tail' }, g);
+        sv('path', { d: G.head, 'class': 'mbis-head' }, g);
+      }
+    });
+    r.crumple = sv('path', { d: G.crumple, fill: 'url(#' + id + '-crumple)' }, frontIn);
+    r.buckle = sv('path', { d: G.buckle, 'class': 'mbis-buckle' }, frontIn);
+    r.outline = [sv('path', { d: G.body, 'class': 'mbis-outline' }, mainIn), sv('path', { d: G.body, 'class': 'mbis-outline' }, frontIn)];
+    /* 실사 차체(변형 없음 · 투명도만 조절) */
+    r.photo = useImg ? sv('g', { 'class': 'mbis-photo-only' }, body) : null;
+    if (r.photo) photo(r.photo, 'mbis-photo-ego');
+
+    /* 실내(단면) */
+    var inn = r.interior = sv('g', { 'class': 'mbis-interior' }, body);
+    r.cabinLight = sv('ellipse', { cx: 190, cy: -84, rx: 70, ry: 30, fill: 'url(#' + id + '-glowW)' }, inn);
+    sv('path', { d: 'M146,-40 L194,-40 L192,-33 L148,-33 Z M146,-40 L138,-90 L148,-92 L156,-42 Z', 'class': 'mbis-seat' }, inn);
+    sv('rect', { x: 136, y: -104, width: 11, height: 11, rx: 3, 'class': 'mbis-seat' }, inn);
+    sv('path', { d: 'M206,-56 L216,-79 M214,-67 L234,-58', 'class': 'mbis-wheelrim' }, inn);
+    var occ = r.occ = sv('g', null, inn);
+    sv('path', { d: 'M162,-44 L204,-48 L214,-29', 'class': 'mbis-occ-leg' }, occ);
+    sv('path', { d: 'M162,-44 L158,-78', 'class': 'mbis-occ-torso' }, occ);
+    sv('path', { d: 'M160,-76 L182,-62 L207,-68', 'class': 'mbis-occ-arm' }, occ);
+    sv('circle', { cx: 162, cy: -92, r: 8.5, 'class': 'mbis-occ-head' }, occ);
+    r.airbag = sv('ellipse', { cx: 206, cy: -68, rx: 2, ry: 2, 'class': 'mbis-airbag' }, inn);
+    sv('rect', { x: 142, y: -40, width: 9, height: 10, rx: 2, 'class': 'mbis-retractor' }, inn);
+    r.belt = sv('path', { 'class': 'mbis-belt' }, inn);
+    r.retract = sv('path', { d: 'M138,-74 L138,-52 M134,-58 L138,-50 L142,-58', 'class': 'mbis-retract' }, inn);
+    r.pyro = sv('circle', { cx: 146, cy: -35, r: 15, fill: 'url(#' + id + '-glowO)' }, inn);
+    r.soundArcs = [0, 1, 2].map(function () { return sv('path', { 'class': 'mbis-sound' }, inn); });
+
+    /* 측면 유리(PRE-SAFE 윈도우 닫힘) */
+    var winL = r.winLayer = sv('g', null, body);
+    var wc = sv('g', { 'clip-path': 'url(#' + id + '-clipWin)' }, winL);
+    r.glass = sv('g', null, wc);
+    var gr = G.glassRect;
+    sv('rect', { x: gr[0], y: gr[1], width: gr[2], height: gr[3], 'class': 'mbis-glass' }, r.glass);
+    sv('path', { d: 'M' + gr[0] + ',' + (gr[1] + 3) + ' L' + (gr[0] + gr[2] * 0.75) + ',' + (gr[1] + 4.5), 'class': 'mbis-glass-edge' }, r.glass);
+    r.winFrame = sv('path', { d: G.frontWin, 'class': 'mbis-winframe' }, winL);
+
+    /* 승객실 강조 */
+    r.cell = sv('path', { d: G.cell, 'class': 'mbis-cell' }, body);
+
+    /* 고전압 시스템(전기차·하이브리드) — 개념 배치 */
+    if (this.hasHV) {
+      var H = G.hv, hv = r.hv = sv('g', { 'class': 'mbis-hv' }, body), bt = H.batt;
+      r.hvBatt = sv('rect', { x: bt[0], y: bt[1], width: bt[2], height: bt[3], rx: 2.5, 'class': 'mbis-hv-batt' }, hv);
+      var cd = '';
+      for (var cx2 = bt[0] + 10; cx2 < bt[0] + bt[2] - 4; cx2 += 10) cd += 'M' + cx2 + ',' + (bt[1] + 2) + ' v' + (bt[3] - 4) + ' ';
+      sv('path', { d: cd, 'class': 'mbis-hv-cell' }, hv);
+      var bx = H.box, by = H.busY, rm = H.rearMotor, fm = H.frontMotor;
+      r.hvLines = [
+        sv('path', { d: 'M' + (bx[0] - 3) + ',' + by + ' H' + (rm[0] + 10) + ' Q' + rm[0] + ',' + by + ' ' + rm[0] + ',' + (rm[1] - 6), 'class': 'mbis-hv-line' }, hv),
+        sv('path', { d: 'M' + (bx[0] + 13) + ',' + by + ' H' + (fm[0] - 10) + ' Q' + fm[0] + ',' + by + ' ' + fm[0] + ',' + (fm[1] - 6), 'class': 'mbis-hv-line' }, hv)
+      ];
+      [rm, fm].forEach(function (m) { sv('circle', { cx: m[0], cy: m[1], r: 6, 'class': 'mbis-hv-motor' }, hv); });
+      sv('rect', { x: bx[0], y: bx[1], width: 10, height: 6, rx: 1.2, 'class': 'mbis-hv-box' }, hv);
+      r.hvBlades = [
+        sv('path', { d: 'M' + (bx[0] - 1) + ',' + by + ' h-5', 'class': 'mbis-hv-blade' }, hv),
+        sv('path', { d: 'M' + (bx[0] + 11) + ',' + by + ' h5', 'class': 'mbis-hv-blade' }, hv)
+      ];
+      r.hvBox = bx; r.hvBusY = by;
+    }
+
+    /* 램프 발광 */
+    r.brakeGlow = sv('ellipse', { cx: G.tailPt[0], cy: G.tailPt[1], rx: 26, ry: 14, fill: 'url(#' + id + '-glowR)' }, body);
+    r.hazR = sv('circle', { cx: G.tailPt[0] - 6, cy: G.tailPt[1] + 2, r: 20, fill: 'url(#' + id + '-glowA)' }, body);
+    r.hazF = sv('circle', { cx: G.headPt[0], cy: G.headPt[1], r: 20, fill: 'url(#' + id + '-glowA)' }, body);
+
+    /* 에너지 흐름 화살표 */
+    r.energy = sv('g', { 'class': 'mbis-energy' }, ego);
+    r.energyLines = [-36, -50, -63].map(function (y) { return sv('path', { 'class': 'mbis-energy-line', 'data-y': y }, r.energy); });
+
+    /* 긴급 호출 전파(개념) */
+    r.waves = [0, 1, 2].map(function () { return sv('path', { 'class': 'mbis-wave' }, ego); });
+
+    /* 차량 라벨 */
+    var fx = r.fxEgo = sv('g', { 'class': 'mbis-lbl' }, ego);
+    var st = function (k) { return feat[k] === 'supported'; };
+    var L = {
+      beltPre: [166, -64, 120, 44, st('preSafe') ? 'PRE-SAFE® 벨트 장력 조절' : '충돌 전 벨트 장력 조절'],
+      window: [206, -92, 300, -150, st('preSafe') ? 'PRE-SAFE® 측면 윈도우 닫힘' : '측면 윈도우 닫힘'],
+      sound: [172, -100, 70, -122, 'PRE-SAFE® Sound · 시각 표현'],
+      pretensioner: [146, -36, -40, -118, '충돌 시 벨트 프리텐셔너'],
+      limiter: [170, -60, -20, -150, '벨트 하중 제한 장치'],
+      airbag: [198, -70, 250, -150, '전면 에어백 (충돌 감지 후)'],
+      crumple: [290, -48, 400, -180, '크럼플 존 · 에너지 흡수'],
+      cell: [180, -105, 140, -200, '고강성 승객실 · 생존 공간'],
+      hazard: [12, -52, -20, -140, '비상등 자동 점멸'],
+      unlock: [200, -50, 260, -160, '실내 조명 · 도어 잠금 해제'],
+      qr: [148, -58, 110, -194, 'QR 구조 정보 (B필러 등)'],
+      hv: [G.hv.box[0] + 5, G.hv.busY, -70, -96, '고전압 연결 차단 (조건에 따라)'],
+      hvRes: [G.hv.batt[0] + G.hv.batt[2] * 0.7, G.hv.batt[1] + 5, -70, -66, '배터리 내부 잔류 에너지 주의']
+    };
+    if (G.labels) Object.keys(G.labels).forEach(function (k) { L[k] = G.labels[k]; });
+    if (!this.hasHV) { delete L.hv; delete L.hvRes; }
+    r.labels = {};
+    Object.keys(L).forEach(function (k) {
+      var d = L[k], g = sv('g', null, fx);
+      var line = sv('path', { d: 'M' + d[0] + ',' + d[1] + ' L' + d[2] + ',' + (d[3] + 6), 'class': 'mbis-lbl-line' }, g);
+      var dot = sv('circle', { cx: d[0], cy: d[1], r: 2.6, 'class': 'mbis-lbl-dot' }, g);
+      var t = sv('text', { x: d[2], y: d[3], 'text-anchor': 'middle', 'class': 'mbis-lbl-text', text: d[4] }, g);
+      r.labels[k] = { g: g, line: line, dot: dot, t: t, d: d };
+    });
+  };
+
+  P_.wheel = function (parent, cx) {
+    var R = this.G.wheelR, k = R / 22, wi = this.cfg.wheelImage;
+    var g = sv('g', { transform: 'translate(' + cx + ' ' + (-R) + ')' }, parent);
+    var sw = sv('g', { 'class': wi ? 'mbis-wsvg' : null }, g);
+    sv('circle', { r: R, 'class': 'mbis-tire' }, sw);
+    sv('circle', { r: f1(14.5 * k), 'class': 'mbis-rim' }, sw);
+    var sp = sv('g', null, g);
+    var spk = sv('g', { 'class': wi ? 'mbis-wsvg' : null }, sp);
+    for (var i = 0; i < 5; i++) sv('path', { d: 'M0,' + f1(-3.5 * k) + ' L0,' + f1(-13.5 * k), 'class': 'mbis-spoke', transform: 'rotate(' + i * 72 + ')' }, spk);
+    if (wi) {
+      var rr = R * (this.cfg.wheelImageScale || 1);
+      var im = sv('image', { x: -rr, y: -rr, width: 2 * rr, height: 2 * rr, 'class': 'mbis-wimg' }, sp);
+      this._lazy.push({ el: im, src: this.assetUrl(wi), kind: 'wheel' });
+    }
+    sv('circle', { r: f1(3.2 * k), 'class': 'mbis-hub' + (wi ? ' mbis-wsvg' : '') }, g);
+    return sp;
+  };
+
+  /* STEP 02 운전석 실사 장면 — 이미지와 SVG(벨트·창문)가 같은 좌표계(이미지 픽셀)를 공유 */
+  P_.buildInterior = function (stage) {
+    var C = this.cfg.preSafeInterior, id = this.id, r = this.r, self = this, B = C.belt, W = C.window;
+    var src = this.assetUrl(this.cfg.preSafeInteriorImage);
+    var box = r.int = el('div', 'mbis-int', stage);
+    box.setAttribute('aria-hidden', 'true');
+    var s = r.intSvg = sv('svg', { 'class': 'mbis-int-svg', viewBox: C.view.wide.join(' '), preserveAspectRatio: 'xMidYMid slice', focusable: 'false' }, box);
+    var defs = sv('defs', null, s);
+    var cw = sv('clipPath', { id: id + '-iwin' }, defs); sv('path', { d: W.clip }, cw);
+    var ca = sv('clipPath', { id: id + '-iarm' }, defs); sv('path', { d: B.armClip }, ca);
+    var gg = sv('linearGradient', { id: id + '-iglass', x1: 0, y1: 0, x2: 1, y2: 1 }, defs);
+    [[0, 'rgba(214,228,240,.55)'], [0.42, 'rgba(160,184,206,.38)'], [0.5, 'rgba(236,244,250,.62)'], [0.58, 'rgba(160,184,206,.36)'], [1, 'rgba(120,146,170,.42)']].forEach(function (p) { sv('stop', { offset: p[0], 'stop-color': p[1] }, gg); });
+    var bg = sv('linearGradient', { id: id + '-ibg', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+    [[0, '#dfe5eb'], [0.55, '#eef1f4'], [1, '#e3e7ec']].forEach(function (p) { sv('stop', { offset: p[0], 'stop-color': p[1] }, bg); });
+    var cam = r.intCam = sv('g', null, s);
+    sv('rect', { x: -3000, y: -3000, width: 8000, height: 8000, fill: 'url(#' + id + '-ibg)' }, cam);
+    var scene = sv('g', { 'class': 'mbis-int-scene' }, cam);
+    /* 창문 유리: 사진 뒤에 두어 실제 창문 개구부(투명 영역)로만 보이게 하고, 프레임 모양으로 클리핑 */
+    var wg = sv('g', { 'clip-path': 'url(#' + id + '-iwin)' }, scene);
+    r.iGlass = sv('g', null, wg);
+    sv('path', { d: W.clip, fill: 'url(#' + id + '-iglass)' }, r.iGlass);
+    sv('path', { d: W.topEdge, 'class': 'mbis-i-glass-edge' }, r.iGlass);
+    var img = sv('image', { x: 0, y: 0, width: C.width, height: C.height, preserveAspectRatio: 'none' }, scene);
+    this._lazy.push({ el: img, src: src, kind: 'interior' });
+    /* 벨트: 리트랙터 쪽(B필러) 웨빙 + 어깨벨트 */
+    var bw = B.width || 24;
+    var belt = sv('g', { 'class': 'mbis-i-belt' }, scene);
+    var pl = B.pillar;
+    sv('path', { d: 'M' + pl[0][0] + ',' + pl[0][1] + ' L' + pl[1][0] + ',' + pl[1][1], 'class': 'mbis-i-web', 'stroke-width': bw * 0.9 }, belt);
+    r.iGlow = sv('path', { 'class': 'mbis-i-glow', 'stroke-width': bw + 10 }, belt);
+    r.iShoulderShadow = sv('path', { 'class': 'mbis-i-webshadow', 'stroke-width': bw + 3 }, belt);
+    r.iShoulder = sv('path', { 'class': 'mbis-i-web', 'stroke-width': bw }, belt);
+    r.iShoulderHi = sv('path', { 'class': 'mbis-i-webhi' }, belt);
+    r.iFlow = sv('path', { 'class': 'mbis-i-flow', 'stroke-width': bw * 0.34 }, belt);
+    /* 팔 앞쪽(같은 사진을 팔 영역만 다시 그림) → 벨트가 팔 뒤로 지나가도록 */
+    var arm = sv('image', { x: 0, y: 0, width: C.width, height: C.height, preserveAspectRatio: 'none', 'clip-path': 'url(#' + id + '-iarm)' }, scene);
+    this._lazy.push({ el: arm, src: src, kind: 'interior2' });
+    /* 허리 벨트 */
+    r.iLapGlow = sv('path', { 'class': 'mbis-i-glow', 'stroke-width': bw + 8 }, scene);
+    r.iLapShadow = sv('path', { 'class': 'mbis-i-webshadow', 'stroke-width': bw + 2 }, scene);
+    r.iLap = sv('path', { 'class': 'mbis-i-web', 'stroke-width': bw * 0.95 }, scene);
+    r.iLapHi = sv('path', { 'class': 'mbis-i-webhi' }, scene);
+    /* 버클 · D링 */
+    var bk = B.buckle;
+    var bkg = sv('g', { transform: 'translate(' + bk[0] + ' ' + bk[1] + ') rotate(' + bk[2] + ')' }, scene);
+    sv('rect', { x: -22, y: -13, width: 44, height: 26, rx: 6, 'class': 'mbis-i-buckle' }, bkg);
+    sv('rect', { x: -10, y: -5, width: 20, height: 10, rx: 2, 'class': 'mbis-i-buckle-btn' }, bkg);
+    var dr = B.dring;
+    sv('rect', { x: dr[0] - 16, y: dr[1] - 12, width: 32, height: 24, rx: 7, 'class': 'mbis-i-dring' }, scene);
+    sv('rect', { x: dr[0] - 9, y: dr[1] - 3, width: 18, height: 6, rx: 3, 'class': 'mbis-i-dring-slot' }, scene);
+    /* 되감기 방향 화살표(B필러 안 리트랙터 쪽) */
+    var ar = B.arrow;
+    r.iArrow = sv('g', { 'class': 'mbis-i-arrow' }, scene);
+    for (var i = 0; i < 2; i++) {
+      var ay = ar[1] + i * ar[2] * 0.62;
+      sv('path', { d: 'M' + (ar[0] - 13) + ',' + ay + ' L' + ar[0] + ',' + (ay + 15) + ' L' + (ar[0] + 13) + ',' + ay }, r.iArrow);
+    }
+    /* PRE-SAFE Sound (적용 차량만, 소리 없음) */
+    r.iSound = [];
+    if (this.feat.preSafeSound !== 'hidden' && C.ear) for (var j = 0; j < 3; j++) r.iSound.push(sv('path', { 'class': 'mbis-i-sound' }, scene));
+    /* 라벨 */
+    var lb = C.labels || {}, lg = sv('g', { 'class': 'mbis-i-lbls' }, scene);
+    function label(d, text) {
+      var g = sv('g', null, lg);
+      if (d[2] != null) sv('path', { d: 'M' + d[0] + ',' + d[1] + ' L' + d[2] + ',' + d[3], 'class': 'mbis-lbl-line' }, g);
+      if (d[2] != null) sv('circle', { cx: d[2], cy: d[3], r: 5, 'class': 'mbis-lbl-dot' }, g);
+      sv('text', { x: d[0], y: d[1] - 10, 'text-anchor': 'middle', 'class': 'mbis-lbl-text mbis-int-lbl', text: text }, g);
+      return g;
+    }
+    var pre = this.feat.preSafe === 'supported';
+    r.iLblBelt = lb.belt ? label(lb.belt, pre ? 'PRE-SAFE® 벨트 장력 조절' : '벨트 느슨함 감소 · 되감기') : null;
+    r.iLblWin = lb.window ? label(lb.window, pre ? 'PRE-SAFE® 측면 윈도우 닫힘' : '측면 윈도우 닫힘') : null;
+    var rd = lb.ready || [C.width / 2, 200];
+    r.iReady = sv('g', { 'class': 'mbis-i-ready', transform: 'translate(' + rd[0] + ' ' + rd[1] + ')' }, scene);
+    var rin = sv('g', { 'class': 'mbis-i-ready-in' }, r.iReady);
+    sv('rect', { x: -170, y: -34, width: 340, height: 68, rx: 34, 'class': 'mbis-i-ready-bg' }, rin);
+    sv('path', { d: 'M-136,1 l12,12 l22,-26', 'class': 'mbis-i-ready-ck' }, rin);
+    sv('text', { x: 18, y: 10, 'text-anchor': 'middle', 'class': 'mbis-i-ready-t', text: '보호 준비 완료' }, rin);
+  };
+
+  function chain(a, b, k) {
+    var o = 'M', i, x, y;
+    for (i = 0; i < a.length; i++) {
+      x = f1(a[i][0] + (b[i][0] - a[i][0]) * k); y = f1(a[i][1] + (b[i][1] - a[i][1]) * k);
+      o += (i === 0 ? '' : (i % 3 === 1 ? ' C' : ' ')) + x + ',' + y;
+    }
+    return o;
+  }
+
+  P_.disableInterior = function () {
+    if (!this.hasInt) return;
+    this.hasInt = false;
+    this.S[1] = this.S1base;
+    var self = this;
+    this.phases[1] = this.S1base.phases.filter(function (p) { return !p.f || self.feat[p.f] !== 'hidden'; });
+    cls(this.root, 'mbis--int', false);
+    if (this.r.int) this.r.int.style.display = 'none';
+    if (this.step === 1) this.t = Math.min(this.t, this.S[1].dur);
+    this.setView(); this.render(); this.updateUI();
+  };
+
+  P_.assetUrl = function (p) {
+    if (/^(https?:|data:|\/)/.test(p)) return p;
+    var base = this.cfg.assetBasePath || '';
+    if (base && base.charAt(base.length - 1) !== '/') base += '/';
+    return base + p;
+  };
+
+  /* ---------- 이벤트 ---------- */
+  P_.on = function (target, ev, fn, opt) { target.addEventListener(ev, fn, opt); this._listeners.push([target, ev, fn, opt]); };
+
+  P_.bind = function () {
+    var self = this, ui = this.ui;
+    ui.tabs.forEach(function (b, i) {
+      self.on(b, 'click', function () { self.userStarted = true; self.select(i, { play: true, mode: 'single' }); });
+      self.on(b, 'keydown', function (e) {
+        var k = e.key, n = null;
+        if (k === 'ArrowRight' || k === 'ArrowDown') n = (i + 1) % 4;
+        else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (i + 3) % 4;
+        else if (k === 'Home') n = 0; else if (k === 'End') n = 3;
+        if (n !== null) { e.preventDefault(); ui.tabs[n].focus(); self.userStarted = true; self.select(n, { play: true, mode: 'single' }); }
+      });
+    });
+    this.on(ui.btnPlay, 'click', function () { self.userStarted = true; if (self.want) self.pause(); else self.play(); });
+    this.on(ui.btnReplay, 'click', function () { self.userStarted = true; self.replay(); });
+    this.on(ui.btnAll, 'click', function () { self.userStarted = true; self.playAll(); });
+    this.on(document, 'visibilitychange', function () { self.pageVisible = !document.hidden; self.schedule(); });
+
+    if ('IntersectionObserver' in window) {
+      this._io = new IntersectionObserver(function (en) {
+        self.visible = en[0].isIntersecting;
+        self.schedule();
+      }, { threshold: 0.2 });
+      this._io.observe(ui.stage);
+    }
+    this.loadImagesWhenNear();
+    var onResize = function () { self.layout(); };
+    if ('ResizeObserver' in window) { this._ro = new ResizeObserver(onResize); this._ro.observe(this.root); }
+    else this.on(window, 'resize', onResize);
+    if (window.matchMedia) {
+      var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var h = function () { self.reduced = mq.matches; self.updateUI(); };
+      if (mq.addEventListener) { mq.addEventListener('change', h); this._listeners.push([mq, 'change', h]); }
+    }
+    this.layout();
+  };
+
+  /* 이미지 지연 로딩 + 실패 시 SVG 대체 */
+  P_.loadImagesWhenNear = function () {
+    var self = this, list = this._lazy;
+    if (!list.length) return;
+    var go = function () {
+      if (self._imgStarted) return; self._imgStarted = true;
+      var flags = { photo: 'photoOk', wheel: 'wheelOk', road: 'roadOk', interior: 'intOk' }, cl = { photo: 'mbis--photo', wheel: 'mbis--wimg', road: 'mbis--road', interior: 'mbis--intimg' };
+      list.forEach(function (it) {
+        var e = it.el;
+        e.addEventListener('load', function () {
+          var f = flags[it.kind];
+          if (f && !self[f]) { self[f] = true; cls(self.root, cl[it.kind], true); self.render(); }
+        });
+        e.addEventListener('error', function () {
+          if (window.console) console.warn('[MBIntegralSafety] 이미지 로드 실패 — SVG로 대체합니다:', it.src);
+          if (it.kind === 'interior') self.disableInterior();
+        });
+        e.setAttribute('href', it.src);
+        try { e.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', it.src); } catch (err) {}
+      });
+      if (self._lio) { self._lio.disconnect(); self._lio = null; }
+    };
+    if ('IntersectionObserver' in window) {
+      this._lio = new IntersectionObserver(function (en) { if (en[0].isIntersecting) go(); }, { rootMargin: '600px 0px' });
+      this._lio.observe(this.root);
+    } else go();
+  };
+
+  P_.layout = function () {
+    var w = this.root.clientWidth || 1000;
+    var c = w < this.cfg.compactBreakpoint;
+    if (c !== this.compact || !this.vb) {
+      this.compact = c;
+      cls(this.root, 'mbis--compact', c);
+      this.setView();
+      this.render();
+    }
+  };
+
+  /* 화면 구도: 모바일 STEP 02(실내 장면)는 4:3 */
+  P_.setView = function () {
+    var c = this.compact, k2 = c && this.hasInt && this.step === 1;
+    var key = (c ? 'c' : 'w') + (k2 ? '2' : '');
+    cls(this.root, 'mbis--int', this.hasInt);
+    if (key === this._vkey) return;
+    this._vkey = key;
+    var v = c ? (k2 ? VB.compact2 : VB.compact) : VB.wide;
+    this.vb = { cx: v.x + v.w / 2, cy: v.y + v.h / 2 };
+    this.ui.svg.setAttribute('viewBox', v.x + ' ' + v.y + ' ' + v.w + ' ' + v.h);
+    this._caption = null;
+    if (this.r && this.r.intSvg) {
+      var iv = this.cfg.preSafeInterior.view[c ? 'compact' : 'wide'];
+      this.r.intSvg.setAttribute('viewBox', iv.join(' '));
+      this.ivc = [iv[0] + iv[2] / 2, iv[1] + iv[3] / 2];
+    }
+  };
+
+  /* ---------- 재생 제어 ---------- */
+  P_.select = function (i, o) {
+    o = o || {};
+    this.step = i; this.mode = o.mode || 'single'; this.ended = false; this.trans = 0;
+    var play = !!o.play;
+    this.t = (this.reduced && !this.userStarted) ? this.S[i].keyT : 0;
+    this.want = play;
+    if (this.vb) this.setView();
+    this.renderPanel();
+    this.render();
+    this.updateUI();
+    if (!o.silent) this.announce();
+    this.schedule();
+  };
+  P_.play = function () {
+    if (this.ended) return this.replay();
+    if (this.reduced && this.t === this.S[this.step].keyT && !this._rmPlayed) { this._rmPlayed = true; this.t = 0; }
+    this.want = true; this.updateUI(); this.announce(); this.schedule();
+  };
+  P_.pause = function () { this.want = false; this.updateUI(); this.announce(); };
+  P_.replay = function () {
+    if (this.mode === 'all') this.select(0, { play: true, mode: 'all' });
+    else this.select(this.step, { play: true, mode: 'single' });
+  };
+  P_.playAll = function () { this.select(0, { play: true, mode: 'all' }); };
+  P_.running = function () { return this.want && this.visible && this.pageVisible; };
+
+  P_.schedule = function () {
+    var self = this;
+    if (this.running()) {
+      if (!this._raf) { this._last = 0; this._raf = requestAnimationFrame(function loop(now) { self._raf = 0; self.frame(now); }); }
+    } else if (this._raf) { cancelAnimationFrame(this._raf); this._raf = 0; }
+  };
+
+  P_.frame = function (now) {
+    if (!this.running()) return;
+    var dt = this._last ? Math.min(0.05, (now - this._last) / 1000) : 0;
+    this._last = now;
+    var st = this.S[this.step];
+    if (this.trans > 0) {
+      this.trans -= dt;
+      if (this.trans <= 0) { this.trans = 0; this.select(this.step + 1, { play: true, mode: 'all' }); return; }
+    } else {
+      this.t += dt;
+      if (this.t >= st.dur) {
+        this.t = st.dur;
+        if (this.mode === 'all' && this.step < 3) { this.trans = 2.2; this.showTransition(this.step + 1); }
+        else { this.ended = true; this.want = false; this.render(); this.updateUI(); this.announce(); return; }
+      }
+      this.render();
+    }
+    this.updateProgress();
+    var self = this;
+    if (!this._raf) this._raf = requestAnimationFrame(function (n) { self._raf = 0; self.frame(n); });
+  };
+
+  P_.showTransition = function (n) {
+    var s = this.S[n], ui = this.ui;
+    txt(ui.transNo, 'STEP ' + s.no + ' · ' + s.en);
+    txt(ui.transTitle, s.title || s.ko);
+    txt(ui.transTag, n === 2 ? '충돌을 피하지 못한 가상 상황으로 전환합니다' : s.tagline);
+    cls(ui.transition, 'is-on', true);
+  };
+
+  /* 테스트·외부 제어용: 특정 단계의 특정 시점 렌더 */
+  P_.seek = function (step, t) {
+    if (step !== this.step) { this.step = step; this.setView(); this.renderPanel(); }
+    this.t = clamp(t, 0, this.S[step].dur); this.want = false; this.ended = false; this.trans = 0;
+    this.render(); this.updateUI();
+  };
+
+  P_.destroy = function () {
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._io) this._io.disconnect();
+    if (this._ro) this._ro.disconnect();
+    if (this._lio) this._lio.disconnect();
+    this._listeners.forEach(function (l) { l[0].removeEventListener(l[1], l[2], l[3]); });
+    this.root.innerHTML = '';
+    this.root.classList.remove('mbis', 'mbis--light', 'mbis--compact', 'mbis--photo', 'mbis--wimg', 'mbis--road', 'mbis--int', 'mbis--intimg');
+    this.root.removeAttribute('data-mbis-ready');
+    delete this.root.__mbis;
+  };
+
+  /* ---------- UI 동기화 ---------- */
+  P_.updateUI = function () {
+    var ui = this.ui, self = this;
+    ui.tabs.forEach(function (b, i) {
+      var on = i === self.step;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+      cls(b, 'is-active', on);
+      cls(b, 'is-done', i < self.step);
+    });
+    ui.panel.setAttribute('aria-labelledby', ui.tabs[this.step].id);
+    if (this.want) this.setBtn(ui.btnPlay, 'pause', '일시정지');
+    else this.setBtn(ui.btnPlay, this.ended ? 'replay' : 'play', this.ended ? '다시 재생' : '재생');
+    ui.btnReplay.setAttribute('aria-label', this.mode === 'all' ? '전체 과정 처음부터 다시 보기' : '현재 단계 처음부터 다시 보기');
+    ui.btnAll.setAttribute('aria-pressed', this.mode === 'all' ? 'true' : 'false');
+    cls(this.root, 'is-playing', this.want);
+    for (var si = 0; si < 4; si++) cls(this.root, 'mbis-step-' + (si + 1), si === this.step);
+    cls(ui.rmNote, 'is-on', this.reduced && !this.userStarted);
+    if (this.trans <= 0) cls(ui.transition, 'is-on', false);
+    this.updateProgress();
+  };
+  P_.updateProgress = function () {
+    var self = this, k = clamp(this.t / this.S[this.step].dur, 0, 1);
+    this.ui.tabs.forEach(function (b, i) {
+      var v = i < self.step ? (self.mode === 'all' ? 1 : 0) : i === self.step ? k : 0;
+      var w = Math.round(v * 1000) / 10 + '%';
+      if (b._fill.style.width !== w) b._fill.style.width = w;
+    });
+  };
+  P_.announce = function () {
+    var s = this.S[this.step];
+    txt(this.ui.status, 'STEP ' + s.no + ' ' + (s.title || s.ko) + ' — ' + (this.want ? '재생 중' : this.ended ? '재생 완료' : '일시정지됨'));
+  };
+
+  P_.renderPanel = function () {
+    var s = this.S[this.step], p = this.ui.panel, self = this;
+    p.innerHTML = '';
+    var main = el('div', 'mbis-panel-main', p);
+    el('p', 'mbis-panel-kicker', main, 'STEP ' + s.no + ' · ' + s.en);
+    el('h3', 'mbis-panel-title', main, s.title || s.ko);
+    if (s.theme) el('p', 'mbis-panel-theme', main, s.theme);
+    el('p', 'mbis-panel-tag', main, '“' + s.tagline + '”');
+    if (s.note) el('p', 'mbis-panel-note', main, s.note);
+    var ul = el('ul', 'mbis-feats', p);
+    s.features.forEach(function (k) {
+      var stt = self.feat[k]; if (stt === 'hidden') return;
+      var f = FEATURES[k], li = el('li', 'mbis-feat mbis-feat--' + stt, ul);
+      var hd = el('div', 'mbis-feat-head', li);
+      el('strong', null, hd, featName(k, stt, self.cfg.featureNames));
+      el('span', 'mbis-badge', hd, stt === 'supported' ? (self.cfg.vehicleModel ? self.cfg.vehicleModel + ' 적용' : '적용 사양') : stt === 'common' ? '공통 안전 구조' : '공통 안전');
+      el('p', null, li, f.short);
+      var d = el('details', null, li);
+      el('summary', null, d, '상세보기');
+      el('p', null, d, f.detail);
+    });
+  };
+
+  /* ---------- 장면 렌더 ---------- */
+  function baseParams(vb) {
+    return {
+      egoX: 160, scroll: 0, wheelDist: null, pitch: 0, egoBrake: 0,
+      leadOn: 0, leadX: 1400, leadBrake: 0,
+      cone: 0, coneColor: 'blue', conePhase: 0, sensorLbl: 0, gap: 0,
+      bodyAlpha: 1, interior: 0, belt: 1, payout: 0, retract: 0, pyro: 0,
+      windowOpen: 0, sound: 0, soundPhase: 0, ox: 0, airbag: 0,
+      crush: 0, energy: 0, energyPhase: 0, cell: 0, crumpleTint: 0,
+      barrier: 0, barrierX: 760, hazardOn: false, cabinLight: 0, waves: 0, wavesPhase: 0,
+      cam: { k: 0, z: 1, fx: vb.cx, fy: vb.cy },
+      labels: {}, cluster: true, speed: 100,
+      icons: { dist: 0, lane: 0, brake: 0, esp: 0, hazard: 0, sos: 0 },
+      showIcons: ['dist', 'lane', 'esp'],
+      inset: 0, insetMode: 'lane', iOff: 0, iWarn: 0, iArrow: 0, iYaw: 0, iWheel: 0, iTrail: 0, iYawArrow: 0, iDash: 0,
+      banner: '', ecall: 0, ecallStage: 0, pin: 0,
+      photo: 1, hv: 0, hvCut: 0, hvPhase: 0,
+      int: 0, intZoom: 1, beltT: 0, beltGlow: 0, beltFlow: 0, glass: 0, ready: 0, lblBelt: 0, lblWin: 0, isound: 0
+    };
+  }
+
+  var RENDER = [
+    /* STEP 01 — 안전 주행 */
+    function (t, P, I) {
+      var v = function (x) { return 520 - 60 * win(x, 5.0, 5.6, 6.2, 7.2); };
+      P.scroll = travel(t, v);
+      P.speed = Math.round(100 - 10 * win(t, 5.0, 5.6, 6.2, 7.2));
+      var gap = t < 2 ? 900 : lerp(760, 190, easeOut(lin(t, 2, 3.6)));
+      gap -= 42 * win(t, 4.6, 5.6, 5.6, 7.0);
+      P.leadOn = t >= 2 ? 1 : 0; P.leadX = P.egoX + 320 + gap; P.leadBrake = (t > 4.6 && t < 5.5) ? 1 : 0;
+      P.cone = seg(t, 3.0, 3.6); P.coneColor = 'blue'; P.conePhase = t * 0.8;
+      P.sensorLbl = win(t, 3.2, 3.8, 7.2, 7.8);
+      P.gap = win(t, 4.4, 5.0, 7.2, 7.8);
+      P.icons.dist = t > 3.2 ? ((t > 4.6 && t < 7.2) ? 2 : 1) : 0;
+      P.icons.lane = t > 0.5 ? ((t > 8.4 && t < 9.8) ? 3 : 1) : 0;
+      P.icons.esp = (t > 11.6 && t < 12.9 && blink(t, 2)) ? 3 : 0;
+      P.inset = win(t, 7.2, 7.6, 13.6, 14.1);
+      P.iDash = P.scroll * 0.3;
+      if (t < 10.8) {
+        P.insetMode = 'lane';
+        P.iOff = -11 * seg(t, 7.6, 8.6) + 11 * seg(t, 9.2, 10.3);
+        P.iWarn = (t > 8.4 && t < 9.8) ? 1 : 0;
+        P.iArrow = win(t, 9.0, 9.3, 9.9, 10.3);
+      } else {
+        P.insetMode = 'esp';
+        P.iYaw = -16 * seg(t, 11.0, 11.7) + 16 * seg(t, 11.9, 12.9);
+        P.iOff = 5 * seg(t, 11.0, 11.7) - 5 * seg(t, 11.9, 12.9);
+        P.iWheel = (t > 11.7 && t < 12.9) ? 1 : 0;
+        P.iTrail = win(t, 11.0, 11.4, 12.6, 13.2);
+        P.iYawArrow = win(t, 11.8, 12.0, 12.6, 12.9);
+      }
+    },
+    /* STEP 02 — 충돌 위험 대비 */
+    function (t, P, I) {
+      var v = function (x) { return lerp(520, 230, seg(x, 3.0, 4.8)); };
+      P.scroll = travel(t, v);
+      P.speed = Math.round(lerp(100, 45, seg(t, 3.0, 7.0)));
+      var gap = 190 - 108 * seg(t, 1.4, 3.0) - 34 * seg(t, 3.0, 4.6);
+      P.leadOn = 1; P.leadX = P.egoX + 320 + gap; P.leadBrake = t > 1.4 ? 1 : 0;
+      P.cone = 1 - 0.8 * seg(t, 4.3, 5.0);
+      P.coneColor = t < 1.9 ? 'blue' : t < 2.6 ? 'amber' : 'red';
+      P.conePhase = t * (t > 1.9 ? 1.6 : 0.8);
+      P.egoBrake = t > 3.0 ? 1 : 0;
+      P.pitch = 1.3 * seg(t, 3.0, 3.5) - 0.5 * seg(t, 4.6, 5.4);
+      P.showIcons = ['dist', 'brake'];
+      P.icons.dist = t < 3.0 ? 1 : 0;
+      P.icons.brake = t > 1.9 ? (t < 3.0 ? (blink(t, 2.5) ? 3 : 0) : 4) : 0;
+      P.bodyAlpha = 1 - 0.72 * seg(t, 4.3, 5.0);
+      P.photo = 1 - 0.8 * seg(t, 4.3, 5.0);
+      P.interior = seg(t, 4.3, 5.0);
+      P.cam = { k: seg(t, 4.2, 5.2), z: 2.1, fx: P.egoX + 178, fy: 400 - 64 };
+      P.belt = 1 - seg(t, 5.0, 5.8);
+      P.retract = win(t, 5.0, 5.2, 6.2, 6.6);
+      P.ox = 4 * seg(t, 3.0, 3.6) - 3 * seg(t, 5.0, 5.8);
+      P.windowOpen = 1 - seg(t, 6.6, 7.8);
+      if (I.feat.preSafeSound !== 'hidden') { P.sound = win(t, 8.0, 8.3, 9.6, 10.0); P.soundPhase = t * 1.4; }
+      P.labels.beltPre = seg(t, 5.0, 5.4);
+      P.labels.window = seg(t, 6.6, 7.0);
+      P.labels.sound = P.sound;
+      P.banner = (t >= 4.2 && t < 9.8) ? '가상 상황 · 충돌이 임박한 경우' : t >= 9.8 ? '제동 지원 = 액티브 브레이크 어시스트  /  탑승자 보호 준비 = PRE-SAFE®' : '';
+      if (I.hasInt) {
+        /* 실내 장면: 4.2~5.4 진입 · 5.6~7.4 벨트 장력 · 7.9~9.9 창문 · 10.2 준비 완료 · 11.8~13.0 장력 완화 */
+        P.int = seg(t, 4.2, 5.4); P.intZoom = 1.16 - 0.16 * seg(t, 4.2, 5.8);
+        P.beltT = seg(t, 5.6, 7.4) * (1 - seg(t, 11.8, 13.0));
+        P.beltGlow = win(t, 5.6, 5.9, 7.4, 8.0); P.beltFlow = t;
+        P.glass = seg(t, 7.9, 9.9);
+        P.ready = win(t, 10.2, 10.5, 11.5, 11.8);
+        P.lblBelt = win(t, 5.7, 6.1, 11.6, 12.0); P.lblWin = win(t, 8.0, 8.4, 11.6, 12.0);
+        if (I.feat.preSafeSound !== 'hidden') P.isound = win(t, 10.9, 11.1, 11.6, 11.8);
+        P.banner = (t >= 4.2 && t < 11.8) ? '가상 상황 · 충돌이 임박한 경우' : t >= 11.8 ? '제동 지원 = 액티브 브레이크 어시스트  /  탑승자 보호 준비 = PRE-SAFE®' : '';
+      }
+    },
+    /* STEP 03 — 충돌 순간 보호 */
+    function (t, P, I) {
+      var B = 760; P.barrier = 1; P.barrierX = B; P.leadOn = 0; P.cone = 0;
+      var G = I.G, cr = easeOut(lin(t, 1.6, 3.2)); P.crush = cr;
+      var s = 1 - 0.58 * cr;
+      var x0 = B - G.split - G.frontLen, x1 = x0 - 190;
+      P.egoX = t < 1.6 ? lerp(x1, x0, t / 1.6) : B - G.split - G.frontLen * s;
+      P.scroll = 0; P.wheelDist = P.egoX - x1;
+      P.egoBrake = 1;
+      P.photo = 1 - seg(t, 0.2, 1.2);
+      P.pitch = 1.0 + 1.2 * win(t, 1.6, 1.9, 2.4, 3.4) - 0.4 * seg(t, 3.4, 4.0);
+      P.bodyAlpha = 1 - 0.64 * seg(t, 0.2, 1.0); P.interior = seg(t, 0.2, 1.0);
+      var pre = I.feat.preSafe !== 'hidden';
+      P.belt = t < 1.85 ? (pre ? 0 : 0.6) : (pre ? 0 : 0.6 * (1 - seg(t, 1.85, 1.95)));
+      P.pyro = win(t, 1.85, 1.9, 2.1, 2.4);
+      P.airbag = seg(t, 2.1, 2.45) - 0.45 * seg(t, 3.8, 5.0);
+      P.ox = 10 * seg(t, 2.3, 3.3) - 4 * seg(t, 3.6, 4.6);
+      P.payout = seg(t, 3.0, 3.6);
+      P.energy = win(t, 1.7, 1.9, 3.4, 4.0); P.energyPhase = t * 2;
+      P.crumpleTint = 0.9 * seg(t, 1.7, 2.4);
+      P.cell = seg(t, 4.0, 4.8);
+      P.cam = { k: seg(t, 1.0, 1.8), z: 1.4, fx: 650, fy: 330 };
+      P.labels.pretensioner = seg(t, 1.85, 2.1);
+      P.labels.airbag = seg(t, 2.1, 2.4);
+      P.labels.crumple = seg(t, 2.6, 3.0);
+      P.labels.limiter = seg(t, 3.2, 3.6);
+      P.labels.cell = seg(t, 4.2, 4.6);
+      P.cluster = false;
+      P.banner = t < 1.6 ? '가상 상황 · 충돌을 피하지 못한 경우 — 개념 시뮬레이션' : '가상 상황 · 슬로 모션 개념 표현 (실제 충돌은 순식간에 진행)';
+    },
+    /* STEP 04 — 사고 이후 보호 */
+    function (t, P, I) {
+      var B = 760, s = 0.42, G = I.G;
+      P.barrier = 1; P.barrierX = B; P.crush = 1; P.photo = 0;
+      P.egoX = B - G.split - G.frontLen * s; P.scroll = 0; P.wheelDist = 190;
+      P.pitch = 0.6; P.bodyAlpha = 0.74; P.interior = 0.85;
+      P.airbag = 0.55; P.ox = 6; P.belt = 0; P.payout = 1; P.crumpleTint = 0.5;
+      P.hazardOn = t > 0.8 && ((t - 0.8) % 0.9) < 0.45;
+      P.cabinLight = seg(t, 1.8, 2.4);
+      P.labels.hazard = seg(t, 0.8, 1.2);
+      P.labels.unlock = seg(t, 1.8, 2.2);
+      if (I.hasHV) {
+        P.hv = seg(t, 0, 0.6); P.hvCut = seg(t, 2.4, 2.9); P.hvPhase = t;
+        P.labels.hv = seg(t, 2.4, 2.8); P.labels.hvRes = win(t, 3.0, 3.4, 8.4, 8.8);
+      }
+      P.labels.qr = seg(t, 8.8, 9.2);
+      P.waves = win(t, 3.0, 3.3, 7.4, 8.0); P.wavesPhase = t * 0.8;
+      P.ecall = seg(t, 2.8, 3.2);
+      P.ecallStage = t < 5 ? 1 : t < 7 ? 2 : 3;
+      P.pin = (t * 0.9) % 1;
+      P.cam = { k: 1, z: 1.12, fx: 700, fy: 318 };
+      P.speed = 0;
+      P.showIcons = ['hazard', 'sos'];
+      P.icons.hazard = P.hazardOn ? 3 : 0;
+      P.icons.sos = t > 3 ? (t < 5 ? (blink(t, 1.5) ? 1 : 0) : 2) : 0;
+      P.banner = t > 10.6 ? '차량 사양·사고 조건·통신 환경에 따라 작동은 달라질 수 있습니다' : '';
+    }
+  ];
+
+  P_.render = function () {
+    if (!this.vb) return;
+    var P = baseParams(this.vb);
+    RENDER[this.step](this.t, P, this);
+    this.apply(P);
+    this.updateCaption();
+  };
+
+  P_.updateCaption = function () {
+    var ph = this.phases[this.step], cur = ph[0];
+    for (var i = 0; i < ph.length; i++) if (ph[i].t <= this.t + 1e-6) cur = ph[i];
+    var key = this.step + ':' + cur.t + (this.compact ? 's' : '');
+    if (key !== this._caption) {
+      this._caption = key;
+      txt(this.ui.capStep, 'STEP ' + STEPS[this.step].no);
+      txt(this.ui.capText, this.compact && cur.xs ? cur.xs : cur.x);
+      this.ui.capText.title = cur.x;
+      this.ui.caption.classList.remove('is-fresh'); void this.ui.caption.offsetWidth; this.ui.caption.classList.add('is-fresh');
+    }
+  };
+
+  P_.apply = function (P) {
+    var r = this.r, ui = this.ui, vb = this.vb, G = this.G;
+    /* 카메라 */
+    var k = P.cam.k, z = lerp(1, P.cam.z, k), fx = lerp(vb.cx, P.cam.fx, k), fy = lerp(vb.cy, P.cam.fy, k);
+    attr(r.cam, 'transform', 'translate(' + f1(vb.cx) + ' ' + f1(vb.cy) + ') scale(' + (Math.round(z * 1000) / 1000) + ') translate(' + f1(-fx) + ' ' + f1(-fy) + ')');
+    attr(r.fxEgo, 'font-size', f1(15 * (1 + (z - 1) * 0.15) / z));
+
+    /* 도로 */
+    var sc = P.scroll;
+    attr(r.dashes, 'transform', 'translate(' + f1(-(sc % 120)) + ' 0)');
+    attr(r.posts, 'transform', 'translate(' + f1(-(sc % 90)) + ' 0)');
+    attr(r.hills, 'transform', 'translate(' + f1(-((sc * 0.08) % 600)) + ' 0)');
+    if (r.roadTiles) attr(r.roadTiles, 'transform', 'translate(' + f1(-(sc % this.roadTileW)) + ' 0)');
+
+    /* 내 차 */
+    attr(r.ego, 'transform', 'translate(' + f1(P.egoX) + ' 0)');
+    attr(r.egoBody, 'transform', 'rotate(' + f1(P.pitch) + ' ' + G.rearWheel + ' ' + (-G.wheelR) + ')');
+    var ang = f1((((P.wheelDist != null ? P.wheelDist : sc) / G.wheelR) * 57.2958) % 360);
+    r.egoSpokes.forEach(function (s) { attr(s, 'transform', 'rotate(' + ang + ')'); });
+    var s = 1 - 0.58 * P.crush;
+    attr(r.egoFront, 'transform', 'translate(' + G.split + ' 0) scale(' + (Math.round(s * 1000) / 1000) + ' 1) translate(' + (-G.split) + ' 0)');
+    op(r.buckle, P.crush);
+    op(r.crumple, P.crumpleTint);
+    var pa = r.photo && this.photoOk ? clamp(P.photo, 0, 1) : 0;
+    if (r.photo) op(r.photo, pa);
+    var sa = P.bodyAlpha * (1 - pa);
+    op(r.egoMain, sa);
+    op(r.egoFrontWrap, sa);
+    var ol = clamp((1 - P.bodyAlpha) * 1.6, 0, 1);
+    r.outline.forEach(function (o) { op(o, ol); });
+    op(r.interior, P.interior);
+    op(r.winFrame, ol);
+    attr(r.occ, 'transform', 'translate(' + f1(P.ox) + ' 0)');
+    var cx = lerp(166, 180, P.belt) + P.ox + P.payout * 4;
+    attr(r.belt, 'd', 'M146,-34 L148,-86 Q' + f1(cx) + ',-64 176,-41');
+    op(r.retract, P.retract);
+    op(r.pyro, P.pyro);
+    var a = clamp(P.airbag, 0, 1);
+    attr(r.airbag, 'cx', f1(206 - 7 * a)); attr(r.airbag, 'rx', f1(2 + 13 * a)); attr(r.airbag, 'ry', f1(2 + 16 * a));
+    op(r.airbag, a > 0.02 ? 1 : 0);
+    attr(r.glass, 'transform', 'translate(0 ' + f1(P.windowOpen * 30) + ')');
+    op(r.cell, P.cell);
+    op(r.brakeGlow, P.egoBrake);
+    op(r.hazR, P.hazardOn ? 1 : 0);
+    op(r.hazF, P.hazardOn ? 1 : 0);
+    attr(r.hazF, 'cx', f1(G.split + (G.headPt[0] - G.split) * s));
+    op(r.cabinLight, P.cabinLight);
+    for (var i = 0; i < 3; i++) {
+      var ph = (P.soundPhase + i / 3) % 1, rr = 11 + ph * 18, ang2 = 0.9;
+      attr(r.soundArcs[i], 'd', 'M' + f1(162 + rr * Math.cos(-ang2)) + ',' + f1(-92 + rr * Math.sin(-ang2)) + ' A' + f1(rr) + ',' + f1(rr) + ' 0 0 1 ' + f1(162 + rr * Math.cos(ang2)) + ',' + f1(-92 + rr * Math.sin(ang2)));
+      op(r.soundArcs[i], P.sound * (1 - ph));
+      var pw = (P.wavesPhase + i / 3) % 1, rw = 12 + pw * 70;
+      attr(r.waves[i], 'd', 'M' + f1(172 - rw * 0.8) + ',' + f1(-112 - rw * 0.6) + ' A' + f1(rw) + ',' + f1(rw) + ' 0 0 1 ' + f1(172 + rw * 0.8) + ',' + f1(-112 - rw * 0.6));
+      op(r.waves[i], P.waves * (1 - pw));
+    }
+    op(r.energy, P.energy);
+    if (P.energy > 0) {
+      var x0 = G.split + G.frontLen * s;
+      r.energyLines.forEach(function (ln) {
+        var y = +ln.getAttribute('data-y');
+        attr(ln, 'd', 'M' + f1(x0 + 8) + ',' + y + ' L' + (G.split + 4) + ',' + y + ' M' + (G.split + 12) + ',' + (y - 6) + ' L' + (G.split + 4) + ',' + y + ' L' + (G.split + 12) + ',' + (y + 6));
+        attr(ln, 'stroke-dashoffset', f1(-(P.energyPhase * 40) % 40));
+      });
+    }
+
+    /* 고전압 시스템 */
+    if (r.hv) {
+      op(r.hv, P.hv);
+      if (P.hv > 0) {
+        var cut = P.hvCut, on = cut < 0.5;
+        r.hvLines.forEach(function (ln) {
+          cls(ln, 'is-off', !on);
+          attr(ln, 'stroke-dashoffset', on ? f1(-(P.hvPhase * 18) % 18) : '0');
+        });
+        var bx = r.hvBox, by = r.hvBusY, d = 6 * cut;
+        attr(r.hvBlades[0], 'transform', 'rotate(' + f1(-38 * cut) + ' ' + (bx[0] - 1) + ' ' + by + ')');
+        attr(r.hvBlades[1], 'transform', 'rotate(' + f1(38 * cut) + ' ' + (bx[0] + 11) + ' ' + by + ')');
+        cls(r.hvBatt, 'is-residual', cut > 0.5);
+      }
+    }
+
+    /* 앞차 */
+    op(r.lead, P.leadOn);
+    if (P.leadOn) {
+      attr(r.lead, 'transform', 'translate(' + f1(P.leadX) + ' 0)');
+      r.leadSpokes.forEach(function (sp) { attr(sp, 'transform', 'rotate(' + ang + ')'); });
+      op(r.leadBrake, P.leadBrake);
+    }
+
+    /* 센서 영역 */
+    op(r.cone, P.cone);
+    var fxp = P.egoX + 316, endX = P.leadOn ? P.leadX - 4 : fxp + 380, L = Math.max(30, endX - fxp);
+    if (P.cone > 0) {
+      attr(r.coneShape, 'd', 'M' + f1(fxp) + ',-48 L' + f1(endX) + ',-96 Q' + f1(endX + 14) + ',-52 ' + f1(endX) + ',-6 Z');
+      attr(r.coneShape, 'fill', 'url(#' + this.id + '-cone' + P.coneColor + ')');
+      for (var j = 0; j < 3; j++) {
+        var q = (P.conePhase + j / 3) % 1, d = q * L, hh = 4 + q * 42;
+        attr(r.coneArcs[j], 'd', 'M' + f1(fxp + d) + ',' + f1(-48 - hh) + ' Q' + f1(fxp + d + hh * 0.35) + ',-48 ' + f1(fxp + d) + ',' + f1(-48 + hh));
+        attr(r.coneArcs[j], 'class', 'mbis-cone-arc mbis-cone-arc--' + P.coneColor);
+        op(r.coneArcs[j], (1 - q) * 0.9);
+      }
+    }
+    op(r.sensorLbl, P.sensorLbl);
+    attr(r.sensorLbl, 'x', f1(fxp + L / 2)); attr(r.sensorLbl, 'y', 52);
+    op(r.gap, P.gap);
+    if (P.gap > 0) {
+      var gx1 = P.egoX + 320, gx2 = P.leadX;
+      attr(r.gapPath, 'd', 'M' + f1(gx1) + ',-128 v-10 M' + f1(gx1) + ',-133 H' + f1(gx2) + ' M' + f1(gx2) + ',-128 v-10');
+      attr(r.gapText, 'x', f1((gx1 + gx2) / 2)); attr(r.gapText, 'y', -144);
+    }
+
+    /* 장애물 */
+    op(r.barrier, P.barrier);
+    attr(r.barrier, 'transform', 'translate(' + P.barrierX + ' 0)');
+
+    /* 라벨 */
+    var labels = r.labels;
+    Object.keys(labels).forEach(function (key) {
+      var lb = labels[key], v = P.labels[key] || 0;
+      op(lb.g, v);
+      if (key === 'crumple' && v > 0) {
+        var dx = G.split + 28 * s;
+        attr(lb.dot, 'cx', f1(dx)); attr(lb.line, 'd', 'M' + f1(dx) + ',-48 L' + lb.d[2] + ',' + (lb.d[3] + 6));
+      }
+    });
+
+    /* HUD */
+    cls(ui.cluster, 'is-hidden', !P.cluster);
+    txt(ui.speed, String(P.speed));
+    var icons = ui.icons;
+    Object.keys(icons).forEach(function (kk) {
+      var e = icons[kk], show = P.showIcons.indexOf(kk) >= 0, v = P.icons[kk];
+      cls(e, 'is-gone', !show);
+      cls(e, 'is-on', v === 1); cls(e, 'is-active', v === 2); cls(e, 'is-warn', v === 3); cls(e, 'is-alert', v === 4);
+    });
+    txt(ui.banner, P.banner);
+    cls(ui.banner, 'is-on', !!P.banner);
+
+    /* 상단 뷰 */
+    cls(ui.inset, 'is-on', P.inset > 0.01);
+    ui.inset.style.opacity = P.inset;
+    if (P.inset > 0) {
+      var lane = P.insetMode === 'lane';
+      txt(ui.insetMode, lane ? featName('activeLaneKeeping', this.feat.activeLaneKeeping, this.cfg.featureNames) : featName('esp', this.feat.esp, this.cfg.featureNames));
+      attr(ui.iDash, 'transform', 'translate(' + f1(-(P.iDash % 40)) + ' 0)');
+      attr(ui.iCar, 'transform', 'translate(140 ' + f1(97.5 + P.iOff) + ') rotate(' + f1(P.iYaw) + ')');
+      op(ui.iWarn, P.iWarn);
+      op(ui.iSteer, P.iArrow); op(ui.iSteerHead, P.iArrow);
+      op(ui.iTrail, P.iTrail);
+      op(ui.iWheelHi, P.iWheel);
+      op(ui.iYaw, P.iYawArrow); op(ui.iYawHead, P.iYawArrow);
+      txt(ui.iLbl, lane ? (P.iWarn ? '차선 이탈 위험 감지 · 경고' : P.iArrow ? '조향 개입으로 차선 복귀 지원' : '카메라로 차선 인식')
+        : (P.iWheel ? '바깥쪽 앞바퀴 개별 제동 → 자세 안정' : P.iTrail ? '미끄러짐(오버스티어) 발생' : '보조 장면 · 미끄러운 노면'));
+    }
+
+    /* STEP 02 실내 장면 */
+    if (r.int) {
+      var iv = this.hasInt && this.intOk ? clamp(P.int, 0, 1) : 0;
+      if (iv <= 0.001) { if (r.int.style.display !== 'none') r.int.style.display = 'none'; }
+      else {
+        if (r.int.style.display !== 'block') r.int.style.display = 'block';
+        r.int.style.opacity = f1(iv * 100) / 100;
+        var C = this.cfg.preSafeInterior, Bl = C.belt, z = Math.round(P.intZoom * 1000) / 1000, c0 = this.ivc;
+        attr(r.intCam, 'transform', 'translate(' + c0[0] + ' ' + c0[1] + ') scale(' + z + ') translate(' + (-c0[0]) + ' ' + (-c0[1]) + ')');
+        var bt = smooth(P.beltT);
+        var sp = chain(Bl.shoulderSlack, Bl.shoulderTight, bt), lp = chain(Bl.lapSlack, Bl.lapTight, bt);
+        attr(r.iShoulder, 'd', sp); attr(r.iShoulderShadow, 'd', sp); attr(r.iShoulderHi, 'd', sp); attr(r.iFlow, 'd', sp); attr(r.iGlow, 'd', sp);
+        attr(r.iLap, 'd', lp); attr(r.iLapShadow, 'd', lp); attr(r.iLapHi, 'd', lp); attr(r.iLapGlow, 'd', lp);
+        op(r.iGlow, P.beltGlow * 0.55); op(r.iLapGlow, P.beltGlow * 0.45);
+        op(r.iFlow, P.beltGlow);
+        attr(r.iFlow, 'stroke-dashoffset', f1((P.beltFlow * 90) % 60));
+        op(r.iArrow, P.beltGlow);
+        if (P.beltGlow > 0) attr(r.iArrow, 'transform', 'translate(0 ' + f1(((P.beltFlow * 1.6) % 1) * 14) + ')');
+        var W = C.window;
+        attr(r.iGlass, 'transform', 'translate(0 ' + f1(lerp(W.open, W.closed, smooth(P.glass))) + ')');
+        if (r.iLblBelt) op(r.iLblBelt, P.lblBelt);
+        if (r.iLblWin) op(r.iLblWin, P.lblWin);
+        op(r.iReady, P.ready);
+        if (r.iSound.length) {
+          var ear = C.ear;
+          for (var si = 0; si < 3; si++) {
+            var sph = (P.beltFlow * 1.4 + si / 3) % 1, sr = 24 + sph * 46;
+            attr(r.iSound[si], 'd', 'M' + f1(ear[0] - sr * 0.6) + ',' + f1(ear[1] - sr * 0.8) + ' A' + f1(sr) + ',' + f1(sr) + ' 0 0 0 ' + f1(ear[0] - sr * 0.6) + ',' + f1(ear[1] + sr * 0.8));
+            op(r.iSound[si], P.isound * (1 - sph));
+          }
+        }
+      }
+    }
+
+    /* 긴급 호출 */
+    cls(ui.ecall, 'is-on', P.ecall > 0.01);
+    ui.ecall.style.opacity = P.ecall;
+    if (P.ecall > 0) {
+      ui.ecallSteps.forEach(function (li, n) {
+        cls(li, 'is-done', n + 1 < P.ecallStage);
+        cls(li, 'is-current', n + 1 === P.ecallStage);
+      });
+      cls(ui.ecallMap, 'is-on', P.ecallStage >= 3);
+      attr(ui.pinPulse, 'r', f1(6 + P.pin * 16));
+      op(ui.pinPulse, (1 - P.pin) * 0.8);
+    }
+  };
+
+  /* ------------------------------------------------------------------ *
+   * 공개 API
+   * ------------------------------------------------------------------ */
+  function parseCfg(node) {
+    var raw = node.getAttribute('data-mb-config');
+    if (!raw) return {};
+    try { return JSON.parse(raw); } catch (e) { if (window.console) console.warn('[MBIntegralSafety] data-mb-config JSON 오류', e); return {}; }
+  }
+  function mount(node, cfg) {
+    if (typeof node === 'string') node = document.querySelector(node);
+    if (!node) return null;
+    if (node.__mbis) return node.__mbis;
+    var inst = new Instance(node, extend(parseCfg(node), cfg));
+    node.__mbis = inst;
+    return inst;
+  }
+  function init(scope) {
+    var list = (scope || document).querySelectorAll('[data-mb-integral-safety]');
+    var out = [];
+    for (var i = 0; i < list.length; i++) out.push(mount(list[i]));
+    return out;
+  }
+
+  window.MBIntegralSafety = {
+    version: VERSION, mount: mount, init: init,
+    features: Object.keys(FEATURES), defaults: DEFAULTS
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { init(); });
+  else init();
+})(window, document);
+
+</script>
+<script>
+/* ==================================================
+   ▶▶ 통합 안전 섹션 이미지 ◀◀ — 여기 경로만 바꾸면 자동 교체됩니다.
+   - body : E-Class W214 측면 차체 (바퀴 없음 · 투명 배경 · 앞쪽이 화면 오른쪽)
+   - wheel: 바퀴 단독 이미지 (정면 · 원형 투명)
+   - road / interior: GLC 안전 섹션과 같은 도로 · PRE-SAFE 실내 이미지
+   - body·wheel을 비워 두면('') GLC 이미지가 아닌 E-Class 세단 형태의 SVG로 표시됩니다.
+   ================================================== */
+const ECLASS_SAFETY_IMAGES = {
+  body:     'images/e-class/safety/e200-safety-body.webp',
+  wheel:    'images/e-class/safety/e200-safety-wheel.webp',
+  road:     'https://raw.githubusercontent.com/JNOHJINGYU/images/main/safety/glc-safety-road.webp',
+  interior: 'https://raw.githubusercontent.com/JNOHJINGYU/images/main/safety/glc-presafe-interior.webp'
+};
+
+/* E-Class W214 세단 차체 좌표 (차체 이미지와 SVG 구조도가 겹치도록 이미지에서 측정 · CAR 단위, 지면 y=0)
+   전장 4,955mm · 18인치 245/45 R18 기준 비율 — 휠 중심 rearWheel/frontWheel, 휠 반지름 wheelR,
+   고강성 승객실 cell, 전면 충격 흡수 영역 crumple(split 앞쪽), 측면 유리 aperture/frontWin, B필러 bpillar */
+const ECLASS_SAFETY_GEOMETRY = {
+  body: "M8.0,-35.6 L8.4,-31.6 L8.0,-27.5 L9.0,-24.8 L8.6,-23.8 L9.7,-22.0 L10.2,-20.1 L11.1,-19.2 L14.0,-17.8 L16.0,-17.5 L18.1,-15.7 L20.4,-14.9 L26.8,-13.8 L27.7,-14.1 L28.0,-13.7 L28.8,-14.0 L29.1,-13.6 L30.0,-13.8 L30.3,-13.4 L31.2,-13.7 L31.5,-13.3 L32.5,-13.6 L32.6,-13.1 L33.8,-13.3 L33.6,-13.0 L36.0,-13.1 L36.3,-12.7 L38.6,-12.8 L38.9,-12.4 L39.9,-12.7 L40.1,-12.2 L40.9,-12.5 L42.5,-11.9 L43.6,-12.2 L43.7,-11.8 L44.9,-12.1 L45.0,-11.7 L46.3,-11.9 L46.6,-11.5 L48.8,-11.5 L49.5,-12.4 L51.4,-12.8 L52.4,-14.4 L52.4,-18.9 L53.0,-19.4 L52.9,-24.2 L53.6,-28.0 L56.4,-34.1 L60.6,-38.9 L64.4,-41.5 L69.1,-43.4 L72.8,-44.2 L77.2,-44.2 L81.0,-43.4 L85.7,-41.5 L89.5,-38.9 L93.4,-34.5 L95.3,-31.2 L96.7,-26.8 L97.8,-14.9 L99.1,-12.8 L100.4,-12.4 L100.5,-9.9 L101.0,-9.5 L205.9,-9.9 L208.7,-9.5 L225.4,-9.8 L226.6,-9.3 L239.4,-9.3 L240.0,-10.1 L240.1,-13.0 L241.9,-14.3 L242.6,-15.7 L241.7,-19.8 L241.7,-24.2 L242.5,-28.0 L244.4,-32.6 L246.4,-35.7 L250.2,-39.5 L254.7,-42.3 L260.5,-44.0 L266.1,-44.2 L269.9,-43.4 L274.5,-41.5 L278.3,-38.9 L282.2,-34.5 L284.6,-30.2 L286.0,-24.2 L285.9,-18.7 L284.3,-13.4 L287.9,-12.7 L288.7,-10.5 L290.3,-10.2 L290.7,-8.9 L301.8,-10.2 L301.9,-10.6 L302.8,-10.3 L305.1,-10.8 L305.3,-11.2 L307.2,-11.2 L307.9,-11.8 L308.3,-11.5 L311.0,-12.5 L312.6,-14.7 L311.2,-17.0 L312.3,-21.6 L312.3,-23.0 L311.8,-23.5 L312.3,-23.9 L312.4,-29.3 L312.0,-30.6 L312.7,-32.8 L311.8,-37.7 L312.1,-38.6 L311.5,-41.5 L311.4,-47.2 L310.4,-48.5 L310.7,-49.1 L309.9,-50.3 L306.7,-52.9 L294.8,-57.7 L277.3,-61.9 L261.0,-64.3 L226.0,-66.4 L224.4,-67.5 L223.2,-67.5 L222.9,-67.0 L203.1,-79.6 L185.5,-89.2 L173.8,-92.5 L155.3,-94.7 L146.1,-95.2 L122.7,-94.9 L103.6,-93.3 L84.6,-89.3 L70.5,-83.6 L58.0,-77.5 L47.3,-71.5 L44.1,-71.4 L23.9,-67.2 L18.5,-66.7 L15.4,-62.4 L15.3,-60.9 L13.0,-56.4 L13.2,-53.8 L12.4,-49.7 L8.7,-41.5 Z",
+  imageBox: {"x": 7.4, "y": -95.7, "w": 305.87, "h": 87.43},
+  rearWheel: 75.0,
+  frontWheel: 263.9,
+  wheelR: 22.0,
+  split: 270.9,
+  frontLen: 41.8,
+  aperture: "M75.6,-65.4 C76.1,-72.3 79.3,-78.1 87.3,-83.5 C95.3,-87.9 104.0,-89.9 118.6,-90.8 L144.8,-91.2 L162.3,-90.1 C169.6,-89.2 174.7,-87.9 181.3,-85.0 L198.7,-75.2 L211.9,-67.2 L220.2,-61.3 L151.0,-64.3 L75.6,-65.4 Z",
+  bpillar: "M141.6,-90.5 L150.8,-90.2 L151.1,-64.3 L141.9,-64.7 Z",
+  frontWin: "M151.1,-64.3 L151.1,-89.8 L162.3,-89.8 C169.6,-89.2 174.7,-87.9 181.3,-85.0 L198.7,-75.2 L211.9,-67.2 L220.2,-61.3 Z",
+  glassRect: [150.7, -91.4, 69.9, 30.6],
+  sill: "M101.1,-9.6 L238.8,-9.6 L238.1,-17.6 L102.6,-17.6 Z",
+  shoulder: "M18.1,-65.4 C89.5,-66.0 191.5,-62.8 302.2,-53.3",
+  doors: "M75.6,-65.4 C80.7,-55.5 95.3,-39.5 104.0,-18.4 M150.8,-64.3 C153.6,-48.2 154.4,-33.7 153.6,-17.6 M220.6,-61.1 C224.2,-48.2 224.7,-33.7 222.4,-16.9",
+  handles: "M93.4,-56.0 h15.4 M161.6,-54.6 h15.3",
+  mirror: "M195.1,-66.9 L197.0,-71.8 L203.8,-72.7 L209.7,-69.8 L213.6,-65.1 L211.9,-61.9 L203.1,-62.7 L195.5,-64.6 Z",
+  head: "M284.7,-51.4 L293.5,-51.9 L304.4,-48.2 L308.0,-45.0 L307.3,-41.7 L300.8,-42.4 L292.0,-46.0 Z",
+  tail: "M13.7,-59.0 L21.0,-60.2 L31.2,-59.9 L38.5,-57.6 L35.5,-54.6 L21.0,-50.9 L14.4,-53.2 Z",
+  cell: "M102.6,-17.6 L102.6,-89.0 C115.7,-90.6 133.2,-91.2 144.8,-91.2 L162.3,-90.1 C169.6,-89.2 174.7,-87.9 181.3,-85.0 L198.7,-75.2 L211.9,-67.2 L225.0,-59.9 L225.0,-17.6 Z",
+  crumple: "M270.9,-55.5 C286.2,-54.4 300.8,-52.6 308.0,-49.0 C311.7,-42.4 312.7,-27.8 311.8,-13.3 L288.5,-10.3 A24.6,24.6 0 0 0 270.9,-44.4 Z",
+  buckle: "M272.6,-52.6 L279.6,-49.4 L286.2,-52.6 L292.8,-49.0 L300.0,-51.9 L309.5,-47.5 M289.8,-22.0 L295.7,-18.4 L300.8,-22.0 L306.6,-17.9 L311.2,-20.8",
+  tailPt: [26.1, -56.2],
+  headPt: [300.8, -46.0],
+  shadow: [160.3, 150],
+  labels: {"hazard": [26.1, -56.2, -20, -140, "비상등 자동 점멸"], "qr": [146.3, -45.3, 100, -194, "QR 구조 정보 (B필러 등)"], "cell": [155.0, -90.5, 140, -200, "고강성 승객실 · 생존 공간"], "window": [184.2, -74.5, 300, -150, "측면 윈도우 닫힘"]}
+};
+
+const ECLASS_SAFETY_CONFIG = {
+  vehicleModel: "E-Class 플러그인 하이브리드",
+  vehicleType: "phev",   // 'combustion' = 가솔린·디젤 · 'phev' = 플러그인 하이브리드(고전압 차단 기능 표시)
+  theme: 'light',
+  autoplay: false,
+  startStep: 0,
+  showHeader: true,
+  title: "안전은 사고 전부터, 사고 이후까지.",
+  description: "메르세데스-벤츠는 사고 예방부터 충돌 위험 대비, 탑승자 보호, 사고 이후 구조 지원까지 4단계로 안전을 설계합니다.",
+  assetBasePath: '',
+  vehicleImage: ECLASS_SAFETY_IMAGES.body || null,
+  vehicleImageHasWheels: false,
+  wheelImage: ECLASS_SAFETY_IMAGES.wheel || null,
+  roadImage: ECLASS_SAFETY_IMAGES.road ? Object.assign({ src: ECLASS_SAFETY_IMAGES.road }, {"width": 914, "height": 426, "scale": 0.32126, "top": -40.16, "skyTop": -205.61, "sky": [[0.0, "#97a5b4"], [0.083, "#9daab9"], [0.167, "#a3afbe"], [0.25, "#a9b5c3"], [0.334, "#afbac7"], [0.417, "#b7c0cb"], [0.501, "#bec6cf"], [0.584, "#c6ccd3"], [0.668, "#cdd1d5"], [0.751, "#d6d7d8"], [0.835, "#dedddb"], [0.918, "#e7e3de"], [1.0, "#f1eae1"]], "below": "#2b2d31"}) : null,
+  preSafeInteriorImage: ECLASS_SAFETY_IMAGES.interior || null,
+  preSafeInterior: {"width": 1672, "height": 941, "view": {"wide": [-330, 50, 1569, 680], "compact": [250, 60, 907, 680]}, "window": {"clip": "M396,372 L396,128 Q398,98 428,97 L623,104 L730,115 L803,129 L848,144 L907,172 L1007,232 L1099,297 L1110,318 L1116,372 Z", "topEdge": "M396,128 Q398,98 428,97 L623,104 L730,115 L803,129 L848,144 L907,172 L1007,232 L1099,297 L1110,318", "open": 175, "closed": 3}, "belt": {"width": 24, "shoulderSlack": [[322, 322], [378, 378], [452, 374], [512, 305], [548, 310], [578, 345], [600, 425], [652, 508], [714, 588], [724, 624]], "shoulderTight": [[322, 322], [382, 312], [450, 300], [512, 301], [548, 299], [575, 330], [598, 420], [640, 498], [700, 575], [724, 624]], "lapSlack": [[578, 710], [630, 730], [692, 694], [724, 628]], "lapTight": [[578, 710], [622, 694], [682, 652], [724, 628]], "pillar": [[320, 334], [316, 450]], "dring": [322, 322], "buckle": [724, 628, -55], "arrow": [284, 352, 40], "armClip": "M548,316 L600,330 L645,362 L688,420 L720,446 L800,440 L900,420 L962,408 L992,470 L930,502 L800,548 L734,578 L692,568 L640,553 L590,536 L556,516 L538,470 L542,400 Z"}, "ear": [533, 196], "labels": {"belt": [40, 440, 284, 362], "window": [860, 215], "ready": [900, 305]}},   // GLC와 동일한 실내 이미지 · 벨트/창문 좌표
+  vehicleGeometry: ECLASS_SAFETY_GEOMETRY,
+  /* 이 페이지 사양에 표시된 안전 기능만 '적용'으로 표시 (나머지는 공통 안전 개념 · PRE-SAFE® Sound는 미확인 시 숨김) */
+  supportedSafetyFeatures: null,   // 페이지에 안전 사양 목록이 없어 모든 기능을 공통 안전 개념으로 표시
+  featureNames: { distronic: '액티브 디스턴스 어시스트 DISTRONIC', activeLaneKeeping: '능동형 차선 유지 어시스트', activeBrakeAssist: '액티브 브레이크 어시스트', preSafe: 'PRE-SAFE® 예방 안전 시스템' },
+  stepCopy: [
+    {},
+    { tagline: '충돌 위험을 감지하면 차량이 탑승자를 보호할 준비를 합니다.' },
+    { tagline: '충돌 에너지를 흡수하고 탑승자의 생존 공간을 보호합니다.' },
+    { tagline: '사고 이후에도 탑승자의 안전과 신속한 구조를 지원합니다.' }
+  ]
+};
+
+/* 한 번만 초기화 (data 속성 자동 초기화 미사용 · 같은 요소 재호출 시 모듈이 기존 인스턴스 반환) */
+(function () {
+  var el = document.getElementById('mbis-hybrid');
+  if (!el || !window.MBIntegralSafety) return;
+  try { el.style.setProperty('--mbis-font', getComputedStyle(document.body).fontFamily); } catch (e) {}
+  window.MBIntegralSafety.mount(el, ECLASS_SAFETY_CONFIG);
+})();
+</script>
+
 
 </main>
 
