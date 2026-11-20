@@ -244,28 +244,73 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
 @media (max-width:960px){.boost-grid{grid-template-columns:1fr}}
 
 /* ==================================================
-   7. 4MATIC+
+   7. 4MATIC+ — 실제 도로 주행 시뮬레이션
    ================================================== */
-.awd-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(24px,3vw,44px);align-items:center;}
-.awd-wheel{fill:#3A3E45;}
+.awd-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(24px,3vw,44px);align-items:center;}
 .awd-caption{font-size:clamp(19px,1.8vw,23px);font-weight:700;line-height:1.45;}
 .awd-desc{color:var(--sub);font-size:15px;margin-top:12px;line-height:1.8;}
 .awd-desc,.awd-caption{transition:opacity .25s;}
-/* 상대적 구동력 게이지 (비율 숫자 없음) */
-.awd-levels{margin-top:22px;display:grid;gap:12px;}
-.awd-levels .row{display:grid;grid-template-columns:88px 1fr;align-items:center;gap:12px;font-size:13px;color:var(--sub);}
-.awd-levels .track{height:8px;background:var(--graphite);position:relative;overflow:hidden;}
-.awd-levels .fill{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#8E1418,var(--red-2));}
-.awd-levels .hint{font-size:11.5px;color:var(--mute);}
-/* AMG 4MATIC+ 탑뷰 구동력 흐름 */
+/* 무대 */
+.awd-stage{position:relative;aspect-ratio:16/9;overflow:hidden;background:#2B2D31;isolation:isolate;}
+.awd-stage::after{content:'';position:absolute;inset:0;background:#0B0C0E;opacity:0;pointer-events:none;transition:opacity .22s;z-index:2;}
+.awd-stage.is-cut::after{opacity:1;}
+#awdSvg{display:block;width:100%;height:100%;}
+#awdSvg .awd-road{opacity:0;transition:opacity .7s var(--ease);}
+#awdSvg .awd-road.is-on{opacity:1;}
+#awdSvg .awd-road.is-noimg image{display:none;}
 #awdSvg .awd-fb{display:none;}
 #awdSvg.awd-fallback .awd-img{display:none;}
 #awdSvg.awd-fallback .awd-fb{display:inline;}
-#awdSvg .awd-corner{opacity:0;transition:opacity .6s var(--ease);}
-#awdSvg .awd-corner.is-on{opacity:1;}
-.awd-cap{margin-top:8px;text-align:center;font-size:12px;color:var(--mute);}
+#awdSvg .awd-tread{opacity:.42;}
+#awdSvg .awd-track{fill:none;stroke-linecap:round;stroke-linejoin:round;}
+#awdSvg .awd-flow{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:34 54;}
+#awdSvg .awd-track.awd-f{stroke:#1B4E8C;} #awdSvg .awd-flow.awd-f{stroke:#4DA3FF;}
+#awdSvg .awd-track.awd-r{stroke:#6E1216;} #awdSvg .awd-flow.awd-r{stroke:#FF3B42;}
+/* 정보 표시 · 조작 */
+.awd-hud{position:absolute;left:12px;right:12px;top:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;z-index:1;}
+.awd-chip{white-space:nowrap;padding:5px 10px;background:rgba(11,12,14,.72);color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1.3;}
+.awd-chip--phase{color:#E8EAED;font-weight:600;text-align:right;}
+.awd-chip:empty{display:none;}
+.awd-ctrl{position:absolute;right:10px;bottom:10px;display:flex;gap:6px;z-index:1;}
+.awd-ctrl button{display:inline-flex;align-items:center;gap:7px;min-height:44px;min-width:44px;padding:0 14px;background:rgba(11,12,14,.78);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:12.5px;font-weight:700;}
+.awd-ctrl button:hover{border-color:rgba(255,255,255,.45);}
+.awd-ico{width:12px;height:12px;position:relative;flex:none;}
+.awd-ico::before,.awd-ico::after{content:'';position:absolute;top:0;width:4px;height:12px;background:currentColor;}
+.awd-ico::before{left:1px;}.awd-ico::after{right:1px;}
+#awdPlay[aria-pressed="true"] .awd-ico::before{left:2px;width:0;height:0;background:none;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent currentColor;}
+#awdPlay[aria-pressed="true"] .awd-ico::after{display:none;}
+.awd-ico--re::before{left:0;width:12px;height:12px;background:none;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;box-sizing:border-box;}
+.awd-ico--re::after{right:0;top:-1px;width:0;height:0;background:none;border-style:solid;border-width:4px 0 4px 5px;border-color:transparent transparent transparent currentColor;transform:rotate(-30deg);}
+/* 상대적 구동력 게이지 (비율 숫자 없음) — 블루 = 앞차축, 레드 = 뒷차축 */
+.awd-levels{margin-top:16px;display:grid;gap:10px;}
+.awd-levels .row{display:grid;grid-template-columns:96px 1fr;align-items:center;gap:12px;font-size:13px;color:var(--sub);}
+.awd-levels .row b{display:inline-block;width:9px;height:9px;margin-right:6px;vertical-align:0;}
+.awd-levels .track{height:8px;background:var(--graphite);position:relative;overflow:hidden;}
+.awd-levels .fill{position:absolute;inset:0 auto 0 0;width:100%;transform-origin:0 50%;transform:scaleX(0);}
+.awd-levels .fill.f{background:linear-gradient(90deg,#1B4E8C,#4DA3FF);} .awd-levels .fill.r{background:linear-gradient(90deg,#8E1418,var(--red-2));}
+.awd-levels .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:11.5px;color:var(--mute);}
+.awd-levels .legend i{display:inline-block;width:14px;height:3px;margin-right:6px;vertical-align:3px;}
+/* 단계 표시 */
+.awd-steps{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:6px;counter-reset:awd;}
+.awd-steps li{position:relative;padding:10px 12px 10px 40px;font-size:14px;color:var(--mute);background:var(--bg-3,#1B1D21);border-left:3px solid transparent;transition:color .3s,border-color .3s;}
+.awd-steps li::before{counter-increment:awd;content:counter(awd);position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;background:var(--graphite);color:var(--sub);}
+.awd-steps li.is-on{color:var(--ink);border-left-color:var(--red-2);}
+.awd-steps li.is-on::before{background:var(--red-2);color:#fff;}
+.awd-steps li.is-done{color:var(--sub);}
+.awd-steps .awd-steps-note{padding:6px 0 0;background:none;font-size:12px;color:var(--mute);border:0;}
+.awd-steps .awd-steps-note::before{display:none;}
 @media (max-width:960px){.awd-grid{grid-template-columns:1fr}}
-@media (max-width:767px){#awdTabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;}#awdTabs button{min-height:44px;padding:10px 8px;}}
+@media (max-width:767px){
+  #awdTabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;}#awdTabs button{min-height:44px;padding:10px 8px;}
+  .awd-stage{aspect-ratio:4/3;margin:0 -2px;}
+  .awd-hud{left:8px;right:8px;top:8px;}
+  .awd-chip{font-size:11.5px;padding:4px 8px;}
+  .awd-ctrl{right:8px;bottom:8px;}
+  .awd-ctrl button{padding:0 12px;}
+  .awd-ctrl .awd-ctrl-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  .awd-levels .row{grid-template-columns:86px 1fr;}
+}
+@media (prefers-reduced-motion:reduce){#awdSvg .awd-road,.awd-stage::after{transition:none;}}
 
 /* ==================================================
    8. SUSPENSION
@@ -1008,7 +1053,7 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
   </div>
 </section>
 
-<!-- 06 AMG 4MATIC+ -->
+<!-- 06 AMG 4MATIC+ — 실제 도로 주행 시뮬레이션 -->
 <section class="bg-2" id="awd" aria-labelledby="awTitle">
   <div class="wrap">
     <div class="section-head reveal">
@@ -1019,95 +1064,103 @@ button,[role="button"]{touch-action:manipulation;-webkit-tap-highlight-color:tra
     <div class="awd-grid">
       <div class="panel reveal">
         <div class="seg" id="awdTabs"></div>
-        <!-- 탑뷰: 좌표계 = 차체 이미지(1822×689) 픽셀 기준. 전면 = 왼쪽, 차량 왼쪽 바퀴 = 화면 아래 -->
-        <svg id="awdSvg" viewBox="-130 -110 2082 909" role="img" aria-label="위에서 본 Mercedes-AMG E 53. 주행 상황별로 구동력이 앞·뒤 바퀴로 전달되는 개념 애니메이션">
-          <defs>
-            <marker id="awdArr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.4" markerHeight="3.4" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#FF3B42"/></marker>
-          </defs>
-          <!-- ② 보조 궤적 (코너 탈출) -->
-          <g id="awdCorner" class="awd-corner">
-            <path d="M1952 -60 C 1500 -40, 900 40, 380 150 S -60 260, -130 280" fill="none" stroke="#3A3E45" stroke-width="7" stroke-dasharray="40 30"/>
-            <path d="M1952 790 C 1500 760, 900 690, 380 640 S -60 600, -130 590" fill="none" stroke="#3A3E45" stroke-width="7" stroke-dasharray="40 30"/>
-            <path d="M0 357.5 C -50 352, -85 338, -112 322" fill="none" stroke="#FF3B42" stroke-width="7" stroke-linecap="round" marker-end="url(#awdArr)"/>
-          </g>
-          <!-- ④ 차체 (실제 이미지) -->
-          <image class="awd-img" id="awdBody" x="0" y="0" width="1822" height="689" preserveAspectRatio="none"/>
-          <rect class="awd-fb" x="10" y="54" width="1800" height="607" rx="200" fill="#1A1C20" stroke="#3A3E45" stroke-width="8"/>
-          <!-- ③ 타이어 4개 (1장 복제, 조향 0°) — 차체 위에 투시 표시 -->
-          <g id="awdTireFL" transform="translate(328 614)">
-            <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
-            <image class="awd-img awd-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
-            <rect class="awd-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
-          </g>
-          <g id="awdTireFR" transform="translate(328 101)">
-            <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
-            <image class="awd-img awd-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
-            <rect class="awd-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
-          </g>
-          <g id="awdTireRL" transform="translate(1410 614)">
-            <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
-            <image class="awd-img awd-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
-            <rect class="awd-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
-          </g>
-          <g id="awdTireRR" transform="translate(1410 101)">
-            <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
-            <image class="awd-img awd-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
-            <rect class="awd-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
-          </g>
-          <!-- ⑤ 구동력 전달 경로 (개념도) -->
-          <g id="awdTracks">
-            <path id="awdTrackFR" d="M470 357.5 L370 357.5 Q328 357.5 328 315.5 L328 151" fill="none" stroke="#6E1216" stroke-linecap="round" stroke-linejoin="round" opacity=".55" stroke-width="10"/>
-            <path id="awdTrackFL" d="M470 357.5 L370 357.5 Q328 357.5 328 399.5 L328 564" fill="none" stroke="#6E1216" stroke-linecap="round" stroke-linejoin="round" opacity=".55" stroke-width="10"/>
-            <path id="awdTrackRR" d="M470 357.5 L1368 357.5 Q1410 357.5 1410 315.5 L1410 151" fill="none" stroke="#6E1216" stroke-linecap="round" stroke-linejoin="round" opacity=".55" stroke-width="10"/>
-            <path id="awdTrackRL" d="M470 357.5 L1368 357.5 Q1410 357.5 1410 399.5 L1410 564" fill="none" stroke="#6E1216" stroke-linecap="round" stroke-linejoin="round" opacity=".55" stroke-width="10"/>
-          </g>
-          <!-- ⑥ 움직이는 에너지 흐름 -->
-          <g id="awdFlows">
-            <path id="awdFlowFR" d="M470 357.5 L370 357.5 Q328 357.5 328 315.5 L328 151" fill="none" stroke="#FF3B42" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="34 54" stroke-width="8"/>
-            <path id="awdFlowFL" d="M470 357.5 L370 357.5 Q328 357.5 328 399.5 L328 564" fill="none" stroke="#FF3B42" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="34 54" stroke-width="8"/>
-            <path id="awdFlowRR" d="M470 357.5 L1368 357.5 Q1410 357.5 1410 315.5 L1410 151" fill="none" stroke="#FF3B42" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="34 54" stroke-width="8"/>
-            <path id="awdFlowRL" d="M470 357.5 L1368 357.5 Q1410 357.5 1410 399.5 L1410 564" fill="none" stroke="#FF3B42" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="34 54" stroke-width="8"/>
-          </g>
-          <!-- 동력원·변속기 영역 (개념 표시) -->
-          <circle id="awdSrcRing" cx="470" cy="357.5" r="40" fill="none" stroke="#FF3B42" stroke-width="5" opacity=".4"/>
-          <circle cx="470" cy="357.5" r="22" fill="#FF3B42"/>
-          <!-- ⑦ 바퀴별 강조 (레드 = 구동력, 오렌지 = 미끄러짐) -->
-          <g id="awdGlowFL" transform="translate(328 614)" opacity="0">
-            <rect x="-142" y="-57" width="284" height="114" rx="26" fill="#FF3B42" fill-opacity=".14" stroke="#FF3B42" stroke-width="6"/>
-          </g>
-          <g id="awdSlipFL" transform="translate(328 614)" opacity="0">
-            <rect x="-150" y="-65" width="300" height="130" rx="30" fill="#F08A24" fill-opacity=".16" stroke="#F08A24" stroke-width="7" stroke-dasharray="26 16"/>
-            <path d="M160 -30 l60 0 M172 0 l70 0 M160 30 l60 0" stroke="#F08A24" stroke-width="8" stroke-linecap="round"/>
-          </g>
-          <g id="awdGlowFR" transform="translate(328 101)" opacity="0">
-            <rect x="-142" y="-57" width="284" height="114" rx="26" fill="#FF3B42" fill-opacity=".14" stroke="#FF3B42" stroke-width="6"/>
-          </g>
-          <g id="awdSlipFR" transform="translate(328 101)" opacity="0">
-            <rect x="-150" y="-65" width="300" height="130" rx="30" fill="#F08A24" fill-opacity=".16" stroke="#F08A24" stroke-width="7" stroke-dasharray="26 16"/>
-            <path d="M160 -30 l60 0 M172 0 l70 0 M160 30 l60 0" stroke="#F08A24" stroke-width="8" stroke-linecap="round"/>
-          </g>
-          <g id="awdGlowRL" transform="translate(1410 614)" opacity="0">
-            <rect x="-142" y="-57" width="284" height="114" rx="26" fill="#FF3B42" fill-opacity=".14" stroke="#FF3B42" stroke-width="6"/>
-          </g>
-          <g id="awdSlipRL" transform="translate(1410 614)" opacity="0">
-            <rect x="-150" y="-65" width="300" height="130" rx="30" fill="#F08A24" fill-opacity=".16" stroke="#F08A24" stroke-width="7" stroke-dasharray="26 16"/>
-            <path d="M160 -30 l60 0 M172 0 l70 0 M160 30 l60 0" stroke="#F08A24" stroke-width="8" stroke-linecap="round"/>
-          </g>
-          <g id="awdGlowRR" transform="translate(1410 101)" opacity="0">
-            <rect x="-142" y="-57" width="284" height="114" rx="26" fill="#FF3B42" fill-opacity=".14" stroke="#FF3B42" stroke-width="6"/>
-          </g>
-          <g id="awdSlipRR" transform="translate(1410 101)" opacity="0">
-            <rect x="-150" y="-65" width="300" height="130" rx="30" fill="#F08A24" fill-opacity=".16" stroke="#F08A24" stroke-width="7" stroke-dasharray="26 16"/>
-            <path d="M160 -30 l60 0 M172 0 l70 0 M160 30 l60 0" stroke="#F08A24" stroke-width="8" stroke-linecap="round"/>
-          </g>
-        </svg>
-        <p class="awd-cap">◀ 차량 앞쪽 · 구동력 전달 경로 · 개념도</p>
-        <p class="panel-note">※ 경로의 굵기·밝기는 이해를 돕기 위한 상대적 표현이며 실제 배분 비율을 나타내지 않습니다. 경로는 실제 부품 배치가 아닌 개념도입니다. 실제 구동력은 노면, 가속, 조향, 주행 모드 등에 따라 연속적으로 제어됩니다.</p>
+        <div class="awd-stage" id="awdStage">
+          <!-- 무대 좌표 1600×900 (16:9). 모바일은 4:3으로 좌우를 잘라 차량을 크게 표시 -->
+          <svg id="awdSvg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="위에서 본 Mercedes-AMG E 53이 실제 도로를 달리며 주행 상황별로 앞·뒤 차축에 구동력이 전달되는 개념 애니메이션">
+            <defs>
+              <radialGradient id="awdShadowGrad" cx="50%" cy="50%" r="50%"><stop offset="55%" stop-color="#000" stop-opacity=".55"/><stop offset="100%" stop-color="#000" stop-opacity="0"/></radialGradient>
+              <pattern id="awdTreadF" width="40" height="86" patternUnits="userSpaceOnUse"><rect width="13" height="86" fill="#000" opacity=".5"/></pattern>
+              <pattern id="awdTreadR" width="40" height="86" patternUnits="userSpaceOnUse"><rect width="13" height="86" fill="#000" opacity=".5"/></pattern>
+              <linearGradient id="awdVig" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset=".16" stop-color="#000" stop-opacity="0"/><stop offset=".84" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".5"/></linearGradient>
+            </defs>
+            <!-- 레이어 1 — 도로 배경 (이미지가 없으면 기본 배경 + SVG 차선) -->
+            <rect width="1600" height="900" fill="#2B2D31"/>
+            <g id="awdRoadNormal" class="awd-road">
+              <g class="awd-tiles"></g>
+              <path class="awd-lane" d="M-400 293.2 H2000 M-400 606.8 H2000" stroke="#E6E6E6" stroke-width="7" stroke-dasharray="120 157" opacity=".92"/>
+            </g>
+            <g id="awdRoadIce" class="awd-road">
+              <g class="awd-tiles"></g>
+              <path class="awd-lane" d="M-400 611.2 H2000" stroke="#DFE6EC" stroke-width="13" stroke-dasharray="150 242" opacity=".9"/>
+            </g>
+            <g id="awdCorner" class="awd-road">
+              <g id="awdCam">
+                <path id="awdCornerFb" fill="none" stroke="#34373C" stroke-width="340" stroke-linecap="round" stroke-linejoin="round"/>
+                <image id="awdCornerImg" x="0" y="0" width="1673" height="940" preserveAspectRatio="none"/>
+              </g>
+            </g>
+          <!-- 레이어 2~5 — 차량 그룹: 그림자·차체·타이어·구동력 경로가 같은 좌표 변환을 따릅니다 (내부 좌표 = 차체 이미지 1822×689, 전면 = 왼쪽) -->
+          <g id="awdCar" transform="translate(800 450) scale(.3)">
+           <g transform="translate(-911 -344.5)">
+            <rect class="awd-shadow" x="-30" y="10" width="1902" height="690" rx="300" fill="url(#awdShadowGrad)"/>
+            <image class="awd-img" id="awdBody" x="0" y="0" width="1822" height="689" preserveAspectRatio="none"/>
+            <rect class="awd-fb" x="10" y="54" width="1800" height="607" rx="200" fill="#1A1C20" stroke="#3A3E45" stroke-width="8"/>
+            <g id="awdTireFL" transform="translate(328 614)">
+              <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+              <image class="awd-img awd-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+              <rect class="awd-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              <rect class="awd-tread" x="-128" y="-43" width="256" height="86" rx="18" fill="url(#awdTreadF)"/>
+            </g>
+            <g id="awdTireFR" transform="translate(328 101)">
+              <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+              <image class="awd-img awd-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+              <rect class="awd-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              <rect class="awd-tread" x="-128" y="-43" width="256" height="86" rx="18" fill="url(#awdTreadF)"/>
+            </g>
+            <g id="awdTireRL" transform="translate(1410 614)">
+              <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+              <image class="awd-img awd-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+              <rect class="awd-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              <rect class="awd-tread" x="-128" y="-43" width="256" height="86" rx="18" fill="url(#awdTreadR)"/>
+            </g>
+            <g id="awdTireRR" transform="translate(1410 101)">
+              <rect x="-132" y="-47" width="264" height="94" rx="20" fill="#000" opacity=".35"/>
+              <image class="awd-img awd-tire" x="-128" y="-43" width="256" height="86" preserveAspectRatio="none"/>
+              <rect class="awd-fb" x="-128" y="-43" width="256" height="86" rx="18" fill="#2A2D32" stroke="#555A62" stroke-width="6"/>
+              <rect class="awd-tread" x="-128" y="-43" width="256" height="86" rx="18" fill="url(#awdTreadR)"/>
+            </g>
+            <!-- 레이어 4 — 4MATIC+ 구동력 (블루 = 앞차축, 레드 = 뒷차축) · 개념도 -->
+            <g id="awdTracks">
+              <path id="awdTrackFR" class="awd-track awd-f" d="M470 357.5 L370 357.5 Q328 357.5 328 315.5 L328 151"/>
+              <path id="awdTrackFL" class="awd-track awd-f" d="M470 357.5 L370 357.5 Q328 357.5 328 399.5 L328 564"/>
+              <path id="awdTrackRR" class="awd-track awd-r" d="M470 357.5 L1368 357.5 Q1410 357.5 1410 315.5 L1410 151"/>
+              <path id="awdTrackRL" class="awd-track awd-r" d="M470 357.5 L1368 357.5 Q1410 357.5 1410 399.5 L1410 564"/>
+            </g>
+            <g id="awdFlows">
+              <path id="awdFlowFR" class="awd-flow awd-f" d="M470 357.5 L370 357.5 Q328 357.5 328 315.5 L328 151"/>
+              <path id="awdFlowFL" class="awd-flow awd-f" d="M470 357.5 L370 357.5 Q328 357.5 328 399.5 L328 564"/>
+              <path id="awdFlowRR" class="awd-flow awd-r" d="M470 357.5 L1368 357.5 Q1410 357.5 1410 315.5 L1410 151"/>
+              <path id="awdFlowRL" class="awd-flow awd-r" d="M470 357.5 L1368 357.5 Q1410 357.5 1410 399.5 L1410 564"/>
+            </g>
+            <circle id="awdSrcRing" cx="470" cy="357.5" r="40" fill="none" stroke="#fff" stroke-width="5" opacity=".35"/>
+            <circle cx="470" cy="357.5" r="22" fill="#E8EAED"/>
+            <!-- 레이어 5 — 바퀴 강조 (블루/레드 = 구동력, 오렌지 = 미끄러짐) -->
+            <g id="awdGlowFL" transform="translate(328 614)" opacity="0"><rect x="-142" y="-57" width="284" height="114" rx="26" fill="#4DA3FF" fill-opacity=".16" stroke="#4DA3FF" stroke-width="7"/></g>
+            <g id="awdSlipFL" transform="translate(328 614)" opacity="0"><rect x="-152" y="-67" width="304" height="134" rx="32" fill="#F08A24" fill-opacity=".18" stroke="#F08A24" stroke-width="8" stroke-dasharray="26 16"/><path d="M168 -30 l56 0 M180 0 l66 0 M168 30 l56 0" stroke="#F08A24" stroke-width="9" stroke-linecap="round"/></g>
+            <g id="awdGlowFR" transform="translate(328 101)" opacity="0"><rect x="-142" y="-57" width="284" height="114" rx="26" fill="#4DA3FF" fill-opacity=".16" stroke="#4DA3FF" stroke-width="7"/></g>
+            <g id="awdSlipFR" transform="translate(328 101)" opacity="0"><rect x="-152" y="-67" width="304" height="134" rx="32" fill="#F08A24" fill-opacity=".18" stroke="#F08A24" stroke-width="8" stroke-dasharray="26 16"/><path d="M168 -30 l56 0 M180 0 l66 0 M168 30 l56 0" stroke="#F08A24" stroke-width="9" stroke-linecap="round"/></g>
+            <g id="awdGlowRL" transform="translate(1410 614)" opacity="0"><rect x="-142" y="-57" width="284" height="114" rx="26" fill="#FF3B42" fill-opacity=".16" stroke="#FF3B42" stroke-width="7"/></g>
+            <g id="awdSlipRL" transform="translate(1410 614)" opacity="0"><rect x="-152" y="-67" width="304" height="134" rx="32" fill="#F08A24" fill-opacity=".18" stroke="#F08A24" stroke-width="8" stroke-dasharray="26 16"/><path d="M168 -30 l56 0 M180 0 l66 0 M168 30 l56 0" stroke="#F08A24" stroke-width="9" stroke-linecap="round"/></g>
+            <g id="awdGlowRR" transform="translate(1410 101)" opacity="0"><rect x="-142" y="-57" width="284" height="114" rx="26" fill="#FF3B42" fill-opacity=".16" stroke="#FF3B42" stroke-width="7"/></g>
+            <g id="awdSlipRR" transform="translate(1410 101)" opacity="0"><rect x="-152" y="-67" width="304" height="134" rx="32" fill="#F08A24" fill-opacity=".18" stroke="#F08A24" stroke-width="8" stroke-dasharray="26 16"/><path d="M168 -30 l56 0 M180 0 l66 0 M168 30 l56 0" stroke="#F08A24" stroke-width="9" stroke-linecap="round"/></g>
+           </g>
+          </g>            <!-- 화면 위아래 음영 (정보 표시 가독성) -->
+            <rect width="1600" height="900" fill="url(#awdVig)" pointer-events="none"/>
+          </svg>
+          <!-- 레이어 6 — 정보 표시 -->
+          <div class="awd-hud" aria-hidden="true"><span class="awd-chip" id="awdMode"></span><span class="awd-chip awd-chip--phase" id="awdPhase"></span></div>
+          <div class="awd-ctrl">
+            <button type="button" id="awdPlay" aria-pressed="false" aria-label="일시 정지"><span class="awd-ico" aria-hidden="true"></span><span class="awd-ctrl-t">일시 정지</span></button>
+            <button type="button" id="awdReplay" aria-label="처음부터 다시 재생"><span class="awd-ico awd-ico--re" aria-hidden="true"></span><span class="awd-ctrl-t">다시 재생</span></button>
+          </div>
+        </div>
+        <div class="awd-levels" id="awdLevels"></div>
+        <p class="panel-note">※ 도로·차량 움직임과 구동력 경로의 굵기·밝기·흐름 속도는 이해를 돕기 위한 개념 표현입니다. 실제 배분 비율이나 실시간 차량 데이터를 나타내지 않으며, 경로는 실제 부품 배치가 아닙니다. 실제 구동력은 노면, 가속, 조향, 주행 모드 등에 따라 연속적으로 제어됩니다.</p>
       </div>
-      <div class="reveal">
+      <div class="reveal awd-info">
         <p class="awd-caption" id="awdCaption"></p>
         <p class="awd-desc" id="awdDesc"></p>
-        <div class="awd-levels" id="awdLevels"></div>
+        <ol class="awd-steps" id="awdSteps"></ol>
       </div>
     </div>
   </div>
@@ -3172,137 +3225,300 @@ document.getElementById('curveToggles').addEventListener('click', e => {
   });
 })();
 
-/* 4MATIC+ 시나리오 — w: 바퀴별 상대적 구동력 단계(0~4, 시각화용 · 실제 배분 비율 아님) */
+/* ==================================================
+   AMG Performance 4MATIC+ — 실제 도로 주행 시뮬레이션
+   ▶ 도로 이미지 주소 (같은 저장소의 상대 경로). 파일이 없으면 기본 배경 + SVG 차선이 표시됩니다.
+     - normal/ice 는 끊김 없이 반복되도록 가공한 타일(차선 점선은 지우고 SVG로 다시 그림)
+     - corner 는 차량 앞쪽(왼쪽)에 맞춰 좌우 반전한 곡선 도로
+   ================================================== */
+const AWD_ROAD_IMAGES = {
+  normal: "images/e53/road-normal.webp",   // 일반 아스팔트 (일반 주행 · 강한 가속)
+  ice:    "images/e53/road-ice.webp",      // 빙판길 (미끄러운 노면)
+  corner: "images/e53/road-corner.webp",   // 곡선 도로 (코너 탈출)
+  mobile: {                                // 화면 폭 767px 이하에서 사용하는 가벼운 버전
+    normal: "images/e53/road-normal-m.webp",
+    ice:    "images/e53/road-ice-m.webp",
+    corner: "images/e53/road-corner-m.webp"
+  }
+};
+/* 도로 배치 (무대 좌표 1600×900). 이미지를 교체하면 여기 값만 맞추면 됩니다. */
+const AWD_ROAD_LAYOUT = {
+  normal: { tileW: 574,    tileH: 1171.1, top: -135.2 },  // 원본 820×1673 × 0.7 — 가운데 차로 중심이 y=450
+  ice:    { tileW: 1406.7, tileH: 1061,   top: 0 },       // 원본 1473×1111 × 0.955 — 위쪽(우측 통행) 차로 중심이 y=450
+  corner: { w: 1673, h: 940 },                           // 곡선 도로 원본 좌표
+  carScale: 0.3,            // 직선 도로에서 차량 크기 (차체 1822×689 기준)
+  cornerCarScale: 0.158,    // 곡선 도로 원본 좌표에서 차량 크기 (차로 폭 약 158px)
+  cornerZoom: { pc: 1.3, mobile: 1.6 }   // 코너 탈출 카메라 확대 (차량을 따라 이동)
+};
+/* 곡선 도로 안쪽(우측 통행) 차로 중심선 — 곡선 도로 원본 좌표. 차량이 이 경로를 따라 이동하고, 접선 방향으로 회전합니다. */
+const AWD_CORNER_PATH = [[2073,618.3],[1664.6,618.3],[1472.4,618.3],[1272.4,618.3],[1072.4,618.3],[992.4,618.3],[952.5,618.3],[913,614.7],[888.5,613.1],[857.1,610.2],[817.8,603],[778.6,595.4],[740,585.1],[702.1,572.4],[665,557.7],[629.1,540.1],[594.4,520.2],[561,498.3],[529.2,474.2],[499.1,447.8],[470.5,419.9],[444.1,389.9],[420,358],[397.6,324.9],[377.3,290.5],[358.9,255],[342.2,218.8],[327.2,181.7],[314.3,143.8],[303.5,105.4],[294.8,66.4],[287.6,27.3],[284.7,10.8],[216.3,-383.3]];
+
+/* 4MATIC+ 시나리오
+   - F/R : 앞·뒤 차축의 상대적 구동력 단계 (0~4, 시각화용 · 실제 배분 비율 아님)
+   - speed : 차량 이동 속도 (직선 = 무대 좌표/초, 코너 = 곡선 도로 좌표/초) — 구동력과 별개의 값
+   - slip : 뒷바퀴 미끄러짐 표시 (0~1) · at : 단계 시작 시각(초) — 코너는 경로상의 위치로 결정 */
 const AWD = {
-  cruise:{ label:'일반 주행', caption:'평상시에는 후륜 중심의 주행 감각',
-    desc:'접지 조건이 좋은 평상시에는 후륜 중심의 구동 특성을 활용하고, 필요할 때 전륜에도 구동력을 전달합니다.',
-    w:{FL:1,FR:1,RL:3,RR:3}, slip:[], flow:1 },
-  launch:{ label:'강한 가속', caption:'강한 가속, 네 바퀴가 함께',
-    desc:'강하게 가속할 때 주행 상황과 노면 접지력에 따라 앞뒤 차축에 구동력을 배분하여 가속 성능과 트랙션 확보를 돕습니다.',
-    w:{FL:3.2,FR:3.2,RL:4,RR:4}, slip:[], flow:1.7 },
-  slippery:{ label:'미끄러운 노면', caption:'미끄러운 노면에서도 접지력을 활용하도록',
-    desc:'뒷바퀴의 접지력이 부족한 상황에서는 구동력 전달을 조정하여 접지력을 확보할 수 있는 앞차축을 활용합니다.',
-    /* 개념 시뮬레이션: ① 후륜 중심 + 뒷바퀴 미끄러짐 → ② 앞차축 쪽 전달 증가 → ③ 새 상태로 안정 (후륜이 0이 되지는 않음) */
-    phases:[ { w:{FL:1,FR:1,RL:3,RR:3}, slip:1, ms:450, hold:450 },
-             { w:{FL:3.6,FR:3.6,RL:1.6,RR:1.6}, slip:.35, ms:1100, hold:500 },
-             { w:{FL:3.6,FR:3.6,RL:1.6,RR:1.6}, slip:0, ms:700, hold:0 } ],
-    w:{FL:3.6,FR:3.6,RL:1.6,RR:1.6}, slip:['RL','RR'], flow:1.2 },
-  corner:{ label:'코너 탈출', caption:'코너를 빠져나올 때 안정적인 구동력 전달',
-    desc:'코너 탈출 시 주행 상태와 접지 조건에 맞춰 앞뒤 구동력을 조절합니다. 여기에 전자식으로 제어되는 AMG 리어 액슬 잠금 디퍼렌셜이 코너링 시 좌우 뒷바퀴 사이의 동력 분배를 도와, 안정적인 가속과 트랙션 확보를 돕습니다.',
-    w:{FL:2.6,FR:2.6,RL:3.4,RR:3.4}, slip:[], flow:1.35, corner:true },
+  cruise:{ label:'일반 주행', road:'normal', caption:'평상시에는 후륜 중심의 주행 감각',
+    desc:'일상적인 주행에서는 후륜 중심의 주행 특성을 활용하고, 필요한 상황에서 전륜에도 구동력을 전달합니다.',
+    phases:[ { at:0, label:'후륜 중심 주행', F:0.8, R:3.0, speed:640 } ] },
+  launch:{ label:'강한 가속', road:'normal', caption:'강하게 가속할 때, 앞뒤 차축이 함께',
+    desc:'강하게 가속할 때 AMG Performance 4MATIC+는 노면 접지력과 주행 상황에 따라 앞뒤 차축에 구동력을 가변적으로 전달합니다.',
+    phases:[ { at:0,   label:'가속 시작',  F:1.2, R:3.1, speed:640 },
+             { at:1.3, label:'강한 가속',  F:3.0, R:3.9, speed:1900, tau:1.3 },
+             { at:4.3, label:'가속 지속',  F:2.7, R:3.6, speed:2300, tau:1.6 } ] },
+  slippery:{ label:'미끄러운 노면', road:'ice', caption:'미끄러운 노면에서 활용 가능한 접지력을 찾아',
+    desc:'미끄러운 노면에서 특정 바퀴의 접지력이 부족해지면 구동력 배분을 조정하여 활용 가능한 접지력을 확보하도록 돕습니다.',
+    note:'후륜 접지력이 부족한 한 가지 상황을 예로 든 개념 시뮬레이션입니다. 실제 작동 순서와 배분은 노면과 주행 상황에 따라 다르며, 미끄러짐을 완전히 막아주지는 않습니다.',
+    phases:[ { at:0,   label:'빙판길 진입',     F:0.9, R:2.9, slip:0,   speed:420 },
+             { at:1.6, label:'후륜 접지력 부족', F:0.9, R:2.7, slip:1,   speed:400 },
+             { at:3.2, label:'구동력 재배분',    F:3.3, R:1.7, slip:.35, speed:400, tau:.6 },
+             { at:4.9, label:'안정적인 주행',    F:3.0, R:1.9, slip:0,   speed:430 } ] },
+  corner:{ label:'코너 탈출', road:'corner', caption:'코너를 빠져나오며 다시 힘차게',
+    desc:'코너 탈출 시 차량의 주행 상태와 노면 접지력에 따라 앞뒤 차축의 구동력을 조절하여 가속과 트랙션 확보를 돕습니다.',
+    /* at = 곡선 시작점 기준 위치 (곡선 길이 대비 비율, 음수 = 곡선 이전) */
+    phases:[ { atCurve:-9,   label:'코너 진입',      F:1.3, R:2.8, speed:430 },
+             { atCurve:-.18, label:'조향',           F:1.9, R:2.9, speed:300, tau:.9 },
+             { atCurve:.30,  label:'코너 중간',      F:2.4, R:3.0, speed:300 },
+             { atCurve:.55,  label:'코너 탈출 가속', F:3.1, R:3.8, speed:760, tau:1.1 } ] }
 };
 const AWD_ASSETS = {
   body: E53_TOPVIEW_ASSETS.body,   // 리어 액슬 스티어링과 같은 이미지 (캐시 공유)
   tire: E53_TOPVIEW_ASSETS.tire
 };
 const AWD_VISUAL_CONFIG = {
-  frontX: 328, rearX: 1410, upperY: 101, lowerY: 614,   // 바퀴 중심 (차체 이미지 1822×689 기준, 리어 액슬 스티어링과 동일)
-  transitionDuration: 650,                               // 상황 전환 시간(ms)
-  activeColor: '#FF3B42', slipColor: '#F08A24',
-  flowSpeed: 260                                         // 에너지 흐름 기본 속도 (좌표/초)
+  frontX: 328, rearX: 1410, upperY: 101, lowerY: 614,   // 바퀴 중심 (차체 이미지 1822×689 기준)
+  flowSpeed: 300,                                        // 에너지 흐름 기본 속도 (차량 좌표/초)
+  maxSteer: 30                                           // 시각적 최대 조향각(°)
 };
 (function initAwd4Matic(){
-  const C = AWD_VISUAL_CONFIG, KEYS = ['FL','FR','RL','RR'];
-  const svg = document.getElementById('awdSvg'), tabs = document.getElementById('awdTabs');
-  if(!svg || !tabs) return;
-  const capEl = document.getElementById('awdCaption'), descEl = document.getElementById('awdDesc'), lvEl = document.getElementById('awdLevels');
+  const C = AWD_VISUAL_CONFIG, LAY = AWD_ROAD_LAYOUT, KEYS = ['FL','FR','RL','RR'];
   const $ = id => document.getElementById(id);
+  const svg = $('awdSvg'), tabs = $('awdTabs'), stage = $('awdStage');
+  if(!svg || !tabs || !stage) return;
+  const capEl = $('awdCaption'), descEl = $('awdDesc'), lvEl = $('awdLevels'), stepsEl = $('awdSteps');
+  const modeEl = $('awdMode'), phaseEl = $('awdPhase'), playBtn = $('awdPlay'), replayBtn = $('awdReplay');
+  const car = $('awdCar'), cam = $('awdCam'), cornerImg = $('awdCornerImg');
+  const roads = { normal:$('awdRoadNormal'), ice:$('awdRoadIce'), corner:$('awdCorner') };
+  const treadF = $('awdTreadF'), treadR = $('awdTreadR'), ring = $('awdSrcRing');
+  const tireFL = $('awdTireFL'), tireFR = $('awdTireFR');
   const el = {}; KEYS.forEach(k => el[k] = { track:$('awdTrack'+k), flow:$('awdFlow'+k), glow:$('awdGlow'+k), slip:$('awdSlip'+k) });
-  const ring = $('awdSrcRing'), corner = $('awdCorner');
-  tabs.innerHTML = Object.entries(AWD).map(([k,s],i) => `<button type="button" data-awd="${k}" class="${i ? '' : 'active'}" aria-pressed="${!i}">${s.label}</button>`).join('');
-  lvEl.innerHTML = `<div class="row"><span>앞차축(전륜)</span><span class="track"><i class="fill" id="awdGaugeF"></i></span></div>
-    <div class="row"><span>뒷차축(후륜)</span><span class="track"><i class="fill" id="awdGaugeR"></i></span></div>
-    <p class="hint">게이지는 상대적인 구동력 전달 강도를 나타내며, 실제 배분 비율이 아닙니다.</p>`;
+  const mq = window.matchMedia('(max-width: 767px)');
+  const isMobile = () => mq.matches;
+
+  tabs.innerHTML = Object.entries(AWD).map(([k,s]) => `<button type="button" data-awd="${k}" aria-pressed="false">${s.label}</button>`).join('');
+  lvEl.innerHTML = `<div class="row"><span><b style="background:#4DA3FF"></b>앞차축(전륜)</span><span class="track"><i class="fill f" id="awdGaugeF"></i></span></div>
+    <div class="row"><span><b style="background:#FF3B42"></b>뒷차축(후륜)</span><span class="track"><i class="fill r" id="awdGaugeR"></i></span></div>
+    <p class="legend"><span><i style="background:#4DA3FF"></i>전륜 구동력</span><span><i style="background:#FF3B42"></i>후륜 구동력</span><span><i style="background:#F08A24"></i>미끄러짐</span><span>· 상대적 강도 표시이며 실제 배분 비율이 아닙니다</span></p>`;
   const gF = $('awdGaugeF'), gR = $('awdGaugeR');
 
-  /* 이미지: 섹션 근처에서만 연결 (리어 액슬 스티어링과 같은 주소라 캐시 재사용). 실패 시 개념 도형 */
-  let imgSet = false;
-  function loadImages(){
-    if(imgSet) return; imgSet = true;
+  /* ---------- 곡선 경로: Catmull-Rom 보간 → 거리별 위치·방향·곡률 표 ---------- */
+  const PATH = (function(){
+    const P = AWD_CORNER_PATH, pts = [];
+    for(let i = 0; i < P.length - 1; i++){
+      const p0 = P[Math.max(0,i-1)], p1 = P[i], p2 = P[i+1], p3 = P[Math.min(P.length-1,i+2)];
+      const n = Math.max(2, Math.ceil(Math.hypot(p2[0]-p1[0], p2[1]-p1[1]) / 6));
+      for(let j = 0; j < n; j++){ const t = j/n, t2 = t*t, t3 = t2*t;
+        pts.push([0, 1].map(a => 0.5*((2*p1[a]) + (-p0[a]+p2[a])*t + (2*p0[a]-5*p1[a]+4*p2[a]-p3[a])*t2 + (-p0[a]+3*p1[a]-3*p2[a]+p3[a])*t3))); }
+    }
+    pts.push(P[P.length-1]);
+    const s = [0]; for(let i = 1; i < pts.length; i++) s.push(s[i-1] + Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]));
+    const head = pts.map((p,i) => { const a = pts[Math.max(0,i-2)], b = pts[Math.min(pts.length-1,i+2)]; return Math.atan2(b[1]-a[1], b[0]-a[0]); });
+    for(let i = 1; i < head.length; i++){ while(head[i]-head[i-1] > Math.PI) head[i] -= 2*Math.PI; while(head[i]-head[i-1] < -Math.PI) head[i] += 2*Math.PI; }
+    const total = s[s.length-1];
+    const idx = d => { let lo = 0, hi = s.length-1; d = Math.max(0, Math.min(total, d)); while(hi - lo > 1){ const m = (lo+hi) >> 1; if(s[m] <= d) lo = m; else hi = m; } return [lo, hi, s[hi] > s[lo] ? (d - s[lo]) / (s[hi]-s[lo]) : 0]; };
+    const at = d => { const [i, j, f] = idx(d); return { x: pts[i][0] + (pts[j][0]-pts[i][0])*f, y: pts[i][1] + (pts[j][1]-pts[i][1])*f, h: head[i] + (head[j]-head[i])*f }; };
+    const curv = d => (at(d + 20).h - at(d - 20).h) / 40;   // dθ/ds (화면 시계 방향 +)
+    /* 곡선 시작·끝: 직선 구간이 끝나는 지점과 원본 이미지 끝 지점 */
+    let c0 = 0, c1 = total; for(let i = 0; i < pts.length; i++){ if(pts[i][0] < 940){ c0 = s[i]; break; } }
+    for(let i = pts.length-1; i >= 0; i--){ if(pts[i][1] >= 10.8){ c1 = s[i]; break; } }
+    const d = 'M' + pts.filter((p,i) => i % 4 === 0).map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L');
+    return { at, curv, total, c0, c1, d };
+  })();
+  $('awdCornerFb').setAttribute('d', PATH.d);
+  AWD.corner.phases.forEach(p => p.at = PATH.c0 + p.atCurve * (PATH.c1 - PATH.c0));
+  AWD.corner.phases[0].at = 0;
+
+  /* ---------- 도로 이미지: 현재 모드 우선, 나머지는 잠시 후 미리 불러오기 ---------- */
+  const tiles = {};
+  ['normal','ice'].forEach(k => {
+    const g = roads[k].querySelector('.awd-tiles'), L = LAY[k], n = Math.ceil(1600 / L.tileW) + 2;
+    tiles[k] = { g, L, imgs: [] };
+    for(let i = 0; i < n; i++){
+      const im = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+      im.setAttribute('x', (i * L.tileW - 0.5).toFixed(1)); im.setAttribute('y', L.top);
+      im.setAttribute('width', (L.tileW + 1).toFixed(1)); im.setAttribute('height', L.tileH);   // 1px 겹침 = 이음새 방지
+      im.setAttribute('preserveAspectRatio', 'none');
+      g.appendChild(im); tiles[k].imgs.push(im);
+    }
+  });
+  const loaded = {};
+  function src(k){ const m = isMobile() && AWD_ROAD_IMAGES.mobile && AWD_ROAD_IMAGES.mobile[k]; return m || AWD_ROAD_IMAGES[k] || ''; }
+  function loadRoad(k){
+    if(loaded[k]) return; loaded[k] = true;
+    const url = src(k), layer = roads[k];
+    if(!url){ layer.classList.add('is-noimg'); return; }
+    const probe = new Image();
+    probe.onload = () => { (k === 'corner' ? [cornerImg] : tiles[k].imgs).forEach(im => im.setAttribute('href', url)); };
+    probe.onerror = () => layer.classList.add('is-noimg');     // 실패 → 기본 배경 + SVG 차선
+    probe.src = url;
+  }
+  let preloadTimer = 0;
+  function preloadRest(){ if(preloadTimer) return; preloadTimer = setTimeout(() => ['normal','ice','corner'].forEach(loadRoad), 1500); }
+  let carSet = false;
+  function loadCar(){
+    if(carSet) return; carSet = true;
     const fail = () => svg.classList.add('awd-fallback');
     if(!AWD_ASSETS.body || !AWD_ASSETS.tire){ fail(); return; }
     const body = $('awdBody'); body.addEventListener('error', fail, {once:true}); body.setAttribute('href', AWD_ASSETS.body);
     svg.querySelectorAll('.awd-tire').forEach(t => { t.addEventListener('error', fail, {once:true}); t.setAttribute('href', AWD_ASSETS.tire); });
   }
 
-  /* 상태: 표시 중인 값(cur) → 목표(target)로 보간. 미끄러운 노면은 단계(phases)를 순서대로 진행 */
-  const cur = { FL:1, FR:1, RL:3, RR:3, slip:0, flow:1 };
-  let queue = [], seg = null, mode = '', offset = 0;
-  const ease = t => t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2) / 2;
-  function plan(k){
-    const s = AWD[k];
-    const steps = s.phases ? s.phases.map(p => ({ w:p.w, slip:p.slip, ms:p.ms, hold:p.hold, flow:s.flow }))
-                           : [{ w:s.w, slip:0, ms:C.transitionDuration, hold:0, flow:s.flow }];
-    queue = steps; seg = null;
-    if(reduceMotion){ const last = steps[steps.length - 1]; Object.assign(cur, last.w, { slip:last.slip, flow:last.flow }); queue = []; render(0); }
+  /* ---------- 상태 (구동력과 이동 속도는 별개의 값) ---------- */
+  const st = { mode:'', t:0, d:0, F:0.8, R:3.0, slip:0, speed:640, offset:0, trF:0, trR:0, flF:0, flR:0, steer:0, camX:0, camY:0, camInit:false, phase:-1, paused:false };
+  const approach = (cur, target, dt, tau) => cur + (target - cur) * (1 - Math.exp(-dt / Math.max(0.05, tau)));
+  function phaseIndex(s){ const ph = AWD[st.mode].phases, v = st.mode === 'corner' ? st.d : st.t; let i = 0; ph.forEach((p, j) => { if(v >= p.at) i = j; }); return i; }
+  function restart(){
+    const s = AWD[st.mode], p0 = s.phases[0];
+    st.t = 0; st.d = 0; st.phase = -1; st.camInit = false;
+    Object.assign(st, { F:p0.F, R:p0.R, slip:p0.slip || 0, speed:p0.speed, steer:0 });
+    if(reduceMotion){   // 움직임 줄이기: 마지막 단계 상태를 정지 화면으로
+      const pl = s.phases[s.phases.length-1]; Object.assign(st, { F:pl.F, R:pl.R, slip:0, speed:pl.speed });
+      if(st.mode === 'corner') st.d = PATH.c0 + 0.45 * (PATH.c1 - PATH.c0);
+      st.t = 99;
+    }
+    frame(0);
   }
-  function nextSeg(now){
-    const p = queue.shift(); if(!p) return null;
-    return { from:{ ...cur }, to:{ ...p.w, slip:p.slip, flow:p.flow }, t0:now, ms:p.ms, hold:p.hold };
+
+  /* ---------- 한 프레임: 상태 갱신 → 화면 반영 (DOM 변경은 transform/속성만) ---------- */
+  function frame(dt){
+    const s = AWD[st.mode];
+    if(!reduceMotion){ st.t += dt; if(st.mode === 'corner') st.d += st.speed * dt; }
+    if(st.mode === 'corner' && st.d > PATH.total){ restart(); return; }      // 화면 밖으로 나가면 처음부터
+    const pi = phaseIndex(), p = s.phases[pi];
+    if(pi !== st.phase){ st.phase = pi; phaseEl.textContent = s.phases.length > 1 ? `${pi+1} · ${p.label}` : p.label;
+      stepsEl.querySelectorAll('li[data-i]').forEach(li => { const i = +li.dataset.i; li.classList.toggle('is-on', i === pi); li.classList.toggle('is-done', i < pi); }); }
+    st.F = approach(st.F, p.F, dt, .45); st.R = approach(st.R, p.R, dt, .45);
+    st.slip = approach(st.slip, p.slip || 0, dt, .3);
+    st.speed = approach(st.speed, p.speed, dt, p.tau || .8);
+
+    /* 바퀴 회전 느낌 (시각 효과) — 뒷바퀴는 미끄러질 때 더 빨리 돈다 */
+    const roadStage = st.mode === 'corner' ? st.speed * zoomTotal() : st.speed;
+    const tread = 160 + roadStage * 0.28;
+    st.trF -= tread * dt; st.trR -= tread * (1 + 1.3 * st.slip) * dt;
+    treadF.setAttribute('patternTransform', `translate(${(st.trF % 40).toFixed(1)} 0)`);
+    treadR.setAttribute('patternTransform', `translate(${(st.trR % 40).toFixed(1)} 0)`);
+
+    if(st.mode === 'corner') placeCorner(dt);
+    else {
+      st.offset += st.speed * dt;      // 차량 앞쪽 = 왼쪽 → 도로는 오른쪽으로 흐름
+      const k = s.road, L = LAY[k], o = st.offset % L.tileW;
+      tiles[k].g.setAttribute('transform', `translate(${(o - L.tileW).toFixed(1)} 0)`);
+      roads[k].querySelector('.awd-lane').setAttribute('stroke-dashoffset', (-st.offset).toFixed(1));
+      car.setAttribute('transform', `translate(800 450) scale(${LAY.carScale})`);
+      setSteer(0);
+    }
+    renderForce(dt);
   }
-  function advance(now){
-    if(!seg) seg = nextSeg(now);
-    if(!seg) return;
-    const k = seg.ms ? Math.min(1, (now - seg.t0) / seg.ms) : 1, e = ease(k);
-    for(const key in seg.to) cur[key] = seg.from[key] + (seg.to[key] - seg.from[key]) * e;
-    if(now - seg.t0 >= seg.ms + seg.hold) seg = null;
+  function zoomTotal(){ return (1600 / LAY.corner.w) * (isMobile() ? LAY.cornerZoom.mobile : LAY.cornerZoom.pc); }
+  function setSteer(deg){ tireFL.setAttribute('transform', `translate(${C.frontX} ${C.lowerY}) rotate(${deg.toFixed(2)})`); tireFR.setAttribute('transform', `translate(${C.frontX} ${C.upperY}) rotate(${deg.toFixed(2)})`); }
+  function placeCorner(dt){
+    const z = zoomTotal(), a = PATH.at(st.d);
+    /* 카메라: 차량 앞쪽을 조금 더 보여주며 따라가고, 도로 이미지 밖은 보이지 않게 제한 */
+    const r = stage.getBoundingClientRect(), visW = Math.min(1600, r.height ? 900 * r.width / r.height : 1600);
+    const vw = visW / z, vh = 900 / z;
+    let tx = a.x + Math.cos(a.h) * 140, ty = a.y + Math.sin(a.h) * 140;
+    tx = Math.max(vw/2, Math.min(LAY.corner.w - vw/2, tx)); ty = Math.max(vh/2, Math.min(LAY.corner.h - vh/2, ty));
+    if(!st.camInit){ st.camX = tx; st.camY = ty; st.camInit = true; }
+    st.camX = approach(st.camX, tx, dt, .5); st.camY = approach(st.camY, ty, dt, .5);
+    cam.setAttribute('transform', `translate(800 450) scale(${z.toFixed(4)}) translate(${(-st.camX).toFixed(1)} ${(-st.camY).toFixed(1)})`);
+    const sx = 800 + (a.x - st.camX) * z, sy = 450 + (a.y - st.camY) * z;
+    car.setAttribute('transform', `translate(${sx.toFixed(1)} ${sy.toFixed(1)}) rotate(${(a.h * 180 / Math.PI - 180).toFixed(2)}) scale(${(LAY.cornerCarScale * z).toFixed(4)})`);
+    /* 앞바퀴 조향각: 조금 앞쪽 경로의 곡률 × 축간거리 (시각 표현) */
+    const wb = (C.rearX - C.frontX) * LAY.cornerCarScale;
+    const target = Math.max(-C.maxSteer, Math.min(C.maxSteer, Math.atan(wb * PATH.curv(st.d + wb * 0.6)) * 180 / Math.PI * 1.5));
+    st.steer = approach(st.steer, target, dt, .25); setSteer(st.steer);
   }
-  /* 강도 → 경로 굵기·밝기, 흐름 속도, 바퀴 강조, 게이지 (모두 같은 값에서 계산) */
-  function render(dt){
-    offset -= C.flowSpeed * cur.flow * dt;
+  /* 구동력 → 경로 굵기·밝기, 흐름 속도, 바퀴 강조, 게이지 (모두 같은 값에서 계산) */
+  function renderForce(dt){
+    const vF = Math.max(0, Math.min(4, st.F)) / 4, vR = Math.max(0, Math.min(4, st.R)) / 4;
+    st.flF -= C.flowSpeed * (0.45 + 0.55 * vF) * dt; st.flR -= C.flowSpeed * (0.45 + 0.55 * vR) * dt;
     KEYS.forEach(k => {
-      const v = Math.max(0, Math.min(4, cur[k])) / 4;              // 0~1
-      const e = el[k];
-      e.track.setAttribute('stroke-width', (6 + v * 14).toFixed(1));
-      e.track.setAttribute('opacity', (0.35 + v * 0.4).toFixed(3));
-      e.flow.setAttribute('stroke-width', (3 + v * 9).toFixed(1));
-      e.flow.setAttribute('opacity', (0.25 + v * 0.75).toFixed(3));
-      e.flow.setAttribute('stroke-dashoffset', offset.toFixed(1));
-      const slipOn = k === 'RL' || k === 'RR' ? cur.slip : 0;
-      e.glow.setAttribute('opacity', (Math.max(0, v - 0.2) * 1.15 * (1 - slipOn * 0.6)).toFixed(3));
-      e.slip.setAttribute('opacity', (slipOn * (0.75 + 0.25 * Math.sin(offset / 25))).toFixed(3));
+      const front = k[0] === 'F', v = front ? vF : vR, e = el[k];
+      e.track.setAttribute('stroke-width', (4 + v * 10).toFixed(1));
+      e.track.setAttribute('opacity', (0.28 + v * 0.35).toFixed(3));
+      e.flow.setAttribute('stroke-width', (3 + v * 8).toFixed(1));
+      e.flow.setAttribute('opacity', (0.22 + v * 0.78).toFixed(3));
+      e.flow.setAttribute('stroke-dashoffset', (front ? st.flF : st.flR).toFixed(1));
+      const slipOn = front ? 0 : st.slip;
+      e.glow.setAttribute('opacity', (Math.max(0, v - 0.2) * 1.2 * (1 - slipOn * 0.7)).toFixed(3));
+      e.slip.setAttribute('opacity', (slipOn * (0.78 + 0.22 * Math.sin(st.t * 9))).toFixed(3));
     });
-    ring.setAttribute('opacity', (0.25 + 0.2 * (1 + Math.sin(offset / 40))).toFixed(3));
-    gF.style.width = (Math.max(cur.FL, cur.FR) / 4 * 100).toFixed(1) + '%';
-    gR.style.width = (Math.max(cur.RL, cur.RR) / 4 * 100).toFixed(1) + '%';
+    ring.setAttribute('opacity', (0.25 + 0.15 * (1 + Math.sin(st.t * 4))).toFixed(3));
+    gF.style.transform = `scaleX(${vF.toFixed(3)})`; gR.style.transform = `scaleX(${vR.toFixed(3)})`;
   }
-  /* 루프: 화면 안 + 탭 활성일 때만 실행, 중복 실행 방지 */
+
+  /* ---------- 루프: 화면 안 + 탭 활성 + 재생 중일 때만 (단일 루프 → 중복 실행 없음) ---------- */
   let raf = 0, last = 0, visible = false;
   function loop(now){
     raf = 0;
-    if(!visible || document.hidden){ last = 0; return; }
+    if(!visible || document.hidden || st.paused){ last = 0; return; }
     const dt = last ? Math.min(0.05, (now - last) / 1000) : 0; last = now;
-    advance(now); render(dt);
+    frame(dt);
     raf = requestAnimationFrame(loop);
   }
-  function inView(m){ const r = svg.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight; return r.bottom > -m && r.top < vh + m && r.width > 0; }
+  function kick(){ if(!raf && visible && !document.hidden && !st.paused && !reduceMotion){ last = 0; raf = requestAnimationFrame(loop); } }
+  function inView(m){ const r = stage.getBoundingClientRect(), vh = window.innerHeight || document.documentElement.clientHeight; return r.bottom > -m && r.top < vh + m && r.width > 0; }
   function update(){
-    if(inView(window.innerHeight || 800)) loadImages();
-    visible = inView(80);
-    if(reduceMotion){ render(0); return; }
-    if(visible && !document.hidden){ if(!raf){ last = 0; raf = requestAnimationFrame(loop); } }
-    else if(raf){ cancelAnimationFrame(raf); raf = 0; last = 0; }
+    if(inView(window.innerHeight || 800)){ loadCar(); loadRoad(AWD[st.mode].road); preloadRest(); }
+    visible = inView(0);
+    if(visible) kick(); else if(raf){ cancelAnimationFrame(raf); raf = 0; last = 0; }
   }
   let ticking = false;
   const onScroll = () => { if(!ticking){ ticking = true; requestAnimationFrame(() => { ticking = false; update(); }); } };
-  if('IntersectionObserver' in window) new IntersectionObserver(update, {rootMargin:'100% 0px'}).observe(svg);
+  if('IntersectionObserver' in window) new IntersectionObserver(update, {rootMargin:'50% 0px'}).observe(stage);
   addEventListener('scroll', onScroll, {passive:true});
   addEventListener('resize', onScroll, {passive:true});
   addEventListener('pageshow', update);
   document.addEventListener('visibilitychange', update);
 
+  /* ---------- 모드 선택 · 재생 조작 ---------- */
+  let cutTimer = 0;
   function set(k){
-    if(!AWD[k] || k === mode) return;          // 같은 버튼 재클릭 시 중복 실행 없음
-    mode = k; const s = AWD[k];
+    if(!AWD[k]) return;
+    if(k === st.mode){ restart(); return; }                 // 같은 버튼 = 처음부터 다시 재생
+    const prev = st.mode, s = AWD[k];
+    const cut = prev && (prev === 'corner') !== (k === 'corner');   // 직선 ↔ 곡선 도로 전환은 짧게 암전
     tabs.querySelectorAll('button').forEach(b => { const on = b.dataset.awd === k; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
-    corner.classList.toggle('is-on', !!s.corner);
     capEl.style.opacity = descEl.style.opacity = 0;
-    setTimeout(() => { if(mode !== k) return; capEl.textContent = s.caption; descEl.textContent = s.desc; capEl.style.opacity = descEl.style.opacity = 1; }, reduceMotion ? 0 : 180);
-    plan(k);
+    clearTimeout(cutTimer);
+    const apply = () => {
+      st.mode = k; loadRoad(s.road);
+      Object.entries(roads).forEach(([rk, g]) => g.classList.toggle('is-on', rk === s.road));
+      modeEl.textContent = s.label;
+      capEl.textContent = s.caption; descEl.textContent = s.desc; capEl.style.opacity = descEl.style.opacity = 1;
+      stepsEl.innerHTML = s.phases.map((p, i) => `<li data-i="${i}">${p.label}</li>`).join('') + (s.note ? `<li class="awd-steps-note">${s.note}</li>` : '');
+      const keep = prev && !cut;                              // 일반 ↔ 가속 ↔ 빙판: 차량 위치·도로 흐름 유지
+      const p0 = s.phases[0];
+      st.t = 0; st.d = 0; st.phase = -1; st.camInit = false;
+      if(!keep){ Object.assign(st, { F:p0.F, R:p0.R, slip:0, speed:p0.speed, steer:0 }); }
+      if(reduceMotion) restart(); else frame(0);
+      stage.classList.remove('is-cut');
+    };
+    if(cut && !reduceMotion){ stage.classList.add('is-cut'); cutTimer = setTimeout(apply, 230); }
+    else apply();
   }
   tabs.addEventListener('click', e => { const b = e.target.closest('[data-awd]'); if(b) set(b.dataset.awd); });
-  capEl.textContent = AWD.cruise.caption; descEl.textContent = AWD.cruise.desc;
-  set('cruise'); render(0); update();
+  function setPaused(p){
+    st.paused = p; playBtn.setAttribute('aria-pressed', String(p));
+    playBtn.setAttribute('aria-label', p ? '재생' : '일시 정지'); playBtn.querySelector('.awd-ctrl-t').textContent = p ? '재생' : '일시 정지';
+    if(!p) kick();
+  }
+  playBtn.addEventListener('click', () => setPaused(!st.paused));
+  replayBtn.addEventListener('click', () => { restart(); setPaused(false); });
+  if(reduceMotion){ playBtn.hidden = true; replayBtn.hidden = true; }
+  mq.addEventListener && mq.addEventListener('change', () => { Object.keys(loaded).forEach(k => delete loaded[k]); update(); });
+
+  set('cruise'); update();
 })();
 
 /* AMG RIDE CONTROL — 감쇠 모드별 차체 움직임 */
