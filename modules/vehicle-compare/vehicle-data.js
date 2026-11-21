@@ -33,11 +33,10 @@
     /* ======================== Mercedes-Benz ======================== */
 
     'e200-exclusive': {
-      brand: 'Mercedes-Benz', model: 'E-Class', name: 'E 200', trim: 'EXCLUSIVE', short: 'E200',
-      aliases: ['e200-avantgarde'],
+      brand: 'Mercedes-Benz', model: 'E-Class', name: 'E 200', trim: 'EXCLUSIVE', short: 'E200', aliases: ['e200-avantgarde'],
       powertrain: 'gasoline', modelYear: null, market: '국내 판매',
-      source: { page: 'e200.html', note: 'E200 페이지 제원·기본 사양 데이터 / 경쟁차 비교표', checked: CHECKED },
-      price: { value: 77500000, note: 'E200 경쟁차 비교표 기준 (EXCLUSIVE)' },
+      source: { page: 'e200.html', note: 'E200 페이지 제원·기본 사양 데이터(TRIM_EQUIPMENT 포함) · 2026-04 보도자료는 7,660만원(개소세 인하 반영) 표기 → 가격 확인 필요', checked: '2026-11-21' },
+      price: { value: 77500000, note: 'E200 페이지 기재 가격 (EXCLUSIVE)' },
       specs: {
         engine: 'M254 직렬 4기통 가솔린 터보', displacement: 1999,
         power: { value: 204, note: '6,100 rpm' }, torque: { value: 32.6, note: '2,000~4,000 rpm' },
@@ -48,18 +47,64 @@
         trunk: 540, fuelTank: 66, suspension: '컴포트 서스펜션'
       },
       equipment: {
+        exteriorPackage: { status: 'std', text: 'EXCLUSIVE 외장 패키지' },
         headlamp: { status: 'std', text: 'LED 고성능 헤드램프' }, adaptiveHighBeam: 'std',
-        wheels: { status: 'std', text: '18인치 5스포크 경량 알로이 휠' }, panoramaRoof: 'std',
+        wheels: { status: 'std', text: '18인치 5스포크 경량 알로이 휠', note: '보도자료 표기: 18인치 5트윈 스포크' }, panoramaRoof: 'std',
+        seatType: { status: 'std', text: '컴포트 시트' },
         seatMaterial: { status: 'std', text: 'ARTICO 시트' },
+        steering: { status: 'std', text: '나파가죽 스티어링 휠' },
         interiorTrim: { status: 'std', text: '블랙 오픈 포어 애쉬우드' },
         ambient: { status: 'std', text: '앰비언트 라이트' },
         heatedSeats: 'std', ventSeats: 'std', hud: 'std',
-        sound: { status: 'std', text: '어드벤시드 사운드', note: 'E200 경쟁차 비교표 표기 그대로' },
-        arNavi: 'std', wirelessCarplay: 'std', wirelessCharging: 'std',
-        keylessGo: 'std', powerTrunk: 'std', surroundCamera: 'std', parkingAssist: 'std',
+        sound: { status: 'check', note: '기존 비교표 "어드벤시드 사운드" 표기 · 정식 명칭 확인 필요' },
+        engineSound: 'na',
+        arNavi: 'std', wirelessCarplay: { status: 'std', text: '무선 애플 카플레이 · 안드로이드 오토' }, wirelessCharging: 'std',
+        keylessGo: 'std', powerTrunk: 'std', surroundCamera: 'std', parkingAssist: { status: 'std', text: '액티브 주차 어시스트' },
         drivingAssistPlus: 'std', semiAuto: 'std', distronic: 'std', laneKeeping: 'std', blindSpot: 'std',
         activeBrake: 'std', preSafe: 'std', airbags: { status: 'std', text: '11개' }
-      }
+      },
+      recommend: [
+        'E-Class를 합리적인 가격으로 경험하고 싶은 고객',
+        '부드러운 승차감과 클래식한 디자인을 선호하는 고객'
+      ]
+    },
+    'e200-amg-line': {
+      brand: 'Mercedes-Benz', model: 'E-Class', name: 'E 200', trim: 'AMG Line', short: 'E200 AMG', aliases: ['e200-amg'],
+      powertrain: 'gasoline', modelYear: null, market: '국내 판매',
+      source: { page: 'e200.html', note: 'E200 페이지 TRIM_DATA·TRIM_EQUIPMENT (파워트레인 EXCLUSIVE와 동일) · 공차중량·연비 AMG Line 별도 인증값 미표기', checked: '2026-11-21' },
+      price: { value: 81000000, note: 'E200 페이지 기재 가격 (AMG Line)' },
+      specs: {
+        engine: 'M254 직렬 4기통 가솔린 터보', displacement: 1999,
+        power: { value: 204, note: '6,100 rpm' }, torque: { value: 32.6, note: '2,000~4,000 rpm' },
+        drive: 'RWD (후륜구동)', transmission: { value: '9G-TRONIC', note: '자동 9단' },
+        accel: 7.5, topSpeed: 240,
+        fuelCombined: { value: 12.3, verify: true, note: 'EXCLUSIVE 수치 · AMG Line(19인치 휠) 인증값 미표기' },
+        fuelCity: { value: 10.6, verify: true, note: 'EXCLUSIVE 수치' }, fuelHighway: { value: 15.3, verify: true, note: 'EXCLUSIVE 수치' },
+        length: { value: 4955, verify: true, note: 'EXCLUSIVE 수치 · AMG 범퍼 적용 시 전장 확인 필요' }, width: 1880, height: 1475, wheelbase: 2960,
+        weight: { value: 1750, verify: true, note: 'EXCLUSIVE 수치' },
+        trunk: 540, fuelTank: 66, suspension: '스포츠 서스펜션'
+      },
+      equipment: {
+        exteriorPackage: { status: 'std', text: 'AMG Line 외장 패키지' },
+        headlamp: { status: 'std', text: 'LED 고성능 헤드램프' }, adaptiveHighBeam: 'std',
+        wheels: { status: 'std', text: '19인치 AMG 휠' }, panoramaRoof: 'std',
+        seatType: { status: 'std', text: '스포츠 시트' },
+        seatMaterial: { status: 'std', text: 'ARTICO 시트' },
+        steering: { status: 'std', text: '다기능 스포츠 나파 스티어링 휠' },
+        interiorTrim: { status: 'std', text: '블랙 피아노 라커' },
+        ambient: { status: 'std', text: '앰비언트 라이트' },
+        heatedSeats: 'std', ventSeats: 'std', hud: 'std',
+        sound: { status: 'check', note: '기존 비교표 "어드벤시드 사운드" 표기 · 정식 명칭 확인 필요' },
+        engineSound: { status: 'std', text: '스포티 엔진 사운드' },
+        arNavi: 'std', wirelessCarplay: { status: 'std', text: '무선 애플 카플레이 · 안드로이드 오토' }, wirelessCharging: 'std',
+        keylessGo: 'std', powerTrunk: 'std', surroundCamera: 'std', parkingAssist: { status: 'std', text: '액티브 주차 어시스트' },
+        drivingAssistPlus: 'std', semiAuto: 'std', distronic: 'std', laneKeeping: 'std', blindSpot: 'std',
+        activeBrake: 'std', preSafe: 'std', airbags: { status: 'std', text: '11개' }
+      },
+      recommend: [
+        '스포티한 외관과 19인치 AMG 휠을 원하는 고객',
+        '스포츠 시트·스포츠 스티어링 휠의 단단한 감각을 선호하는 고객'
+      ]
     },
 
     'e220d-4matic-exclusive': {

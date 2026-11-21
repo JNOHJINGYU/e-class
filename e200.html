@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="modules/vehicle-compare/vehicle-compare.css?v=20261121">
 
 <!-- ============================================================
      이미지 URL 관리 영역
@@ -35,17 +36,15 @@ function optImg(img, url, sizes){
 }
 
 const IMAGES = {
-  hero:               "images/e-class/opt/e-front-1920.webp",   // S1 히어로 · 차량 사진
-  digitalLight:       "images/e-class/opt/mercedes-me-1600.webp",   // S3 카드 1 · 디지털 라이트
-  distronic:          "images/e-class/opt/autodrive-1399.webp",   // S3 카드 2 · 디스트로닉
-  parking:            "images/e-class/opt/parking-camera-1408.webp",   // S3 카드 3 · 주차 보조
-  burmester:          "images/e-class/opt/burmester-e200-1008.webp",   // S3 카드 4 · 부메스터
-  interior:           "images/e-class/opt/e-interior-1600.webp",   // S7 인테리어
-  safety:             "images/e-class/opt/safety-1365.webp",   // S8 안전
+  hero:               "images/e-class/opt/e-front-1920.webp",       // ① 히어로 · 차량 사진
+  mercedesMe:         "images/e-class/opt/mercedes-me-1600.webp",   // ⑥ 기본 옵션 · Mercedes me connect
+  distronic:          "images/e-class/opt/autodrive-1399.webp",     // ⑥ 기본 옵션 · DISTRONIC
+  parking:            "images/e-class/opt/parking-camera-1408.webp",// ⑥ 기본 옵션 · 360도 카메라 / 주차 보조
+  safety:             "images/e-class/opt/safety-1365.webp",        // ⑥ 기본 옵션 · 드라이빙 어시스턴스 패키지 플러스
 
-  /* ── TRIM SELECTOR 이미지 (비어 있으면 플레이스홀더 표시) ── */
+  /* ── TRIM SELECTOR 이미지 (비어 있으면 플레이스홀더 표시) · ④ 디자인 카드에도 사용 ── */
   exclusiveExterior:  "images/e-class/opt/e200-exclusive-1600.webp",   // E200 EXCLUSIVE 외관 이미지
-  amgExterior:        "images/e-class/opt/e200-amgline-1600.webp",   // E200 AMG LINE 외관 이미지
+  amgExterior:        "images/e-class/opt/e200-amgline-1600.webp",     // E200 AMG LINE 외관 이미지
 };
 
 /* 이미지 주소 입력 안내
@@ -59,16 +58,30 @@ const IMAGE_CACHE_VERSION = "20261014";
 </script>
 
 <!-- ============================================================
+     공통 차량 데이터 — 가격·제원은 이 파일 한 곳에서만 관리
+     (히어로 가격 · 선택 이유 카드 · 제원 비교가 함께 사용)
+     ============================================================ -->
+<script src="modules/vehicle-compare/vehicle-data.js?v=20261121"></script>
+
+<!-- ============================================================
      트림 선택 데이터 (TRIM SELECTOR)
-     가격·사양이 바뀌면 이 영역만 수정하면 화면에 자동 반영됩니다.
+     - price 는 공통 데이터(vehicle-data.js)에서 자동으로 가져옵니다 (못 읽으면 괄호 안 값 사용)
+     - vehicleId 는 공통 데이터의 차량 ID (제원 비교 기준 차량으로 사용)
      ============================================================ -->
 <script>
+function trimPrice(id, fallback){
+  const v = window.MBVC_VEHICLES && MBVC_VEHICLES[id], won = v && v.price && v.price.value;
+  if(!won) return fallback;
+  const man = Math.round(won / 10000), e = Math.floor(man / 10000), r = man % 10000;
+  return (e ? e + '억' + (r ? ' ' : '') : '') + (r || !e ? r.toLocaleString('ko-KR') + '만원' : '원');
+}
 const TRIM_DATA = {
   exclusive: {
     key: "exclusive",
     label: "EXCLUSIVE",
     name: "E 200 EXCLUSIVE",
-    price: "7,750만원",
+    vehicleId: "e200-exclusive",
+    price: trimPrice("e200-exclusive", "7,750만원"),
     description: "직렬 4기통 가솔린 터보 · 204ps · 후륜구동 · 컴포트 서스펜션",
     image: IMAGES.exclusiveExterior,
     placeholder: "EXCLUSIVE EXTERIOR IMAGE"
@@ -77,8 +90,9 @@ const TRIM_DATA = {
     key: "amg",
     label: "AMG LINE",
     name: "E 200 AMG LINE",
-    price: "8,100만원",   // 기존 E200 페이지(히어로 카드·S6 비교표) 기재 가격
-    description: "직렬 4기통 가솔린 터보 · 204ps · 후륜구동 · 스포츠 서스펜션",   // 기존 S6 비교표 기준
+    vehicleId: "e200-amg-line",
+    price: trimPrice("e200-amg-line", "8,100만원"),
+    description: "직렬 4기통 가솔린 터보 · 204ps · 후륜구동 · 스포츠 서스펜션",
     image: IMAGES.amgExterior,
     placeholder: "AMG LINE EXTERIOR IMAGE"
   }
@@ -87,113 +101,79 @@ const TRIM_DEFAULT = "exclusive";
 </script>
 
 <!-- ============================================================
-     제원 및 기본 사양 데이터 (S4 · SPECIFICATIONS & EQUIPMENT)
-     - 여기 값만 고치면 화면에 자동 반영됩니다. (HTML은 수정할 필요 없음)
-     - 문자열 항목 = 두 트림 공통 사양
-     - { trim: '키' } 항목 = 트림별로 다른 사양 → 아래 TRIM_EQUIPMENT의 같은 키 값을 표시
-       (값을 null로 두면 그 트림에서는 항목이 표시되지 않습니다)
-     - 트림 키(exclusive / amg)는 위 TRIM_DATA와 같은 이름을 사용합니다.
+     기본 적용 옵션 데이터 (⑥ EQUIPMENT)
+     - 제원(엔진·출력·연비·크기 등)은 공통 데이터 vehicle-data.js 로 이동 → ⑦ 제원 비교에서 표시
+     - 항목 형식
+         { name }                 : 두 트림 공통 사양
+         { trim: '키', name }     : 트림별로 다른 사양 → TRIM_EQUIPMENT 의 같은 키 값을 표시
+                                    (값이 null 이면 그 트림에서는 표시 안 함)
+         desc    : 펼쳤을 때 설명       benefit : 고객 입장에서 좋은 점
+         img     : IMAGES 키 (누르면 확대)   verify : ['amg'] → 해당 트림 '확인 필요' 표시
      ============================================================ -->
 <script>
-/* 카테고리 버튼 — 순서·이름 */
 const EQUIPMENT_CATEGORIES = [
-  { key: 'specifications', label: '상세 제원' },
-  { key: 'exterior',       label: '외관 사양' },
-  { key: 'interior',       label: '실내 사양' },
-  { key: 'multimedia',     label: '멀티미디어' },
-  { key: 'convenience',    label: '편의 사양' },
-  { key: 'safety',         label: '안전 사양' }
+  { key: 'exterior',    label: '외관' },
+  { key: 'interior',    label: '실내' },
+  { key: 'multimedia',  label: '멀티미디어' },
+  { key: 'convenience', label: '편의' },
+  { key: 'safety',      label: '안전' }
 ];
 
 const EQUIPMENT_DATA = {
-  /* 상세 제원 — rows: [항목명, 제원] 또는 { label: 항목명, trim: '키' } */
-  specifications: [
-    { group: '엔진 및 동력', rows: [
-      ['엔진', 'M254 직렬 4기통 가솔린 터보'],
-      ['배기량', '1,999cc'],
-      ['최고출력', '204ps / 6,100rpm'],
-      ['최대토크', '32.6kg.m / 2,000~4,000rpm'],
-      ['변속기', '9G-TRONIC'],
-      ['구동방식', 'RWD'],
-      { label: '서스펜션', trim: 'suspension' }
-    ]},
-    { group: '성능 및 연비', rows: [
-      ['복합연비', '12.3km/l'],
-      ['도심연비', '10.6km/l'],
-      ['고속연비', '15.3km/l'],
-      ['0~100km/h', '7.5초'],
-      ['최고속도', '240km/h']
-    ]},
-    { group: '차체 및 무게', rows: [
-      ['전장', '4,955mm'],
-      ['전폭', '1,880mm'],
-      ['전고', '1,475mm'],
-      ['축거', '2,960mm'],
-      ['공차중량', '1,750kg']
-    ]},
-    { group: '용량', rows: [
-      ['연료탱크', '66L'],
-      ['트렁크', '540L']
-    ]},
-    /* 기존 '기본 사양 > POWERTRAIN' 항목 (상세 제원에 통합) */
-    { group: '파워트레인 기본 사양', items: [
-      'M254 직렬 가솔린 터보',
-      '9G-TRONIC 자동 9단',
-      { trim: 'suspension' },
-      '타이어핏',
-      { trim: 'engineSound' }
-    ]}
-  ],
   exterior: [
-    { trim: 'exteriorPackage' },
-    { trim: 'wheel' },
-    { trim: 'grille' },
-    'LED 고성능 헤드램프',
-    '어댑티브 상향등 어시스트',
-    '파노라믹 선루프',
-    '브랜드 프로젝션 로고'
+    { trim: 'exteriorPackage', name: '외장 패키지' },
+    { trim: 'grille', name: '라디에이터 그릴' },
+    { trim: 'wheel', name: '휠' },
+    { name: 'LED 고성능 헤드램프' },
+    { name: '어댑티브 상향등 어시스트', desc: '마주 오는 차와 앞차를 인식해 상향등을 자동으로 조절합니다.', benefit: '야간 시야는 넓히고 다른 운전자의 눈부심은 줄여줍니다.' },
+    { name: '파노라믹 선루프', desc: '앞좌석부터 뒷좌석 위까지 이어지는 대형 글라스 루프입니다.', benefit: '실내가 한층 밝고 넓게 느껴집니다.' },
+    { name: '브랜드 프로젝션 로고', desc: '문을 열면 바닥에 메르세데스-벤츠 로고를 비춥니다.' }
   ],
   interior: [
-    { trim: 'interiorPackage' },
-    'ARTICO 시트',
-    { trim: 'seat' },
-    { trim: 'interiorTrim' },
-    { trim: 'steering' },
-    '앞좌석 열선 · 통풍 · 메모리',
-    '뒷좌석 열선 · ISOFIX · 접이식 시트',
-    '앰비언트 라이트',
-    '자동 온도 조절 시스템'
+    { trim: 'interiorPackage', name: '인테리어 패키지' },
+    { trim: 'seat', name: '시트 타입' },
+    { name: 'ARTICO 시트' },
+    { trim: 'interiorTrim', name: '인테리어 트림' },
+    { trim: 'steering', name: '스티어링 휠' },
+    { name: '앞좌석 열선 · 통풍 · 메모리', benefit: '계절에 맞춰 쾌적하게 앉고, 운전 자세를 한 번에 불러옵니다.' },
+    { name: '뒷좌석 열선 · ISOFIX · 접이식 시트', benefit: '뒷좌석 탑승자와 아이 동반 가족 모두 편안합니다.' },
+    { name: '앰비언트 라이트', desc: '실내 곳곳을 은은한 조명으로 밝혀 분위기를 연출합니다.' },
+    { name: '자동 온도 조절 시스템' }
   ],
-  /* 멀티미디어 — '편의 및 인포테인먼트' 옵션과 동일. { text, sub } 형식은 sub가 회색 보조 설명으로 표시됩니다 */
   multimedia: [
-    '12.3인치 계기판 + 3세대 MBUX 14.4인치 디스플레이',
-    'MBUX 증강현실 내비게이션',
-    '헤드업 디스플레이',
-    '앞좌석 스마트폰 무선 충전',
-    '무선 Apple CarPlay · Android Auto',
-    { text: 'Mercedes me connect', sub: '사전 온도 조절 · 디지털 차량 키' }
+    { name: '12.3인치 계기판 + 3세대 MBUX 14.4인치 디스플레이' },
+    { name: 'MBUX 증강현실 내비게이션', desc: '전방 카메라 영상 위에 방향 안내를 겹쳐 보여줍니다.', benefit: '복잡한 교차로에서도 갈 길을 한눈에 알 수 있습니다.' },
+    { name: '헤드업 디스플레이', desc: '속도와 길 안내를 앞 유리에 띄워줍니다.', benefit: '전방에서 시선을 떼지 않고 주행 정보를 확인합니다.' },
+    { name: '무선 Apple CarPlay · Android Auto', desc: '아이폰과 갤럭시폰을 케이블 없이 연결합니다.' },
+    { name: '앞좌석 스마트폰 무선 충전' },
+    { name: 'Mercedes me connect', desc: '스마트폰 앱으로 원격 시동, 차량 위치, 차량 상태를 실시간으로 확인합니다. 사전 온도 조절과 디지털 차량 키도 이용할 수 있습니다.', benefit: '나와 차가 연결되어, 차에 타기 전부터 준비가 끝납니다.', img: 'mercedesMe', imgLabel: 'Mercedes me connect' },
+    { trim: 'engineSound', name: '스포티 엔진 사운드', desc: '주행 상황에 맞춰 스포티한 엔진 사운드를 실내에 연출합니다.' }
   ],
   convenience: [
-    'KEYLESS-GO',
-    '액티브 주차 어시스트',
-    '서라운드 뷰 카메라',
-    '전동 트렁크',
-    '핸즈프리 액세스'
+    { trim: 'suspension', name: '서스펜션', descByTrim: {
+        exclusive: '노면 충격을 부드럽게 걸러 편안한 승차감에 초점을 맞춘 서스펜션입니다.',
+        amg: '보다 단단한 세팅으로 코너와 차선 변경에서 민첩한 주행 감각을 줍니다.' } },
+    { name: 'KEYLESS-GO', desc: '스마트키를 지니고 있으면 버튼만으로 문을 열고 시동을 걸 수 있습니다.' },
+    { name: '핸즈프리 액세스', desc: '양손에 짐을 들고 있어도 범퍼 아래 발동작으로 트렁크를 엽니다.' },
+    { name: '전동 트렁크' },
+    { name: '서라운드 뷰 카메라', desc: '차량 주변을 위에서 내려다보듯 보여주는 360도 카메라입니다.', benefit: '좁은 골목과 주차장에서도 주변을 확인하며 움직일 수 있어 주차 스트레스가 줄어듭니다.', img: 'parking', imgLabel: '360도 카메라 · 액티브 주차 어시스트' },
+    { name: '액티브 주차 어시스트', desc: '주차 공간을 찾아 조향과 제동을 도와 주차를 보조합니다.', benefit: '평행주차와 후진주차가 쉬워집니다.' }
   ],
   safety: [
-    '드라이빙 어시스턴스 패키지 플러스',
-    'DISTRONIC',
-    '능동형 차선 유지 어시스트',
-    '능동형 사각지대 어시스트',
-    'Active Brake Assist',
-    'Steering Assist',
-    'PRE-SAFE',
-    '에어백 11개',
-    'ADAPTIVE BRAKE'
+    { name: '드라이빙 어시스턴스 패키지 플러스', desc: '레이더와 카메라가 주변을 실시간으로 살피며 아래 주행 보조 기능을 함께 제공합니다.', img: 'safety', imgLabel: '드라이빙 어시스턴스 패키지 플러스' },
+    { name: 'DISTRONIC', desc: '설정한 속도로 달리며 앞차와의 거리를 자동으로 유지합니다. 고속도로 반자율 주행을 돕는 핵심 기능입니다.', benefit: '장거리 운전과 정체 구간의 피로가 줄어듭니다.', img: 'distronic', imgLabel: 'DISTRONIC' },
+    { name: 'Steering Assist', desc: '차선 중앙을 유지하도록 조향을 보조합니다.' },
+    { name: '능동형 차선 유지 어시스트', desc: '의도치 않게 차선을 벗어나면 차로 안으로 복귀하도록 돕습니다.' },
+    { name: '능동형 사각지대 어시스트', desc: '측후방에서 다가오는 차량을 감지해 알려줍니다.' },
+    { name: 'Active Brake Assist', desc: '충돌 위험이 있으면 경고하고 자동으로 제동을 돕습니다.' },
+    { name: 'ADAPTIVE BRAKE' },
+    { name: 'PRE-SAFE', desc: '충돌이 예상되면 탑승자를 보호하기 위한 준비를 미리 시작합니다.' },
+    { name: '에어백 11개' },
+    { name: '타이어핏', desc: '타이어가 펑크 났을 때 실란트로 임시 복구해 가까운 정비소까지 이동할 수 있게 돕습니다.' }
   ]
 };
 
-/* 트림별로 다른 사양 — 기존 'Exclusive vs AMG Line' 비교표(삭제된 섹션) 기준 */
+/* 트림별로 다른 사양 — 기존 'Exclusive vs AMG Line' 비교표 기준 (값 수정은 여기서) */
 const TRIM_EQUIPMENT = {
   exclusive: {
     label: 'EXCLUSIVE',
@@ -219,28 +199,6 @@ const TRIM_EQUIPMENT = {
     interiorTrim:    '블랙 피아노 라커 트림',
     steering:        '다기능 스포츠 나파 스티어링 휠'
   }
-};
-</script>
-
-<!-- ============================================================
-     경쟁차 비교 데이터
-     ============================================================ -->
-<script>
-const COMPARE_DATA = {
-  headers: ["항목", "E200 \nExclusive", "BMW 520i ", "Audi A6 "],
-  highlight: 1,
-  rows: [
-    { label: "가격",              values: ["7,750만원", "6,980만", "6,764만"] },
-    { label: "출력",              values: ["204ps",     "190ps", "203ps"] },
-    { label: "토크",              values: ["32.6kg.m",  "31kg.m", "34.6kg.m"] },
-    { label: "구동방식",          values: ["후륜","후륜", "전륜"] },
-    { label: "헤드 라이트",     values: ["LED고성능",   "어댑티브LED라이트", "Matrix LED"] },
-    { label: "헤드업 디스플레이", values: ["✓ 기본",   "✓ 기본", "✓ 기본"] },
-    { label: "오디오 시스템",     values: ["어드벤시드 사운드","스텐다드"," B&O 3D사운드"] },
-    { label: "반자율 주행",       values: ["✓ 기본", "✓ 기본", "✓ 기본"] },
-    { label: "통풍 시트",         values: ["✓ 기본",   "✓ 기본", "✓ 기본"] },
-    { label: "브랜드 가치",       values: ["★★★★★",  "★★★★", "★★★"] },
-  ]
 };
 </script>
 
@@ -284,10 +242,7 @@ body {
 /* ============================================================
    TYPOGRAPHY
    ============================================================ */
-.label-en {
-  font-size: .72rem; font-weight: 700;
-  letter-spacing: .18em; text-transform: uppercase; color: var(--gray4);
-}
+
 h1 { font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -.03em; }
 h2 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900; line-height: 1.15; letter-spacing: -.02em; }
 h3 { font-size: clamp(1.25rem, 2.5vw, 1.65rem); font-weight: 800; }
@@ -297,29 +252,9 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
    UTILITY
    ============================================================ */
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-.red  { color: var(--red); }
-.blue { color: var(--blue); }
+
 .section { padding: var(--section-gap) 0; }
 .section-alt { background: var(--gray1); }
-.tag {
-  display: inline-block; padding: 4px 14px; border-radius: 100px;
-  font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-}
-.tag-blue { background: rgba(0,102,255,.08); color: var(--blue); }
-.tag-red  { background: rgba(229,57,53,.08);  color: var(--red); }
-
-/* ============================================================
-   IMAGE PLACEHOLDER
-   ============================================================ */
-.img-box {
-  width: 100%; background: #F5F5F5; border: 2px dashed #CCCCCC;
-  display: flex; align-items: center; justify-content: center;
-  color: #AAAAAA; font-size: .85rem; font-weight: 600;
-  letter-spacing: .1em; text-transform: uppercase;
-  position: relative; overflow: hidden;
-}
-.img-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.img-box span { position: relative; z-index: 1; pointer-events: none; }
 
 /* ============================================================
    SCROLL REVEAL
@@ -569,308 +504,20 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   .trim-desc { font-size: .82rem; }
 }
 
-/* ============================================================
-   S2 · WHY SECTION
-   ============================================================ */
-.why-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 32px;
-  margin-top: 64px;
-}
-.why-card {
-  padding: 40px 32px;
-  background: var(--white);
-  border: 1px solid var(--gray3);
-  border-radius: var(--radius);
-  text-align: center;
-  transition: all .4s ease;
-  position: relative;
-  overflow: hidden;
-}
-.why-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 100%);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform .6s ease;
-}
-.why-card:hover::before {
-  transform: scaleX(1);
-}
-.why-card:hover {
-  border-color: var(--blue);
-  box-shadow: var(--shadow-md);
-}
-.why-card h3 {
-  margin-bottom: 12px;
-  color: var(--black);
-}
-.why-card p {
-  color: #666;
-  font-size: .95rem;
-}
-
-/* ============================================================
-   S3 · CONVENIENCE FEATURES (2단 레이아웃)
-   ============================================================ */
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
-  margin-top: 64px;
-}
-.feature-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius);
-  background: var(--white);
-  border: 1px solid var(--gray3);
-  display: flex;
-  flex-direction: column;
-  transition: all .5s ease;
-  box-shadow: var(--shadow-sm);
-}
-.feature-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--blue);
-}
-.feature-card .img-box {
-  position: relative;
-  border: none;
-  background: #DDD;
-  width: 100%;
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.feature-card .img-box img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.feature-card::before {
-  display: none;
-}
-.feature-card:hover::before {
-  display: none;
-}
-.feature-content {
-  position: relative;
-  z-index: 2;
-  padding: 24px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.feature-card h3 {
-  margin-bottom: 8px;
-  color: var(--black);
-  font-size: clamp(1rem, 2vw, 1.25rem);
-}
-.feature-card p {
-  color: #666;
-  font-size: .85rem;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* ============================================================
-   S4 · SPECIFICATIONS & EQUIPMENT (상세 제원 + 기본 사양 통합)
-   ============================================================ */
-.spx-toolbar {
-  display: flex; flex-direction: column; align-items: center; gap: 18px;
-  margin-top: 8px; margin-bottom: 36px;
-}
 /* 카테고리 버튼 — PC 가로 정렬(좁아지면 줄바꿈) / 모바일 2열 × 3행 */
-.spx-cats { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 980px; }
-.spx-cat {
-  appearance: none; -webkit-appearance: none;
-  min-height: 46px; padding: 11px 22px;
-  background: var(--white); color: var(--black);
-  border: 1px solid var(--gray3); border-radius: 100px;
-  font-family: inherit; font-size: .92rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.2;
-  cursor: pointer; -webkit-tap-highlight-color: transparent;
-  transition: background-color .22s ease, color .22s ease, border-color .22s ease, box-shadow .22s ease;
-}
-.spx-cat:hover { border-color: var(--black); box-shadow: var(--shadow-sm); }
-.spx-cat:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.spx-cat.active {
-  background: var(--black); color: var(--white); border-color: var(--gold);
-  box-shadow: 0 4px 14px rgba(0,0,0,.14), inset 0 -2px 0 var(--gold);
-}
+
 /* 기준 트림 — 2번째 섹션 트림 선택과 같은 상태 */
-.spx-trim { display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; }
-.spx-trim-label { font-size: .72rem; font-weight: 800; letter-spacing: .2em; color: #9b7440; }
-.spx-trim-tabs {
-  display: inline-flex; gap: 4px; padding: 4px;
-  background: var(--gray2); border: 1px solid var(--gray3); border-radius: 100px;
-}
-.spx-trim-tab {
-  appearance: none; -webkit-appearance: none;
-  min-height: 38px; min-width: 112px; padding: 8px 18px;
-  border: 1px solid transparent; border-radius: 100px;
-  background: transparent; color: var(--black);
-  font-family: inherit; font-size: .7rem; font-weight: 800; letter-spacing: .16em; white-space: nowrap;
-  cursor: pointer; -webkit-tap-highlight-color: transparent;
-  transition: background-color .22s ease, color .22s ease, border-color .22s ease;
-}
-.spx-trim-tab:hover { background: var(--white); border-color: rgba(212,175,122,.55); }
-.spx-trim-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.spx-trim-tab.active { background: var(--black); color: var(--white); border-color: var(--gold); }
 
 /* 내용 영역 — 높이 변화를 부드럽게 (갑작스러운 화면 이동 방지) */
-.spx-panel { position: relative; overflow: hidden; transition: height .32s ease; }
-.spx-view { transition: opacity .22s ease, transform .22s ease; }
-.spx-view.is-out { opacity: 0; transform: translateY(6px); }
 
 /* 상세 제원 — 그룹별 카드(PC 2열 / 모바일 1열) */
-.spx-spec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
-.spx-table {
-  width: 100%; border-collapse: collapse; table-layout: fixed;
-  background: var(--white); border: 1px solid var(--gray3); border-radius: 10px; overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-.spx-table caption { caption-side: top; text-align: left; }
-.spx-table th.spx-th {
-  background: var(--black); color: var(--white);
-  padding: 15px 22px; text-align: left;
-  font-size: .9rem; font-weight: 700; letter-spacing: .05em;
-}
-.spx-table td { padding: 14px 22px; border-bottom: 1px solid var(--gray3); font-size: .92rem; line-height: 1.5; vertical-align: middle; overflow-wrap: anywhere; word-break: keep-all; }
-.spx-table tr:last-child td { border-bottom: none; }
-.spx-table td.spx-k { width: 40%; color: #555; font-weight: 500; }
-.spx-table td.spx-v { color: var(--black); font-weight: 700; text-align: right; }
-.spx-table tbody tr:hover { background: var(--gray1); }
-.spx-full { grid-column: 1 / -1; }
 
 /* 사양 리스트 카드 */
-.spx-list-card {
-  background: var(--white); border: 1px solid var(--gray3); border-radius: var(--radius);
-  box-shadow: var(--shadow-sm); padding: 28px 32px;
-}
-.spx-list-title {
-  font-size: 1.05rem; font-weight: 800; color: var(--black);
-  padding-bottom: 12px; margin-bottom: 6px; border-bottom: 2px solid var(--black);
-}
-.spx-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; }
-.spx-list li {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 13px 0; border-bottom: 1px solid var(--gray2);
-  font-size: .95rem; line-height: 1.55; color: #333; word-break: keep-all; overflow-wrap: anywhere;
-}
-.spx-list li::before { content: '✓'; color: var(--blue); font-weight: 800; flex: 0 0 auto; }
-.spx-list li .spx-txt { flex: 1; min-width: 0; }
-.spx-sub { color: var(--gray4); font-size: .88em; font-weight: 500; }
-.spx-badge {
-  flex: 0 0 auto; align-self: center;
-  font-size: .62rem; font-weight: 800; letter-spacing: .12em; white-space: nowrap;
-  color: #9b7440; border: 1px solid rgba(212,175,122,.7); border-radius: 100px; padding: 3px 8px;
-}
-.spx-note { margin-top: 18px; text-align: center; font-size: .8rem; color: var(--gray4); line-height: 1.6; }
-.spx-note b { color: #9b7440; font-weight: 800; }
-
-@media (max-width: 900px) {
-  .spx-spec-grid { grid-template-columns: 1fr; gap: 18px; }
-}
-@media (max-width: 768px) {
-  .spx-toolbar { margin-bottom: 28px; }
-  .spx-cats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; max-width: 420px; }
-  .spx-cat { width: 100%; min-height: 46px; padding: 10px 8px; font-size: .9rem; }
-  .spx-list { grid-template-columns: 1fr; }
-  .spx-list-card { padding: 22px 20px; }
-  .spx-table th.spx-th { padding: 14px 18px; }
-  .spx-table td { padding: 13px 18px; font-size: .9rem; }
-}
-@media (max-width: 480px) {
-  .spx-trim { gap: 8px; }
-  .spx-trim-tab { min-width: 100px; padding: 8px 12px; }
-  .spx-table td.spx-k { width: 42%; }
-  .spx-list li { font-size: .92rem; padding: 12px 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .spx-panel, .spx-view { transition: none; }
-}
 
 /* 모바일 최적화 — 터치 영역·작은 글자 보강 */
-.spx-badge { font-size: 11px; letter-spacing: .08em; }
+
 .ecol-swatch { position: relative; }
 .ecol-swatch::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; }   /* 보이는 크기는 그대로, 누르는 영역만 넓힘 */
-@media (max-width: 768px) {
-  .spx-trim-tab { min-height: 44px; }
-}
-
-/* ============================================================
-   S5 · COMPARISON TABLE (경쟁차 비교)
-   ============================================================ */
-.scroll-hint {
-  text-align: center;
-  color: var(--gray4);
-  font-size: .85rem;
-  margin: 32px 0 16px;
-  font-weight: 600;
-}
-.compare-wrap {
-  overflow-x: auto;
-  margin-top: 32px;
-  padding-bottom: 12px;
-  border-radius: 8px;
-}
-.compare-table {
-  width: 100%;
-  min-width: 600px;
-  border-collapse: collapse;
-  background: var(--white);
-}
-.compare-table thead {
-  background: var(--black);
-  color: var(--white);
-}
-.compare-table th {
-  padding: 20px 16px;
-  text-align: center;
-  font-weight: 700;
-  font-size: .9rem;
-  border-right: 1px solid rgba(0,0,0,.1);
-}
-.compare-table th:first-child {
-  text-align: left;
-}
-.compare-table td {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--gray3);
-  text-align: center;
-  font-size: .85rem;
-}
-.compare-table .col-label {
-  text-align: left;
-  background: var(--gray1);
-  font-weight: 700;
-  color: var(--black);
-  min-width: 130px;
-}
-.compare-table .col-e300 {
-  color: var(--blue);
-  font-weight: 600;
-}
-.compare-table tbody tr:hover {
-  background: rgba(0,102,255,.02);
-}
-.compare-notice {
-  margin-top: 24px;
-  padding: 16px;
-  background: rgba(229,57,53,.08);
-  border-left: 4px solid var(--red);
-  border-radius: 4px;
-  font-size: .85rem;
-  color: #B71C1C;
-}
 
 /* ============================================================
    SECTION HEADING
@@ -879,22 +526,7 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   margin-bottom: 64px;
   text-align: center;
 }
-.sec-num {
-  display: inline-block;
-  margin-bottom: 12px;
-  padding: 6px 14px;
-  font-size: .85rem;
-  font-weight: 700;
-  color: var(--white);
-  background: var(--blue);
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  border-radius: 6px;
-}
-.section-heading .label-en {
-  display: block;
-  margin-bottom: 16px;
-}
+
 .section-heading h2 {
   margin-bottom: 16px;
   color: var(--black);
@@ -966,111 +598,19 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: 1.15rem;
   }
   
-  /* ---- S2 WHY 섹션 ---- */
-  .why-card p {
-    font-size: 1.05rem;
-  }
-  
-  /* ---- S3 편의사양 섹션 ---- */
-  .feature-content {
-    padding: 30px;
-  }
-  .feature-card h3 {
-    font-size: 1.35rem;
-  }
-  .feature-card p {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-  
-  
-  
-  
-  
-  /* ---- S5 경쟁차 비교 ---- */
-  .compare-table th {
-    font-size: 1rem;
-  }
-  .compare-table td {
-    font-size: .98rem;
-  }
-  
-  
   /* ---- 섹션 공통 ---- */
   .section-heading p {
     font-size: 1.15rem;
   }
   
-  /* ---- S2 WHY 섹션 ---- */
-  .why-card p {
-    font-size: 1.05rem;
-  }
-  
-  /* ---- S3 편의사양 섹션 ---- */
-  .feature-content {
-    padding: 30px;
-  }
-  .feature-card h3 {
-    font-size: 1.35rem;
-  }
-  .feature-card p {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-  
-  
-  
-  
-  
-  /* ---- S5 경쟁차 비교 ---- */
-  .compare-table th {
-    font-size: 1rem;
-  }
-  .compare-table td {
-    font-size: .98rem;
-  }
-  
-  
   /* ---- 섹션 공통 ---- */
   .section-heading p {
     font-size: 1.15rem;
-  }
-  
-  /* ---- S2 WHY 섹션 ---- */
-  .why-card p {
-    font-size: 1.05rem;
-  }
-  
-  /* ---- S3 편의사양 섹션 ---- */
-  .feature-content {
-    padding: 30px;
-  }
-  .feature-card h3 {
-    font-size: 1.35rem;
-  }
-  .feature-card p {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-  
-  
-  
-  
-  
-  /* ---- S5 경쟁차 비교 ---- */
-  .compare-table th {
-    font-size: 1rem;
-  }
-  .compare-table td {
-    font-size: .98rem;
   }
   
 }
 
 /* ---- 태블릿 (481px ~ 768px) ---- */
-@media (max-width: 768px) {
-  .why-grid { grid-template-columns: 1fr; }
-}
 
 /* ---- 모바일 (480px 이하) ---- */
 @media (max-width: 480px) {
@@ -1115,6 +655,107 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
     font-size: 1rem;
   }
 }
+
+/* ============================================================
+   ④ WHY E200 — 선택 이유 4카드 (PC 2×2 · 모바일 1열)
+   ============================================================ */
+.why2-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 1080px; margin: 0 auto; }
+.why2-card { display: flex; flex-direction: column; background: var(--white); border: 1px solid #e6e6e6; border-radius: var(--radius); padding: clamp(28px, 3vw, 40px); box-shadow: 0 2px 6px rgba(17,17,17,.03), 0 12px 28px -18px rgba(17,17,17,.12); }
+.why2-card h3 { margin: 0 0 14px; font-size: clamp(1.2rem, 1.9vw, 1.42rem); font-weight: 800; line-height: 1.4; letter-spacing: -.02em; color: var(--black); text-wrap: balance; word-break: keep-all; }
+.why2-card h3 small { display: inline-block; margin-left: 4px; font-size: .78em; font-weight: 700; color: #8a6a3b; }
+.why2-card > p { margin: 0; font-size: 1rem; line-height: 1.75; color: #4a4a4a; word-break: keep-all; text-wrap: pretty; }
+.why2-foot { margin-top: auto; padding-top: 24px; }
+.why2-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid #ececec; }
+.why2-rows li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-bottom: 1px solid #ececec; font-size: .95rem; color: #555; }
+.why2-rows li b { font-weight: 700; color: var(--black); font-variant-numeric: tabular-nums; text-align: right; word-break: keep-all; }
+.why2-rows li span { font-weight: 600; letter-spacing: .04em; white-space: nowrap; }
+.why2-rows li.is-on span { color: var(--black); }
+.why2-rows li.is-on span::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: var(--gold); vertical-align: 2px; }
+.why2-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; border-top: 1px solid #ececec; }
+.why2-stats div { padding: 14px 0 0; }
+.why2-stats div + div { padding-left: 16px; border-left: 1px solid #ececec; }
+.why2-stats dt { font-size: .8rem; font-weight: 600; color: #6b6b6b; }
+.why2-stats dd { margin: 4px 0 0; font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; color: var(--black); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.why2-stats dd small { margin-left: 3px; font-size: .62em; font-weight: 700; color: #8a6a3b; }
+.why2-picks { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.why2-pick { display: block; padding: 0; margin: 0; font: inherit; text-align: left; background: #f6f6f6; border: 1.5px solid transparent; border-radius: 12px; overflow: hidden; cursor: pointer; transition: border-color .2s; }
+.why2-pick:hover { border-color: #c9c9c9; }
+.why2-pick[aria-pressed="true"] { border-color: var(--black); }
+.why2-pick:focus-visible { outline: 3px solid rgba(212,175,122,.6); outline-offset: 2px; }
+.why2-pick-img { display: block; aspect-ratio: 16 / 10; background: #eee; }
+.why2-pick-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.why2-pick-name { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-height: 44px; padding: 8px 12px; font-size: .82rem; font-weight: 700; letter-spacing: .06em; color: var(--black); }
+.why2-pick-name i { font-style: normal; font-size: .72rem; font-weight: 600; letter-spacing: 0; color: #8a6a3b; visibility: hidden; }
+.why2-pick[aria-pressed="true"] .why2-pick-name i { visibility: visible; }
+.why2-card .nw { white-space: nowrap; }
+.why2-note { max-width: 1080px; margin: 18px auto 0; font-size: .82rem; line-height: 1.7; color: #6b6b6b; text-align: center; }
+@media (max-width: 768px) {
+  .why2-grid { grid-template-columns: 1fr; gap: 16px; }
+  .why2-card { padding: 26px 22px; }
+  .why2-card > p { font-size: .97rem; }
+  .why2-stats dd { font-size: 1.2rem; }
+  .why2-stats div + div { padding-left: 12px; }
+}
+@media (max-width: 380px) {
+  .why2-stats dd { font-size: 1.08rem; }
+  .why2-rows li { font-size: .9rem; }
+}
+
+/* ============================================================
+   ⑥ 기본 적용 옵션 — eqx- (카테고리 탭 + 2열 아코디언 · 트림 연동)
+   ============================================================ */
+.eqx { max-width: 960px; margin: 0 auto; }
+.eqx-trim-label { color: var(--black); font-weight: 800; }
+.eqx-trimbar { display: flex; justify-content: center; margin: 0 auto 18px; width: max-content; max-width: 100%; padding: 3px; border: 1px solid var(--gray3); border-radius: 999px; background: #fff; }
+.eqx-trim { min-height: 44px; padding: 0 22px; font: inherit; font-size: .9rem; font-weight: 700; letter-spacing: .04em; color: #555; background: none; border: 0; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
+.eqx-trim[aria-pressed="true"] { background: var(--black); color: #fff; }
+.eqx-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+.eqx-tab { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 20px; font: inherit; font-size: .95rem; font-weight: 600; color: #4a4a4a; background: #fff; border: 1px solid var(--gray3); border-radius: 999px; cursor: pointer; white-space: nowrap; transition: background .2s, color .2s, border-color .2s; }
+.eqx-tab:hover { border-color: #8a8a8a; color: var(--black); }
+.eqx-tab[aria-selected="true"] { background: var(--black); border-color: var(--black); color: #fff; }
+.eqx-tab:focus-visible, .eqx-row:focus-visible, .eqx-trim:focus-visible, .eqx-media:focus-visible { outline: 3px solid rgba(212,175,122,.6); outline-offset: 2px; }
+.eqx-count { font-size: .75rem; font-weight: 700; opacity: .6; font-variant-numeric: tabular-nums; }
+.eqx-panel { background: #fff; border: 1px solid var(--gray3); border-radius: var(--radius); overflow: hidden; }
+.eqx-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.eqx-item { border-bottom: 1px solid #efefef; min-width: 0; }
+.eqx-item:nth-child(odd) { border-right: 1px solid #efefef; }
+.eqx-row { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 58px; padding: 14px 22px; margin: 0; font: inherit; text-align: left; color: var(--black); background: none; border: 0; cursor: pointer; }
+.eqx-row.is-static { cursor: default; }
+button.eqx-row:hover { background: #fafafa; }
+.eqx-check { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--black); position: relative; }
+.eqx-check::after { content: ''; position: absolute; left: 7px; top: 4px; width: 5px; height: 9px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg); }
+.eqx-name { flex: 1; min-width: 0; font-size: 1rem; font-weight: 600; line-height: 1.45; word-break: keep-all; }
+.eqx-tag { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 4px; font-size: .7rem; font-weight: 700; letter-spacing: .02em; vertical-align: 2px; white-space: nowrap; }
+.eqx-tag.is-trim { background: #f5eee2; color: #7a5a2a; }
+.eqx-tag.is-check { background: #fff3e0; color: #9a5200; }
+.eqx-plus { flex: none; position: relative; width: 12px; height: 12px; }
+.eqx-plus::before, .eqx-plus::after { content: ''; position: absolute; left: 0; top: 5px; width: 12px; height: 2px; background: #8a8a8a; transition: transform .2s; }
+.eqx-plus::after { transform: rotate(90deg); }
+.eqx-row[aria-expanded="true"] .eqx-plus::after { transform: rotate(0); }
+.eqx-desc { padding: 0 22px 18px 54px; }
+.eqx-desc p { margin: 0; font-size: .94rem; line-height: 1.7; color: #4a4a4a; word-break: keep-all; }
+.eqx-desc p + p { margin-top: 8px; }
+.eqx-desc .eqx-benefit { color: var(--black); }
+.eqx-benefit b { margin-right: 6px; font-weight: 700; color: #8a6a3b; }
+.eqx-media { position: relative; display: block; width: 100%; max-width: 360px; aspect-ratio: 16 / 9; margin-top: 12px; padding: 0; border: 1px solid #efefef; border-radius: 10px; overflow: hidden; background: #f4f4f4; cursor: zoom-in; }
+.eqx-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.eqx-media-zoom { position: absolute; right: 8px; bottom: 8px; padding: 3px 9px; border-radius: 999px; background: rgba(17,17,17,.78); color: #fff; font-size: .72rem; font-weight: 700; }
+.eqx-note { margin: 14px 0 0; font-size: .82rem; line-height: 1.7; color: #6b6b6b; text-align: center; }
+.eqx-note .eqx-tag { margin: 0 2px; }
+@media (max-width: 768px) {
+  .eqx-tabs { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; margin: 0 -24px 16px; padding: 0 24px; -webkit-overflow-scrolling: touch; }
+  .eqx-tabs::-webkit-scrollbar { display: none; }
+  .eqx-tab { padding: 0 16px; font-size: .92rem; }
+  .eqx-trim { min-height: 44px; padding: 0 20px; }
+  .eqx-list { grid-template-columns: 1fr; }
+  .eqx-item:nth-child(odd) { border-right: 0; }
+  .eqx-row { min-height: 52px; padding: 12px 16px; }
+  .eqx-name { font-size: .96rem; }
+  .eqx-desc { padding: 0 16px 16px 48px; }
+  .eqx-media { max-width: 100%; }
+}
+@media (max-width: 480px) { .eqx-tabs { margin: 0 -16px 16px; padding: 0 16px; } }
+@media (prefers-reduced-motion: reduce) { .eqx-tab, .eqx-trim, .eqx-plus::before, .eqx-plus::after, .why2-pick { transition: none; } }
 </style>
 <style>
 /* ==================================================
@@ -1678,7 +1319,6 @@ p  { color: #444; font-size: clamp(1rem, 1.9vw, 1.1rem); line-height: 1.8; }
   <div class="ecol-wrap">
     <div class="ecol-block reveal" id="ecolViewer">
       <div class="ecol-head">
-        <p class="ecol-eyebrow">EXTERIOR COLOURS</p>
         <h2 class="ecol-title" id="ecolTitle">나만의 E-Class를 완성하는 컬러</h2>
       </div>
       <div class="ecol-stage" id="ecolStage" aria-live="polite"></div>
@@ -1831,7 +1471,6 @@ const E_COLORS = [
   <div class="ecol-wrap">
     <div class="eint-block reveal" id="eintViewer">
       <div class="ecol-head">
-        <p class="ecol-eyebrow">INTERIOR DESIGN</p>
         <h2 class="ecol-title" id="eintTitle">취향에 맞는 실내 공간</h2>
       </div>
       <div class="eint-stage" id="eintStage" aria-live="polite"></div>
@@ -1972,128 +1611,101 @@ const E_INTERIOR = [
 
 
 <!-- ============================================================
-     [S2] WHY E200
+     ④ WHY E200 — E200을 선택하는 이유 (4카드 · PC 2×2 / 모바일 1열)
+     - 가격·출력·토크·연비는 공통 데이터(vehicle-data.js)에서 자동으로 채웁니다
+     - 서스펜션·디자인 항목은 TRIM_EQUIPMENT 값을 사용하며, 선택한 트림이 표시됩니다
      ============================================================ -->
-<section class="section">
+<section class="section section-alt" id="why" aria-labelledby="whyTitle">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">01 · WHY E200</span>
-      <span class="label-en">The Reason</span>
-      <h2>왜 E200을 선택하는가</h2>
-      <p>가장 합리적으로 경험하는 메르세데스-벤츠</p>
+      <h2 id="whyTitle">왜 E 200을 선택하는가</h2>
+      <p>E-Class의 품격을 가장 합리적으로 경험하는 방법</p>
     </div>
-    <div class="why-grid reveal">
-      <!-- [S2-1] 합리적인 가격 -->
-      <div class="why-card reveal reveal-delay-1">
-        <h3>합리적인 가격</h3>
-        <p>E-Class의 품격을 가장 경제적으로 경험</p>
-      </div>
-      <!-- [S2-2] #1 -->
-      <div class="why-card reveal reveal-delay-2">
-        <h3>#1</h3>
-        <p>대한민국 판매량 기준 독보적 1위</p>
-      </div>
-      <!-- [S2-3] 서비스센터 -->
-      <div class="why-card reveal reveal-delay-3">
-        <h3>검증된 75개소 서비스센터</h3>
-        <p>국내 최대 규모의 서비스 네트워크</p>
-      </div>
-      <!-- [S2-4]최첨단 안전 기술 -->
-      <div class="why-card reveal reveal-delay-4">
-        <h3>최첨단 안전 기술</h3>
-        <p>메르세데스-벤츠만의 안전 기술로 고객님을 보호합니다</p>
-      </div>
+    <div class="why2-grid">
+      <article class="why2-card reveal">
+        <h3>E-Class를 경험하는<br>합리적인 선택</h3>
+        <p>E 200은 상위 E-Class와 같은 차체와 실내 공간, 3세대 MBUX, 드라이빙 어시스턴스 패키지 플러스를 기본으로 갖춘 가솔린 모델입니다. E-Class가 주는 품격과 안전을 합리적인 가격에서 시작할 수 있습니다.</p>
+        <div class="why2-foot">
+          <ul class="why2-rows" id="whyPrices">
+            <li data-trim="exclusive"><span>EXCLUSIVE</span><b data-why-price="exclusive"></b></li>
+            <li data-trim="amg"><span>AMG LINE</span><b data-why-price="amg"></b></li>
+          </ul>
+        </div>
+      </article>
+      <article class="why2-card reveal reveal-delay-1">
+        <h3>실용적인 가솔린 터보 엔진 <small>M254</small></h3>
+        <p>2.0L 직렬 4기통 가솔린 터보 엔진이 <span class="nw">9G-TRONIC</span> 자동 9단 변속기와 맞물려 뒷바퀴를 굴립니다. 최대토크가 <span class="nw" data-why-spec="torqueRpm">2,000~4,000 rpm</span>의 넓은 구간에서 나와 시내와 고속도로 모두 여유롭습니다.</p>
+        <div class="why2-foot">
+          <dl class="why2-stats">
+            <div><dt>최고출력</dt><dd data-why-spec="power">204<small>ps</small></dd></div>
+            <div><dt>최대토크</dt><dd data-why-spec="torque">32.6<small>kg·m</small></dd></div>
+            <div><dt>복합연비</dt><dd data-why-spec="fuelCombined">12.3<small>km/L</small></dd></div>
+          </dl>
+        </div>
+      </article>
+      <article class="why2-card reveal reveal-delay-2">
+        <h3>편안하고 균형 잡힌 주행</h3>
+        <p>EXCLUSIVE는 컴포트 서스펜션으로 노면 충격을 부드럽게 걸러 편안한 승차감에 집중합니다. AMG Line은 스포츠 서스펜션과 19인치 AMG 휠로 한층 단단하고 민첩한 주행 감각을 줍니다.</p>
+        <div class="why2-foot">
+          <ul class="why2-rows" id="whySusp">
+            <li data-trim="exclusive"><span>EXCLUSIVE</span><b data-why-eq="exclusive:suspension"></b></li>
+            <li data-trim="amg"><span>AMG LINE</span><b data-why-eq="amg:suspension"></b></li>
+          </ul>
+        </div>
+      </article>
+      <article class="why2-card reveal reveal-delay-3">
+        <h3>두 가지 디자인 선택</h3>
+        <p>EXCLUSIVE는 크롬 라디에이터 그릴과 18인치 휠, 블랙 오픈 포어 애쉬우드 트림으로 클래식한 품격을 강조합니다. AMG Line은 AMG 패턴 그릴과 19인치 AMG 휠, 스포츠 시트로 역동적인 인상을 완성합니다.</p>
+        <div class="why2-foot">
+          <div class="why2-picks" role="group" aria-label="디자인 트림 선택">
+            <button type="button" class="why2-pick" data-trim="exclusive" aria-pressed="false"><span class="why2-pick-img"><img data-why-img="exclusiveExterior" alt="E 200 EXCLUSIVE 외관" loading="lazy" decoding="async" width="960" height="600"></span><span class="why2-pick-name">EXCLUSIVE<i>선택됨</i></span></button>
+            <button type="button" class="why2-pick" data-trim="amg" aria-pressed="false"><span class="why2-pick-img"><img data-why-img="amgExterior" alt="E 200 AMG LINE 외관" loading="lazy" decoding="async" width="960" height="600"></span><span class="why2-pick-name">AMG LINE<i>선택됨</i></span></button>
+          </div>
+        </div>
+      </article>
     </div>
+    <p class="why2-note">가격은 부가세 포함 기준이며 판매 조건과 출고 시점에 따라 달라질 수 있습니다. 디자인을 선택하면 아래 기본 옵션과 제원 비교가 해당 트림 기준으로 바뀝니다.</p>
   </div>
 </section>
+<script>
+/* ④ WHY 카드 — 공통 데이터·트림 데이터로 숫자 채우기 + 트림 연동 */
+(function(){
+  const root = document.getElementById('why'); if(!root) return;
+  const V = (window.MBVC_VEHICLES || {});
+  const base = V[TRIM_DATA.exclusive.vehicleId];
+  const val = x => (x && typeof x === 'object') ? x.value : x;
+  root.querySelectorAll('[data-why-price]').forEach(el => { const t = TRIM_DATA[el.dataset.whyPrice]; el.textContent = t ? t.price : ''; });
+  root.querySelectorAll('[data-why-eq]').forEach(el => { const [t, k] = el.dataset.whyEq.split(':'); el.textContent = (TRIM_EQUIPMENT[t] && TRIM_EQUIPMENT[t][k]) || ''; });
+  if(base && base.specs){
+    const s = base.specs, unit = { power: 'ps', torque: 'kg·m', fuelCombined: 'km/L' };
+    root.querySelectorAll('[data-why-spec]').forEach(el => {
+      const k = el.dataset.whySpec;
+      if(k === 'torqueRpm'){ const n = s.torque && s.torque.note; if(n) el.textContent = n.replace(/\s*rpm$/, '') + ' rpm'; return; }
+      const v = val(s[k]); if(v == null) return;
+      el.innerHTML = Number(v).toLocaleString('ko-KR') + '<small>' + unit[k] + '</small>';
+    });
+  }
+  root.querySelectorAll('[data-why-img]').forEach(img => {
+    const url = IMAGES[img.dataset.whyImg]; if(!url) return;
+    img.src = url.replace(/-\d+\.webp$/, '-960.webp');
+  });
+  const picks = [...root.querySelectorAll('.why2-pick')];
+  picks.forEach(b => b.addEventListener('click', () => { if(window.setE200Trim) window.setE200Trim(b.dataset.trim); }));
+  document.addEventListener('e200:trimchange', e => {
+    const k = e.detail.trim;
+    picks.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.trim === k)));
+    root.querySelectorAll('.why2-rows li').forEach(li => li.classList.toggle('is-on', li.dataset.trim === k));
+  });
+})();
+</script>
 
 <!-- ============================================================
-     [S3] CONVENIENCE FEATURES
-     ============================================================ -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-heading">
-      <span class="sec-num">02 · CONVENIENCE</span>
-      <span class="label-en">Daily Experience</span>
-      <h2>E200을 선택하는<br>이유들</h2>
-      <p>일상의 편안함을 더하는 기술들</p>
-    </div>
-    <div class="feature-grid reveal">
-      <!-- [S3-1] mercedes me connect -->
-      <div class="feature-card reveal reveal-delay-1">
-        <div class="img-box" id="imgDigitalLight"></div>
-        <div class="feature-content">
-          <h3>나와 차가 연결되는 순간</h3>
-          <p>mercedes me connect<br>원격시동,차량위치,차량상태 실시간 확인</p>
-        </div>
-      </div>
-      <!-- [S3-2] DISTRONIC -->
-      <div class="feature-card reveal reveal-delay-2">
-        <div class="img-box" id="imgDistronic"></div>
-        <div class="feature-content">
-          <h3>장거리 운전이 편해집니다</h3>
-          <p>DISTRONIC<br>고속도로 반자율주행</p>
-        </div>
-      </div>
-      <!-- [S3-3] 360도 카메라 -->
-      <div class="feature-card reveal reveal-delay-3">
-        <div class="img-box" id="imgParking"></div>
-        <div class="feature-content">
-          <h3>주차 스트레스가 줄어듭니다</h3>
-          <p>360도 카메라<br>액티브 주차 보조</p>
-        </div>
-      </div>
-      <!-- [S3-4] 저공해인증 2종 -->
-      <div class="feature-card reveal reveal-delay-4">
-        <div class="img-box" id="imgBurmester"></div>
-        <div class="feature-content">
-          <h3>일상에서 누리는 경제적 혜택</h3>
-          <p>공영주차장 50%할인<br>자동차세 30% 할인</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     [S4] SPECIFICATIONS & EQUIPMENT — 제원 및 기본 사양 (기존 S5 상세 제원 + S6 기본 사양 통합)
-     - 화면 내용은 아래 SPEC DATA 스크립트의 EQUIPMENT_DATA / TRIM_EQUIPMENT에서 자동 생성됩니다.
-     - 트림(EXCLUSIVE / AMG LINE)은 2번째 섹션 트림 선택과 같은 상태를 사용합니다.
-     ============================================================ -->
-<section class="section spx-section" id="specs" aria-labelledby="spxTitle">
-  <div class="container">
-    <div class="section-heading">
-      <span class="sec-num">03 · SPECS &amp; EQUIPMENT</span>
-      <span class="label-en">Specifications &amp; Equipment</span>
-      <h2 id="spxTitle">E 200 제원 및 기본 사양</h2>
-      <p>궁금한 항목을 선택해 자세히 확인해 보세요.</p>
-    </div>
-
-    <div class="spx-toolbar reveal">
-      <!-- [S5-1] 카테고리 선택 (버튼은 EQUIPMENT_CATEGORIES 순서대로 자동 생성) -->
-      <div class="spx-cats" id="spxCats" role="tablist" aria-label="사양 카테고리 선택"></div>
-      <!-- [S5-2] 기준 트림 (2번째 섹션 트림 선택과 연동) -->
-      <div class="spx-trim" role="group" aria-label="기준 트림 선택">
-        <span class="spx-trim-label">기준 트림</span>
-        <div class="spx-trim-tabs" id="spxTrimTabs"></div>
-      </div>
-    </div>
-
-    <!-- [S5-3] 선택한 카테고리 내용 -->
-    <div class="spx-panel reveal reveal-delay-1" id="spxPanel" role="tabpanel" aria-live="polite"></div>
-    <p class="spx-note" id="spxNote"></p>
-  </div>
-</section>
-
-<!-- ============================================================
-     [S5] INTEGRAL SAFETY · 4단계 통합 안전대책 (GLC 모듈 이식 · E-Class W214 세단 설정)
+     ⑤ INTEGRAL SAFETY · 4단계 통합 안전대책 (GLC 모듈 이식 · E-Class W214 세단 설정)
      - 이미지 경로·안전 사양은 아래 스크립트의 E200_SAFETY_IMAGES / E200_SAFETY_CONFIG에서 수정합니다.
      ============================================================ -->
 <section class="eis-section" id="integral-safety" aria-label="4단계 통합 안전대책">
   <div class="eis-inner">
     <div class="section-heading">
-      <span class="sec-num">04 · INTEGRAL SAFETY</span>
-      <span class="label-en">Mercedes-Benz Integral Safety</span>
       <h2>안전은 사고 전부터,<br>사고 이후까지.</h2>
       <p>메르세데스-벤츠는 사고 예방부터 충돌 위험 대비, 탑승자 보호, 사고 이후 구조 지원까지 4단계로 안전을 설계합니다.</p>
     </div>
@@ -3751,21 +3363,131 @@ const E200_SAFETY_CONFIG = {
 
 
 <!-- ============================================================
-     [S6] 경쟁차 비교
+     ⑥ 기본 적용 옵션 — 카테고리 탭 + 아코디언 (트림 연동)
+     - 내용은 <head>의 EQUIPMENT_CATEGORIES / EQUIPMENT_DATA / TRIM_EQUIPMENT 에서 자동 생성
+     - 기존 '편의 기능(E200을 선택하는 이유들)' 카드 내용과 이미지는 이 섹션 항목으로 통합
      ============================================================ -->
-<section class="section section-alt">
+<section class="section section-alt" id="equipment" aria-labelledby="eqxTitle">
   <div class="container">
     <div class="section-heading">
-      <span class="sec-num">05 · COMPETITION</span>
-      <span class="label-en">Competitive Comparison</span>
-      <h2>왜 E-Class가<br>선택받는가</h2>
-      <p>경쟁 모델과 직접 비교해보십시오</p>
+      <h2 id="eqxTitle">E 200 기본 적용 옵션</h2>
+      <p><b class="eqx-trim-label" id="eqxTrimLabel">EXCLUSIVE</b> 트림에 별도 선택 없이 기본 포함되는 사양입니다</p>
     </div>
-    <p class="scroll-hint">← 좌우로 스크롤하여 비교하세요 →</p>
-    <div class="compare-wrap reveal" id="compareWrap"></div>
-    <p class="compare-notice">데이터는 추후 업데이트 예정입니다. 현재는 E200 Exclusive 기준 데이터만 반영되어 있습니다.</p>
+    <div class="eqx" id="eqx">
+      <div class="eqx-trimbar" role="group" aria-label="기본 옵션 기준 트림">
+        <button type="button" class="eqx-trim" data-trim="exclusive" aria-pressed="true">EXCLUSIVE</button>
+        <button type="button" class="eqx-trim" data-trim="amg" aria-pressed="false">AMG LINE</button>
+      </div>
+      <div class="eqx-tabs" role="tablist" aria-label="기본 적용 옵션 카테고리"></div>
+      <div class="eqx-panel" role="tabpanel" id="eqxPanel"></div>
+      <p class="eqx-note">항목을 누르면 설명을 볼 수 있습니다. <span class="eqx-tag is-trim">트림</span> 표시는 트림에 따라 달라지는 사양입니다. 엔진·출력·연비·크기 등 제원은 아래 제원 비교에서 확인하세요. 국내 판매 E 200 기준이며 출고 시점에 따라 달라질 수 있습니다.</p>
+    </div>
   </div>
 </section>
+<script>
+(function(){
+  const root = document.getElementById('eqx'); if(!root || typeof EQUIPMENT_DATA === 'undefined') return;
+  const tabsEl = root.querySelector('.eqx-tabs'), panel = root.querySelector('.eqx-panel');
+  const trimBtns = [...root.querySelectorAll('.eqx-trim')], trimLabelEl = document.getElementById('eqxTrimLabel');
+  const cats = EQUIPMENT_CATEGORIES.filter(c => EQUIPMENT_DATA[c.key]);
+  const LABEL = k => (TRIM_EQUIPMENT[k] && TRIM_EQUIPMENT[k].label) || k;
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const imgOf = k => (k && IMAGES[k]) || '';
+  const thumbOf = url => String(url).replace(/-(\d+)\.webp$/, (m, w) => (+w > 960 ? '-960.webp' : m));
+  let cur = cats[0].key, trim = (window.getE200Trim && window.getE200Trim()) || TRIM_DEFAULT, n = 0;
+  /* 항목 해석 — { trim } 은 현재 트림 값 (null 이면 숨김) */
+  const nameOf = (it, t) => it.trim ? (TRIM_EQUIPMENT[t] && TRIM_EQUIPMENT[t][it.trim]) || null : it.name;
+  const countOf = (c, t) => EQUIPMENT_DATA[c.key].filter(it => nameOf(it, t)).length;
+  tabsEl.innerHTML = cats.map((c, i) =>
+    `<button type="button" role="tab" class="eqx-tab" id="eqxTab-${c.key}" data-cat="${c.key}" aria-controls="eqxPanel" aria-selected="${i===0}" tabindex="${i===0?0:-1}">${esc(c.label)}<span class="eqx-count"></span></button>`).join('');
+  const tabs = [...tabsEl.querySelectorAll('.eqx-tab')];
+  function render(){
+    tabs.forEach(t => { t.querySelector('.eqx-count').textContent = countOf(cats.find(c => c.key === t.dataset.cat), trim); });
+    panel.setAttribute('aria-labelledby', 'eqxTab-' + cur);
+    panel.innerHTML = '<ul class="eqx-list">' + EQUIPMENT_DATA[cur].map(it => {
+      const name = nameOf(it, trim); if(!name) return '';
+      const desc = (it.descByTrim && it.descByTrim[trim]) || it.desc || '';
+      const img = imgOf(it.img);
+      const tag = (it.verify && it.verify.indexOf(trim) > -1) ? '<span class="eqx-tag is-check">확인 필요</span>'
+                : it.trim ? `<span class="eqx-tag is-trim">${esc(LABEL(trim))}</span>` : '';
+      const head = `<span class="eqx-check" aria-hidden="true"></span><span class="eqx-name">${esc(name)}${tag}</span>`;
+      if(!desc && !it.benefit && !img) return `<li class="eqx-item"><div class="eqx-row is-static">${head}</div></li>`;
+      const id = 'eqxD' + (++n);
+      let body = desc ? `<p>${esc(desc)}</p>` : '';
+      if(it.benefit) body += `<p class="eqx-benefit"><b>고객 혜택</b>${esc(it.benefit)}</p>`;
+      if(img) body += `<button type="button" class="eqx-media" data-full="${esc(img)}" data-alt="${esc(it.imgLabel || name)}" aria-label="${esc(it.imgLabel || name)} 이미지 확대"><img src="${esc(thumbOf(img))}" alt="" loading="lazy" decoding="async" width="960" height="540"><span class="eqx-media-zoom" aria-hidden="true">확대</span></button>`;
+      return `<li class="eqx-item"><button type="button" class="eqx-row" aria-expanded="false" aria-controls="${id}">${head}<span class="eqx-plus" aria-hidden="true"></span></button><div class="eqx-desc" id="${id}" hidden>${body}</div></li>`;
+    }).join('') + '</ul>';
+  }
+  function setCat(key, focus){
+    if(key === cur) return; cur = key;
+    tabs.forEach(t => { const on = t.dataset.cat === key; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
+      if(on){ if(focus) t.focus(); if(tabsEl.scrollWidth > tabsEl.clientWidth) tabsEl.scrollTo({ left: Math.max(0, t.offsetLeft - tabsEl.offsetLeft - (tabsEl.clientWidth - t.offsetWidth) / 2), behavior: 'smooth' }); } });
+    render();
+  }
+  function setTrim(k){
+    if(!TRIM_EQUIPMENT[k]) return;
+    trim = k;
+    trimBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.trim === k)));
+    if(trimLabelEl) trimLabelEl.textContent = LABEL(k);
+    render();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => setCat(t.dataset.cat));
+    t.addEventListener('keydown', e => { const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if(!d) return;
+      e.preventDefault(); setCat(tabs[(i + d + tabs.length) % tabs.length].dataset.cat, true); });
+  });
+  /* 이 섹션의 트림 버튼 → 페이지 전체 트림 변경 (히어로 · 선택 이유 · 제원 비교 함께) */
+  trimBtns.forEach(b => b.addEventListener('click', () => { if(window.setE200Trim) window.setE200Trim(b.dataset.trim); else setTrim(b.dataset.trim); }));
+  document.addEventListener('e200:trimchange', e => setTrim(e.detail.trim));
+  panel.addEventListener('click', e => {
+    const m = e.target.closest('.eqx-media');
+    if(m){
+      /* 외장 컬러 섹션과 같은 확대 화면 사용 */
+      if(window.ecolOpenLightbox) window.ecolOpenLightbox({ dataset: { full: m.dataset.full }, alt: m.dataset.alt, src: m.dataset.full, focus: () => m.focus() });
+      return;
+    }
+    const b = e.target.closest('button.eqx-row'); if(!b) return;
+    const open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', String(open));
+    document.getElementById(b.getAttribute('aria-controls')).hidden = !open;
+  });
+  render();
+})();
+</script>
+
+<!-- ============================================================
+     ⑦ 차량 제원 비교 (공통 모듈: modules/vehicle-compare/)
+     - 기존 '상세 제원'과 '경쟁차 비교표'를 통합 · 트림 선택에 따라 기준 차량 자동 변경
+       (EXCLUSIVE → e200-exclusive / AMG LINE → e200-amg-line, 기준 차량은 비교 목록에서 자동 제외)
+     - 가격·제원·옵션 수정은 modules/vehicle-compare/vehicle-data.js 에서만 합니다
+     ============================================================ -->
+<section class="section" id="compare" aria-labelledby="compareTitle">
+  <div class="container">
+    <div class="section-heading">
+      <h2 id="compareTitle">차량 제원 비교</h2>
+      <p>비교하고 싶은 차량을 선택해 성능과 옵션의 차이를 직접 확인해 보세요.</p>
+    </div>
+    <div class="mbvc-container" id="mbvcE200" data-mbvc-manual></div>
+  </div>
+</section>
+<script src="modules/vehicle-compare/vehicle-compare.js?v=20261121"></script>
+<script>
+MercedesCompare.init({
+  container: '#mbvcE200',
+  baseModel: TRIM_DATA[TRIM_DEFAULT].vehicleId,     // 기준 차량 (트림 선택과 연동)
+  defaultCompare: 'bmw-520i',                        // 처음 보여줄 비교 차량
+  compareModels: [
+    'e200-exclusive', 'e200-amg-line',
+    'e220d-4matic-exclusive', 'e300-4matic-exclusive', 'e300-4matic-amg-line',
+    'bmw-520i', 'audi-a6-40-tfsi'
+  ]
+});
+document.addEventListener('e200:trimchange', e => {
+  const inst = MercedesCompare.instance('#mbvcE200');
+  if(inst) inst.setBase(TRIM_DATA[e.detail.trim].vehicleId);
+});
+</script>
 
 <!-- ============================================================
      [SCRIPT] JAVASCRIPT & FUNCTIONALITY
@@ -3851,30 +3573,8 @@ function checkAllImageLinks(){
 }
 window.checkAllImageLinks = checkAllImageLinks;
 
-/* -- 이미지 자동 적용 -- */
+/* -- 히어로 이미지 적용 (기본 옵션 이미지는 ⑥ 섹션에서, 디자인 카드 이미지는 ④ 섹션에서 적용) -- */
 function applyImages() {
-  const map = {
-    imgDigitalLight:     'digitalLight',
-    imgDistronic:        'distronic',
-    imgParking:          'parking',
-    imgBurmester:        'burmester',
-    imgInterior:         'interior',
-    imgSafety:           'safety',
-  };
-  Object.entries(map).forEach(([id, key]) => {
-    const url = IMAGES[key];
-    if (!url) return;
-    const box = document.getElementById(id);
-    if (!box) return;
-    const img = document.createElement('img');
-    img.alt = id; img.loading = 'lazy'; img.decoding = 'async';
-    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
-    box.appendChild(img);
-    // 최종 실패 시 깨진 이미지 아이콘 대신 기존 박스 배경을 그대로 보여줌
-    loadImageWithRetry(img, key, url, () => img.remove());
-  });
-
-  /* 히어로 이미지 적용 */
   const heroImg = document.getElementById('heroImg');
   const heroMedia = document.getElementById('heroMedia');
   if (heroImg && heroMedia) {
@@ -3944,6 +3644,8 @@ function renderTrim(trimKey) {
   if (!trim || trimKey === currentTrim) return;
   const isFirst = currentTrim === null;
   currentTrim = trimKey;
+  /* 페이지 전체 트림 공유 — 선택 이유 카드 · 기본 옵션 · 제원 비교(기준 차량)가 이 신호를 받아 함께 바뀝니다 */
+  document.dispatchEvent(new CustomEvent('e200:trimchange', { detail: { trim: trimKey, vehicleId: trim.vehicleId } }));
   updateTrimButtons(trimKey);
 
   const media = document.getElementById('trimMedia');
@@ -3978,32 +3680,9 @@ function initTrimSelector() {
   }));
   renderTrim(TRIM_DATA[TRIM_DEFAULT] ? TRIM_DEFAULT : Object.keys(TRIM_DATA)[0]);
 }
+window.setE200Trim = k => renderTrim(k);
+window.getE200Trim = () => currentTrim || TRIM_DEFAULT;
 initTrimSelector();
-
-/* -- 경쟁차 비교표 렌더링 -- */
-function renderCompareTable() {
-  const wrap = document.getElementById('compareWrap');
-  if (!wrap) return;
-  let html = '<table class="compare-table"><thead><tr>';
-  COMPARE_DATA.headers.forEach((h, i) => {
-    if (i === 0) html += `<th style="text-align:left;padding-left:28px;min-width:130px;">${h}</th>`;
-    else if (i === COMPARE_DATA.highlight) html += `<th class="col-e300" style="min-width:160px;">${h}</th>`;
-    else html += `<th style="min-width:120px;color:var(--gray4);">${h}</th>`;
-  });
-  html += '</tr></thead><tbody>';
-  COMPARE_DATA.rows.forEach(row => {
-    html += '<tr><td class="col-label">' + row.label + '</td>';
-    row.values.forEach((v, i) => {
-      const cls = (i + 1 === COMPARE_DATA.highlight) ? ' col-e300' : '';
-      const empty = v === '-' || v === '';
-      html += `<td class="${cls}"${empty ? ' style="color:#CCC"' : ''}>${v}</td>`;
-    });
-    html += '</tr>';
-  });
-  html += '</tbody></table>';
-  wrap.innerHTML = html;
-}
-renderCompareTable();
 
 /* -- Scroll Reveal -- */
 const revealObserver = new IntersectionObserver((entries) => {
@@ -4017,127 +3696,8 @@ window.addEventListener('scroll', () => { siteHeader.classList.toggle('scrolled'
 
 /* -- CSS keyframes -- */
 const s = document.createElement('style');
-s.textContent = `@keyframes fadeIn{from{opacity:0}to{opacity:1}} @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.score-bar-fill{transition:none}}`;
+s.textContent = `@keyframes fadeIn{from{opacity:0}to{opacity:1}} @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}`;
 document.head.appendChild(s);
-</script>
-<script>
-/* ==================================================
-   S4 · 제원 및 기본 사양 — 화면 생성·카테고리 전환·트림 연동
-   (데이터는 <head>의 EQUIPMENT_CATEGORIES / EQUIPMENT_DATA / TRIM_EQUIPMENT)
-   ================================================== */
-(function(){
-  const panel = document.getElementById('spxPanel'), catsEl = document.getElementById('spxCats'),
-        trimEl = document.getElementById('spxTrimTabs'), noteEl = document.getElementById('spxNote');
-  if(!panel || !catsEl || typeof EQUIPMENT_DATA === 'undefined') return;
-  const cats = (typeof EQUIPMENT_CATEGORIES !== 'undefined' ? EQUIPMENT_CATEGORIES : []).filter(c => EQUIPMENT_DATA[c.key]);
-  const trims = (typeof TRIM_EQUIPMENT !== 'undefined') ? TRIM_EQUIPMENT : {};
-  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const startTrim = () => { try { if(typeof currentTrim !== 'undefined' && currentTrim && trims[currentTrim]) return currentTrim; } catch(e){}
-    return (typeof TRIM_DEFAULT !== 'undefined' && trims[TRIM_DEFAULT]) ? TRIM_DEFAULT : Object.keys(trims)[0]; };
-  let curCat = cats.length ? cats[0].key : null, curTrim = startTrim();
-
-  /* 항목 해석 — 문자열은 공통, { trim } 은 현재 트림 값 (null이면 표시 안 함) */
-  function trimLabel(){ return (trims[curTrim] && trims[curTrim].label) || ''; }
-  function resolve(item){
-    if(typeof item === 'string') return { text: item, trim: false };
-    if(item && item.text) return { text: item.text, sub: item.sub || '', trim: false };
-    if(item && item.trim){ const v = trims[curTrim] && trims[curTrim][item.trim]; return v ? { text: v, trim: true } : null; }
-    return null;
-  }
-  const badge = () => `<span class="spx-badge">${esc(trimLabel())}</span>`;
-  function listHTML(title, items, extraClass){
-    const lis = items.map(resolve).filter(Boolean)
-      .map(r => `<li${r.trim ? ' class="is-trim"' : ''}><span class="spx-txt">${esc(r.text)}${r.sub ? ` <span class="spx-sub">${esc(r.sub)}</span>` : ''}</span>${r.trim ? badge() : ''}</li>`).join('');
-    return `<div class="spx-list-card${extraClass || ''}"><h3 class="spx-list-title">${esc(title)}</h3><ul class="spx-list">${lis}</ul></div>`;
-  }
-  function specsHTML(groups){
-    return '<div class="spx-spec-grid">' + groups.map(g => {
-      if(g.items) return listHTML(g.group, g.items, ' spx-full');
-      const rows = (g.rows || []).map(r => {
-        if(Array.isArray(r)) return `<tr><td class="spx-k">${esc(r[0])}</td><td class="spx-v">${esc(r[1])}</td></tr>`;
-        const v = resolve(r); if(!v) return '';
-        return `<tr class="is-trim"><td class="spx-k">${esc(r.label)} ${badge()}</td><td class="spx-v">${esc(v.text)}</td></tr>`;
-      }).join('');
-      return `<table class="spx-table"><thead><tr><th class="spx-th" colspan="2" scope="colgroup">${esc(g.group)}</th></tr></thead><tbody>${rows}</tbody></table>`;
-    }).join('') + '</div>';
-  }
-  function build(){
-    const v = document.createElement('div'); v.className = 'spx-view';
-    const cat = cats.find(c => c.key === curCat);
-    v.innerHTML = curCat === 'specifications' ? specsHTML(EQUIPMENT_DATA.specifications) : listHTML(cat ? cat.label : '', EQUIPMENT_DATA[curCat] || []);
-    return v;
-  }
-  function updateNote(){
-    if(!noteEl) return;
-    noteEl.innerHTML = `<b>${esc(trimLabel())}</b> 기준 사양입니다. 금색 태그가 붙은 항목은 트림(EXCLUSIVE / AMG LINE)에 따라 달라집니다.`;
-  }
-
-  /* 전환 — 페이드 + 높이를 부드럽게 맞춰 아래 내용이 갑자기 튀지 않게 */
-  let token = 0;
-  function swap(){
-    const my = ++token, old = panel.querySelector('.spx-view');
-    updateNote();
-    if(!old || reduce){ panel.replaceChildren(build()); panel.style.height = ''; return; }
-    const h0 = panel.offsetHeight;
-    panel.style.height = h0 + 'px';
-    old.classList.add('is-out');
-    setTimeout(() => {
-      if(my !== token) return;
-      const nv = build(); nv.classList.add('is-out');
-      panel.replaceChildren(nv);
-      const h1 = nv.offsetHeight;
-      requestAnimationFrame(() => {
-        if(my !== token) return;
-        panel.style.height = h1 + 'px';
-        nv.classList.remove('is-out');
-        setTimeout(() => { if(my === token) panel.style.height = ''; }, 360);
-      });
-    }, 170);
-  }
-
-  /* 카테고리 버튼 (탭) */
-  catsEl.innerHTML = cats.map(c => `<button type="button" class="spx-cat" role="tab" id="spxTab-${esc(c.key)}" data-cat="${esc(c.key)}" aria-controls="spxPanel" aria-selected="false" tabindex="-1">${esc(c.label)}</button>`).join('');
-  const catBtns = [...catsEl.querySelectorAll('.spx-cat')];
-  function setCat(key, animate){
-    if(!cats.some(c => c.key === key)) return;
-    const changed = key !== curCat; curCat = key;
-    catBtns.forEach(b => { const on = b.dataset.cat === key; b.classList.toggle('active', on); b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
-    panel.setAttribute('aria-labelledby', 'spxTab-' + key);
-    if(animate === false) { panel.replaceChildren(build()); updateNote(); }
-    else if(changed) swap();
-  }
-  catBtns.forEach((b, i) => {
-    b.addEventListener('click', () => setCat(b.dataset.cat));
-    b.addEventListener('keydown', e => {
-      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if(!d) return;
-      e.preventDefault(); const n = catBtns[(i + d + catBtns.length) % catBtns.length]; n.focus(); setCat(n.dataset.cat);
-    });
-  });
-
-  /* 기준 트림 — 2번째 섹션(트림 선택)과 같은 상태 사용 */
-  trimEl.innerHTML = Object.keys(trims).map(k => `<button type="button" class="spx-trim-tab" data-trim="${esc(k)}" aria-pressed="false">${esc(trims[k].label || k)}</button>`).join('');
-  const trimBtns = [...trimEl.querySelectorAll('.spx-trim-tab')];
-  function setTrim(k){
-    if(!trims[k]) return;
-    const changed = k !== curTrim; curTrim = k;
-    trimBtns.forEach(b => { const on = b.dataset.trim === k; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
-    if(changed) swap();   // 선택된 카테고리는 그대로 유지
-  }
-  trimBtns.forEach(b => b.addEventListener('click', () => {
-    if(typeof renderTrim === 'function') renderTrim(b.dataset.trim);   // 2번째 섹션도 함께 변경 → 아래 연결로 이 섹션도 갱신
-    else setTrim(b.dataset.trim);
-  }));
-  /* 2번째 섹션의 트림 전환(renderTrim)에 이 섹션 갱신을 연결 */
-  if(typeof renderTrim === 'function'){
-    const baseRenderTrim = renderTrim;
-    renderTrim = function(k){ const r = baseRenderTrim.apply(this, arguments); setTrim(k); return r; };
-  }
-  window.SPEC_EQUIPMENT = { setCategory: setCat, setTrim: setTrim };
-
-  trimBtns.forEach(b => { const on = b.dataset.trim === curTrim; b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on)); });
-  setCat(curCat, false);
-})();
 </script>
 <script>
 /* TRIM BOX FIT — 로드된 이미지의 실제 비율로 박스 비율 맞춤 */
